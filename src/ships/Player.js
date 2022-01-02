@@ -20,6 +20,8 @@ export default class Player {
     this.currentColor = "#5baac9";
     this.isGotHit = false;
     this.isDead = false;
+    this.isPlayerAlly = true;
+    this.gun = "default";
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.vX = 0;
     this.vY = 0;
@@ -40,9 +42,7 @@ export default class Player {
     }
     this.applyPhysics();
     this.collision.adjustPlayerPositionOnBordersCollision(this);
-    //this.fireMainGun();
     this.fire();
-    this.game.draw.playerGotHitAnimation();
   }
 
   draw() {
@@ -72,84 +72,31 @@ export default class Player {
      // console.log(`timePassed = ${timePassed}`)
       if (timePassed >= this.getAtkSpeed()) {
         this.now = Date.now();
-        if (this.game.projectiles.length <= 30) {
-  
-          let newProjectile = new PlayerDefault(this.game);
-  
-          newProjectile.setPlayerOwned();
-          newProjectile.setTypeDefault();
-          this.game.projectiles.push(newProjectile);
-        }
+        this.game.init.addProjectile(this);
       }
-    // this.fireMainGun();
   }
 
-  // fireMainGun() {
-  //   let timePassed = (this.now - this.game.then) / 1000;
-  //   if (-timePassed >= 0.6) {
-  //     this.now = Date.now();
-  //     if (this.game.projectiles.length <= 30) {
-
-  //       let newProjectile = new PlayerDefault(this.game);
-
-  //       newProjectile.setPlayerOwned();
-  //       newProjectile.setTypeDefault();
-  //       this.game.projectiles.push(newProjectile);
-  //     }
-  //   }
-  // }
 
   gotHit(isByProjectile, projectile) {
     this.isGotHit = true;
     if(isByProjectile) {
       this.gotHitByProjectile(projectile);
-    }
-    else {
-      this.gotHitByPlayerHull();
-    }
-    this.checkHealth();
-    console.log("enemy ship HEALTH = " + this.health);
-  }
-
-  gotHit(isByProjectile, projectile) {
-    this.isGotHit = true;
-    if(isByProjectile) {
-      this.gotHitByProjectile(projectile);
+      this.game.init.addEffect(this, projectile.type);
     }
     else {
       this.gotHitByEnemyHull();
     }
-    //this.game.draw.playerGotHitAnimation();
+    
     //this.health = Math.floor(this.health - 1);
   }
 
   gotHitByProjectile(projectile) {
-    this.health = Math.floor(this.health - projectile.damage);
+    this.health = this.health - projectile.damage;
   }
 
   gotHitByEnemyHull() {
-    this.health = Math.floor(this.health - this.game.stats.enemy.rammingDmg);
+    this.health = this.health - this.game.stats.enemy.rammingDmg;
   }
-
-  // playerGotHitAnimation() {
-  //   if (this.animationOpacity <= 0) {
-  //     this.animationOpacity = 0.1;
-  //   }
-
-  //   this.ctx.current.globalAlpha = this.animationOpacity;
-  //   this.ctx.current.beginPath();
-  //   this.ctx.current.arc(this.x, this.y, this.animationRadius, 0, 2 * Math.PI);
-  //   this.ctx.current.fill();
-  //   this.ctx.current.closePath();
-
-  //   this.animationRadius += 1.6;
-  //   this.animationOpacity += 0.05;
-  //   this.animationOpacity = Math.round((this.animationOpacity + Number.EPSILON) * 100) / 100;
-
-  //   if (this.animationOpacity >= 0.4) {
-  //     this.animationOpacity = this.animationOpacity * -1;
-  //   }
-  // }
 
   applyPhysics() {
     /* apply friction to velocity */

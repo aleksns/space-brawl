@@ -62,7 +62,7 @@ html {
 }
 
 .canvas-background-main {
-  /* background-color: var(--canvas-background-main); */
+  background-color: var(--canvas-background-main);
 }
 
 .canvas-background-second {

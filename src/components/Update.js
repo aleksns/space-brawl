@@ -6,24 +6,18 @@ export default class Update {
   }
 
   update() {
-    this.spawnNewEnemies();
-
     this.updatePlayer();
     this.updateEnemies();
     this.updateProjectiles();
+    this.updateEffects();
+
     this.updateCollisionPlayerHullWithEnemies();
     this.updateCollisionPlayerWithProjectiles();
     this.updateCollisionEnemyWithProjectiles();
 
     this.removeDeadProjectiles();
     this.removeDeadEnemies();
-  }
 
-  spawnNewEnemies() {
-    if (this.game.enemies.length < this.game.maxNumOfEnemies) {
-      let newEnemy = new Enemy(this.game);
-      this.game.enemies.push(newEnemy);
-    }
   }
 
   updatePlayer() {
@@ -31,15 +25,36 @@ export default class Update {
   }
 
   updateEnemies() {
+    this.game.init.spawnEnemies();
+
     for (let i = 0; i < this.game.enemies.length; i++) {
       this.game.enemies[i].update();
     }
   }
 
   updateProjectiles() {
-    for (let i = 0; i < this.game.projectiles.length; i++) {
-      this.game.projectiles[i].update();
+    for (let i = 0; i < this.game.enemyProjectiles.length; i++) {
+      this.game.enemyProjectiles[i].update();
     }
+
+    for (let i = 0; i < this.game.playerProjectiles.length; i++) {
+      this.game.playerProjectiles[i].update();
+    }
+  }
+
+  updateEffects() {
+    let effectsToRemove = []
+    for(let i = 0; i < this.game.effects.length; i++) {
+      if(!this.game.effects[i].isPlaying) {
+        effectsToRemove.push(this.game.effects[i]);
+      }
+    }
+
+    for (let i = 0; i < effectsToRemove.length; i++) {
+      let index = this.game.effects.indexOf(effectsToRemove[i]);
+      this.game.effects.splice(index, 1);
+    }
+
   }
 
   updateCollisionPlayerHullWithEnemies() {
@@ -57,48 +72,62 @@ export default class Update {
   }
 
   updateCollisionPlayerWithProjectiles() {
-    for (let i = 0; i < this.game.projectiles.length; i++) {
+    for (let i = 0; i < this.game.enemyProjectiles.length; i++) {
       if (this.game.collision.rectsColliding(
           this.game.player,
-          this.game.projectiles[i]
+          this.game.enemyProjectiles[i]
         ) &&
-        !this.game.projectiles[i].isPlayerOwned
+        !this.game.enemyProjectiles[i].isPlayerOwned
       ) {
-        this.game.player.gotHit(true, this.game.projectiles[i]);
-        this.game.projectiles[i].setToRemove();
+        this.game.player.gotHit(true, this.game.enemyProjectiles[i]);
+        this.game.enemyProjectiles[i].setToRemove();
       }
     }
   }
 
   updateCollisionEnemyWithProjectiles() {
     for (let i = 0; i < this.game.enemies.length; i++) {
-      for (let y = 0; y < this.game.projectiles.length; y++) {
+      for (let y = 0; y < this.game.playerProjectiles.length; y++) {
         if (
           this.game.collision.rectsColliding(
             this.game.enemies[i],
-            this.game.projectiles[y]
+            this.game.playerProjectiles[y]
           ) &&
-          this.game.projectiles[y].isPlayerOwned
+          this.game.playerProjectiles[y].isPlayerOwned
         ) {
-          this.game.enemies[i].gotHit(true, this.game.projectiles[y]);
-          this.game.projectiles[y].setToRemove();
+          this.game.enemies[i].gotHit(true, this.game.playerProjectiles[y]);
+          this.game.playerProjectiles[y].setToRemove();
         }
       }
     }
   }
 
+  // removing all on screen projectiles (enemies and player owned)
   removeDeadProjectiles() {
     let projectilesToRemove = [];
 
-    for (let i = 0; i < this.game.projectiles.length; i++) {
-      if (this.game.projectiles[i].isTimeToRemove) {
-        projectilesToRemove.push(this.game.projectiles[i]);
+    for (let i = 0; i < this.game.enemyProjectiles.length; i++) {
+      if (this.game.enemyProjectiles[i].isTimeToRemove) {
+        projectilesToRemove.push(this.game.enemyProjectiles[i]);
       }
     }
 
     for (let i = 0; i < projectilesToRemove.length; i++) {
-      let index = this.game.projectiles.indexOf(projectilesToRemove[i]);
-      this.game.projectiles.splice(index, 1);
+      let index = this.game.enemyProjectiles.indexOf(projectilesToRemove[i]);
+      this.game.enemyProjectiles.splice(index, 1);
+    }
+
+      projectilesToRemove = [];
+
+    for (let i = 0; i < this.game.playerProjectiles.length; i++) {
+      if (this.game.playerProjectiles[i].isTimeToRemove) {
+        projectilesToRemove.push(this.game.playerProjectiles[i]);
+      }
+    }
+
+    for (let i = 0; i < projectilesToRemove.length; i++) {
+      let index = this.game.playerProjectiles.indexOf(projectilesToRemove[i]);
+      this.game.playerProjectiles.splice(index, 1);
     }
   }
 
@@ -107,6 +136,10 @@ export default class Update {
     for (let i = 0; i < this.game.enemies.length; i++) {
       if (this.game.enemies[i].isDead) {
         enemiesToRemove.push(this.game.enemies[i]);
+
+        // handle it better
+        this.game.init.addEffect(this.game.enemies[i], "default");
+        ///////
       }
     }
 

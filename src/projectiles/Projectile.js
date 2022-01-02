@@ -1,6 +1,6 @@
 
 export default class Projectile {
-  constructor(game, width, height, color, speed) {
+  constructor(game, width, height, color, speed, type) {
     this.game = game;
     this.ctx = game.ctx;
 
@@ -9,6 +9,7 @@ export default class Projectile {
     this.w = width;
     this.h = height;
     this.currentColor = color;
+    this.type = type;
 
     this.direction = undefined;
     this.isPlayerOwned = undefined;
@@ -25,13 +26,14 @@ export default class Projectile {
     //console.log("Projectile PARENT CONSTRUCTOR| w = " + this.w + " AND h = " + this.h)
   }
 
-  setPlayerOwned() {
+  setPlayerOwned(ship) {
     this.isPlayerOwned = true;
     this.direction = "up";
-    this.x = Math.floor((this.game.player.x + (this.game.player.w / 2)));
-    this.y = Math.floor((this.game.player.y + (this.game.player.h / 2)));
     // this.x = Math.floor((this.game.player.x + (this.game.player.w / 2)));
     // this.y = Math.floor((this.game.player.y + (this.game.player.h / 2)));
+    this.x = Math.floor((ship.x + (ship.w / 2)));
+    this.y = ship.y;
+    //this.y = Math.floor((this.game.player.y + (this.game.player.h / 2)));
   }
 
   setEnemyOwned(enemy) {
@@ -60,9 +62,12 @@ export default class Projectile {
   }
 
   checkStatus() {
-      // (-50) - possible range of a projectile which has to be considered if firing big rojectiles
+      //  possible range of a projectile which has to be considered if firing big rojectiles
       // near the game borders (so that they won't disappear at launch)
-      if(this.game.collision.isCollisionWithAnyBorder(this, -50)) {
+      //MAYBE WILL HAVE TO SWITCH FROM 0 TO e.g. -50, to let player's enemyProjectiles fire (and
+      // not get removed upon launch)
+
+      if(this.game.collision.isCollisionWithAnyBorder(this, 0)) {
         this.setToRemove();
       }
   }

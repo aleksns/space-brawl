@@ -8,7 +8,8 @@ export class EnemyDefault extends Projectile {
       projectileEnemyDefault.w,
       projectileEnemyDefault.h,
       projectileEnemyDefault.color,
-      projectileEnemyDefault.speed
+      projectileEnemyDefault.speed,
+      "default"
     );
   }
 }

@@ -10,9 +10,17 @@ export const colors = {
   scoreColor: "#8BE0FF",
 };
 
+export function getObjectCenterPosition(object) {
+  var centerPosition = {
+    x: Math.floor(object.x + (object.w / 2)),
+    y: Math.floor(object.y + (object.h / 2)),
+  }
+  return centerPosition;
+}
+
 export const projectileEnemyDefault = {
-  w: 30,
-  h: 30,
+  w: 15,
+  h: 15,
   color: colors.red,
   speed: 5
 }

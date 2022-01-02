@@ -8,7 +8,8 @@ export class PlayerDefault extends Projectile {
       projectilePlayerDefault.w,
       projectilePlayerDefault.h,
       projectilePlayerDefault.color,
-      projectilePlayerDefault.speed
+      projectilePlayerDefault.speed,
+      "default"
     );
   }
 }

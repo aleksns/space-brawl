@@ -1,6 +1,3 @@
-import React from "react";
-import "../App.css";
-import { EnemyDefault } from "../projectiles/EnemyDefault";
 import {
   getRandomDirection,
   getRandomEnemyPosition,
@@ -21,6 +18,7 @@ export default class Enemy {
     this.currentColor = colors.green;
     this.isGotHit = false;
     this.isDead = false;
+    this.isPlayerAlly = false;
 
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.vX = 0;
@@ -77,19 +75,10 @@ export default class Enemy {
 
   fire() {
     let timePassed = (this.game.then - this.now) / 1000;
-    //console.log(`ENEMY atk timePassed = ${timePassed}`)
     if (timePassed >= this.getAtkSpeed()) {
       this.now = Date.now();
-      if (this.game.projectiles.length <= 30) {
-
-        let newProjectile = new EnemyDefault(this.game);
-
-        newProjectile.setEnemyOwned(this);
-        newProjectile.setTypeDefault();
-        this.game.projectiles.push(newProjectile);
-      }
+      this.game.init.addProjectile(this);
     }
-  // this.fireMainGun();
 }
 
   applyPhysics() {
@@ -121,12 +110,13 @@ export default class Enemy {
     this.isGotHit = true;
     if(isByProjectile) {
       this.gotHitByProjectile(projectile);
+      //this.game.init.addEffect(this, projectile.type);
     }
     else {
       this.gotHitByPlayerHull();
     }
     this.checkHealth();
-    console.log("enemy ship HEALTH = " + this.health);
+    //console.log("enemy ship HEALTH = " + this.health);
   }
 
   gotHitByProjectile(projectile) {
@@ -134,7 +124,7 @@ export default class Enemy {
   }
 
   gotHitByPlayerHull() {
-    this.health -= 2; // add ramming variable here
+    this.health -= this.game.stats.player.rammingDmg; // add ramming variable here
   }
 }
 

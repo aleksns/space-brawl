@@ -3,14 +3,14 @@ export default class Stats {
     this.game = game;
 
     this.player = {
-      rammingDmg: 2,
-      atkSpeed: 1,  //atkSpeed - time between attacks (in seconds)
+      rammingDmg: 0.5,
+      atkSpeed: 0.1,  //atkSpeed - time between attacks (in seconds)
       //tbd
     };
 
     this.enemy = {
-      rammingDmg: 2,
-      atkSpeed: 3,
+      rammingDmg: 0.5,
+      atkSpeed: 1,
     };
 
     this.playerProjectilesDmg = {
@@ -24,10 +24,6 @@ export default class Stats {
 
   setPlayerDmgRamming(value) {
     this.player.rammingDmg = value;
-  }
-
-  setPlayerDmgDefault(value) {
-    this.player.defaultDmg = value;
   }
 
   setPlayerAtkSpeed(value) {

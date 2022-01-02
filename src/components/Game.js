@@ -1,14 +1,11 @@
-import "../App.css";
-import App from "../App.js";
 import Player from "../ships/Player";
-//import Enemy from "../ships/Enemy";
-//import GameBoard from "./GameBoard";
 import Controls from "./Controls";
 import Collision from "./Collision";
 import Movement from "./Movement";
 import Draw from "./Draw";
 import Update from "./Update";
 import Stats from "./Stats";
+import Init from "./Init";
 
 //Remove some variables FROM THE CONSTRUCTOR which are not being used
 //e.g. board height, allowed board height, etc
@@ -16,6 +13,7 @@ export default class Game {
   constructor(contextRef, context2Ref, clearTheCanvas1, clearTheCanvas2) {
     this.ctx = contextRef;
     this.ctx2 = context2Ref;
+    this.init = new Init(this); 
     this.clearTheCanvas1 = clearTheCanvas1;
     this.clearTheCanvas2 = clearTheCanvas2;
     this.stats = new Stats(this);
@@ -25,9 +23,11 @@ export default class Game {
     this.movement = new Movement(this);
     this.draw = new Draw(this);
     this.update = new Update(this);
-    this.projectiles = [];
     this.enemies = [];
-    this.maxNumOfEnemies = 5;
+    this.maxNumOfEnemies = 10;
+    this.enemyProjectiles = [];
+    this.playerProjectiles = [];
+    this.effects = [];
 
     this.keys = this.controls.keys;
     this.isGameOn = false;
@@ -73,7 +73,7 @@ export default class Game {
     this.then = Date.now();
 
     this.clearTheCanvas1();
-    //this.clearTheCanvas2();
+    this.clearTheCanvas2();
 
     if (this.player.isDead) {
       this.isGameOn = false;
@@ -84,6 +84,6 @@ export default class Game {
     this.draw.drawAll();
 
     this.now = this.then;
-   // console.log("projectiles.length AFTER = " + this.projectiles.length);
+   // console.log("enemyProjectiles.length AFTER = " + this.enemyProjectiles.length);
   }
 }
