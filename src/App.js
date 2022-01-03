@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
-import Background from "./components/BgElement";
 import Canvas from "./components/Canvas";
 import Game from "./components/Game";
 import GameOver from "./components/GameOver";
@@ -74,7 +73,7 @@ export default function App() {
     canvas3.width = window.innerWidth;
     canvas3.height = window.innerHeight;
 
-    const context3 = canvas2.getContext("2d");
+    const context3 = canvas3.getContext("2d");
 
     context3.lineWidth = lineWidth;
     context3Ref.current = context3;
@@ -113,18 +112,8 @@ export default function App() {
     setIsGameOver(false);
 
     gameRef.current.isGameOn = !gameRef.current.isGameOn;
-    //gameRef.current.gameLoop();
     requestAnimationFrame(runLoop);
-
-    // if (gameRef.current.isPlayerDead()) {
-    //   setIsGameOver(true);
-    // }
   }
-
-  // function handleSpeedUp(e) {
-  //   const { value } = e.target;
-  //   gameRef.speedBoost(value);
-  // }
 
   function runLoop(timestamp) {
     if (gameRef.current.isGameOn) {

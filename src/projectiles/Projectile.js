@@ -1,5 +1,4 @@
-
-import { getObjectCenterPosition } from "../services/services";
+import { getObjectCenterPosition, getCenteredPositionForProjectile } from "../services/services";
 
 export default class Projectile {
   constructor(game, width, height, color, speed, type) {
@@ -9,15 +8,16 @@ export default class Projectile {
     this.x = 0;
     this.y = 0;
 
+    // p1 - start point of a projectile, p2 - end point
     this.p1 = {
       x: 0,
-      y: 0
-    }
+      y: 0,
+    };
 
     this.p2 = {
-      x: 200,
-      y: 200
-    }
+      x: 0,
+      y: 0,
+    };
 
     this.dX = 0;
     this.dY = 0;
@@ -40,12 +40,12 @@ export default class Projectile {
 
   setPlayerOwned(ship) {
     this.isPlayerOwned = true;
-    this.p1.x = getObjectCenterPosition(ship).x;
-    this.p1.y = getObjectCenterPosition(ship).y;
+    this.p1.x = getCenteredPositionForProjectile(ship, this).x;
+    this.p1.y = getCenteredPositionForProjectile(ship, this).y;
 
-    this.p2.x = ship.x;
-    //change p2.y value if you need to hit in different angles
+    this.p2.x = this.p1.x;
     this.p2.y = 0;
+    //change p2.x value if you need to fire in different angles
 
     this.calculateVectorsAndDistance();
     this.applySpeedModifier();
@@ -55,7 +55,7 @@ export default class Projectile {
     this.vX = this.p2.x - this.p1.x;
     this.vY = this.p2.y - this.p1.y;
 
-    this.dist = Math.sqrt((this.vX * this.vX) + (this.vY * this.vY));
+    this.dist = Math.sqrt(this.vX * this.vX + this.vY * this.vY);
 
     this.vX = this.vX / this.dist;
     this.vY = this.vY / this.dist;
@@ -72,8 +72,8 @@ export default class Projectile {
   setEnemyOwned(ship) {
     this.isPlayerOwned = false;
 
-    this.p1.x = getObjectCenterPosition(ship).x;
-    this.p1.y = getObjectCenterPosition(ship).y;
+    this.p1.x = getCenteredPositionForProjectile(ship, this).x;
+    this.p1.y = getCenteredPositionForProjectile(ship, this).y;
 
     this.p2.x = getObjectCenterPosition(this.game.player).x;
     this.p2.y = getObjectCenterPosition(this.game.player).y;
@@ -89,22 +89,20 @@ export default class Projectile {
   }
 
   setTypeDefault() {
-    if(this.isPlayerOwned == true) {
+    if (this.isPlayerOwned == true) {
       this.damage = this.game.stats.playerProjectilesDmg.default;
-    }
-    else {
-        this.damage = this.game.stats.enemyProjectilesDmg.default;;
+    } else {
+      this.damage = this.game.stats.enemyProjectilesDmg.default;
     }
   }
 
   removeIfOutsideScreen() {
-      if(this.game.collision.isCollisionWithAnyBorder(this, 0)) {
-        this.setToRemove();
-      }
+    if (this.game.collision.isCollisionWithAnyBorder(this, 0)) {
+      this.setToRemove();
+    }
   }
 
   setToRemove() {
     this.isTimeToRemove = true;
   }
-
 }

@@ -4,7 +4,7 @@ export default class Stats {
 
     this.player = {
       rammingDmg: 0.5,
-      atkSpeed: 0.15,  //atkSpeed - time between attacks (in seconds)
+      atkSpeed: 0.1,  //atkSpeed - time between attacks (in seconds)
       //tbd
     };
 
@@ -17,7 +17,7 @@ export default class Stats {
       default: 10,
     }
     this.enemyProjectilesDmg = {
-      default: 5,
+      default: 4,
     }
     this.score = 0;
   }

@@ -2,9 +2,9 @@ import { colors } from "../services/services";
 import Projectile from "./Projectile";
 
  const projectilePlayerDefault = {
-  w: 15,
-  h: 15,
-  color: colors.blue,
+  w: 10,
+  h: 10,
+  color: "#47FFFB",
   speed: 20,
   isFill: true
 }

@@ -33,7 +33,7 @@ export default class Game {
     this.keys = this.controls.keys;
     this.isGameOn = false;
 
-    this.now = 0; // dateNow to remove? Not being used
+    this.now = 0;
     this.then = 0;
 
     console.log("CONSTRUCTOR > GAME");
@@ -83,8 +83,7 @@ export default class Game {
     this.update.update();
     this.draw.drawAll();
 
-    console.log(`this bgElements.length = ${this.bgElements.length}`)
-
+    //console.log("bgElements.length = " + this.bgElements.length)
     this.now = this.then;
   }
 }

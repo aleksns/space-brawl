@@ -46,31 +46,4 @@ export class ExplosionDefault extends Effect {
     this.opacity += this.opacityModifier;
     this.opacity = Math.round((this.opacity + Number.EPSILON) * 100) / 100;
   }
-
-  // explosionDefault() {
-  //   if (this.opacity <= 0) {
-  //     this.isDead = false;
-  //     return;
-  //   }
-
-  //   if (this.opacity >= 0.8) {
-  //     this.opacityModifier = -this.opacityModifier;
-  //   }
-  //   let x = getObjectCenterPosition(this.object).x;
-  //   let y = getObjectCenterPosition(this.object).y;
-
-  //   this.game.draw.drawArc(
-  //     x,
-  //     y,
-  //     colors.red,
-  //     this.radius,
-  //     this.lineWidth,
-  //     this.isFill,
-  //     this.opacity
-  //   );
-
-  //   this.radius += this.radiusModifier;
-  //   this.opacity += this.opacityModifier;
-  //   this.opacity = Math.round((this.opacity + Number.EPSILON) * 100) / 100;
-  // }
 }

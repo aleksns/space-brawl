@@ -11,8 +11,8 @@ export default class Enemy {
     this.collision = game.collision;
     this.w = 100;
     this.h = 50;
-    this.x = getRandomInt(this. w, this.collision.boardWidth - this.w);
-    this.y = getRandomInt(0, Math.floor(this.collision.boardHeight / 2));
+    this.x = getRandomInt(this. w, this.collision.boardWidth - this.w);   ///make it to 0 and then in separate method randomize position
+    this.y = getRandomInt(0, Math.floor(this.collision.boardHeight / 2));  ///just like with bgEffects
     this.health = 100;
     this.color = colors.green;
     this.opacity = 1.0;
@@ -80,15 +80,6 @@ export default class Enemy {
       this.game.init.addEnemyProjectile(this);
     }
 }
-
-  // applyPhysics() {
-  //   /* apply friction to velocity */
-  //   this.vX *= this.f;
-  //   this.x += this.vX;
-
-  //   this.vY *= this.f;
-  //   this.y += this.vY;
-  // }
 
   checkIsDead() {
     if (this.health <= 0) {

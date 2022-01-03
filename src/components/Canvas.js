@@ -24,7 +24,7 @@ export default function Canvas(props) {
           ref={canvasRef}
           // height="180px"
           style={{ zIndex: "2", width: "80%" }}
-          className="canvas canvas-background-main"
+          className="canvas"
         />
         <canvas
           id="effectsScreen"

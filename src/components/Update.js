@@ -47,7 +47,6 @@ export default class Update {
     }
 
     for (let i = 0; i < this.game.playerProjectiles.length; i++) {
-      //this.game.playerProjectiles[i].update();
       this.game.playerProjectiles[i].update();
     }
   }
@@ -114,8 +113,6 @@ export default class Update {
       let index = this.game.bgElements.indexOf(bgElementsToRemove[i]);
       this.game.bgElements.splice(index, 1);
     }
-   // console.log("REMOVED DEAD BG ELEMENTS, AMOUNT OF REMOVED = " + bgElementsToRemove.length)
-   // console.log("REMOVED DEAD BG ELEMENTS, bgElements.length = " + this.game.bgElements.length)
   }
   
 
