@@ -38,6 +38,7 @@ export default class Update {
     }
 
     for (let i = 0; i < this.game.playerProjectiles.length; i++) {
+      //this.game.playerProjectiles[i].update();
       this.game.playerProjectiles[i].update();
     }
   }

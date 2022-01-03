@@ -24,14 +24,13 @@ export default class Game {
     this.draw = new Draw(this);
     this.update = new Update(this);
     this.enemies = [];
-    this.maxNumOfEnemies = 10;
+    this.maxNumOfEnemies = 5;
     this.enemyProjectiles = [];
     this.playerProjectiles = [];
     this.effects = [];
 
     this.keys = this.controls.keys;
     this.isGameOn = false;
-    //this.score = 0;
 
     this.now = 0; // dateNow to remove? Not being used
     this.then = 0;
@@ -84,6 +83,5 @@ export default class Game {
     this.draw.drawAll();
 
     this.now = this.then;
-   // console.log("enemyProjectiles.length AFTER = " + this.enemyProjectiles.length);
   }
 }

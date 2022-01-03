@@ -25,7 +25,7 @@ export default class Movement {
         this.moveDown(object, object.a);
         break;
       default:
-        console.log("Error handling 'move' function in Move class");
+        console.log("Error handling 'move' function in Movement class");
         break;
     }
   }

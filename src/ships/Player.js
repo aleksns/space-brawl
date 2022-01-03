@@ -72,7 +72,7 @@ export default class Player {
      // console.log(`timePassed = ${timePassed}`)
       if (timePassed >= this.getAtkSpeed()) {
         this.now = Date.now();
-        this.game.init.addProjectile(this);
+        this.game.init.addPlayerProjectile(this);
       }
   }
 

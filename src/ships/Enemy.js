@@ -77,7 +77,7 @@ export default class Enemy {
     let timePassed = (this.game.then - this.now) / 1000;
     if (timePassed >= this.getAtkSpeed()) {
       this.now = Date.now();
-      this.game.init.addProjectile(this);
+      this.game.init.addEnemyProjectile(this);
     }
 }
 

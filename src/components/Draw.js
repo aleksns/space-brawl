@@ -12,7 +12,6 @@ export default class Draw {
     this.drawEnemies();
     this.drawProjectiles();
 
-
     this.drawEffects();
   }
 
@@ -35,12 +34,32 @@ export default class Draw {
 
   drawProjectiles() {
     for (let i = 0; i < this.game.enemyProjectiles.length; i++) {
-      this.game.enemyProjectiles[i].draw();
+      //this.game.enemyProjectiles[i].draw();
+      this.drawObject(this.game.enemyProjectiles[i], this.game.enemyProjectiles[i].currentColor, true);
     }
 
     for (let i = 0; i < this.game.playerProjectiles.length; i++) {
-      this.game.playerProjectiles[i].draw();
+      //this.game.playerProjectiles[i].draw();
+     this.drawObject(this.game.playerProjectiles[i], this.game.playerProjectiles[i].currentColor, true);
     }
+  }
+
+  // draw() {
+  //     this.game.draw.drawObject(this, this.currentColor, true);
+  // }
+
+  drawTest(object, color, isFill) {
+    //console.log(`object.vX = ${object.vX} AND object.vY = ${object.vY}`)
+    this.ctx.current.beginPath();
+    this.ctx.current.rect(object.x, object.y, object.w, object.h);
+    if (isFill) {
+      this.ctx.current.fillStyle = color;
+      this.ctx.current.fill();
+    } else {
+      this.ctx.current.strokeStyle = color;
+      this.ctx.current.stroke();
+    }
+    this.ctx.current.closePath();
   }
 
   drawObject(object, color, isFill) {

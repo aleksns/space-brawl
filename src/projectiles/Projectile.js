@@ -1,4 +1,6 @@
 
+import { getObjectCenterPosition } from "../services/services";
+
 export default class Projectile {
   constructor(game, width, height, color, speed, type) {
     this.game = game;
@@ -6,41 +8,84 @@ export default class Projectile {
 
     this.x = 0;
     this.y = 0;
+
+    this.p1 = {
+      x: 0,
+      y: 0
+    }
+
+    this.p2 = {
+      x: 200,
+      y: 200
+    }
+
+    this.dX = 0;
+    this.dY = 0;
+
+    this.vX = 0;
+    this.vY = 0;
+    this.dist = 0;
+
     this.w = width;
     this.h = height;
     this.currentColor = color;
     this.type = type;
 
-    this.direction = undefined;
     this.isPlayerOwned = undefined;
     this.isTimeToRemove = false;
     this.damage = undefined;
 
-    /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
-    this.vX = 0;
-    this.vY = 0;
-    this.f = 0.95;
     this.s = speed;
-    this.a = this.s / 10;
-
-    //console.log("Projectile PARENT CONSTRUCTOR| w = " + this.w + " AND h = " + this.h)
   }
 
   setPlayerOwned(ship) {
     this.isPlayerOwned = true;
-    this.direction = "up";
-    // this.x = Math.floor((this.game.player.x + (this.game.player.w / 2)));
-    // this.y = Math.floor((this.game.player.y + (this.game.player.h / 2)));
-    this.x = Math.floor((ship.x + (ship.w / 2)));
-    this.y = ship.y;
-    //this.y = Math.floor((this.game.player.y + (this.game.player.h / 2)));
+    this.p1.x = getObjectCenterPosition(ship).x;
+    this.p1.y = getObjectCenterPosition(ship).y;
+
+    this.p2.x = ship.x;
+    //change p2.y value if you need to hit in different angles
+    this.p2.y = 0;
+
+    this.calculateVectorsAndDistance();
+    this.applySpeedModifier();
   }
 
-  setEnemyOwned(enemy) {
+  calculateVectorsAndDistance() {
+    this.vX = this.p2.x - this.p1.x;
+    this.vY = this.p2.y - this.p1.y;
+
+    this.dist = Math.sqrt((this.vX * this.vX) + (this.vY * this.vY));
+
+    this.vX = this.vX / this.dist;
+    this.vY = this.vY / this.dist;
+
+    this.x = this.p1.x;
+    this.y = this.p1.y;
+  }
+
+  applySpeedModifier() {
+    this.dX = this.vX * this.s;
+    this.dY = this.vY * this.s;
+  }
+
+  setEnemyOwned(ship) {
     this.isPlayerOwned = false;
-    this.direction = "down";
-    this.x = Math.floor((enemy.x + (enemy.w / 2)));
-    this.y = Math.floor((enemy.y + (enemy.h / 2)));
+
+    this.p1.x = getObjectCenterPosition(ship).x;
+    this.p1.y = getObjectCenterPosition(ship).y;
+
+    this.p2.x = getObjectCenterPosition(this.game.player).x;
+    this.p2.y = getObjectCenterPosition(this.game.player).y;
+
+    this.calculateVectorsAndDistance();
+    this.applySpeedModifier();
+  }
+
+  update() {
+    this.x += this.dX;
+    this.y += this.dY;
+    this.removeIfOutsideScreen();
   }
 
   setTypeDefault() {
@@ -52,21 +97,7 @@ export default class Projectile {
     }
   }
 
-  applyPhysics() {
-    /* apply friction to velocity */
-    this.vX *= this.f;
-    this.x += this.vX;
-
-    this.vY *= this.f;
-    this.y += this.vY;
-  }
-
-  checkStatus() {
-      //  possible range of a projectile which has to be considered if firing big rojectiles
-      // near the game borders (so that they won't disappear at launch)
-      //MAYBE WILL HAVE TO SWITCH FROM 0 TO e.g. -50, to let player's enemyProjectiles fire (and
-      // not get removed upon launch)
-
+  removeIfOutsideScreen() {
       if(this.game.collision.isCollisionWithAnyBorder(this, 0)) {
         this.setToRemove();
       }
@@ -76,14 +107,4 @@ export default class Projectile {
     this.isTimeToRemove = true;
   }
 
-  draw() {
-      this.game.draw.drawObject(this, this.currentColor, true);
-  }
-
-  update() {
-    this.game.movement.move(this);
-    this.applyPhysics();
-
-    this.checkStatus();
-  }
 }

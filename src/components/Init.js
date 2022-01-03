@@ -1,5 +1,5 @@
 import Enemy from "../ships/Enemy";
-import {PlayerDefault} from "../projectiles/PlayerDefault";
+import { PlayerDefault } from "../projectiles/PlayerDefault";
 import { EnemyDefault } from "../projectiles/EnemyDefault";
 import { ExplosionDefault } from "../effects/ExplosionDefault";
 
@@ -20,46 +20,42 @@ export default class Init {
     this.game.enemies.push(newEnemy);
   }
 
-  addProjectile(ship) {
-    if(this.getCurrentNumOfProjectiles() >= this.maxNumOfProjectiles) {
+  addEnemyProjectile(ship) {
+    if (this.getCurrentNumOfProjectiles() >= this.maxNumOfProjectiles) {
       return;
     }
+    let newProjectile = new EnemyDefault(this.game);
+    newProjectile.setEnemyOwned(ship);
+    newProjectile.setTypeDefault();
+    this.game.enemyProjectiles.push(newProjectile);
+  }
 
-  if (ship.isPlayerAlly) {
-      // add switch case for different projectiles
+  addPlayerProjectile(ship) {
+    if (this.getCurrentNumOfProjectiles() >= this.maxNumOfProjectiles) {
+      return;
+    }
     let newProjectile = new PlayerDefault(this.game);
     newProjectile.setPlayerOwned(ship);
     newProjectile.setTypeDefault();
     this.game.playerProjectiles.push(newProjectile);
   }
-  else {
-      let newProjectile = new EnemyDefault(this.game);
-
-      newProjectile.setEnemyOwned(ship);
-      newProjectile.setTypeDefault();
-      this.game.enemyProjectiles.push(newProjectile);
-  }
-}
 
   addEffect(object, effectType) {
-     // console.log("adding New Effect")
-      let newEffect;
+    let newEffect;
     switch (effectType) {
-        case "default":
+      case "default":
         newEffect = new ExplosionDefault(this.game, object);
-          break;
-        default:
-        console.log("Error handling `explosion` function in Effects class");
         break;
-    }   
+      default:
+        console.log("Error handling `addEffect` function in Init class");
+        break;
+    }
     this.game.effects.push(newEffect);
   }
 
   getCurrentNumOfProjectiles() {
-      let a = this.game.enemyProjectiles.length;
-      let b = this.game.playerProjectiles.length;
-      return a + b;
+    let a = this.game.enemyProjectiles.length;
+    let b = this.game.playerProjectiles.length;
+    return a + b;
   }
-
-
 }
