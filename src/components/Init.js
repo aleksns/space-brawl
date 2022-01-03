@@ -2,11 +2,36 @@ import Enemy from "../ships/Enemy";
 import { PlayerDefault } from "../projectiles/PlayerDefault";
 import { EnemyDefault } from "../projectiles/EnemyDefault";
 import { ExplosionDefault } from "../effects/ExplosionDefault";
+import BgElement from "./BgElement";
 
 export default class Init {
   constructor(game) {
     this.game = game;
     this.maxNumOfProjectiles = 100;
+    this.maxNumOfElements = 40;
+  }
+
+  addBgElements() {
+    if (this.game.bgElements.length >= this.maxNumOfElements) {
+      return;
+    }
+
+    if (!this.game.now == 0) {
+      this.addBgElement(false);
+    } else {
+      for (let i = 0; i < this.maxNumOfElements; i++) {
+        this.addBgElement(true);
+      }
+    }
+
+    console.log("bgElements.length = " + this.game.bgElements.length);
+  }
+
+  addBgElement(isSpawnOnScreen) {
+    let newBgElement = new BgElement(this.game);
+    newBgElement.setIsSpawnOnScreen(isSpawnOnScreen);
+    newBgElement.randomize();
+    this.game.bgElements.push(newBgElement);
   }
 
   spawnEnemies() {

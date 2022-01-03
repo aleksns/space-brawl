@@ -10,19 +10,20 @@ import Init from "./Init";
 //Remove some variables FROM THE CONSTRUCTOR which are not being used
 //e.g. board height, allowed board height, etc
 export default class Game {
-  constructor(contextRef, context2Ref, clearTheCanvas1, clearTheCanvas2) {
+  constructor(contextRef, context2Ref, context3Ref, clearCanvas) {
     this.ctx = contextRef;
     this.ctx2 = context2Ref;
+    this.ctx3 = context3Ref;
+    this.clearCanvas = clearCanvas;
     this.init = new Init(this); 
-    this.clearTheCanvas1 = clearTheCanvas1;
-    this.clearTheCanvas2 = clearTheCanvas2;
-    this.stats = new Stats(this);
+    this.stats = new Stats(this);   ///maybe to put into another class?
     this.collision = new Collision(this);
     this.player = new Player(this);
     this.controls = new Controls(this);
     this.movement = new Movement(this);
     this.draw = new Draw(this);
     this.update = new Update(this);
+    this.bgElements = [];
     this.enemies = [];
     this.maxNumOfEnemies = 5;
     this.enemyProjectiles = [];
@@ -34,6 +35,7 @@ export default class Game {
 
     this.now = 0; // dateNow to remove? Not being used
     this.then = 0;
+
     console.log("CONSTRUCTOR > GAME");
   }
 
@@ -71,8 +73,7 @@ export default class Game {
   gameLoop() {
     this.then = Date.now();
 
-    this.clearTheCanvas1();
-    this.clearTheCanvas2();
+    this.clearCanvas();
 
     if (this.player.isDead) {
       this.isGameOn = false;
@@ -81,6 +82,8 @@ export default class Game {
     this.controls.handleInput();
     this.update.update();
     this.draw.drawAll();
+
+    console.log(`this bgElements.length = ${this.bgElements.length}`)
 
     this.now = this.then;
   }

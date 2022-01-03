@@ -5,6 +5,7 @@ export default function Canvas(props) {
   const {
     canvasRef,
     canvas2Ref,
+    canvas3Ref
     // handleMouseDown,
     // handleMouseUp,
     // handleMouseMove,
@@ -13,29 +14,32 @@ export default function Canvas(props) {
 
   return (
     <>
-    <div className="container-canvas">
-      <canvas
-        id="gameScreen"
-        // onMouseDown={handleMouseDown}
-        // onMouseUp={handleMouseUp}
-        // onMouseMove={handleMouseMove}
-        // onMouseOut={handleMouseOut}
-        ref={canvasRef}
-        // height="180px"
-        style={{ zIndex: "1", width: "80%" }}
-        className="canvas canvas-background-main"
-      />
-            <canvas
-        id="animationScreen"
-        // onMouseDown={handleMouseDown}
-        // onMouseUp={handleMouseUp}
-        // onMouseMove={handleMouseMove}
-        // onMouseOut={handleMouseOut}
-        ref={canvas2Ref}
-        // height="180px"
-        style={{ zIndex: "2", width: "80%" }}
-        className="canvas canvas-background-second"
-      />
+      <div className="container-canvas">
+        <canvas
+          id="gameScreen"
+          // onMouseDown={handleMouseDown}
+          // onMouseUp={handleMouseUp}
+          // onMouseMove={handleMouseMove}
+          // onMouseOut={handleMouseOut}
+          ref={canvasRef}
+          // height="180px"
+          style={{ zIndex: "2", width: "80%" }}
+          className="canvas canvas-background-main"
+        />
+        <canvas
+          id="effectsScreen"
+          ref={canvas2Ref}
+          // height="180px"
+          style={{ zIndex: "3", width: "80%" }}
+          className="canvas"
+        />
+        <canvas
+          id="backgroundScreen"
+          ref={canvas3Ref}
+          // height="180px"
+          style={{ zIndex: "1", width: "80%" }}
+          className="canvas"
+        />
       </div>
     </>
   );

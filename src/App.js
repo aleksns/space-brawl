@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
-import Background from "./components/Background";
+import Background from "./components/BgElement";
 import Canvas from "./components/Canvas";
 import Game from "./components/Game";
 import GameOver from "./components/GameOver";
@@ -8,6 +8,10 @@ import UI from "./components/UI";
 
 const keysUpColor = "#ffffff";
 const keysDownColor = "#6CAEFF";
+const lineWidth = 7;
+//removed variables for canvas
+//context.lineJoin = "round";
+//context.lineCap = "round";
 
 export default function App() {
   const canvasRef = useRef(null);
@@ -16,54 +20,43 @@ export default function App() {
   const canvas2Ref = useRef(null);
   const context2Ref = useRef(null);
 
+  const canvas3Ref = useRef(null);
+  const context3Ref = useRef(null);
+
   const gameRef = useRef(null);
 
-  // const clearTheCanvas = (contextRefValue, canvasRefValue) => {
-  //   contextRefValue.current.clearRect(
-  //     0,
-  //     0,
-  //     canvasRefValue.current.width,
-  //     canvasRefValue.current.height
-  //   );
-  // };
-  const clearTheCanvas1 = () => {
-    // ctx.current.clearRect(
-    //   0,
-    //   0,
-    //   canvas.current.width,
-    //   canvas.current.height
-    // );
+  const clearCanvas = () => {
     contextRef.current.clearRect(
       0,
       0,
       canvasRef.current.width,
       canvasRef.current.height
     );
-  };
 
-  const clearTheCanvas2 = () => {
     context2Ref.current.clearRect(
       0,
       0,
       canvas2Ref.current.width,
       canvas2Ref.current.height
     );
+
+    context3Ref.current.clearRect(
+      0,
+      0,
+      canvas3Ref.current.width,
+      canvas3Ref.current.height
+    );
   };
 
   useEffect(() => {
     //main game canvas
     const canvas = canvasRef.current;
-    //canvas.width = gameBoard.width;
-    //canvas.height = gameBoard.height;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
     const context = canvas.getContext("2d");
 
-    context.lineCap = "round";
-    context.strokeStyle = "#000000";
-    context.lineWidth = 12;
-    context.lineJoin = "round";
+    context.lineWidth = lineWidth;
     contextRef.current = context;
 
     //canvas for animation effects
@@ -73,14 +66,20 @@ export default function App() {
 
     const context2 = canvas2.getContext("2d");
 
-    context2.lineCap = "round";
-    context2.strokeStyle = "#000000";
-    context2.lineWidth = 12;
-    context2.lineJoin = "round";
+    context2.lineWidth = lineWidth;
     context2Ref.current = context2;
 
+    //canvas for background elements
+    const canvas3 = canvas3Ref.current;
+    canvas3.width = window.innerWidth;
+    canvas3.height = window.innerHeight;
 
-    const game = new Game(contextRef, context2Ref, clearTheCanvas1, clearTheCanvas2);
+    const context3 = canvas2.getContext("2d");
+
+    context3.lineWidth = lineWidth;
+    context3Ref.current = context3;
+
+    const game = new Game(contextRef, context2Ref, context3Ref, clearCanvas);
     gameRef.current = game;
   }, []);
 
@@ -193,7 +192,7 @@ export default function App() {
         </div>
       </div>
       {/* <h4 style={{color: "#ffffff"}}>Health: {health}</h4> */}
-      <Canvas canvasRef={canvasRef} canvas2Ref={canvas2Ref}/>
+      <Canvas canvasRef={canvasRef} canvas2Ref={canvas2Ref} canvas3Ref={canvas3Ref} />
 
       {isGameOver ? (
         <GameOver />

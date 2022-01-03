@@ -1,5 +1,6 @@
 
-export const directions = ["up", "down", "left", "right"];
+//export const directions = ["left", "right", "up", "down"];
+export const directions = ["left", "right"];
 
 export const colors = {
   green: "#00FF2D",
@@ -18,20 +19,6 @@ export function getObjectCenterPosition(object) {
   return centerPosition;
 }
 
-export const projectileEnemyDefault = {
-  w: 15,
-  h: 15,
-  color: colors.red,
-  speed: 5
-}
-
-export const projectilePlayerDefault = {
-  w: 15,
-  h: 15,
-  color: colors.blue,
-  speed: 20
-}
-
 export function getHPColor(health) {
   if (health >= 70) {
     return colors.green;
@@ -42,15 +29,24 @@ export function getHPColor(health) {
   }
 }
 
-export function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
+export function getTrueBasedOnChance(chance) {
+  let foo = Math.random() * 100;
+
+  if(foo < chance) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+export function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min);
 }
 
 export function getRandomDirection() {
-  let randomDirectionIndex = getRandomInt(directions.length);
+  let randomDirectionIndex = getRandomInt(0, directions.length-1);
   return directions[randomDirectionIndex];
-}
-
-export function getRandomEnemyPosition(max) {
-  return getRandomInt(max);
 }

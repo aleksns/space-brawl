@@ -8,18 +8,14 @@ export default class Effect {
     this.type = type;
   }
 
-  update() {
-    if(this.isPlaying) {
-      for(let i = 0; i < this.game.effects.length; i++) {
-        this.play(this.game.effects[i]);
-      }
-    }
-  }
+  // update() {
+  //   this.update();
+  // }
 
-  explosion(object, type) {
-    switch (type) {
+  explosion() {
+    switch (this.type) {
         case "default":
-          this.explosionDefault(object);
+          this.play();
           break;
         default:
         console.log("Error handling `explosion` function in Effects class");

@@ -1,8 +1,7 @@
 import {
   getRandomDirection,
-  getRandomEnemyPosition,
+  getRandomInt,
   colors,
-  getHPColor,
 } from "../services/services";
 
 export default class Enemy {
@@ -12,25 +11,26 @@ export default class Enemy {
     this.collision = game.collision;
     this.w = 100;
     this.h = 50;
-    this.x = getRandomEnemyPosition(this.collision.boardWidth - this.w);
-    this.y = getRandomEnemyPosition(Math.floor(this.collision.boardHeight / 4));
+    this.x = getRandomInt(this. w, this.collision.boardWidth - this.w);
+    this.y = getRandomInt(0, Math.floor(this.collision.boardHeight / 2));
     this.health = 100;
-    this.currentColor = colors.green;
+    this.color = colors.green;
+    this.opacity = 1.0;
     this.isGotHit = false;
     this.isDead = false;
-    this.isPlayerAlly = false;
+    this.isFill = true;   //for test drawing purpose
 
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.vX = 0;
     this.vY = 0;
     this.f = 0.95;
     this.s = 3;
-    this.a = this.s / 20;
+    this.a = this.s / 30;
     this.direction = getRandomDirection();
     /* offStep = applies additional distance for enemies to stop their movement
     before reaching allowed borders and maintaining smooth bounce effect */
-    this.offStepX = 115;
-    this.offStepY = 85;
+    this.offStepX = Math.floor(this.w / 2);;
+    this.offStepY = Math.floor(this.h / 2);
     this.now = 0;
     console.log("CONSTRUCTOR > Enemy");
   }
@@ -65,7 +65,7 @@ export default class Enemy {
       this.direction = "up";
     }
     this.game.movement.move(this);
-    this.applyPhysics();
+    //this.applyPhysics();
     this.fire();
   }
 
@@ -81,26 +81,16 @@ export default class Enemy {
     }
 }
 
-  applyPhysics() {
-    /* apply friction to velocity */
-    this.vX *= this.f;
-    this.x += this.vX;
+  // applyPhysics() {
+  //   /* apply friction to velocity */
+  //   this.vX *= this.f;
+  //   this.x += this.vX;
 
-    this.vY *= this.f;
-    this.y += this.vY;
-  }
+  //   this.vY *= this.f;
+  //   this.y += this.vY;
+  // }
 
-  draw() {
-    if (this.isGotHit) {
-      this.currentColor = colors.hitRegColor;
-      this.isGotHit = false;
-    } else {
-      this.currentColor = getHPColor(this.health);
-    }
-    this.game.draw.drawObject(this, this.currentColor, true);
-  }
-
-  checkHealth() {
+  checkIsDead() {
     if (this.health <= 0) {
       this.isDead = true;
     }
@@ -110,21 +100,19 @@ export default class Enemy {
     this.isGotHit = true;
     if(isByProjectile) {
       this.gotHitByProjectile(projectile);
-      //this.game.init.addEffect(this, projectile.type);
     }
     else {
       this.gotHitByPlayerHull();
     }
-    this.checkHealth();
-    //console.log("enemy ship HEALTH = " + this.health);
+    this.checkIsDead();
   }
 
   gotHitByProjectile(projectile) {
-    this.health -= projectile.damage; // add ramming variable here
+    this.health -= projectile.damage;
   }
 
   gotHitByPlayerHull() {
-    this.health -= this.game.stats.player.rammingDmg; // add ramming variable here
+    this.health -= this.game.stats.player.rammingDmg;
   }
 }
 

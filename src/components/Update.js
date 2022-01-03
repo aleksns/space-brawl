@@ -1,4 +1,3 @@
-import Enemy from "../ships/Enemy";
 
 export default class Update {
   constructor(game) {
@@ -6,6 +5,7 @@ export default class Update {
   }
 
   update() {
+    this.updateBgElements();
     this.updatePlayer();
     this.updateEnemies();
     this.updateProjectiles();
@@ -15,9 +15,18 @@ export default class Update {
     this.updateCollisionPlayerWithProjectiles();
     this.updateCollisionEnemyWithProjectiles();
 
-    this.removeDeadProjectiles();
+    this.removeDeadBgElements();
     this.removeDeadEnemies();
+    this.removeDeadProjectiles();
+    this.removeDeadEffects();
+  }
 
+  updateBgElements() {
+    this.game.init.addBgElements();
+    
+    for (let i = 0; i < this.game.bgElements.length; i++) {
+      this.game.bgElements[i].update();
+    }
   }
 
   updatePlayer() {
@@ -44,18 +53,9 @@ export default class Update {
   }
 
   updateEffects() {
-    let effectsToRemove = []
     for(let i = 0; i < this.game.effects.length; i++) {
-      if(!this.game.effects[i].isPlaying) {
-        effectsToRemove.push(this.game.effects[i]);
-      }
+      this.game.effects[i].update();
     }
-
-    for (let i = 0; i < effectsToRemove.length; i++) {
-      let index = this.game.effects.indexOf(effectsToRemove[i]);
-      this.game.effects.splice(index, 1);
-    }
-
   }
 
   updateCollisionPlayerHullWithEnemies() {
@@ -100,6 +100,35 @@ export default class Update {
           this.game.playerProjectiles[y].setToRemove();
         }
       }
+    }
+  }
+
+  removeDeadBgElements() {
+    let bgElementsToRemove = []
+    for(let i = 0; i < this.game.bgElements.length; i++) {
+      if(this.game.bgElements[i].isDead) {
+        bgElementsToRemove.push(this.game.bgElements[i]);
+      }
+    }
+    for (let i = 0; i < bgElementsToRemove.length; i++) {
+      let index = this.game.bgElements.indexOf(bgElementsToRemove[i]);
+      this.game.bgElements.splice(index, 1);
+    }
+   // console.log("REMOVED DEAD BG ELEMENTS, AMOUNT OF REMOVED = " + bgElementsToRemove.length)
+   // console.log("REMOVED DEAD BG ELEMENTS, bgElements.length = " + this.game.bgElements.length)
+  }
+  
+
+  removeDeadEffects() {
+    let effectsToRemove = []
+    for(let i = 0; i < this.game.effects.length; i++) {
+      if(this.game.effects[i].isDead) {
+        effectsToRemove.push(this.game.effects[i]);
+      }
+    }
+    for (let i = 0; i < effectsToRemove.length; i++) {
+      let index = this.game.effects.indexOf(effectsToRemove[i]);
+      this.game.effects.splice(index, 1);
     }
   }
 

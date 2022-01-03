@@ -1,4 +1,3 @@
-import "../App.css";
 
 export default class Movement {
   constructor(game) {
@@ -13,44 +12,54 @@ export default class Movement {
   move(object) {
     switch (object.direction) {
       case "left":
-        this.moveLeft(object, object.a);
+        this.moveLeft(object);
         break;
       case "right":
-        this.moveRight(object, object.a);
+        this.moveRight(object);
         break;
       case "up":
-        this.moveUp(object, object.a);
+        this.moveUp(object);
         break;
       case "down":
-        this.moveDown(object, object.a);
+        this.moveDown(object);
         break;
       default:
         console.log("Error handling 'move' function in Movement class");
         break;
     }
+    this.applyPhysics(object);
   }
 
-  moveUp(object, acceleration) {
+  moveUp(object) {
     if (object.vY > -object.s) {
-        object.vY -= acceleration;
+        object.vY -= object.a;
     }
   }
 
-  moveLeft(object, acceleration) {
+  moveLeft(object) {
     if (object.vX > -object.s) {
-        object.vX -= acceleration;
+        object.vX -= object.a;
     }
   }
 
-  moveDown(object, acceleration) {
+  moveDown(object) {
     if (object.vY < object.s) {
-        object.vY += acceleration;
+        object.vY += object.a;
     }
   }
 
-  moveRight(object, acceleration) {
+  moveRight(object) {
     if (object.vX < object.s) {
-        object.vX += acceleration;
+        object.vX += object.a;
     }
+  }
+
+  applyPhysics(object) {
+    /* apply friction to velocity */
+    object.vX *= object.f;
+    object.x += object.vX;
+
+    object.vY *= object.f;
+    object.y += object.vY;
   }
 }

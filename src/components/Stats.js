@@ -14,7 +14,7 @@ export default class Stats {
     };
 
     this.playerProjectilesDmg = {
-      default: 25,
+      default: 10,
     }
     this.enemyProjectilesDmg = {
       default: 5,

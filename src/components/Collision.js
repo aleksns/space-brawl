@@ -6,6 +6,7 @@ export default class Collision {
     this.gameBoard = new GameBoard();
     this.boardWidth = this.gameBoard.boardWidth;
     this.boardHeight = this.gameBoard.boardHeight;
+
     this.allowedX = this.gameBoard.allowedX;
     this.allowedY = this.gameBoard.allowedY;
     console.log(">> Collison Constructor")

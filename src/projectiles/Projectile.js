@@ -28,7 +28,7 @@ export default class Projectile {
 
     this.w = width;
     this.h = height;
-    this.currentColor = color;
+    this.color = color;
     this.type = type;
 
     this.isPlayerOwned = undefined;

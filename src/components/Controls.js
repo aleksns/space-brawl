@@ -69,6 +69,7 @@ export default class Controls {
     if (this.keys.keyD == true) {
       this.handleKeyD();
     }
+    this.game.movement.applyPhysics(this.player);
   }
 
   handleKeyW() {

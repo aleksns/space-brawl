@@ -17,10 +17,11 @@ export default class Player {
     // this.boardHeight = game.boardHeight;
     this.health = 100;
     this.damage = this.game.stats.playerProjectilesDmg.default;
-    this.currentColor = "#5baac9";
+    this.color = "#5baac9";
+    this.opacity = 1.0;
     this.isGotHit = false;
     this.isDead = false;
-    this.isPlayerAlly = true;
+    this.isFill = false;   //for test drawing purpose
     this.gun = "default";
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.vX = 0;
@@ -40,19 +41,9 @@ export default class Player {
       //this.health = 0 ----> doesnt work, check UI updates
       this.isDead = true;
     }
-    this.applyPhysics();
+    //this.game.movement.applyPhysics(this);
     this.collision.adjustPlayerPositionOnBordersCollision(this);
     this.fire();
-  }
-
-  draw() {
-    if (this.isGotHit) {
-      this.currentColor = colors.red;
-      this.isGotHit = false;
-    } else {
-      this.currentColor = "#5baac9";
-    }
-    this.game.draw.drawObject(this, this.currentColor, false);
   }
 
   getAtkSpeed() {
