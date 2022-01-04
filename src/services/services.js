@@ -11,6 +11,31 @@ export const colors = {
   scoreColor: "#8BE0FF",
 };
 
+export const getPlayerDefaultStats = {
+  rammingDmg: 0.5,
+  atkSpeed: 0.1,
+  atkSpeedCap: 0.01,
+}
+export const getEnemyDefaultStats = {
+  rammingDmg: 0.5,
+  atkSpeed: 1,
+  atkSpeedCap: 0.5,
+}
+
+export const getPlayerProjectileDefaultStats = {
+  default: 10,
+  tier1: 15,
+  tier2: 25,
+  tier3: 50
+}
+
+export const getEnemyProjectileDefaultStats = {
+  default: 4,
+  tier1: 6,
+  tier2: 12,
+  tier3: 20
+}
+
 export function getObjectCenterPosition(object) {
   var centerPosition = {
     x: Math.floor(object.x + (object.w / 2)),

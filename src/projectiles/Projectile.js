@@ -32,8 +32,7 @@ export default class Projectile {
     this.type = type;
 
     this.isPlayerOwned = undefined;
-    this.isTimeToRemove = false;
-    this.damage = undefined;
+    this.isDead = false;
 
     this.s = speed;
   }
@@ -89,11 +88,11 @@ export default class Projectile {
   }
 
   setTypeDefault() {
-    if (this.isPlayerOwned == true) {
-      this.damage = this.game.stats.playerProjectilesDmg.default;
-    } else {
-      this.damage = this.game.stats.enemyProjectilesDmg.default;
-    }
+    // if (this.isPlayerOwned == true) {
+    //   this.damage = this.game.stats.playerProjectilesDmg.default;
+    // } else {
+    //   this.damage = this.game.stats.enemyProjectilesDmg.default;
+    // }
   }
 
   removeIfOutsideScreen() {
@@ -103,6 +102,6 @@ export default class Projectile {
   }
 
   setToRemove() {
-    this.isTimeToRemove = true;
+    this.isDead = true;
   }
 }

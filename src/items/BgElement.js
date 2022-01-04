@@ -22,12 +22,18 @@ export class BgElement extends Item {
     this.w = 0;
     this.h = 0;
 
+    this.offStepX = 0;
     this.offStepY = 0;
     this.color = color;
     this.opacity = 0;
     this.s = s;
     this.a = a;
     this.isFill = undefined;
+    this.shadowColor = "transparent";
+    this.shadowBlur = 0;
+    this.spawnRangeMinX = 0;
+    this.spawnRangeMaxX = 0;
+    this.isInteractable = false;
   }
 
   setRandomShape() {
@@ -37,7 +43,9 @@ export class BgElement extends Item {
     this.opacity = getRandomDecimal(0.05, 0.3);
   }
 
-  setOffStepY() {
-    this.offStepY = -this.h;
+  setMinSpawnRange() {
+  this.spawnRangeMinX = 0 - (this.w / 2);
+  this.spawnRangeMaxX = this.game.collision.boardWidth + this.w / 2;
   }
+
 }

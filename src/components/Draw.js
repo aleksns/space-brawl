@@ -1,4 +1,5 @@
 import { colors, getHPColor } from "../services/services";
+import medkit from "../images/medkit.png";
 
 export default class Draw {
   constructor(game) {
@@ -10,10 +11,28 @@ export default class Draw {
 
   drawAll() {
     this.drawBgElements();
+    this.drawItems();
     this.drawPlayer();
     this.drawEnemies();
     this.drawProjectiles();
     this.drawEffects();
+  }
+
+  drawItems() {
+    for (let i = 0; i < this.game.items.length; i++) {
+      this.drawItem(this.game.items[i]);
+    }
+  }
+
+  drawItem(item) {
+    this.drawRect(item, this.ctx);
+    var img = new Image();
+    img.src = medkit;
+    // this.ctx.current.shadowColor = 'red';
+    // this.ctx.current.shadowBlur = 20;
+
+    this.ctx.current.drawImage(img, item.x, item.y, item.w, item.h);
+    //this.ctx.current.shadowBlur = 0;
   }
 
   drawBgElements() {
@@ -72,7 +91,10 @@ export default class Draw {
   }
 
   drawRect(object, ctx) {
+    ctx.current.shadowColor = object.shadowColor;
+    ctx.current.shadowBlur = object.shadowBlur;
     ctx.current.globalAlpha = object.opacity;
+    
     ctx.current.beginPath();
     ctx.current.rect(object.x, object.y, object.w, object.h);
     if (object.isFill) {
@@ -86,7 +108,10 @@ export default class Draw {
   }
 
   drawArc(object, ctx) {
+    ctx.current.shadowColor = object.shadowColor;
+    ctx.current.shadowBlur = object.shadowBlur;
     ctx.current.globalAlpha = object.opacity;
+
     ctx.current.beginPath();
     ctx.current.arc(object.x, object.y, object.radius, 0, 2 * Math.PI);
 

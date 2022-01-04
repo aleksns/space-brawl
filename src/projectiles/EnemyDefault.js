@@ -18,7 +18,10 @@ export class EnemyDefault extends Projectile {
       projectileEnemyDefault.speed,
       "default"
     );
+    this.damage = this.game.stats.enemyProjectilesDmg.default;
     this.opacity = 1.0;
     this.isFill = projectileEnemyDefault.isFill;
+    this.shadowColor = "transparent";
+    this.shadowBlur = 0;
   }
 }

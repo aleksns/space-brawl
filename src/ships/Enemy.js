@@ -18,7 +18,9 @@ export default class Enemy {
     this.opacity = 1.0;
     this.isGotHit = false;
     this.isDead = false;
-    this.isFill = true;   //for test drawing purpose
+    this.isFill = true;
+    this.shadowColor = "transparent";
+    this.shadowBlur = 0;
 
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.vX = 0;
@@ -84,6 +86,7 @@ export default class Enemy {
   checkIsDead() {
     if (this.health <= 0) {
       this.isDead = true;
+      this.game.init.addEffect(this, "default");
     }
   }
 
@@ -91,6 +94,7 @@ export default class Enemy {
     this.isGotHit = true;
     if(isByProjectile) {
       this.gotHitByProjectile(projectile);
+      //console.log(`got hit with dmg = ${projectile.damage} | remaining HEALTH = ${this.health}`)
     }
     else {
       this.gotHitByPlayerHull();

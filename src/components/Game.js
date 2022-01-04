@@ -6,6 +6,7 @@ import Draw from "./Draw";
 import Update from "./Update";
 import Stats from "./Stats";
 import Init from "./Init";
+import StatusEffects from "./StatusEffects";
 
 //Remove some variables FROM THE CONSTRUCTOR which are not being used
 //e.g. board height, allowed board height, etc
@@ -15,15 +16,17 @@ export default class Game {
     this.ctx2 = context2Ref;
     this.ctx3 = context3Ref;
     this.clearCanvas = clearCanvas;
-    this.init = new Init(this); 
     this.stats = new Stats(this);   ///maybe to put into another class?
+    this.init = new Init(this); 
     this.collision = new Collision(this);
     this.player = new Player(this);
     this.controls = new Controls(this);
     this.movement = new Movement(this);
+    this.statusEffects = new StatusEffects(this);
     this.draw = new Draw(this);
     this.update = new Update(this);
     this.bgElements = [];
+    this.items = [];
     this.enemies = [];
     this.maxNumOfEnemies = 5;
     this.enemyProjectiles = [];
@@ -35,7 +38,7 @@ export default class Game {
 
     this.now = 0;
     this.then = 0;
-
+    this.timeWhenItemSpawned = 0;
     console.log("CONSTRUCTOR > GAME");
   }
 
@@ -83,7 +86,12 @@ export default class Game {
     this.update.update();
     this.draw.drawAll();
 
-    //console.log("bgElements.length = " + this.bgElements.length)
+    // console.log("items.length = " + this.items.length)
+    // console.log("bgElements.length = " + this.bgElements.length)
+    // console.log("enemies.length = " + this.enemies.length)
+    // console.log("effects.length = " + this.effects.length)
+    // console.log("enemy projectiles.length = " + this.enemyProjectiles.length)
+    // console.log("player projectiles.length = " + this.playerProjectiles.length)
     this.now = this.then;
   }
 }

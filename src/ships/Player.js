@@ -1,6 +1,6 @@
 //import Projectile from "../projectiles/Projectile";
 
-import {PlayerDefault} from "../projectiles/PlayerDefault";
+import { PlayerDefault } from "../projectiles/PlayerDefault";
 
 import { colors, getHPColor } from "../services/services";
 
@@ -12,16 +12,14 @@ export default class Player {
     this.y = 600;
     this.w = 70;
     this.h = 40;
-    this.ctx = game.ctx;
-    // this.boardWidth = game.boardWidth;
-    // this.boardHeight = game.boardHeight;
     this.health = 100;
-    this.damage = this.game.stats.playerProjectilesDmg.default;
     this.color = "#5baac9";
     this.opacity = 1.0;
     this.isGotHit = false;
     this.isDead = false;
-    this.isFill = false;   //for test drawing purpose
+    this.isFill = false;
+    this.shadowColor = "transparent";
+    this.shadowBlur = 0;
     this.gun = "default";
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.vX = 0;
@@ -46,6 +44,17 @@ export default class Player {
     this.fire();
   }
 
+  // updateGunStatus() {
+  //   switch (this.gun) {
+  //     case "default":
+  //       this.damage = this.game.stats.playerProjectilesDmg.default;
+  //       break;
+  //     default:
+  //       console.log("Error handling `updateGunStatus` in Player class");
+  //       break;
+  //   }
+  // }
+
   getAtkSpeed() {
     return this.game.stats.player.atkSpeed;
   }
@@ -59,25 +68,28 @@ export default class Player {
   }
 
   fire() {
-      let timePassed = (this.game.then - this.now) / 1000;
-     // console.log(`timePassed = ${timePassed}`)
-      if (timePassed >= this.getAtkSpeed()) {
-        this.now = Date.now();
-        this.game.init.addPlayerProjectile(this);
-      }
+    let timePassed = (this.game.then - this.now) / 1000;
+    if (timePassed < this.getAtkSpeed()) {
+      return;
+    } else {
+      this.now = Date.now();
+      this.game.init.addPlayerProjectile(this);
+    }
+    // if (timePassed >= this.getAtkSpeed()) {
+    //   this.now = Date.now();
+    //   this.game.init.addPlayerProjectile(this);
+    // }
   }
-
 
   gotHit(isByProjectile, projectile) {
     this.isGotHit = true;
-    if(isByProjectile) {
+    if (isByProjectile) {
       this.gotHitByProjectile(projectile);
       this.game.init.addEffect(this, projectile.type);
-    }
-    else {
+    } else {
       this.gotHitByEnemyHull();
     }
-    
+
     //this.health = Math.floor(this.health - 1);
   }
 

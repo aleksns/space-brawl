@@ -3,31 +3,60 @@ import { PlayerDefault } from "../projectiles/PlayerDefault";
 import { EnemyDefault } from "../projectiles/EnemyDefault";
 import { ExplosionDefault } from "../effects/ExplosionDefault";
 import {BgElement} from "../items/BgElement";
+import {Medkit} from "../items/Medkit";
+import { BuffDefault } from "../effects/BuffDefault";
 
 export default class Init {
   constructor(game) {
     this.game = game;
     this.maxNumOfProjectiles = 100;
     this.maxNumOfElements = 40;
+    this.maxNumOfItems = 1;
+    this.timeToSpawn = this.game.stats.itemsTimeToSpawn;
+    this.now = 0;
   }
 
+  addItems() {
+    if (this.game.items.length >= this.maxNumOfItems) {
+      return;
+    }
+    this.addItem(false);
+  }
+
+  addItem(isSpawnOnInit) {
+    //  this.game. timeWhenItemSpawned = 0; DO SOMETHING With it/
+    let timePassed = (this.game.then - this.now) / 1000;
+    if (timePassed < this.timeToSpawn.medkit) {
+      console.log(`timePassed = ${timePassed}`)
+      return;
+    }
+    else {
+      this.now = Date.now();
+      let newItem = new Medkit(this.game);
+      newItem.setIsSpawnOnInit(isSpawnOnInit);
+      newItem.randomize();  
+      this.game.items.push(newItem); 
+    }
+  }
+ 
   addBgElements() {
     if (this.game.bgElements.length >= this.maxNumOfElements) {
       return;
     }
     if (!this.game.now == 0) {
-      this.addBgElement(true);
+      this.addBgElement(false);
     } else {
       for (let i = 0; i < this.maxNumOfElements; i++) {
-        this.addBgElement(false);
+        this.addBgElement(true);
       }
     }
 
   }
 
-  addBgElement(isSpawnOutsideScreen) {
+  addBgElement(isSpawnOnInit) {
     let newBgElement = new BgElement(this.game);
-    newBgElement.setIsSpawnOutsideScreen(isSpawnOutsideScreen);
+    newBgElement.setIsSpawnOnInit(isSpawnOnInit);
+    newBgElement.setRandomShape();
     newBgElement.randomize();
     this.game.bgElements.push(newBgElement);
   }
@@ -69,6 +98,9 @@ export default class Init {
       case "default":
         newEffect = new ExplosionDefault(this.game, object);
         break;
+        case "defaultBuff":
+          newEffect = new BuffDefault(this.game, object);
+          break;
       default:
         console.log("Error handling `addEffect` function in Init class");
         break;

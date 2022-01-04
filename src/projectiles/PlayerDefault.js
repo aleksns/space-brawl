@@ -19,7 +19,10 @@ export class PlayerDefault extends Projectile {
       projectilePlayerDefault.speed,
       "default"
     );
+    this.damage = this.game.stats.playerProjectilesDmg.default;
     this.opacity = 1.0;
-    this.isFill = projectilePlayerDefault.isFill;   //for test drawing purpose
+    this.isFill = projectilePlayerDefault.isFill;
+    this.shadowColor = "transparent";
+    this.shadowBlur = 0;
   }
 }
