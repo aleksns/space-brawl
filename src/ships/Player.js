@@ -1,8 +1,7 @@
 //import Projectile from "../projectiles/Projectile";
-
 import { PlayerDefault } from "../projectiles/PlayerDefault";
-
 import { colors, getHPColor } from "../services/services";
+import playerImage from "../images/playerShip.png";
 
 export default class Player {
   constructor(game) {
@@ -13,13 +12,15 @@ export default class Player {
     this.w = 70;
     this.h = 40;
     this.health = 100;
-    this.color = "#5baac9";
+   // this.color = "#5baac9";
+    this.color = "transparent";
     this.opacity = 1.0;
     this.isGotHit = false;
     this.isDead = false;
     this.isFill = false;
     this.shadowColor = "transparent";
     this.shadowBlur = 0;
+    this.imageSrc = playerImage;
     this.gun = "default";
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.vX = 0;
@@ -27,7 +28,7 @@ export default class Player {
     this.f = 0.95;
     this.s = 25;
     this.a = this.s / 10;
-    this.now = 0;
+    this.now = Date.now();
 
     // this.animationOpacity = 0.1;
     // this.animationRadius = 50;
@@ -67,18 +68,15 @@ export default class Player {
     return this.damage;
   }
 
+  
+
   fire() {
     let timePassed = (this.game.then - this.now) / 1000;
-    if (timePassed < this.getAtkSpeed()) {
-      return;
-    } else {
+    if (timePassed >= this.getAtkSpeed()) {
       this.now = Date.now();
       this.game.init.addPlayerProjectile(this);
+      //add varialbe that will pass to init which projectile to choose from
     }
-    // if (timePassed >= this.getAtkSpeed()) {
-    //   this.now = Date.now();
-    //   this.game.init.addPlayerProjectile(this);
-    // }
   }
 
   gotHit(isByProjectile, projectile) {

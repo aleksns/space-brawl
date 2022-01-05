@@ -1,50 +1,43 @@
 import Item from "./Item";
-import {
-  colors,
-  getRandomInt,
-  getRandomDecimal,
-  getTrueBasedOnChance,
-} from "../services/services";
+import { colors, getItemsStats, itemBuffConfig } from "../services/services";
+import atkSpeedImage from "../images/atkSpeed.png";
 
-const width = 50;
-const height = 50;
-const color = "transparent";
-//s - speed, a - acceleration
-const s = 1;
-const a = s / 10;
+const shadowColor = colors.blue;
 
 export class AtkSpeed extends Item {
   constructor(game) {
     super(game);
     this.x = 0;
     this.y = 0;
-    this.w = width;
-    this.h = height;
+    this.w = itemBuffConfig.width;
+    this.h = itemBuffConfig.height;
 
     this.offStepY = -this.h;
-    this.color = color;
-    this.opacity = 1.0;
-    this.shadowColor = color;
-    this.shadowBlur = 20;
-    this.s = s;
-    this.a = a;
-    this.isFill = false;
+    this.color = itemBuffConfig.color;
+    this.opacity = itemBuffConfig.opacity;
+    this.shadowColor = shadowColor;
+    this.shadowBlur = itemBuffConfig.shadowBlur;
+    this.s = itemBuffConfig.s;
+    this.a = itemBuffConfig.a;
+    this.isFill = itemBuffConfig.isFill;
     this.isInteractable = true;
-    this.atkSpeedIncrease = 0.09;
+    this.atkSpeedIncrease = getItemsStats.atkSpeedTier1;
+    this.spawnRangeMinX = 0;
+    this.spawnRangeMaxX = 0;
+    this.imageSrc = atkSpeedImage;
     //this.effectType = "atkspeed";   for different effects to lay
+  }
+
+  onDeath() {
+    this.game.init.addEffect(this, "defaultBuff");
   }
 
   applyBuff() {
     this.game.statusEffects.increaseAtkSpeed(this.atkSpeedIncrease);
   }
 
-  spawnMedkit() {
-    this.x = 300;
-    this.y = 10;
+  setMinSpawnRange() {
+    this.spawnRangeMinX = this.w;
+    this.spawnRangeMaxX = this.game.collision.boardWidth - this.w;
   }
-
-  playPickedUpEffect() {
-    this.game.init.addEffect(this, "defaultBuff")
-  }
-
 }

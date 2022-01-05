@@ -11,14 +11,41 @@ export const colors = {
   scoreColor: "#8BE0FF",
 };
 
+export const itemBuffConfig = {
+  width: 50,
+  height: 50,
+  color: "transparent",
+  opacity: 1.0,
+  shadowBlur: 20,
+  isFill: false,
+  s: 6,   // s - speed
+  a: 0.2,   /// a - acceleration (6/30)
+  // s: 3,   // s - speed
+  // a: 0.2,   /// a - acceleration (s/15)
+};
+
+export const getItemsStats = {
+  medkitTier1: 25,
+  atkSpeedTier1: 0.2,     //higher values give more atk speed
+}
+
+export const getBuffsSpawnDelay = {
+  medkit: 2.0,
+  atkSpeed: 5.0,
+}
+
+export const getBuffsDuration = {
+  atkSpeed: 10.0
+}
+
 export const getPlayerDefaultStats = {
   rammingDmg: 0.5,
-  atkSpeed: 0.1,
-  atkSpeedCap: 0.01,
+  atkSpeed: 0.20,
+  atkSpeedCap: 0.05,
 }
 export const getEnemyDefaultStats = {
   rammingDmg: 0.5,
-  atkSpeed: 1,
+  atkSpeed: 1.0,
   atkSpeedCap: 0.5,
 }
 

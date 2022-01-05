@@ -32,13 +32,12 @@ export default class Game {
     this.enemyProjectiles = [];
     this.playerProjectiles = [];
     this.effects = [];
-
+    this.score = 0;
     this.keys = this.controls.keys;
     this.isGameOn = false;
 
     this.now = 0;
     this.then = 0;
-    this.timeWhenItemSpawned = 0;
     console.log("CONSTRUCTOR > GAME");
   }
 
@@ -59,24 +58,27 @@ export default class Game {
     return this.player.health;
   }
   getScore() {
-    return this.stats.getScore();
+    return this.score;
   }
   getPlayerDmg() {
-    return this.player.getDamage();
+    return this.player.getDamage();   /// change to either get stats from Stats class or change atkSpeed method to get info from Player
+  }
+  getPlayerAtkSpeed() {
+    return this.stats.player.atkSpeed;   /// look above
   }
 
   isPlayerDead() {
     return this.player.isDead;
   }
 
-  getTimePassed() {
-    return (this.now - this.then) / 1000;
-  }
-
   gameLoop() {
     this.then = Date.now();
-
     this.clearCanvas();
+
+    if(this.now == 0) {
+     this.init.startTimers();
+     this.statusEffects.startTimers();
+    }
 
     if (this.player.isDead) {
       this.isGameOn = false;
@@ -86,6 +88,7 @@ export default class Game {
     this.update.update();
     this.draw.drawAll();
 
+    //console.log("this.secondsPassed = " + this.secondsPassed);
     // console.log("items.length = " + this.items.length)
     // console.log("bgElements.length = " + this.bgElements.length)
     // console.log("enemies.length = " + this.enemies.length)

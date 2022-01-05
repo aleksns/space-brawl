@@ -33,7 +33,8 @@ export default class Enemy {
     before reaching allowed borders and maintaining smooth bounce effect */
     this.offStepX = Math.floor(this.w / 2);;
     this.offStepY = Math.floor(this.h / 2);
-    this.now = 0;
+    this.scorePoints = 25;
+    this.now = Date.now();
     console.log("CONSTRUCTOR > Enemy");
   }
 
@@ -54,21 +55,21 @@ export default class Enemy {
     ) {
       this.direction = "left";
     }
-    if (
-      this.collision.isCollisionBorderUp(this, this.offStepY) &&
-      this.direction == "up"
-    ) {
-      this.direction = "down";
-    }
-    if (
-      this.collision.isCollisionBorderDown(this, this.offStepY) &&
-      this.direction == "down"
-    ) {
-      this.direction = "up";
-    }
+    // if (
+    //   this.collision.isCollisionBorderUp(this, this.offStepY) &&
+    //   this.direction == "up"
+    // ) {
+    //   this.direction = "down";
+    // }
+    // if (
+    //   this.collision.isCollisionBorderDown(this, this.offStepY) &&
+    //   this.direction == "down"
+    // ) {
+    //   this.direction = "up";
+    // }
     this.game.movement.move(this);
     //this.applyPhysics();
-    this.fire();
+   // this.fire();
   }
 
   getAtkSpeed() {
@@ -86,8 +87,13 @@ export default class Enemy {
   checkIsDead() {
     if (this.health <= 0) {
       this.isDead = true;
-      this.game.init.addEffect(this, "default");
+      this.onDeath();
     }
+  }
+
+  onDeath() {
+    this.game.init.addEffect(this, "default");
+    this.game.score += this.scorePoints;
   }
 
   gotHit(isByProjectile, projectile) {

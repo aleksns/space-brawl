@@ -71,20 +71,19 @@ export default class Controls {
     }
     this.game.movement.applyPhysics(this.player);
   }
-
   handleKeyW() {
-    this.game.movement.moveUp(this.player, this.player.a);
+    this.game.movement.moveUp(this.player);
   }
 
   handleKeyA() {
-    this.game.movement.moveLeft(this.player, this.player.a);
+    this.game.movement.moveLeft(this.player);
   }
 
   handleKeyS() {
-    this.game.movement.moveDown(this.player, this.player.a);
+    this.game.movement.moveDown(this.player);
   }
 
   handleKeyD() {
-    this.game.movement.moveRight(this.player, this.player.a);
+    this.game.movement.moveRight(this.player);
   }
 }

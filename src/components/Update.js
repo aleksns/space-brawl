@@ -9,6 +9,7 @@ export default class Update {
     this.updateEnemies();
     this.updateProjectiles();
     this.updateEffects();
+    this.updateStatusEffects();
 
     this.updateCollisionPlayerHullWithEnemies();
     this.updateCollisionPlayerWithProjectiles(); 
@@ -19,6 +20,10 @@ export default class Update {
     this.removeDeadEnemies();
     this.removeDeadProjectiles();
     this.removeDeadEffects();
+  }
+
+  updateStatusEffects() {
+    this.game.statusEffects.updateBuffRemainingTime();
   }
 
   updateObjects(objects) {

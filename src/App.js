@@ -91,6 +91,7 @@ export default function App() {
 
   const [playerHP, setPlayerHP] = useState(undefined);
   const [playerDmg, setPlayerDmg] = useState(undefined);
+  const [playerAtkSpeed, setPlayerAtkSpeed] = useState(undefined);
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
 
@@ -106,6 +107,7 @@ export default function App() {
     handleUiKeysPressed();
     setScore(gameRef.current.getScore());
     setPlayerDmg(gameRef.current.getPlayerDmg());
+    setPlayerAtkSpeed(gameRef.current.getPlayerAtkSpeed());
   }
 
   function startIt() {
@@ -186,7 +188,7 @@ export default function App() {
       {isGameOver ? (
         <GameOver />
       ) : (
-        <UI playerHP={playerHP} score={score} playerDmg={playerDmg} />
+        <UI playerHP={playerHP} score={score} playerDmg={playerDmg} playerAtkSpeed={playerAtkSpeed}/>
       )}
     </>
   );

@@ -1,5 +1,5 @@
 import { colors, getHPColor } from "../services/services";
-import medkit from "../images/medkit.png";
+
 
 export default class Draw {
   constructor(game) {
@@ -26,13 +26,9 @@ export default class Draw {
 
   drawItem(item) {
     this.drawRect(item, this.ctx);
-    var img = new Image();
-    img.src = medkit;
-    // this.ctx.current.shadowColor = 'red';
-    // this.ctx.current.shadowBlur = 20;
-
-    this.ctx.current.drawImage(img, item.x, item.y, item.w, item.h);
-    //this.ctx.current.shadowBlur = 0;
+    var image = new Image();
+    image.src = item.imageSrc;
+    this.ctx.current.drawImage(image, item.x, item.y, item.w, item.h);
   }
 
   drawBgElements() {
@@ -50,8 +46,12 @@ export default class Draw {
       this.game.player.color = colors.red;
       this.game.player.isGotHit = false;
     } else {
-      this.game.player.color = "#5baac9"; ///change later on a variable
+      //this.game.player.color = "#5baac9"; ///change later on a variable
+      this.game.player.color = "transparent"; ///change later on a variable
     }
+    var image = new Image();
+    image.src = this.game.player.imageSrc;
+    this.ctx.current.drawImage(image, this.game.player.x, this.game.player.y, this.game.player.w, this.game.player.h);
     this.drawRect(this.game.player, this.ctx);
   }
 

@@ -35,11 +35,6 @@ export default class Stats {
       tier3: getEnemyProjectileDefaultStats.tier3,
     };
 
-    this.itemsTimeToSpawn = {
-      medkit: 7,
-    }
-    
-    this.kills = 0;
   }
 
   setPlayerDmgRamming(value) {
@@ -54,7 +49,4 @@ export default class Stats {
     this.enemy.rammingDmg = value;
   }
 
-  getScore() {
-    return this.kills;
-  }
 }
