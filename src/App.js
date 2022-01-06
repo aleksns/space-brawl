@@ -7,7 +7,7 @@ import UI from "./components/UI";
 
 const keysUpColor = "#ffffff";
 const keysDownColor = "#6CAEFF";
-const lineWidth = 7;
+const lineWidth = 3;
 //removed variables for canvas
 //context.lineJoin = "round";
 //context.lineCap = "round";

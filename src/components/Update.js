@@ -23,7 +23,7 @@ export default class Update {
   }
 
   updateStatusEffects() {
-    this.game.statusEffects.updateBuffRemainingTime();
+    this.game.statusEffects.update();
   }
 
   updateObjects(objects) {
@@ -59,17 +59,17 @@ export default class Update {
   }
 
   updateCollisionPlayerHullWithEnemies() {
-    for (let i = 0; i < this.game.enemies.length; i++) {
-      if (
-        this.game.collision.rectsColliding(
-          this.game.player,
-          this.game.enemies[i]
-        )
-      ) {
-        this.game.enemies[i].gotHit(false);
-        this.game.player.gotHit(false);
-      }
-    }
+    // for (let i = 0; i < this.game.enemies.length; i++) {
+    //   if (
+    //     this.game.collision.rectsColliding(
+    //       this.game.player,
+    //       this.game.enemies[i]
+    //     )
+    //   ) {
+    //     this.game.enemies[i].gotHit(false);
+    //     this.game.player.gotHit(false);
+    //   }
+    // }
   }
 
   updateCollisionPlayerWithProjectiles() {

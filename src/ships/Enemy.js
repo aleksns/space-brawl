@@ -3,25 +3,29 @@ import {
   getRandomInt,
   colors,
 } from "../services/services";
+import enemyImage from "../images/enemyShip.png";
 
 export default class Enemy {
   constructor(game) {
     this.game = game;
     this.ctx = game.ctx;
     this.collision = game.collision;
-    this.w = 100;
-    this.h = 50;
+    this.w = 150;
+    this.h = 100;
     this.x = getRandomInt(this. w, this.collision.boardWidth - this.w);   ///make it to 0 and then in separate method randomize position
     this.y = getRandomInt(0, Math.floor(this.collision.boardHeight / 2));  ///just like with bgEffects
     this.health = 100;
-    this.color = colors.green;
+    this.maxHealth = 100;
+    this.color = "transparent";
+    this.colorHitReg = colors.red;
+    this.colorDefault = "transparent";
     this.opacity = 1.0;
     this.isGotHit = false;
     this.isDead = false;
-    this.isFill = true;
+    this.isFill = false;
     this.shadowColor = "transparent";
     this.shadowBlur = 0;
-
+    this.imageSrc = enemyImage;
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.vX = 0;
     this.vY = 0;
@@ -69,7 +73,7 @@ export default class Enemy {
     // }
     this.game.movement.move(this);
     //this.applyPhysics();
-   // this.fire();
+     this.fire();
   }
 
   getAtkSpeed() {

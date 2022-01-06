@@ -9,8 +9,8 @@ export class Medkit extends Item {
     super(game);
     this.x = 0;
     this.y = 0;
-    this.w = itemBuffConfig.width;
-    this.h = itemBuffConfig.height;
+    this.w = itemBuffConfig.w;
+    this.h = itemBuffConfig.h;
 
     this.offStepY = -this.h;
     this.color = itemBuffConfig.color;
@@ -25,7 +25,7 @@ export class Medkit extends Item {
     this.spawnRangeMinX = 0;
     this.spawnRangeMaxX = 0;
     this.imageSrc = medkitImage;
-    //this.effectType = "medkit";   for different effects to lay
+    //this.effectType = "medkit";   for different effects to play
   }
 
   onDeath() {

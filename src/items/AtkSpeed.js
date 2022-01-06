@@ -9,8 +9,8 @@ export class AtkSpeed extends Item {
     super(game);
     this.x = 0;
     this.y = 0;
-    this.w = itemBuffConfig.width;
-    this.h = itemBuffConfig.height;
+    this.w = itemBuffConfig.w;
+    this.h = itemBuffConfig.h;
 
     this.offStepY = -this.h;
     this.color = itemBuffConfig.color;

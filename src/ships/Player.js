@@ -9,11 +9,14 @@ export default class Player {
     this.collision = game.collision;
     this.x = 300;
     this.y = 600;
-    this.w = 70;
-    this.h = 40;
+    this.w = 120;
+    this.h = 90;
     this.health = 100;
-   // this.color = "#5baac9";
     this.color = "transparent";
+    this.colorHitReg = colors.red;
+    //this.colorDefault = "#5baac9";
+    this.colorDefault = "transparent";
+    //this.color = "transparent";
     this.opacity = 1.0;
     this.isGotHit = false;
     this.isDead = false;

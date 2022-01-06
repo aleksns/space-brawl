@@ -8,8 +8,8 @@ import {
 export default class Stats {
   constructor(game) {
     this.game = game;
-
-    this.player = {
+    ///// POINTLESS CLASS. REMOVE
+    this.player = { 
       rammingDmg: getPlayerDefaultStats.rammingDmg,
       atkSpeed: getPlayerDefaultStats.atkSpeed, //atkSpeed - time between attacks (in seconds)
       atkSpeedCap: getPlayerDefaultStats.atkSpeedCap,
