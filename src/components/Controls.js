@@ -69,8 +69,11 @@ export default class Controls {
     if (this.keys.keyD == true) {
       this.handleKeyD();
     }
+    //having collision check before applyPhysics adds smooth back off effect when reaching borders
+    this.game.collision.handleCollisionWithBorders(this.player);  
     this.game.movement.applyPhysics(this.player);
   }
+
   handleKeyW() {
     this.game.movement.moveUp(this.player);
   }

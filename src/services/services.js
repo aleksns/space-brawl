@@ -38,6 +38,10 @@ export const itemBuffConfig = {
   statusEffectY: getStatusEffectsBar.y + 10,
 };
 
+export const getGunsStats = {
+  singleAtkSpeed: 0,  // 0 means no modifiers added to the gun at speed
+}
+
 export const getItemsStats = {
   medkitTier1: 25,
   atkSpeedTier1: 0.2, //higher values give more atk speed
@@ -53,15 +57,40 @@ export const getBuffsDuration = {
 };
 
 export const getPlayerDefaultStats = {
-  rammingDmg: 0.5,
-  atkSpeed: 0.2,
+  rammingDmg: 0.1,
+  atkSpeed: 0.2,    //default was 0.2
   atkSpeedCap: 0.05,
 };
 export const getEnemyDefaultStats = {
-  rammingDmg: 0.5,
+  rammingDmg: 0.1,
   atkSpeed: 1.0,
   atkSpeedCap: 0.5,
 };
+
+export const getDefaultPlayerProjectile = {
+    w: 10,
+    h: 10,
+    color: "#47FFFB",
+    speed: 20,
+    isFill: true
+}
+
+// export function getProjectileStatsByType(type) {
+//   let toReturn;
+//   switch(type) {
+//     case "default": 
+//     toReturn = getDefaultPlayerProjectile;
+//     break;
+//     default:
+//       console.log("Error handling `getProjectileStatsByType` in services");
+//       break;
+//   }
+//   return toReturn;
+// }
+
+
+
+
 
 export const getPlayerProjectileDefaultStats = {
   default: 10,
@@ -85,14 +114,46 @@ export function getObjectCenterPosition(object) {
   return centerPosition;
 }
 
-export function getCenteredPositionForProjectile(object, projectile) {
+export function getSingleGunPosition(object, projectileW) {   //projectile width
   var centerPosition = {
-    x: object.x + object.w / 2 - projectile.w / 2,
+    x: object.x + object.w / 2 - projectileW / 2,
     y: object.y + object.h / 2,
-    // x: Math.floor(object.x + (object.w / 2) - (projectile.w / 2)),
-    // y: Math.floor(object.y + (object.h / 2)),
+    // x: object.x + object.w / 2 - projectile.w / 2,
+    // y: object.y + object.h / 2,
   };
   return centerPosition;
+}
+
+export function getDoubleGunPosition(object, projectileW) {
+  var toReturn = [];
+
+  var leftPosition = {
+    x: object.x,
+    y: object.y + object.h / 2,
+  };
+
+  var rightPosition = {
+    x: object.x + object.w - projectileW,
+    y: object.y + object.h / 2,
+  };
+  toReturn.push(leftPosition);
+  toReturn.push(rightPosition);
+
+  return toReturn;
+}
+
+export function getTripleGunPosition(object, projectileW) {
+  var toReturn = [];
+
+  var leftPosition = getDoubleGunPosition(object, projectileW)[0];
+  var centerPosition = getSingleGunPosition(object, projectileW);
+  var rightPosition = getDoubleGunPosition(object, projectileW)[1];
+  
+  toReturn.push(leftPosition);
+  toReturn.push(centerPosition);
+  toReturn.push(rightPosition);
+
+  return toReturn;
 }
 
 export function getHPColor(health) {
@@ -115,6 +176,10 @@ export function getTrueBasedOnChance(chance) {
   }
 }
 
+export function roundDecimalHundreds(decimal) {
+  return Math.round((decimal + Number.EPSILON) * 100) / 100;
+}
+
 export function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -123,7 +188,8 @@ export function getRandomInt(min, max) {
 
 export function getRandomDecimal(min, max) {
   let randomDecimal = Math.random() * (max - min) + min;
-  randomDecimal = Math.round((randomDecimal + Number.EPSILON) * 100) / 100;
+  //randomDecimal = Math.round((randomDecimal + Number.EPSILON) * 100) / 100;
+  randomDecimal = roundDecimalHundreds(randomDecimal);
   return randomDecimal;
 }
 

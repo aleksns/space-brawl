@@ -21,9 +21,18 @@ export default class Collision {
     );
   }
 
+  handleCollisionWithBorders(object) {
+    if(object.isPlayer) {
+      this.handlePlayerBordersCollision(object);
+    }
+    else {
+      this.handleEnemyBordersCollision(object);
+    }
+  }
+
   /* Adjust player's position if collision is detected */
 
-  adjustPlayerPositionOnBordersCollision(rect) {
+  handlePlayerBordersCollision(rect) {
     if (this.isCollisionBorderUp(rect, 0)) {
       rect.y = this.allowedY.y0;
     }
@@ -35,6 +44,21 @@ export default class Collision {
     }
     if (this.isCollisionBorderRight(rect, 0)) {
       rect.x = this.allowedX.x1 - rect.w;
+    }
+  }
+
+  handleEnemyBordersCollision(rect) {
+    if (
+      this.isCollisionBorderLeft(rect, rect.offStepX) &&    
+      rect.direction == "left"
+    ) {
+      rect.direction = "right";
+    }
+    if (
+      this.isCollisionBorderRight(rect, rect.offStepX) &&
+      rect.direction == "right"
+    ) {
+      rect.direction = "left";
     }
   }
 

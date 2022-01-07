@@ -1,4 +1,4 @@
-import Enemy from "../ships/Enemy";
+import {Enemy} from "../ships/Enemy";
 import { PlayerDefault } from "../projectiles/PlayerDefault";
 import { EnemyDefault } from "../projectiles/EnemyDefault";
 import { ExplosionDefault } from "../effects/ExplosionDefault";
@@ -11,7 +11,8 @@ import { getBuffsSpawnDelay } from "../services/services";
 export default class Init {
   constructor(game) {
     this.game = game;
-    this.maxNumOfProjectiles = 100;
+    this.maxNumOfEnemies = 5;
+    this.maxNumOfProjectiles = 150;
     this.maxNumOfElements = 40;
     this.maxNumOfItems = 2;
 
@@ -44,36 +45,23 @@ export default class Init {
     this.now = Date.now();
   }
 
+  // onInitGlobal() {
+
+  // }
+
   addItemsBasedOnTiming() {
     for (let i = 0; i < this.itemsToSpawn.length; i++) {
       this.itemsToSpawn[i].now = Date.now();
       let timePassed = (this.itemsToSpawn[i].now - this.itemsToSpawn[i].then) / 1000;
-      //console.log(`timePassed = ${timePassed}`)
       if (timePassed >= this.itemsToSpawn[i].delay) {
         this.itemsToSpawn[i].then = this.itemsToSpawn[i].now;
         this.addItem(this.itemsToSpawn[i]);
-        //console.log(`ADDED ITEM = ${this.itemsToSpawn[i].id} Timepassed = ${timePassed}`)
       }
     }
   }
 
-  // addItemsBasedOnTiming() {
-  //   for (let i = 0; i < this.itemsToSpawn.length; i++) {
-  //     let timePassed = (this.game.then - this.itemsToSpawn[i].now) / 1000;
-  //     if (timePassed >= this.itemsToSpawn[i].delay) {
-  //       this.addItem(this.itemsToSpawn[i]);
-  //     }
-  //   }
-  // }
-
   addItems() {
-    let timePassed = (this.game.then - this.testNow) / 1000;
-    console.log(`time passed = ${timePassed}`)
-    let time = (this.game.then - this.now) / 1000; //testing purpose
-  //  console.log(`item.then = ${this.itemsToSpawn[0].then}`)
-  //  console.log(`item.now = ${this.itemsToSpawn[0].now}`)
-   // console.log(`item.now - item.then = ${(this.itemsToSpawn[0].now - this.itemsToSpawn[0].then) / 1000}`)
-    //console.log(`time passed ${time}`)
+   // let timePassed = (this.game.then - this.testNow) / 1000;
     if (this.game.items.length >= this.maxNumOfItems) {
       return;
     }
@@ -127,35 +115,41 @@ export default class Init {
   }
 
   spawnEnemies() {
-    if (this.game.enemies.length < this.game.maxNumOfEnemies) {
+    if (this.game.enemies.length < this.maxNumOfEnemies) {
       this.addEnemy();
     }
   }
 
   addEnemy() {
     let newEnemy = new Enemy(this.game);
+    newEnemy.assignGun();
     this.game.enemies.push(newEnemy);
   }
 
-  addEnemyProjectile(ship) {
+  addProjectile(object, barrel) {
     if (this.getCurrentNumOfProjectiles() >= this.maxNumOfProjectiles) {
       return;
     }
-    let newProjectile = new EnemyDefault(this.game);
-    newProjectile.setEnemyOwned(ship);
-    newProjectile.setTypeDefault();
-    this.game.enemyProjectiles.push(newProjectile);
+
+    if(object.isPlayer) {
+      this.addPlayerProjectile(barrel);
+    }
+    else {
+     this.addEnemyProjectile(barrel);
+    }
   }
 
-  addPlayerProjectile(ship) {
-    ///add switch for handling different types of projectiles
-    if (this.getCurrentNumOfProjectiles() >= this.maxNumOfProjectiles) {
-      return;
-    }
+  addEnemyProjectile(barrel) {
+     let newProjectile = new EnemyDefault(this.game);
+     newProjectile.setEnemyOwned();
+     newProjectile.launch(barrel);
+     this.game.enemyProjectiles.push(newProjectile);
+  }
+
+  addPlayerProjectile(barrel) {
     let newProjectile = new PlayerDefault(this.game);
-    newProjectile.setPlayerOwned(ship);
-    newProjectile.setTypeDefault();
-    this.game.player.damage = newProjectile.damage;
+    newProjectile.setPlayerOwned();
+    newProjectile.launch(barrel);
     this.game.playerProjectiles.push(newProjectile);
   }
 

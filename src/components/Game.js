@@ -1,4 +1,4 @@
-import Player from "../ships/Player";
+import { Player } from "../ships/Player";
 import Controls from "./Controls";
 import Collision from "./Collision";
 import Movement from "./Movement";
@@ -16,8 +16,8 @@ export default class Game {
     this.ctx2 = context2Ref;
     this.ctx3 = context3Ref;
     this.clearCanvas = clearCanvas;
-    this.stats = new Stats(this);   ///maybe to put into another class?
-    this.init = new Init(this); 
+    this.stats = new Stats(this); ///maybe to put into another class?
+    this.init = new Init(this);
     this.collision = new Collision(this);
     this.player = new Player(this);
     this.controls = new Controls(this);
@@ -28,7 +28,6 @@ export default class Game {
     this.bgElements = [];
     this.items = [];
     this.enemies = [];
-    this.maxNumOfEnemies = 5;
     this.enemyProjectiles = [];
     this.playerProjectiles = [];
     this.effects = [];
@@ -61,10 +60,10 @@ export default class Game {
     return this.score;
   }
   getPlayerDmg() {
-    return this.player.getDamage();   /// change to either get stats from Stats class or change atkSpeed method to get info from Player
+    return "tbd..."; /// change to either get stats from Stats class or change atkSpeed method to get info from Player
   }
   getPlayerAtkSpeed() {
-    return this.stats.player.atkSpeed;   /// look above
+    return this.stats.player.atkSpeed; /// look above
   }
 
   isPlayerDead() {
@@ -75,9 +74,8 @@ export default class Game {
     this.then = Date.now();
     this.clearCanvas();
 
-    if(this.now == 0) {
-     this.init.startTimers();
-     this.statusEffects.startTimers();
+    if (this.now == 0) {
+      this.update.startTimersOnInit();
     }
 
     if (this.player.isDead) {
@@ -88,13 +86,12 @@ export default class Game {
     this.update.update();
     this.draw.drawAll();
 
-    //console.log("this.secondsPassed = " + this.secondsPassed);
-    // console.log("items.length = " + this.items.length)
-    // console.log("bgElements.length = " + this.bgElements.length)
-    // console.log("enemies.length = " + this.enemies.length)
-    // console.log("effects.length = " + this.effects.length)
-    // console.log("enemy projectiles.length = " + this.enemyProjectiles.length)
-    // console.log("player projectiles.length = " + this.playerProjectiles.length)
+    //console.log("items.length = " + this.items.length);
+    //console.log("bgElements.length = " + this.bgElements.length);
+    //console.log("enemies.length = " + this.enemies.length);
+    //console.log("effects.length = " + this.effects.length);
+    //console.log("enemy projectiles.length = " + this.enemyProjectiles.length);
+    //console.log("player projectiles.length = " + this.playerProjectiles.length);
     this.now = this.then;
   }
 }

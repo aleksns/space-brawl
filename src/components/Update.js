@@ -3,6 +3,13 @@ export default class Update {
     this.game = game;
   }
 
+  startTimersOnInit() {
+    this.game.init.startTimers();
+    //this.game.player.initPlayer();
+    this.game.player.startTimers();
+    this.game.statusEffects.startTimers();
+  }
+
   update() {
     this.updateItems();
     this.updatePlayer();
@@ -59,17 +66,17 @@ export default class Update {
   }
 
   updateCollisionPlayerHullWithEnemies() {
-    // for (let i = 0; i < this.game.enemies.length; i++) {
-    //   if (
-    //     this.game.collision.rectsColliding(
-    //       this.game.player,
-    //       this.game.enemies[i]
-    //     )
-    //   ) {
-    //     this.game.enemies[i].gotHit(false);
-    //     this.game.player.gotHit(false);
-    //   }
-    // }
+    for (let i = 0; i < this.game.enemies.length; i++) {
+      if (
+        this.game.collision.rectsColliding(
+          this.game.player,
+          this.game.enemies[i]
+        )
+      ) {
+        this.game.enemies[i].gotHit(false);
+        this.game.player.gotHit(false);
+      }
+    }
   }
 
   updateCollisionPlayerWithProjectiles() {

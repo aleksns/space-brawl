@@ -2,11 +2,11 @@ import Gun from "./Gun";
 import { colors, getGunsStats } from "../services/services";
 import {
   getObjectCenterPosition,
-  getDoubleGunPosition,
+  getTripleGunPosition,
   getDefaultPlayerProjectile,
 } from "../services/services"; 
 
-export class DoubleGun extends Gun {
+export class TripleGun extends Gun {
   constructor(game, owner) {
     super(game, owner);
     this.projectileType = "default";
@@ -28,9 +28,17 @@ export class DoubleGun extends Gun {
       p2Y: 0
     }
 
+    this.barrel3 = {
+        p1X: 0,
+        p1Y: 0,
+        p2X: 0,
+        p2Y: 0
+      }
+
     this.barrels = [
       this.barrel1,
-      this.barrel2
+      this.barrel2,
+      this.barrel3
     ]
 
     this.dW = getDefaultPlayerProjectile.w; //offStep for a projectile, to make a better center position
@@ -38,8 +46,8 @@ export class DoubleGun extends Gun {
 
   fire() {
     for(let i = 0; i < this.barrels.length; i++) {
-      this.barrels[i].p1X = getDoubleGunPosition(this.owner, this.dW)[i].x;
-      this.barrels[i].p1Y = getDoubleGunPosition(this.owner, this.dW)[i].y;
+      this.barrels[i].p1X = getTripleGunPosition(this.owner, this.dW)[i].x;
+      this.barrels[i].p1Y = getTripleGunPosition(this.owner, this.dW)[i].y;
   
       if(this.owner.isPlayer) {
         this.barrels[i].p2X = this.barrels[i].p1X;

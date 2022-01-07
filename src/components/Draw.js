@@ -16,8 +16,8 @@ export default class Draw {
   drawAll() {
     this.drawBgElements();
     this.drawItems();
-    this.drawPlayer();
     this.drawEnemies();
+    this.drawPlayer();
     this.drawProjectiles();
     this.drawEffects();
 
@@ -84,7 +84,7 @@ export default class Draw {
 
   drawPlayer() {
     if (this.game.player.isGotHit) {
-      this.ctx.current.filter = "saturate(0%) brightness(150%)";
+      this.ctx.current.filter = "saturate(50%) brightness(150%)";
       this.game.player.isGotHit = false;
     }
 

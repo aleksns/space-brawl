@@ -28,6 +28,7 @@ export default class Movement {
         break;
     }
     this.applyPhysics(object);
+    this.game.collision.handleCollisionWithBorders(object);
   }
 
   moveUp(object) {

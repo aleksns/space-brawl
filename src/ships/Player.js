@@ -1,113 +1,60 @@
-//import Projectile from "../projectiles/Projectile";
-import { PlayerDefault } from "../projectiles/PlayerDefault";
-import { colors, getHPColor } from "../services/services";
+import Ship from "./Ship";
+import { colors, getPlayerDefaultStats } from "../services/services";
 import playerImage from "../images/playerShip.png";
+import { SingleGun } from "../guns/SingleGun";
+import { DoubleGun } from "../guns/DoubleGun";
+import { TripleGun } from "../guns/TripleGun";
 
-export default class Player {
+export class Player extends Ship {
   constructor(game) {
+    super(game);
     this.game = game;
-    this.collision = game.collision;
     this.x = 300;
     this.y = 600;
     this.w = 120;
     this.h = 90;
     this.health = 100;
-    this.color = "transparent";
-    this.colorHitReg = colors.red;
-    //this.colorDefault = "#5baac9";
-    this.colorDefault = "transparent";
-    //this.color = "transparent";
-    this.opacity = 1.0;
-    this.isGotHit = false;
-    this.isDead = false;
-    this.isFill = false;
-    this.shadowColor = "transparent";
-    this.shadowBlur = 0;
+    this.maxHealth = 100;
+    this.isPlayer = true;
     this.imageSrc = playerImage;
-    this.gun = "default";
+    //this.gun = "default";
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
-    this.vX = 0;
-    this.vY = 0;
-    this.f = 0.95;
     this.s = 25;
     this.a = this.s / 10;
-    this.now = Date.now();
+    this.now = 0;
 
-    // this.animationOpacity = 0.1;
-    // this.animationRadius = 50;
+    this.atkSpeed = getPlayerDefaultStats.atkSpeed;
+    this.atkSpeedCap = getPlayerDefaultStats.atkSpeedCap;
+    this.singleGun = new SingleGun(this.game, this);
+    this.doubleGun = new DoubleGun(this.game, this);
+    this.tripleGun = new TripleGun(this.game, this);
+    this.gun = this.tripleGun;
     console.log("CONSTRUCTOR > Player");
   }
 
-  update() {
-    if (this.health <= 0) {
-      //this.health = 0 ----> doesnt work, check UI updates
-      this.isDead = true;
+  fireGun() {
+    let timePassed = (this.game.then - this.now) / 1000;
+    if (timePassed <= this.getAtkSpeed()) {
+      return;
     }
-    //this.game.movement.applyPhysics(this);
-    this.collision.adjustPlayerPositionOnBordersCollision(this);
-    this.fire();
-  }
 
-  // updateGunStatus() {
-  //   switch (this.gun) {
-  //     case "default":
-  //       this.damage = this.game.stats.playerProjectilesDmg.default;
-  //       break;
-  //     default:
-  //       console.log("Error handling `updateGunStatus` in Player class");
-  //       break;
-  //   }
-  // }
+    this.now = Date.now();
+    this.gun.fire();
+  }
 
   getAtkSpeed() {
-    return this.game.stats.player.atkSpeed;
+    return this.atkSpeed - this.gun.atkSpeed;
   }
 
-  setDamage(value) {
-    this.damage = value;
+  setDefaultAtkSpeed() {
+    this.atkSpeed = getPlayerDefaultStats.atkSpeed;
   }
 
-  getDamage() {
-    return this.damage;
+  playHitEffect(projectileType) {
+    this.game.init.addEffect(this, projectileType);
   }
 
-  
-
-  fire() {
-    let timePassed = (this.game.then - this.now) / 1000;
-    if (timePassed >= this.getAtkSpeed()) {
-      this.now = Date.now();
-      this.game.init.addPlayerProjectile(this);
-      //add varialbe that will pass to init which projectile to choose from
-    }
-  }
-
-  gotHit(isByProjectile, projectile) {
-    this.isGotHit = true;
-    if (isByProjectile) {
-      this.gotHitByProjectile(projectile);
-      this.game.init.addEffect(this, projectile.type);
-    } else {
-      this.gotHitByEnemyHull();
-    }
-
-    //this.health = Math.floor(this.health - 1);
-  }
-
-  gotHitByProjectile(projectile) {
-    this.health = this.health - projectile.damage;
-  }
-
-  gotHitByEnemyHull() {
-    this.health = this.health - this.game.stats.enemy.rammingDmg;
-  }
-
-  applyPhysics() {
-    /* apply friction to velocity */
-    this.vX *= this.f;
-    this.x += this.vX;
-
-    this.vY *= this.f;
-    this.y += this.vY;
+  onDeath() {
+    console.log(`Player has died. DON'T BE SAD!`);
   }
 }

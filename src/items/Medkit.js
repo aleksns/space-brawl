@@ -5,8 +5,8 @@ import medkitImage from "../images/medkit.png";
 const shadowColor = colors.red;
 
 export class Medkit extends Item {
-  constructor(game) {
-    super(game);
+  constructor(game) { 
+    super(game); 
     this.x = 0;
     this.y = 0;
     this.w = itemBuffConfig.w;
