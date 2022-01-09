@@ -4,10 +4,13 @@ import Canvas from "./components/Canvas";
 import Game from "./components/Game";
 import GameOver from "./components/GameOver";
 import UI from "./components/UI";
+import { GAME_WIDTH, GAME_HEIGHT } from "./services/services";
 
 const keysUpColor = "#ffffff";
 const keysDownColor = "#6CAEFF";
 const lineWidth = 3;
+const width = GAME_WIDTH;
+const height = GAME_HEIGHT;
 //removed variables for canvas
 //context.lineJoin = "round";
 //context.lineCap = "round";
@@ -22,23 +25,28 @@ export default function App() {
   const canvas3Ref = useRef(null);
   const context3Ref = useRef(null);
 
+  const canvas4Ref = useRef(null);
+  const context4Ref = useRef(null);
+
   const gameRef = useRef(null);
 
-  const clearCanvas = () => {
+  const clearCanvas1 = () => {
     contextRef.current.clearRect(
       0,
       0,
       canvasRef.current.width,
       canvasRef.current.height
     );
-
+  };
+  const clearCanvas2 = () => {
     context2Ref.current.clearRect(
       0,
       0,
       canvas2Ref.current.width,
       canvas2Ref.current.height
     );
-
+  };
+  const clearCanvas3 = () => {
     context3Ref.current.clearRect(
       0,
       0,
@@ -46,12 +54,50 @@ export default function App() {
       canvas3Ref.current.height
     );
   };
+  const clearCanvas4 = () => {
+    context4Ref.current.clearRect(
+      0,
+      0,
+      canvas4Ref.current.width,
+      canvas4Ref.current.height
+    );
+  };
+
+  // const clearCanvas = () => {
+  //   contextRef.current.clearRect(
+  //     0,
+  //     0,
+  //     canvasRef.current.width,
+  //     canvasRef.current.height
+  //   );
+
+  //   context2Ref.current.clearRect(
+  //     0,
+  //     0,
+  //     canvas2Ref.current.width,
+  //     canvas2Ref.current.height
+  //   );
+
+  // context3Ref.current.clearRect(
+  //   0,
+  //   0,
+  //   canvas3Ref.current.width,
+  //   canvas3Ref.current.height
+  // );
+
+  // context4Ref.current.clearRect(
+  //   0,
+  //   0,
+  //   canvas4Ref.current.width,
+  //   canvas4Ref.current.height
+  // );
+  // };
 
   useEffect(() => {
     //main game canvas
     const canvas = canvasRef.current;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
 
     const context = canvas.getContext("2d");
 
@@ -60,8 +106,8 @@ export default function App() {
 
     //canvas for animation effects
     const canvas2 = canvas2Ref.current;
-    canvas2.width = window.innerWidth;
-    canvas2.height = window.innerHeight;
+    canvas2.width = width;
+    canvas2.height = height;
 
     const context2 = canvas2.getContext("2d");
 
@@ -70,15 +116,34 @@ export default function App() {
 
     //canvas for background elements
     const canvas3 = canvas3Ref.current;
-    canvas3.width = window.innerWidth;
-    canvas3.height = window.innerHeight;
+    canvas3.width = width;
+    canvas3.height = height;
 
     const context3 = canvas3.getContext("2d");
 
     context3.lineWidth = lineWidth;
     context3Ref.current = context3;
 
-    const game = new Game(contextRef, context2Ref, context3Ref, clearCanvas);
+    //canvas for UI elements
+    const canvas4 = canvas4Ref.current;
+    canvas4.width = width;
+    canvas4.height = height;
+
+    const context4 = canvas4.getContext("2d");
+
+    context4.lineWidth = lineWidth;
+    context4Ref.current = context4;
+
+    const game = new Game(
+      contextRef,
+      context2Ref,
+      context3Ref,
+      context4Ref,
+      // clearCanvas1,
+      // clearCanvas2,
+      // clearCanvas3,
+    clearCanvas4
+    );
     gameRef.current = game;
   }, []);
 
@@ -122,7 +187,9 @@ export default function App() {
       // let dT = timestamp - lastTime;
       // lastTime = timestamp;
 
-      //clearTheCanvas();
+      clearCanvas1();
+      clearCanvas2();
+      clearCanvas3();
       updateUI();
       gameRef.current.gameLoop();
 
@@ -183,12 +250,22 @@ export default function App() {
         </div>
       </div>
       {/* <h4 style={{color: "#ffffff"}}>Health: {health}</h4> */}
-      <Canvas canvasRef={canvasRef} canvas2Ref={canvas2Ref} canvas3Ref={canvas3Ref} />
+      <Canvas
+        canvasRef={canvasRef}
+        canvas2Ref={canvas2Ref}
+        canvas3Ref={canvas3Ref}
+        canvas4Ref={canvas4Ref}
+      />
 
       {isGameOver ? (
         <GameOver />
       ) : (
-        <UI playerHP={playerHP} score={score} playerDmg={playerDmg} playerAtkSpeed={playerAtkSpeed}/>
+        <UI
+          playerHP={playerHP}
+          score={score}
+          playerDmg={playerDmg}
+          playerAtkSpeed={playerAtkSpeed}
+        />
       )}
     </>
   );

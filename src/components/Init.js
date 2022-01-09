@@ -1,6 +1,6 @@
-import {Enemy} from "../ships/Enemy";
-import { PlayerDefault } from "../projectiles/PlayerDefault";
-import { EnemyDefault } from "../projectiles/EnemyDefault";
+import { Enemy } from "../ships/Enemy";
+import { Boss } from "../ships/Boss";
+import { ProjectileDefault } from "../projectiles/ProjectileDefault";
 import { ExplosionDefault } from "../effects/ExplosionDefault";
 import { BgElement } from "../items/BgElement";
 import { Medkit } from "../items/Medkit";
@@ -11,24 +11,26 @@ import { getBuffsSpawnDelay } from "../services/services";
 export default class Init {
   constructor(game) {
     this.game = game;
-    this.maxNumOfEnemies = 5;
+    this.progression = this.game.progression;
+    // this.maxNumOfEnemies = 5;
     this.maxNumOfProjectiles = 150;
-    this.maxNumOfElements = 40;
+    //this.maxNumOfElements = 40;
+    this.maxNumOfElements = 2;
     this.maxNumOfItems = 2;
 
     this.itemsToSpawn = [
       (this.medkit = {
         now: 0,
-        then: 0,      //tbd
+        then: 0, //tbd
         delay: getBuffsSpawnDelay.medkit,
-        timesSpawned: 0,      //tbd
+        timesSpawned: 0, //tbd
         id: "medkit",
       }),
       (this.atkSpeed = {
         now: 0,
-        then: 0,        //tbd
+        then: 0, //tbd
         delay: getBuffsSpawnDelay.atkSpeed,
-        timesSpawned: 0,   //tbd
+        timesSpawned: 0, //tbd
         id: "atkSpeed",
       }),
     ];
@@ -45,14 +47,11 @@ export default class Init {
     this.now = Date.now();
   }
 
-  // onInitGlobal() {
-
-  // }
-
   addItemsBasedOnTiming() {
     for (let i = 0; i < this.itemsToSpawn.length; i++) {
       this.itemsToSpawn[i].now = Date.now();
-      let timePassed = (this.itemsToSpawn[i].now - this.itemsToSpawn[i].then) / 1000;
+      let timePassed =
+        (this.itemsToSpawn[i].now - this.itemsToSpawn[i].then) / 1000;
       if (timePassed >= this.itemsToSpawn[i].delay) {
         this.itemsToSpawn[i].then = this.itemsToSpawn[i].now;
         this.addItem(this.itemsToSpawn[i]);
@@ -61,7 +60,6 @@ export default class Init {
   }
 
   addItems() {
-   // let timePassed = (this.game.then - this.testNow) / 1000;
     if (this.game.items.length >= this.maxNumOfItems) {
       return;
     }
@@ -109,20 +107,37 @@ export default class Init {
   addBgElement(isSpawnOnInit) {
     let newBgElement = new BgElement(this.game);
     newBgElement.setIsSpawnOnInit(isSpawnOnInit);
-    newBgElement.setRandomShape();
-    newBgElement.randomize();
+    newBgElement.setBackgroundShapeAndPosition();
+    //newBgElement.setRandomShape();
+    //newBgElement.randomize();
     this.game.bgElements.push(newBgElement);
   }
 
   spawnEnemies() {
-    if (this.game.enemies.length < this.maxNumOfEnemies) {
-      this.addEnemy();
+    // if (this.game.enemies.length < this.maxNumOfEnemies) {
+    if (this.game.enemies.length >= this.progression.maxNumOfEnemies) {
+      return;
     }
+    // if (!this.progression.isMaxThreatLevel) {
+    //   this.addEnemy();
+    // } else if (
+    //   this.progression.isMaxThreatLevel &&
+    //   this.game.enemies.length == 0
+    // ) {
+    //   this.addBoss();
+    // }
+    this.addBoss();
+  }
+
+  addBoss() {
+    let newEnemy = new Boss(this.game);
+    newEnemy.initialize();
+    this.game.enemies.push(newEnemy);
   }
 
   addEnemy() {
     let newEnemy = new Enemy(this.game);
-    newEnemy.assignGun();
+    newEnemy.initialize();
     this.game.enemies.push(newEnemy);
   }
 
@@ -131,26 +146,16 @@ export default class Init {
       return;
     }
 
-    if(object.isPlayer) {
-      this.addPlayerProjectile(barrel);
-    }
-    else {
-     this.addEnemyProjectile(barrel);
-    }
-  }
+    let newProjectile = new ProjectileDefault(this.game);
 
-  addEnemyProjectile(barrel) {
-     let newProjectile = new EnemyDefault(this.game);
-     newProjectile.setEnemyOwned();
-     newProjectile.launch(barrel);
-     this.game.enemyProjectiles.push(newProjectile);
-  }
-
-  addPlayerProjectile(barrel) {
-    let newProjectile = new PlayerDefault(this.game);
-    newProjectile.setPlayerOwned();
+    if (object.isPlayer) {
+      newProjectile.setPlayerOwned(object);
+      this.game.playerProjectiles.push(newProjectile);
+    } else {
+      newProjectile.setEnemyOwned(object);
+      this.game.enemyProjectiles.push(newProjectile);
+    }
     newProjectile.launch(barrel);
-    this.game.playerProjectiles.push(newProjectile);
   }
 
   addEffect(object, effectType) {

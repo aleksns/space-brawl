@@ -11,6 +11,7 @@ export default class Item {
     this.direction = "down";
     this.isDead = false;
     this.isSpawnOnInit = undefined;
+    this.isPlayer = false;
   }
 
   update() {

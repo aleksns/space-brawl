@@ -1,5 +1,5 @@
 export default class Projectile {
-  constructor(game, width, height, color, speed, type) {
+  constructor(game) {
     this.game = game;
     this.ctx = game.ctx;
 
@@ -13,15 +13,8 @@ export default class Projectile {
     this.vY = 0;
     this.dist = 0;
 
-    this.w = width;
-    this.h = height;
-    this.color = color;
-    this.type = type;
-
     this.isPlayerOwned = undefined;
     this.isDead = false;
-
-    this.s = speed;
   }
 
   update() {
@@ -30,12 +23,14 @@ export default class Projectile {
     this.removeIfOutsideScreen();
   }
 
-  setPlayerOwned() {
+  setPlayerOwned(object) {
     this.isPlayerOwned = true;
+    this.setProjectileStats(this.isPlayerOwned, object);
   }
 
-  setEnemyOwned() {
+  setEnemyOwned(object) {
     this.isPlayerOwned = false;
+    this.setProjectileStats(this.isPlayerOwned, object);
   }
 
   launch(barrel) {

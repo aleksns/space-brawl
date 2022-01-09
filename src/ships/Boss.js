@@ -1,48 +1,50 @@
 import Ship from "./Ship";
 import {
+  GAME_WIDTH,
   getRandomDirection,
-  getRandomInt,
   getEnemyDefaultStats,
-  getEnemyT4Dimension,
+  getEnemyT0Dimension,
+  getTripleGunPosition,
+  GAME_HEIGHT
 } from "../services/services";
-import enemyImage from "../images/enemyShip.png";
+import bossImage from "../images/enemyBoss.png";
 import { SingleGun } from "../guns/SingleGun";
 import { DoubleGun } from "../guns/DoubleGun";
 import { TripleGun } from "../guns/TripleGun";
 
 
-export class Enemy extends Ship {
+export class Boss extends Ship {
   constructor(game) {
     super(game);
     this.game = game;
-    this.w = getEnemyT4Dimension().w;
-    this.h = getEnemyT4Dimension().h;
+    this.w = getEnemyT0Dimension().w;
+    this.h = getEnemyT0Dimension().h;
     this.x = 0;   ///make it to 0 and then in separate method randomize position
     this.y = 0;  ///just like with bgEffects
-    this.health = this.game.stats.enemy.health;
-    this.maxHealth = this.game.stats.enemy.maxHealth;
-
+    this.health = this.game.stats.boss.health;
+    this.maxHealth = this.game.stats.boss.maxHealth;
     this.isPlayer = false;
-   // this.imageSrc = enemyImage;
+    //this.gun = "default";
+    //this.imageSrc = enemyImage;
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
-    this.s = 3;
-    this.a = this.s / 30;
+    this.s = 0.5;
+    this.a = this.s / 60;
     this.direction = getRandomDirection();
     /* offStep = applies additional distance for enemies to stop their movement
     before reaching allowed borders and maintaining smooth bounce effect */
     this.offStepX = Math.floor(this.w / 2);
     this.offStepY = Math.floor(this.h / 2);
-    this.scorePoints = this.game.stats.enemy.scorePoints;
+    this.scorePoints = this.game.stats.boss.scorePoints;
     this.now = 0;
-
-    this.damage = this.game.stats.enemy.damage;
-    this.atkSpeed = this.game.stats.enemy.atkSpeed;
+    this.damage = this.game.stats.boss.damage;
+    this.atkSpeed = this.game.stats.boss.atkSpeed;
     this.gun = undefined;
 
     this.image = new Image();
-    this.image.src = enemyImage;
+    this.image.src = bossImage;
     
     console.log("CONSTRUCTOR > Enemy");
+    //console.log(`GAME_WIDTH = ${GAME_WIDTH}`);
   }
 
   fireGun() {
@@ -55,10 +57,9 @@ export class Enemy extends Ship {
   }
 
   initialize() {
-    this.x = getRandomInt(this. w, this.collision.boardWidth - this.w);   ///make it to 0 and then in separate method randomize position
-    this.y = getRandomInt(this.collision.allowedY.y0, Math.floor(this.collision.boardHeight / 2));  ///just like with bgEffects
-
-    var newGun = new SingleGun(this.game, this);
+    this.x = (GAME_WIDTH / 2) - (this.w / 2);
+    this.y = this.collision.allowedY.y0 - 20;
+    var newGun = new TripleGun(this.game, this);
     this.gun = newGun;
   }
 
@@ -77,7 +78,7 @@ export class Enemy extends Ship {
   onDeath() {
     this.game.init.addEffect(this, "default");
     this.game.score += this.scorePoints;
-    this.game.progression.increaseThreatLevel();
+    this.game.progression.advanceLevel();
   }
 }
 

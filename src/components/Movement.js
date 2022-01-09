@@ -4,8 +4,6 @@ export default class Movement {
     this.game = game;
     this.boardWidth = game.boardWidth;
     this.boardHeight = game.boardHeight;
-    this.allowedX = this.game.allowedX;
-    this.allowedY = this.game.allowedY;
   }
 
 

@@ -24,7 +24,10 @@ export class Medkit extends Item {
     this.restoredHP = getItemsStats.medkitTier1;
     this.spawnRangeMinX = 0;
     this.spawnRangeMaxX = 0;
-    this.imageSrc = medkitImage;
+
+    this.image = new Image();
+    this.image.src = medkitImage;
+    
     //this.effectType = "medkit";   for different effects to play
   }
 

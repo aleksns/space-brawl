@@ -35,7 +35,7 @@ export default class Ship {
       this.game.movement.move(this);
     }
 
-     this.fireGun();
+    // this.fireGun();
   }
 
   setDead() {
@@ -60,6 +60,6 @@ export default class Ship {
   }
 
   gotHitByShipHull() {
-    this.health = this.health - 0.1;
+    this.health = this.health - 0.1;  //hardcoded temporary variable
   }
 }

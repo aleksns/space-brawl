@@ -10,13 +10,15 @@ export default class Update {
     this.game.statusEffects.startTimers();
   }
 
-  update() {
+  update() { 
     this.updateItems();
     this.updatePlayer();
     this.updateEnemies();
     this.updateProjectiles();
     this.updateEffects();
     this.updateStatusEffects();
+
+    this.updateGameProgression();
 
     this.updateCollisionPlayerHullWithEnemies();
     this.updateCollisionPlayerWithProjectiles(); 
@@ -27,6 +29,10 @@ export default class Update {
     this.removeDeadEnemies();
     this.removeDeadProjectiles();
     this.removeDeadEffects();
+  }
+
+  updateGameProgression() {
+    this.game.progression.update();
   }
 
   updateStatusEffects() {

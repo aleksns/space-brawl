@@ -31,7 +31,8 @@ export default class StatusEffects {
         y: itemBuffConfig.statusEffectY,
         w: itemBuffConfig.w,
         h: itemBuffConfig.h,
-        image: atkSpeedImage,
+        imageSrc: atkSpeedImage,
+        image: new Image(),
         isApplied: false,
         opacity: itemBuffConfig.opacity,
         isFill: itemBuffConfig.isFill,
@@ -41,8 +42,9 @@ export default class StatusEffects {
         globalAlpha: 1.0,
         text: 0,
       }),
-    ];
+    ];  
 
+    this.statusEffects[0].image.src = this.statusEffects[0].imageSrc;
     this.now = 0; //tbd
   }
 

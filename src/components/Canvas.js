@@ -5,7 +5,8 @@ export default function Canvas(props) {
   const {
     canvasRef,
     canvas2Ref,
-    canvas3Ref
+    canvas3Ref,
+    canvas4Ref
     // handleMouseDown,
     // handleMouseUp,
     // handleMouseMove,
@@ -37,7 +38,14 @@ export default function Canvas(props) {
           id="backgroundScreen"
           ref={canvas3Ref}
           // height="180px"
-          style={{ zIndex: "1", width: "80%" }}
+         style={{ zIndex: "1", width: "80%" }}
+          className="canvas"
+        />
+                <canvas
+          id="uiScreen"
+          ref={canvas4Ref}
+          // height="180px"
+         style={{ zIndex: "4", width: "80%" }}
           className="canvas"
         />
       </div>

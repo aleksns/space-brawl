@@ -7,15 +7,19 @@ import Update from "./Update";
 import Stats from "./Stats";
 import Init from "./Init";
 import StatusEffects from "./StatusEffects";
+import {GAME_WIDTH, GAME_HEIGHT} from "../services/services";
+import Progression from "./Progression";
 
 //Remove some variables FROM THE CONSTRUCTOR which are not being used
 //e.g. board height, allowed board height, etc
 export default class Game {
-  constructor(contextRef, context2Ref, context3Ref, clearCanvas) {
+  constructor(contextRef, context2Ref, context3Ref, context4Ref, clearCanvas4) {
     this.ctx = contextRef;
     this.ctx2 = context2Ref;
     this.ctx3 = context3Ref;
-    this.clearCanvas = clearCanvas;
+    this.ctx4 = context4Ref;
+    this.clearCanvas4 = clearCanvas4;
+    this.progression = new Progression(this);
     this.stats = new Stats(this); ///maybe to put into another class?
     this.init = new Init(this);
     this.collision = new Collision(this);
@@ -72,10 +76,11 @@ export default class Game {
 
   gameLoop() {
     this.then = Date.now();
-    this.clearCanvas();
+    //this.clearCanvas();
 
     if (this.now == 0) {
       this.update.startTimersOnInit();
+      this.draw.drawUIOnInit();
     }
 
     if (this.player.isDead) {
@@ -90,7 +95,7 @@ export default class Game {
     //console.log("bgElements.length = " + this.bgElements.length);
     //console.log("enemies.length = " + this.enemies.length);
     //console.log("effects.length = " + this.effects.length);
-    //console.log("enemy projectiles.length = " + this.enemyProjectiles.length);
+    console.log("enemy projectiles.length = " + this.enemyProjectiles.length);
     //console.log("player projectiles.length = " + this.playerProjectiles.length);
     this.now = this.then;
   }

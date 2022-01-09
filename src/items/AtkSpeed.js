@@ -24,7 +24,10 @@ export class AtkSpeed extends Item {
     this.atkSpeedIncrease = getItemsStats.atkSpeedTier1;
     this.spawnRangeMinX = 0;
     this.spawnRangeMaxX = 0;
-    this.imageSrc = atkSpeedImage;
+
+    this.image = new Image();
+    this.image.src = atkSpeedImage;
+    
     //this.effectType = "atkspeed";   for different effects to lay
   }
 

@@ -1,6 +1,32 @@
 //export const directions = ["left", "right", "up", "down"];
-const GAME_WIDTH = window.innerWidth;
-const GAME_HEIGHT = window.innerHeight;
+//  export const GAME_WIDTH = window.innerWidth;
+//  export const GAME_HEIGHT = window.innerHeight;
+export const GAME_WIDTH = 1536;
+export const GAME_HEIGHT = 754;
+
+export function getPlayerT0Dimension() {
+  let dimension = {
+    w: GAME_WIDTH / 12,
+    h: GAME_HEIGHT / 9,
+  };
+  return dimension;
+}
+
+export function getEnemyT0Dimension() {
+  var dimension = {
+    w: GAME_WIDTH / 2,
+    h: GAME_HEIGHT / 2,
+  };
+  return dimension;
+}
+
+export function getEnemyT4Dimension() {
+  var dimension = {
+    w: GAME_WIDTH / 12,
+    h: GAME_HEIGHT / 10,
+  };
+  return dimension;
+}
 
 export const directions = ["left", "right"];
 
@@ -11,6 +37,9 @@ export const colors = {
   blue: "#2F60FF",
   hitRegColor: "#ffffff",
   scoreColor: "#8BE0FF",
+  uiBlue: "#3498DB",
+  uiBlueDark: "#000657",
+  uiGreen: "#2ECC71",
 };
 
 export const getStatusEffectsBar = {
@@ -39,8 +68,8 @@ export const itemBuffConfig = {
 };
 
 export const getGunsStats = {
-  singleAtkSpeed: 0,  // 0 means no modifiers added to the gun at speed
-}
+  singleAtkSpeed: 0, // 0 means no modifiers added to the gun at speed
+};
 
 export const getItemsStats = {
   medkitTier1: 25,
@@ -57,53 +86,49 @@ export const getBuffsDuration = {
 };
 
 export const getPlayerDefaultStats = {
+  damage: 10,
+  health: 100,
+  maxHealth: 100,
   rammingDmg: 0.1,
-  atkSpeed: 0.2,    //default was 0.2
+  atkSpeed: 0.2, //default was 0.2
   atkSpeedCap: 0.05,
 };
+
 export const getEnemyDefaultStats = {
+  damage: 4,
+  health: 100,
+  maxHealth: 100,
   rammingDmg: 0.1,
   atkSpeed: 1.0,
   atkSpeedCap: 0.5,
+  scorePoints: 25,
 };
 
+export const getBossDefaultStats = {
+  damage: 4,
+  health: 1000,
+  maxHealth: 1000,
+  rammingDmg: 0.1,
+  atkSpeed: 0.7,
+  atkSpeedCap: 0.3,
+  scorePoints: 100,
+};
+
+// s - speed
 export const getDefaultPlayerProjectile = {
-    w: 10,
-    h: 10,
-    color: "#47FFFB",
-    speed: 20,
-    isFill: true
-}
-
-// export function getProjectileStatsByType(type) {
-//   let toReturn;
-//   switch(type) {
-//     case "default": 
-//     toReturn = getDefaultPlayerProjectile;
-//     break;
-//     default:
-//       console.log("Error handling `getProjectileStatsByType` in services");
-//       break;
-//   }
-//   return toReturn;
-// }
-
-
-
-
-
-export const getPlayerProjectileDefaultStats = {
-  default: 10,
-  tier1: 15,
-  tier2: 25,
-  tier3: 50,
+  w: 10,
+  h: 10,
+  color: "#47FFFB",
+  s: 20,
+  isFill: true,
 };
-
-export const getEnemyProjectileDefaultStats = {
-  default: 4,
-  tier1: 6,
-  tier2: 12,
-  tier3: 20,
+// s - speed
+export const getDefaultEnemyProjectile = {
+  w: 10,
+  h: 10,
+  color: colors.red,
+  s: 5,
+  isFill: true,
 };
 
 export function getObjectCenterPosition(object) {
@@ -114,7 +139,8 @@ export function getObjectCenterPosition(object) {
   return centerPosition;
 }
 
-export function getSingleGunPosition(object, projectileW) {   //projectile width
+export function getSingleGunPosition(object, projectileW) {
+  //projectile width
   var centerPosition = {
     x: object.x + object.w / 2 - projectileW / 2,
     y: object.y + object.h / 2,
@@ -148,7 +174,7 @@ export function getTripleGunPosition(object, projectileW) {
   var leftPosition = getDoubleGunPosition(object, projectileW)[0];
   var centerPosition = getSingleGunPosition(object, projectileW);
   var rightPosition = getDoubleGunPosition(object, projectileW)[1];
-  
+
   toReturn.push(leftPosition);
   toReturn.push(centerPosition);
   toReturn.push(rightPosition);
