@@ -26,6 +26,7 @@ export class BuffDefault extends Effect {
     this.color = buffDefault.color;
     this.isFill = buffDefault.isFill; // fill or stroke boolean
     this.isDead = false;
+    this.isRect = false;
   }
 
   update() {

@@ -1,5 +1,7 @@
-import { colors, getHPColor, getStatusEffectsBar } from "../services/services";
+import { Pulse } from "../effects/Pulse";
+import { colors, getHPColor, getStatusEffectsBar, GAME_WIDTH } from "../services/services";
 import { HpBarPlayer } from "../ui/HpBarPlayer";
+import { ThreatLevelBar } from "../ui/ThreatLevelBar";
 
 const textColor = getStatusEffectsBar.color;
 
@@ -16,7 +18,14 @@ export default class Draw {
     this.ctx4 = game.ctx4;
 
     this.hpBarPlayer = new HpBarPlayer(this.game);
-    this.isUiChanged = true;
+    this.threatBar = new ThreatLevelBar(this.game);
+
+
+  }
+
+  updateUICanvas() {
+    this.threatBar.update();
+    //this.newEffect.update();
   }
 
   drawAll() {
@@ -28,15 +37,53 @@ export default class Draw {
     this.drawPlayer();
 
     this.drawUI();
-    //this.drawStatusEffects();
+    //this.drawLevelCutscene();
   }
 
   drawUIOnInit() {
-    this.drawItem(this.hpBarPlayer, this.ctx4);
+    this.drawItem(this.hpBarPlayer.hpBarImageProps, this.ctx4);
+    this.drawItem(this.threatBar.threatBarImageProps, this.ctx4);
+    /////////////////
+    ////////////////
+    // this.ctx4.current.beginPath();
+    // this.ctx4.current.rect(this.game.startBtn.x, this.game.startBtn.y, this.game.startBtn.w, this.game.startBtn.h);
+
+    // this.ctx4.current.strokeStyle = "green";
+    // this.ctx4.current.stroke();
+    // this.ctx4.current.closePath();
+
+    // this.ctx4.current.beginPath();
+    // this.ctx4.current.rect(this.game.endBtn.x, this.game.endBtn.y, this.game.endBtn.w, this.game.endBtn.h);
+
+    // this.ctx4.current.strokeStyle = "#ffffff";
+    // this.ctx4.current.stroke();
+    // this.ctx4.current.closePath();
+  }
+
+  drawLevelCutscene() {
+    this.ctx4.current.lineWidth = 15;
+    this.ctx4.current.beginPath();
+    this.ctx4.current.moveTo(100, 100);
+    this.ctx4.current.lineTo(200, 100);
+    this.ctx4.current.stroke();
+    this.ctx4.current.closePath();
   }
 
   drawUI() {
-      this.hpBarPlayer.draw(this.ctx);
+    this.hpBarPlayer.draw(this.ctx);
+    this.threatBar.draw(this.ctx);
+    this.drawScore();
+  }
+
+  drawScore() { ///combine with draw text (status effects method)
+    var score = "Score: " + this.game.score;
+    this.ctx.current.fillStyle = colors.scoreColor;
+    this.ctx.current.font = `bold 20px tahoma`;
+    this.ctx.current.fillText(
+      score,
+      GAME_WIDTH - 250, // hardcoded, change later
+      65
+    );
   }
 
   // drawHpBar(object, hpBar) {
@@ -69,8 +116,8 @@ export default class Draw {
     this.ctx.current.font = `22px tahoma`;
     this.ctx.current.fillText(
       item.text,
-      item.x + 5, // hardcoded, change later
-      item.y - 5
+      item.xPosText, // hardcoded, change later
+      item.yPosText
     );
   }
 
@@ -78,7 +125,6 @@ export default class Draw {
     for (let i = 0; i < this.game.items.length; i++) {
       this.drawRect(this.game.items[i], this.ctx);
       this.drawItem(this.game.items[i], this.ctx);
-      
     }
   }
 
@@ -121,7 +167,7 @@ export default class Draw {
       enemy.isGotHit = false;
     }
     this.drawRect(enemy, this.ctx);
-    this.drawItem(enemy, this.ctx);                   
+    this.drawItem(enemy, this.ctx);
     this.ctx.current.filter = "none";
     this.drawEnemyHpBar(enemy);
   }
@@ -134,13 +180,13 @@ export default class Draw {
     this.ctx.current.beginPath();
     this.ctx.current.lineWidth = hpBarLineWidth;
     this.ctx.current.strokeStyle = "#ffffff";
-    this.ctx.current.rect(enemy.x, y, enemy.w, hpBarHeight)
+    this.ctx.current.rect(enemy.x, y, enemy.w, hpBarHeight);
     this.ctx.current.stroke();
     this.ctx.current.closePath();
 
     this.ctx.current.beginPath();
     this.ctx.current.fillStyle = colors.red;
-    this.ctx.current.rect(enemy.x, y, dW, hpBarHeight)
+    this.ctx.current.rect(enemy.x, y, dW, hpBarHeight);
     this.ctx.current.fill();
     this.ctx.current.closePath();
   }
@@ -161,7 +207,12 @@ export default class Draw {
   }
 
   drawEffect(effect) {
+    //   if(effect.isRect) {
+    //     this.drawRect(effect, this.ctx2);
+    //   }
+    // else {
     this.drawArc(effect, this.ctx2);
+    //}
   }
 
   drawRect(object, ctx) {

@@ -71,7 +71,7 @@ export default class Stats {
     enemy.maxHealth *= progression.enemyModifiers.maxHealth;
     enemy.atkSpeed *= progression.enemyModifiers.atkSpeed;
     enemy.atkSpeedCap *= progression.enemyModifiers.atkSpeedCap;
-    enemy.scorePoints *= progression.enemyModifiers.scorePo;
+    enemy.scorePoints *= progression.enemyModifiers.scorePoints;
   }
 
   // applyModifiersToEnemies(progression) {

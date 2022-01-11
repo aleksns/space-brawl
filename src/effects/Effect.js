@@ -8,9 +8,9 @@ export default class Effect {
     this.type = type;
   }
 
-  // update() {
-  //   console.log("update from PAPA")
-  // } 
+  update() {
+    console.log("update from PAPA")
+  } 
 
   explosion() {
     switch (this.type) {

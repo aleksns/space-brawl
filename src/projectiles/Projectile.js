@@ -59,7 +59,7 @@ export default class Projectile {
   }
 
   removeIfOutsideScreen() {
-    if (this.game.collision.isCollisionWithAnyBorder(this, 0)) {
+    if (this.game.collision.isCollisionWithAnyBorder(this, -50)) {
       this.setToRemove();
     }
   }

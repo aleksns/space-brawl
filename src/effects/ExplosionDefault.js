@@ -25,8 +25,9 @@ export class ExplosionDefault extends Effect {
     this.lineWidth = explosionDefault.lineWidth;
     this.color = explosionDefault.color;
     this.isFill = explosionDefault.isFill; // fill or stroke boolean
-
+    
     this.isDead = false;
+    this.isRect = false;
   }
 
   update() {

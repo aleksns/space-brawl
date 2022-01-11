@@ -7,6 +7,7 @@ import { Medkit } from "../items/Medkit";
 import { BuffDefault } from "../effects/BuffDefault";
 import { AtkSpeed } from "../items/AtkSpeed";
 import { getBuffsSpawnDelay } from "../services/services";
+import { Pulse } from "../effects/Pulse";
 
 export default class Init {
   constructor(game) {
@@ -118,15 +119,15 @@ export default class Init {
     if (this.game.enemies.length >= this.progression.maxNumOfEnemies) {
       return;
     }
-    // if (!this.progression.isMaxThreatLevel) {
-    //   this.addEnemy();
-    // } else if (
-    //   this.progression.isMaxThreatLevel &&
-    //   this.game.enemies.length == 0
-    // ) {
-    //   this.addBoss();
-    // }
-    this.addBoss();
+    if (!this.progression.isMaxThreatLevel) {
+      this.addEnemy();
+    } else if (
+      this.progression.isMaxThreatLevel &&
+      this.game.enemies.length == 0
+    ) {
+      this.addBoss();
+    }
+    //this.addBoss();
   }
 
   addBoss() {
@@ -166,6 +167,9 @@ export default class Init {
         break;
       case "defaultBuff":
         newEffect = new BuffDefault(this.game, object);
+        break;
+      case "pulse":
+        newEffect = new Pulse(this.game, object);
         break;
       default:
         console.log("Error handling `addEffect` function in Init class");

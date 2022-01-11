@@ -3,6 +3,7 @@ import "./App.css";
 import Canvas from "./components/Canvas";
 import Game from "./components/Game";
 import GameOver from "./components/GameOver";
+import GithubLinkWithIcon from "./components/GithubLinkWithIcon";
 import UI from "./components/UI";
 import { GAME_WIDTH, GAME_HEIGHT } from "./services/services";
 
@@ -139,10 +140,11 @@ export default function App() {
       context2Ref,
       context3Ref,
       context4Ref,
+      canvas4Ref,
       // clearCanvas1,
       // clearCanvas2,
       // clearCanvas3,
-    clearCanvas4
+      clearCanvas4
     );
     gameRef.current = game;
   }, []);
@@ -159,6 +161,7 @@ export default function App() {
   const [playerAtkSpeed, setPlayerAtkSpeed] = useState(undefined);
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [isUiOn, setIsUiOn] = useState(true);
 
   function handleUiKeysPressed() {
     setWIsPressed(gameRef.current.keys.keyW);
@@ -177,7 +180,7 @@ export default function App() {
 
   function startIt() {
     setIsGameOver(false);
-
+    setIsUiOn(false);
     gameRef.current.isGameOn = !gameRef.current.isGameOn;
     requestAnimationFrame(runLoop);
   }
@@ -195,15 +198,35 @@ export default function App() {
 
       requestAnimationFrame(runLoop);
     }
-    //setIsGameOver(true);
   }
 
   return (
     <>
-      <button onClick={startIt}>LAUNCH</button>
+      <Canvas
+        canvasRef={canvasRef}
+        canvas2Ref={canvas2Ref}
+        canvas3Ref={canvas3Ref}
+        canvas4Ref={canvas4Ref}
+      />
+      <div
+        className="ui-start-container"
+        style={!isUiOn ? { opacity: "0", zIndex: -1 } : {}}
+      >
+        <h1 className="label-start">COSMIC BRAWL</h1>
+        <button
+          onClick={startIt}
+          disabled={!isUiOn}
+          className="btn-start"
+          style={!isUiOn ? { cursor: "default" } : {}}
+        >
+          START
+        </button>
+        <GithubLinkWithIcon />
+      </div>
+
       {/* <input type="range" min="1" max="80" onChange={handleSpeedUp} /> */}
 
-      <div className="test-wasd-container">
+      {/* <div className="test-wasd-container">
         <div className="test-w-container">
           <div
             className="test-wasd"
@@ -248,16 +271,10 @@ export default function App() {
             →
           </div>
         </div>
-      </div>
+      </div> */}
       {/* <h4 style={{color: "#ffffff"}}>Health: {health}</h4> */}
-      <Canvas
-        canvasRef={canvasRef}
-        canvas2Ref={canvas2Ref}
-        canvas3Ref={canvas3Ref}
-        canvas4Ref={canvas4Ref}
-      />
 
-      {isGameOver ? (
+      {/* {isGameOver ? (
         <GameOver />
       ) : (
         <UI
@@ -266,7 +283,7 @@ export default function App() {
           playerDmg={playerDmg}
           playerAtkSpeed={playerAtkSpeed}
         />
-      )}
+      )} */}
     </>
   );
 }

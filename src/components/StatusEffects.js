@@ -31,6 +31,8 @@ export default class StatusEffects {
         y: itemBuffConfig.statusEffectY,
         w: itemBuffConfig.w,
         h: itemBuffConfig.h,
+        xPosText: itemBuffConfig.statusEffectX + 5,
+        yPosText: itemBuffConfig.statusEffectY - 5,
         imageSrc: atkSpeedImage,
         image: new Image(),
         isApplied: false,

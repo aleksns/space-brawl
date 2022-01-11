@@ -24,28 +24,28 @@ export default function Canvas(props) {
           // onMouseOut={handleMouseOut}
           ref={canvasRef}
           // height="180px"
-          style={{ zIndex: "2", width: "80%" }}
+          style={{ zIndex: "2"}}
           className="canvas"
         />
         <canvas
           id="effectsScreen"
           ref={canvas2Ref}
           // height="180px"
-          style={{ zIndex: "3", width: "80%" }}
+          style={{ zIndex: "3"}}
           className="canvas"
         />
         <canvas
           id="backgroundScreen"
           ref={canvas3Ref}
           // height="180px"
-         style={{ zIndex: "1", width: "80%" }}
+         style={{ zIndex: "1"}}
           className="canvas"
         />
                 <canvas
           id="uiScreen"
           ref={canvas4Ref}
           // height="180px"
-         style={{ zIndex: "4", width: "80%" }}
+         style={{ zIndex: "4"}}
           className="canvas"
         />
       </div>

@@ -1,8 +1,12 @@
 //export const directions = ["left", "right", "up", "down"];
 //  export const GAME_WIDTH = window.innerWidth;
 //  export const GAME_HEIGHT = window.innerHeight;
-export const GAME_WIDTH = 1536;
-export const GAME_HEIGHT = 754;
+
+//export const GAME_WIDTH = 1536;
+//export const GAME_HEIGHT = 754;
+
+export const GAME_WIDTH = 1436;
+export const GAME_HEIGHT = 734;
 
 export function getPlayerT0Dimension() {
   let dimension = {
@@ -15,15 +19,17 @@ export function getPlayerT0Dimension() {
 export function getEnemyT0Dimension() {
   var dimension = {
     w: GAME_WIDTH / 2,
-    h: GAME_HEIGHT / 2,
+    h: GAME_HEIGHT / 2.5,
   };
   return dimension;
 }
 
 export function getEnemyT4Dimension() {
   var dimension = {
-    w: GAME_WIDTH / 12,
-    h: GAME_HEIGHT / 10,
+    w: GAME_WIDTH / 10,
+    h: GAME_HEIGHT / 9,
+    // w: 150,
+    // h: 75,
   };
   return dimension;
 }
@@ -40,6 +46,8 @@ export const colors = {
   uiBlue: "#3498DB",
   uiBlueDark: "#000657",
   uiGreen: "#2ECC71",
+  uiRed: "#CB4335",
+  uiRedDark: "#C0392B",
 };
 
 export const getStatusEffectsBar = {
@@ -82,7 +90,7 @@ export const getBuffsSpawnDelay = {
 };
 
 export const getBuffsDuration = {
-  atkSpeed: 7.0,
+  atkSpeed: 10.0,
 };
 
 export const getPlayerDefaultStats = {
@@ -90,8 +98,8 @@ export const getPlayerDefaultStats = {
   health: 100,
   maxHealth: 100,
   rammingDmg: 0.1,
-  atkSpeed: 0.2, //default was 0.2
-  atkSpeedCap: 0.05,
+  atkSpeed: 0.15, //default was 0.2
+  atkSpeedCap: 0.04,
 };
 
 export const getEnemyDefaultStats = {
@@ -106,10 +114,10 @@ export const getEnemyDefaultStats = {
 
 export const getBossDefaultStats = {
   damage: 4,
-  health: 1000,
-  maxHealth: 1000,
+  health: 8000,
+  maxHealth: 8000,
   rammingDmg: 0.1,
-  atkSpeed: 0.7,
+  atkSpeed: 0.6,
   atkSpeedCap: 0.3,
   scorePoints: 100,
 };

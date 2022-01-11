@@ -13,6 +13,7 @@ export default class Controls {
 
     this.game = game;
     this.player = game.player;
+    this.canvas4 = game.canvas4;
 
     window.addEventListener("keydown", (event) => {
       switch (event.code) {
@@ -32,7 +33,7 @@ export default class Controls {
           console.log("Error handling 'handleKeyDown' function");
           break;
       }
-    });
+    }, false);
     window.addEventListener("keyup", (event) => {
       switch (event.code) {
         case "KeyW":
@@ -51,10 +52,43 @@ export default class Controls {
           console.log("Error handling 'handleKeyUp' function");
           break;
       }
-    });
+    }, false);
+
+    this.mousePosition = {
+      x:0,
+      y:0
+    };
+
+    this.canvas4.current.addEventListener('click', (event) => {
+      this.mousePosition = this.getMousePosition(event);
+      console.log(`THIS.mousePos = ${JSON.stringify(this.mousePosition)}`)
+  
+
+      this.game.btns.forEach((btn) =>{
+        if (this.game.isInside(this.mousePosition, btn)) {
+            this.game.init.addEffect(btn, "default");
+        }
+      });
+
+
+      // if (this.game.isInside(this.mousePosition, this.game.startBtn)) {
+      //     console.log('clicked inside rect');
+      //     this.game.init.addEffect(this.game.startBtn, "default");
+      // }else{
+      //     console.log('clicked outside rect');
+      // }   
+  }, false);
 
     console.log("CONSTRUCTOR > Controls");
   }
+
+  getMousePosition(event) {
+    var rect = this.canvas4.current.getBoundingClientRect();
+    return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+    };
+}
 
   handleInput() {
     if (this.keys.keyW == true) {

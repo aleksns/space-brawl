@@ -35,7 +35,7 @@ export default class Ship {
       this.game.movement.move(this);
     }
 
-    // this.fireGun();
+     this.fireGun();
   }
 
   setDead() {

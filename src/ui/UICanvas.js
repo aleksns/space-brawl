@@ -14,5 +14,4 @@ export default class UICanvas {
     this.shadowBlur = 0;
     }
 
-
 }

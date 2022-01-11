@@ -19,13 +19,12 @@ export class Boss extends Ship {
     this.game = game;
     this.w = getEnemyT0Dimension().w;
     this.h = getEnemyT0Dimension().h;
-    this.x = 0;   ///make it to 0 and then in separate method randomize position
-    this.y = 0;  ///just like with bgEffects
+    this.x = 0;  
+    this.y = 0;
     this.health = this.game.stats.boss.health;
     this.maxHealth = this.game.stats.boss.maxHealth;
     this.isPlayer = false;
     //this.gun = "default";
-    //this.imageSrc = enemyImage;
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.s = 0.5;
     this.a = this.s / 60;
