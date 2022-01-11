@@ -15,7 +15,7 @@ export default class Progression {
       maxHealth: 2,
       atkSpeed: 1.1,
       atkSpeedCap: 1,
-      scorePoints: 2,
+      scorePoints: 2.5,
     };
     //this.threatLevelMultiplier = 1.5;
   }
@@ -41,6 +41,7 @@ export default class Progression {
     this.level++;
     this.isMaxThreatLevel = false;
     this.applyModifiers();
+    this.game.levelTransition.startAnimation();
   }
 
   applyModifiers() {

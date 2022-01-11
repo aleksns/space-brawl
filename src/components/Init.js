@@ -13,9 +13,7 @@ export default class Init {
   constructor(game) {
     this.game = game;
     this.progression = this.game.progression;
-    // this.maxNumOfEnemies = 5;
     this.maxNumOfProjectiles = 150;
-    //this.maxNumOfElements = 40;
     this.maxNumOfElements = 2;
     this.maxNumOfItems = 2;
 
@@ -115,7 +113,6 @@ export default class Init {
   }
 
   spawnEnemies() {
-    // if (this.game.enemies.length < this.maxNumOfEnemies) {
     if (this.game.enemies.length >= this.progression.maxNumOfEnemies) {
       return;
     }
@@ -131,14 +128,15 @@ export default class Init {
   }
 
   addBoss() {
-    let newEnemy = new Boss(this.game);
+    var newEnemy = new Boss(this.game);
     newEnemy.initialize();
     this.game.enemies.push(newEnemy);
   }
 
   addEnemy() {
-    let newEnemy = new Enemy(this.game);
+    var newEnemy = new Enemy(this.game);
     newEnemy.initialize();
+    newEnemy.startTimers();
     this.game.enemies.push(newEnemy);
   }
 

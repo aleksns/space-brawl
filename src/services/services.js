@@ -1,12 +1,9 @@
 //export const directions = ["left", "right", "up", "down"];
-//  export const GAME_WIDTH = window.innerWidth;
-//  export const GAME_HEIGHT = window.innerHeight;
+  export const GAME_WIDTH = window.innerWidth;
+  export const GAME_HEIGHT = window.innerHeight;
 
 //export const GAME_WIDTH = 1536;
-//export const GAME_HEIGHT = 754;
-
-export const GAME_WIDTH = 1436;
-export const GAME_HEIGHT = 734;
+//export const GAME_HEIGHT = 734;
 
 export function getPlayerT0Dimension() {
   let dimension = {
@@ -17,7 +14,7 @@ export function getPlayerT0Dimension() {
 }
 
 export function getEnemyT0Dimension() {
-  var dimension = {
+  let dimension = {
     w: GAME_WIDTH / 2,
     h: GAME_HEIGHT / 2.5,
   };
@@ -25,14 +22,20 @@ export function getEnemyT0Dimension() {
 }
 
 export function getEnemyT4Dimension() {
-  var dimension = {
-    w: GAME_WIDTH / 10,
+  let dimension = {
+    w: GAME_WIDTH / 9,
     h: GAME_HEIGHT / 9,
-    // w: 150,
-    // h: 75,
   };
   return dimension;
 }
+
+// export function getEnemyT4Dimension() {
+//   let dimension = {
+//     w: GAME_WIDTH / 8,
+//     h: GAME_HEIGHT / 8,
+//   };
+//   return dimension;
+// }
 
 export const directions = ["left", "right"];
 
@@ -48,6 +51,8 @@ export const colors = {
   uiGreen: "#2ECC71",
   uiRed: "#CB4335",
   uiRedDark: "#C0392B",
+  uiPurple: "#7700ff",
+  uiPurpleDark: "#4d00a5",
 };
 
 export const getStatusEffectsBar = {
@@ -119,7 +124,7 @@ export const getBossDefaultStats = {
   rammingDmg: 0.1,
   atkSpeed: 0.6,
   atkSpeedCap: 0.3,
-  scorePoints: 100,
+  scorePoints: 500,
 };
 
 // s - speed

@@ -1,7 +1,16 @@
 import { Pulse } from "../effects/Pulse";
-import { colors, getHPColor, getStatusEffectsBar, GAME_WIDTH } from "../services/services";
+import {
+  colors,
+  getHPColor,
+  getStatusEffectsBar,
+  GAME_WIDTH,
+  GAME_HEIGHT,
+  getEnemyT4Dimension,
+} from "../services/services";
+import { Enemy } from "../ships/Enemy";
 import { HpBarPlayer } from "../ui/HpBarPlayer";
 import { ThreatLevelBar } from "../ui/ThreatLevelBar";
+import enemyImage from "../images/enemyShip.png";
 
 const textColor = getStatusEffectsBar.color;
 
@@ -20,7 +29,8 @@ export default class Draw {
     this.hpBarPlayer = new HpBarPlayer(this.game);
     this.threatBar = new ThreatLevelBar(this.game);
 
-
+    this.img = new Image();
+    this.img.src = enemyImage;
   }
 
   updateUICanvas() {
@@ -33,49 +43,32 @@ export default class Draw {
     this.drawProjectiles();
     this.drawEffects();
     this.drawItems();
-    this.drawEnemies();
+
     this.drawPlayer();
+    this.drawEnemies();
 
     this.drawUI();
-    //this.drawLevelCutscene();
   }
 
   drawUIOnInit() {
     this.drawItem(this.hpBarPlayer.hpBarImageProps, this.ctx4);
     this.drawItem(this.threatBar.threatBarImageProps, this.ctx4);
-    /////////////////
-    ////////////////
-    // this.ctx4.current.beginPath();
-    // this.ctx4.current.rect(this.game.startBtn.x, this.game.startBtn.y, this.game.startBtn.w, this.game.startBtn.h);
-
-    // this.ctx4.current.strokeStyle = "green";
-    // this.ctx4.current.stroke();
-    // this.ctx4.current.closePath();
-
-    // this.ctx4.current.beginPath();
-    // this.ctx4.current.rect(this.game.endBtn.x, this.game.endBtn.y, this.game.endBtn.w, this.game.endBtn.h);
-
-    // this.ctx4.current.strokeStyle = "#ffffff";
-    // this.ctx4.current.stroke();
-    // this.ctx4.current.closePath();
   }
 
   drawLevelCutscene() {
-    this.ctx4.current.lineWidth = 15;
-    this.ctx4.current.beginPath();
-    this.ctx4.current.moveTo(100, 100);
-    this.ctx4.current.lineTo(200, 100);
-    this.ctx4.current.stroke();
-    this.ctx4.current.closePath();
+    this.game.levelTransition.draw(this.ctx);
   }
 
   drawUI() {
     this.hpBarPlayer.draw(this.ctx);
     this.threatBar.draw(this.ctx);
     this.drawScore();
+
+    //this.levelTransition.draw(this.ctx);
   }
 
-  drawScore() { ///combine with draw text (status effects method)
+  drawScore() {
+    ///combine with draw text (status effects method)
     var score = "Score: " + this.game.score;
     this.ctx.current.fillStyle = colors.scoreColor;
     this.ctx.current.font = `bold 20px tahoma`;
@@ -85,26 +78,6 @@ export default class Draw {
       65
     );
   }
-
-  // drawHpBar(object, hpBar) {
-  //   let remainingHPBar = object.health / object.maxHealth;
-  //   let dW = object.w * remainingHPBar;
-
-  //   let y = object.y + hpBarYOffset;
-
-  //   this.ctx.current.beginPath();
-  //   this.ctx.current.lineWidth = hpBarLineWidth;
-  //   this.ctx.current.strokeStyle = "#ffffff";
-  //   this.ctx.current.rect(enemy.x, y, enemy.w, hpBarHeight)
-  //   this.ctx.current.stroke();
-  //   this.ctx.current.closePath();
-
-  //   this.ctx.current.beginPath();
-  //   this.ctx.current.fillStyle = colors.red;
-  //   this.ctx.current.rect(enemy.x, y, dW, hpBarHeight)
-  //   this.ctx.current.fill();
-  //   this.ctx.current.closePath();
-  // }
 
   drawStatusEffect(item) {
     this.ctx.current.drawImage(item.image, item.x, item.y, item.w, item.h);
@@ -156,6 +129,7 @@ export default class Draw {
   }
 
   drawEnemies() {
+    //this.ctx.current.drawImage(this.img, 600, 300, 200, 95);
     for (let i = 0; i < this.game.enemies.length; i++) {
       this.drawEnemy(this.game.enemies[i]);
     }

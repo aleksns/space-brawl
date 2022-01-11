@@ -1,7 +1,8 @@
 import Ship from "./Ship";
-import { colors, getPlayerT0Dimension, getPlayerDefaultStats } from "../services/services";
+import { colors, getPlayerT0Dimension, getEnemyT4Dimension, getPlayerDefaultStats } from "../services/services";
 
 import playerImage from "../images/playerShip.png";
+import enemyImage from "../images/enemyShip.png";
 
 import { SingleGun } from "../guns/SingleGun";
 import { DoubleGun } from "../guns/DoubleGun";
@@ -33,7 +34,6 @@ export class Player extends Ship {
     this.tripleGun = new TripleGun(this.game, this);
     this.gun = this.tripleGun;
 
-    //this.imageSrc = playerImage;
     this.image = new Image();
     this.image.src = playerImage;
 

@@ -12,6 +12,9 @@ const keysDownColor = "#6CAEFF";
 const lineWidth = 3;
 const width = GAME_WIDTH;
 const height = GAME_HEIGHT;
+// const width = window.innerWidth;
+// const height = window.innerHeight;
+
 //removed variables for canvas
 //context.lineJoin = "round";
 //context.lineCap = "round";
@@ -99,9 +102,7 @@ export default function App() {
     const canvas = canvasRef.current;
     canvas.width = width;
     canvas.height = height;
-
     const context = canvas.getContext("2d");
-
     context.lineWidth = lineWidth;
     contextRef.current = context;
 
@@ -109,9 +110,7 @@ export default function App() {
     const canvas2 = canvas2Ref.current;
     canvas2.width = width;
     canvas2.height = height;
-
     const context2 = canvas2.getContext("2d");
-
     context2.lineWidth = lineWidth;
     context2Ref.current = context2;
 
@@ -119,9 +118,7 @@ export default function App() {
     const canvas3 = canvas3Ref.current;
     canvas3.width = width;
     canvas3.height = height;
-
     const context3 = canvas3.getContext("2d");
-
     context3.lineWidth = lineWidth;
     context3Ref.current = context3;
 
@@ -129,9 +126,7 @@ export default function App() {
     const canvas4 = canvas4Ref.current;
     canvas4.width = width;
     canvas4.height = height;
-
     const context4 = canvas4.getContext("2d");
-
     context4.lineWidth = lineWidth;
     context4Ref.current = context4;
 
@@ -212,7 +207,7 @@ export default function App() {
         className="ui-start-container"
         style={!isUiOn ? { opacity: "0", zIndex: -1 } : {}}
       >
-        <h1 className="label-start">COSMIC BRAWL</h1>
+        <h1 className="label-start">COSMIC BRAWL (WIP)</h1>
         <button
           onClick={startIt}
           disabled={!isUiOn}

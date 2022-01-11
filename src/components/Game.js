@@ -1,3 +1,5 @@
+import { Enemy } from "../ships/Enemy";
+
 import { Player } from "../ships/Player";
 import Controls from "./Controls";
 import Collision from "./Collision";
@@ -7,13 +9,22 @@ import Update from "./Update";
 import Stats from "./Stats";
 import Init from "./Init";
 import StatusEffects from "./StatusEffects";
-import {GAME_WIDTH, GAME_HEIGHT} from "../services/services";
+import { GAME_WIDTH, GAME_HEIGHT } from "../services/services";
 import Progression from "./Progression";
+import { LevelTransition } from "../ui/LevelTransition";
+
 
 //Remove some variables FROM THE CONSTRUCTOR which are not being used
 //e.g. board height, allowed board height, etc
 export default class Game {
-  constructor(contextRef, context2Ref, context3Ref, context4Ref, canvas4Ref, clearCanvas4) {
+  constructor(
+    contextRef,
+    context2Ref,
+    context3Ref,
+    context4Ref,
+    canvas4Ref,
+    clearCanvas4
+  ) {
     this.ctx = contextRef;
     this.ctx2 = context2Ref;
     this.ctx3 = context3Ref;
@@ -25,14 +36,28 @@ export default class Game {
     this.init = new Init(this);
     this.collision = new Collision(this);
     this.player = new Player(this);
+
+     /////
+    this.enemyTest = new Enemy(this);
+     //////
     this.controls = new Controls(this);
     this.movement = new Movement(this);
     this.statusEffects = new StatusEffects(this);
+    this.levelTransition = new LevelTransition(this);
     this.draw = new Draw(this);
     this.update = new Update(this);
     this.bgElements = [];
     this.items = [];
+
+
+
     this.enemies = [];
+    //this.enemyImage.src = enemyImage;
+    ///
+     //this.enemyTest.initialize();
+     //this.enemies.push(this.enemyTest);
+    ////
+
     this.enemyProjectiles = [];
     this.playerProjectiles = [];
     this.effects = [];
@@ -52,27 +77,35 @@ export default class Game {
       h: 100,
       xPosText: 100,
       yPosText: 100,
-      text: "START"
-    }
+      text: "START",
+    };
     this.endBtn = {
       x: 400,
       y: 200,
       w: 100,
-      h: 100
-    }
+      h: 100,
+    };
 
     this.btns = [];
     this.btns.push(this.startBtn);
     this.btns.push(this.endBtn);
 
     this.timePassed = 0;
-    this.elem = document.getElementById('uiScreen');
+    this.elem = document.getElementById("uiScreen");
     console.log("CONSTRUCTOR > GAME");
+    console.log(`============`);
+    console.log(`w  = ${GAME_WIDTH} AND h  = ${GAME_HEIGHT}`);
+    console.log(`============`);
   }
 
- isInside(position, rect){
-  return position.x > rect.x && position.x < rect.x+rect.w && position.y < rect.y+rect.h && position.y > rect.y;
-}
+  isInside(position, rect) {
+    return (
+      position.x > rect.x &&
+      position.x < rect.x + rect.w &&
+      position.y < rect.y + rect.h &&
+      position.y > rect.y
+    );
+  }
 
   isGameAlive() {
     return this.isGameOn;
@@ -109,32 +142,48 @@ export default class Game {
     this.pauseNow = this.then;
     //this.clearCanvas();
 
+    if (!this.levelTransition.isAnimationFinished) {
+      this.draw.drawLevelCutscene();
+      return;
+    }
+
+
     if (this.now == 0) {
       this.update.startTimersOnInit();
       this.draw.drawUIOnInit();
-
       this.pauseNow = this.then;
       this.pauseThen = this.pauseNow;
     }
+
+    //  this.timePassed = (this.pauseNow - this.pauseThen) / 1000;
+    // if(this.timePassed >= 3) {
+    //   this.controls.handleInput();
+    //   this.update.update();
+    //   this.draw.drawAll();
+    // }
+
+    // this.timePassed = (this.pauseNow - this.pauseThen) / 1000;
+
+    // console.log(`timePassed = ${this.timePassed}`)
+    // if(this.timePassed <= 3) {
+    //   return;
+    // }
+
+      this.controls.handleInput();
+      this.update.update();
+      this.draw.drawAll();
+    
 
     if (this.player.isDead) {
       this.isGameOn = false;
     }
 
-    this.controls.handleInput();
-    this.update.update();
-    this.draw.drawAll();
+    //pause any action during pause time (for cutscenes, level transitions)
 
-    this.timePassed = (this.pauseNow - this.pauseThen) / 1000;
-    if(this.timePassed >= 3) {
-      // this.controls.handleInput();
-      // this.update.update();
-      // this.draw.drawAll();
-    }
+    
+ 
 
-    console.log(`timePassed = ${this.timePassed}`)
-
-
+    //console.log(`timePassed = ${this.timePassed}`)
     //console.log("items.length = " + this.items.length);
     //console.log("bgElements.length = " + this.bgElements.length);
     //console.log("enemies.length = " + this.enemies.length);
@@ -142,5 +191,6 @@ export default class Game {
     //console.log("enemy projectiles.length = " + this.enemyProjectiles.length);
     //console.log("player projectiles.length = " + this.playerProjectiles.length);
     this.now = this.then;
+    //this.pauseThen = this.now;
   }
 }

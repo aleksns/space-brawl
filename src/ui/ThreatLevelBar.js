@@ -54,24 +54,6 @@ export class ThreatLevelBar extends UICanvas {
     this.isPulseOn = false;
   }
 
-  // pulse() {
-
-
-  //   if (this.opacity >= 0.8 || this.opacity <= 0.1) {
-  //     this.opacityModifier = -this.opacityModifier;
-  //   }
-  //   if(this.lineWidth >= 25 || this.lineWidth <= 5) {
-  //       this.lineWidthModifier = -this.lineWidthModifier;
-  //   }
-
-  // }
-
-  // update() {
-  //   if(this.game.progression.isMaxThreatLevel) {
-  //     this.game.init.addEffect(this, "pulse");
-  //   }
-  // }
-
   draw(ctx) {  
     if(this.game.progression.isMaxThreatLevel && this.isPulseOn == false) {
       this.game.init.addEffect(this.threatBarImageProps, "pulse");
