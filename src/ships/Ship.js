@@ -26,13 +26,13 @@ export default class Ship {
   }
 
   update() {
-    if (this.health <= 0) {
+    if (this.health <= 0 || this.game.collision.isOutOfBorders(this)) {
       this.health = 0;
       this.setDead();
       this.onDeath();
     }
     if(!this.isPlayer) {
-      this.game.movement.move(this);
+     this.move();
     }
 
      this.fireGun();

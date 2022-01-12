@@ -109,18 +109,18 @@ export default class Controls {
   }
 
   handleKeyW() {
-    this.game.movement.moveUp(this.player);
+    this.game.movement.moveNorth(this.player);
   }
 
   handleKeyA() {
-    this.game.movement.moveLeft(this.player);
+    this.game.movement.moveWest(this.player);
   }
 
   handleKeyS() {
-    this.game.movement.moveDown(this.player);
+    this.game.movement.moveSouth(this.player);
   }
 
   handleKeyD() {
-    this.game.movement.moveRight(this.player);
+    this.game.movement.moveEast(this.player);
   }
 }

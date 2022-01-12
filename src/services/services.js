@@ -1,4 +1,5 @@
 //export const directions = ["left", "right", "up", "down"];
+
   export const GAME_WIDTH = window.innerWidth;
   export const GAME_HEIGHT = window.innerHeight;
 
@@ -29,6 +30,14 @@ export function getEnemyT4Dimension() {
   return dimension;
 }
 
+export function getEnemyT5Dimension() {
+  let dimension = {
+    w: GAME_WIDTH / 14,
+    h: GAME_HEIGHT / 7,
+  };
+  return dimension;
+}
+
 // export function getEnemyT4Dimension() {
 //   let dimension = {
 //     w: GAME_WIDTH / 8,
@@ -36,8 +45,6 @@ export function getEnemyT4Dimension() {
 //   };
 //   return dimension;
 // }
-
-export const directions = ["left", "right"];
 
 export const colors = {
   green: "#00FF2D",
@@ -107,7 +114,17 @@ export const getPlayerDefaultStats = {
   atkSpeedCap: 0.04,
 };
 
-export const getEnemyDefaultStats = {
+export const getEnemyT0DefaultStats = {
+  damage: 4,
+  health: 8000,
+  maxHealth: 8000,
+  rammingDmg: 0.1,
+  atkSpeed: 0.6,
+  atkSpeedCap: 0.3,
+  scorePoints: 500,
+};
+
+export const getEnemyT4DefaultStats = {
   damage: 4,
   health: 100,
   maxHealth: 100,
@@ -117,14 +134,14 @@ export const getEnemyDefaultStats = {
   scorePoints: 25,
 };
 
-export const getBossDefaultStats = {
-  damage: 4,
-  health: 8000,
-  maxHealth: 8000,
+export const getEnemyT5DefaultStats = {
+  damage: 3,
+  health: 75,
+  maxHealth: 100,
   rammingDmg: 0.1,
-  atkSpeed: 0.6,
-  atkSpeedCap: 0.3,
-  scorePoints: 500,
+  atkSpeed: 0.7,
+  atkSpeedCap: 0.5,
+  scorePoints: 15,
 };
 
 // s - speed
@@ -232,7 +249,20 @@ export function getRandomDecimal(min, max) {
   return randomDecimal;
 }
 
+// north, east, south, and west, northeast (NE), southeast (SE), southwest (SW), and northwest (NW).
+export const directions = ["N", "E", "S", "W", "NE", "SE", "SW", "NW"];
+
 export function getRandomDirection() {
-  let randomDirectionIndex = getRandomInt(0, directions.length - 1);
+  let randomDirectionIndex = getRandomInt(0, directions.length);
   return directions[randomDirectionIndex];
+}
+
+export function getDeadZoneDimensionForObject(object) {
+  let deadDimension = {
+    x0: 0 - object.w,
+    x1: GAME_WIDTH + object.w,
+    y0: 0 - object.h,
+    y1: GAME_HEIGHT + object.h   
+  }
+  return deadDimension;
 }

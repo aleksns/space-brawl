@@ -2,7 +2,7 @@ import Ship from "./Ship";
 import {
   GAME_WIDTH,
   getRandomDirection,
-  getEnemyDefaultStats,
+  getEnemyT0DefaultStats,
   getEnemyT0Dimension,
   getTripleGunPosition,
   GAME_HEIGHT
@@ -21,8 +21,8 @@ export class Boss extends Ship {
     this.h = getEnemyT0Dimension().h;
     this.x = 0;  
     this.y = 0;
-    this.health = this.game.stats.boss.health;
-    this.maxHealth = this.game.stats.boss.maxHealth;
+    this.health = this.game.stats.enemyT0.health;
+    this.maxHealth = this.game.stats.enemyT0.maxHealth;
     this.isPlayer = false;
     //this.gun = "default";
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
@@ -33,16 +33,16 @@ export class Boss extends Ship {
     before reaching allowed borders and maintaining smooth bounce effect */
     this.offStepX = Math.floor(this.w / 2);
     this.offStepY = Math.floor(this.h / 2);
-    this.scorePoints = this.game.stats.boss.scorePoints;
+    this.scorePoints = this.game.stats.enemyT0.scorePoints;
     this.now = 0;
-    this.damage = this.game.stats.boss.damage;
-    this.atkSpeed = this.game.stats.boss.atkSpeed;
+    this.damage = this.game.stats.enemyT0.damage;
+    this.atkSpeed = this.game.stats.enemyT0.atkSpeed;
     this.gun = undefined;
 
     this.image = new Image();
     this.image.src = bossImage;
     
-    console.log("CONSTRUCTOR > Enemy");
+    console.log("CONSTRUCTOR > Boss");
     //console.log(`GAME_WIDTH = ${GAME_WIDTH}`);
   }
 
@@ -67,7 +67,7 @@ export class Boss extends Ship {
   }
 
   setDefaultAtkSpeed() {
-    this.atkSpeed = getEnemyDefaultStats.atkSpeed;
+    this.atkSpeed = getEnemyT0DefaultStats.atkSpeed;
   }
 
   playHitEffect(projectileType) {

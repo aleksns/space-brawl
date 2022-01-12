@@ -8,26 +8,31 @@ export default class Item {
     this.vY = 0;
 
     this.f = 0.95;
-    this.direction = "down";
+    this.direction = "S";
     this.isDead = false;
     this.isSpawnOnInit = undefined;
-    this.isPlayer = false;
+    //this.isPlayer = false;
+    this.isItem = true;
+    this.isOutOfBordersAllowed = true;
   }
 
   update() {
-    this.game.movement.move(this);
-    this.isTimeToRemove();
-    if (this.isInteractable) {
-      if (this.isPickedUpByPlayer()) {
+    this.game.movement.move(this, this.isOutOfBordersAllowed);
+    //this.isTimeToRemove();
+    if (this.isInteractable && this.isPickedUpByPlayer()) {
         this.applyBuff();
         this.onDeath();
-      }
     }
+  }
+
+  setDead() {
+    this.isDead = true;
   }
 
   isTimeToRemove() {
     if (this.game.collision.isCollisionBorderDown(this, -this.h)) {
-      this.isDead = true;
+      //this.isDead = true;
+      this.setDead();
     }
   }
 

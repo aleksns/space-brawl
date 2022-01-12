@@ -67,31 +67,4 @@ export class BgElement extends Item {
     }
   }
 
-  // setPosition() {
-  //   if(this.game.bgElements.length == 1) {
-  //     this.y = this.game.bgElements[0].y - this.game.bgElements[0].h;
-  //   }
-  //   else {
-  //     this.y = 0;
-  //   }
-  // }
-
-  // setUpmostPosition() {
-  //   let minX = this.spawnRangeMinX;
-  //   let maxX = this.spawnRangeMaxX;
-  //   //let minY = 0 - (this.h + 50);
-  //   let minY = 0 - this.h;
-  //   let maxY;
-
-  //   if (!this.isSpawnOnInit) {
-  //     //maxY = 0 - (this.h + 25);
-  //     maxY = 0 - minY;
-  //   } else {
-  //     maxY = this.game.collision.boardHeight;
-  //   }
-  //   this.x = 0;
-  //   this.y = -500;
-  //   // this.x = getRandomInt(minX, maxX);
-  //   // this.y = getRandomInt(minY, maxY);
-  // }
 }

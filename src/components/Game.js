@@ -1,5 +1,3 @@
-import { Enemy } from "../ships/Enemy";
-
 import { Player } from "../ships/Player";
 import Controls from "./Controls";
 import Collision from "./Collision";
@@ -12,7 +10,6 @@ import StatusEffects from "./StatusEffects";
 import { GAME_WIDTH, GAME_HEIGHT } from "../services/services";
 import Progression from "./Progression";
 import { LevelTransition } from "../ui/LevelTransition";
-
 
 //Remove some variables FROM THE CONSTRUCTOR which are not being used
 //e.g. board height, allowed board height, etc
@@ -37,9 +34,6 @@ export default class Game {
     this.collision = new Collision(this);
     this.player = new Player(this);
 
-     /////
-    this.enemyTest = new Enemy(this);
-     //////
     this.controls = new Controls(this);
     this.movement = new Movement(this);
     this.statusEffects = new StatusEffects(this);
@@ -49,14 +43,7 @@ export default class Game {
     this.bgElements = [];
     this.items = [];
 
-
-
     this.enemies = [];
-    //this.enemyImage.src = enemyImage;
-    ///
-     //this.enemyTest.initialize();
-     //this.enemies.push(this.enemyTest);
-    ////
 
     this.enemyProjectiles = [];
     this.playerProjectiles = [];
@@ -92,10 +79,10 @@ export default class Game {
 
     this.timePassed = 0;
     this.elem = document.getElementById("uiScreen");
-    console.log("CONSTRUCTOR > GAME");
-    console.log(`============`);
-    console.log(`w  = ${GAME_WIDTH} AND h  = ${GAME_HEIGHT}`);
-    console.log(`============`);
+    // console.log("CONSTRUCTOR > GAME");
+    // console.log(`============`);
+    // console.log(`w  = ${GAME_WIDTH} AND h  = ${GAME_HEIGHT}`);
+    // console.log(`============`);
   }
 
   isInside(position, rect) {
@@ -147,7 +134,6 @@ export default class Game {
       return;
     }
 
-
     if (this.now == 0) {
       this.update.startTimersOnInit();
       this.draw.drawUIOnInit();
@@ -169,10 +155,9 @@ export default class Game {
     //   return;
     // }
 
-      this.controls.handleInput();
-      this.update.update();
-      this.draw.drawAll();
-    
+    this.controls.handleInput();
+    this.update.update();
+    this.draw.drawAll();
 
     if (this.player.isDead) {
       this.isGameOn = false;
@@ -180,16 +165,15 @@ export default class Game {
 
     //pause any action during pause time (for cutscenes, level transitions)
 
-    
- 
-
     //console.log(`timePassed = ${this.timePassed}`)
-    //console.log("items.length = " + this.items.length);
-    //console.log("bgElements.length = " + this.bgElements.length);
-    //console.log("enemies.length = " + this.enemies.length);
-    //console.log("effects.length = " + this.effects.length);
-    //console.log("enemy projectiles.length = " + this.enemyProjectiles.length);
-    //console.log("player projectiles.length = " + this.playerProjectiles.length);
+    // console.log(`---------------------------------------`);
+    // console.log("items.length = " + this.items.length);
+    // console.log("bgElements.length = " + this.bgElements.length);
+    // console.log("enemies.length = " + this.enemies.length);
+    // console.log("effects.length = " + this.effects.length);
+    // console.log("enemy projectiles.length = " + this.enemyProjectiles.length);
+    // console.log("player projectiles.length = " + this.playerProjectiles.length);
+    // console.log(`---------------------------------------`);
     this.now = this.then;
     //this.pauseThen = this.now;
   }

@@ -1,4 +1,4 @@
-import { Enemy } from "../ships/Enemy";
+import { EnemyT4 } from "../ships/EnemyT4";
 import { Boss } from "../ships/Boss";
 import { ProjectileDefault } from "../projectiles/ProjectileDefault";
 import { ExplosionDefault } from "../effects/ExplosionDefault";
@@ -8,6 +8,7 @@ import { BuffDefault } from "../effects/BuffDefault";
 import { AtkSpeed } from "../items/AtkSpeed";
 import { getBuffsSpawnDelay } from "../services/services";
 import { Pulse } from "../effects/Pulse";
+import { EnemyT5 } from "../ships/EnemyT5";
 
 export default class Init {
   constructor(game) {
@@ -134,7 +135,8 @@ export default class Init {
   }
 
   addEnemy() {
-    var newEnemy = new Enemy(this.game);
+    var newEnemy = new EnemyT5(this.game);
+    //this.getEmptyPosition(newEnemy);
     newEnemy.initialize();
     newEnemy.startTimers();
     this.game.enemies.push(newEnemy);

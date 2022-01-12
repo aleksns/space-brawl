@@ -1,16 +1,7 @@
 import { Pulse } from "../effects/Pulse";
-import {
-  colors,
-  getHPColor,
-  getStatusEffectsBar,
-  GAME_WIDTH,
-  GAME_HEIGHT,
-  getEnemyT4Dimension,
-} from "../services/services";
-import { Enemy } from "../ships/Enemy";
+import { colors, getStatusEffectsBar, GAME_WIDTH } from "../services/services";
 import { HpBarPlayer } from "../ui/HpBarPlayer";
 import { ThreatLevelBar } from "../ui/ThreatLevelBar";
-import enemyImage from "../images/enemyShip.png";
 
 const textColor = getStatusEffectsBar.color;
 
@@ -28,9 +19,6 @@ export default class Draw {
 
     this.hpBarPlayer = new HpBarPlayer(this.game);
     this.threatBar = new ThreatLevelBar(this.game);
-
-    this.img = new Image();
-    this.img.src = enemyImage;
   }
 
   updateUICanvas() {

@@ -10,7 +10,7 @@ export default class Update {
     this.game.statusEffects.startTimers();
   }
 
-  update() { 
+  update() {
     this.updateItems();
     this.updatePlayer();
     this.updateEnemies();
@@ -21,8 +21,8 @@ export default class Update {
     this.updateGameProgression();
 
     this.updateCollisionPlayerHullWithEnemies();
-    this.updateCollisionPlayerWithProjectiles(); 
-    this.updateCollisionEnemyWithProjectiles();   //put items collison with player on pick up here
+    this.updateCollisionPlayerWithProjectiles();
+    this.updateCollisionEnemyWithProjectiles(); //put items collison with player on pick up here
 
     this.removeDeadItems();
     this.removeDeadBgElements();

@@ -1,8 +1,6 @@
 import Ship from "./Ship";
-import { colors, getPlayerT0Dimension, getEnemyT4Dimension, getPlayerDefaultStats } from "../services/services";
-
+import { getPlayerT0Dimension, getPlayerDefaultStats } from "../services/services";
 import playerImage from "../images/playerShip.png";
-import enemyImage from "../images/enemyShip.png";
 
 import { SingleGun } from "../guns/SingleGun";
 import { DoubleGun } from "../guns/DoubleGun";
@@ -49,6 +47,7 @@ export class Player extends Ship {
     this.now = Date.now();
     this.gun.fire();
   }
+
 
   getAtkSpeed() {
     return this.atkSpeed - this.gun.atkSpeed;

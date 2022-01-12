@@ -1,15 +1,19 @@
+import { getDeadZoneDimensionForObject } from "../services/services";
 import GameBoard from "./GameBoard";
 
 export default class Collision {
   constructor(game) {
     this.game = game;
     this.gameBoard = new GameBoard();
-    this.boardWidth = this.gameBoard.boardWidth;    ///exists in services. 
-    this.boardHeight = this.gameBoard.boardHeight;   ///exists in services
+    this.boardWidth = this.gameBoard.boardWidth; ///exists in services.
+    this.boardHeight = this.gameBoard.boardHeight; ///exists in services
 
     this.allowedX = this.gameBoard.allowedX;
     this.allowedY = this.gameBoard.allowedY;
-    console.log(">> Collison Constructor")
+
+    this.enemyAllowedX = this.gameBoard.enemyAllowedX;
+    this.enemyAllowedY = this.gameBoard.enemyAllowedY;
+    console.log(">> Collison Constructor");
   }
 
   rectsColliding(r1, r2) {
@@ -22,11 +26,14 @@ export default class Collision {
   }
 
   handleCollisionWithBorders(object) {
-    if(object.isPlayer) {
+    if (object.isPlayer) {
       this.handlePlayerBordersCollision(object);
     }
-    else {
+    if (!object.isPlayer && !object.isItem) {
       this.handleEnemyBordersCollision(object);
+    }
+    if (object.isItem && this.isCollisionBorderDown(object, -object.h)) {
+      object.setDead();
     }
   }
 
@@ -47,19 +54,108 @@ export default class Collision {
     }
   }
 
+  handleEnemyWithEnemyCollision(enemy1, enemy2) {
+    return this.rectsColliding(enemy1, enemy2);
+  }
+
   handleEnemyBordersCollision(rect) {
+    let newRandomDirections = [];
     if (
-      this.isCollisionBorderLeft(rect, rect.offStepX) &&    
-      rect.direction == "left"
+      this.isCollisionBorderUp(rect, this.enemyAllowedY.y0) &&
+      this.isNorthDirection(rect.direction)
     ) {
-      rect.direction = "right";
+      newRandomDirections = this.getRandomOppositeDirections(
+        this.getNorthDirections()
+      );
+      // rect.y = this.allowedY.y0; //// testing
+    }
+    if (
+      this.isCollisionBorderDown(rect, this.enemyAllowedY.y1) &&
+      this.isSouthDirection(rect.direction)
+    ) {
+      newRandomDirections = this.getRandomOppositeDirections(
+        this.getSouthDirections()
+      );
+      // rect.y = this.allowedY.y1 - rect.h; //// testing
+    }
+    if (
+      this.isCollisionBorderLeft(rect, rect.offStepX) &&
+      this.isWestDirection(rect.direction)
+    ) {
+      newRandomDirections = this.getRandomOppositeDirections(
+        this.getWestDirections()
+      );
+      // rect.x = this.allowedX.x0; //// testing
     }
     if (
       this.isCollisionBorderRight(rect, rect.offStepX) &&
-      rect.direction == "right"
+      this.isEastDirection(rect.direction)
     ) {
-      rect.direction = "left";
+      newRandomDirections = this.getRandomOppositeDirections(
+        this.getEastDirections()
+      );
+      //rect.x = this.allowedX.x1 - rect.w;//// testing
     }
+    //console.log(`COLLSION > newRandomDirections = ${JSON.stringify(newRandomDirections) }`)
+    if (newRandomDirections.length != 0) {
+      rect.setRandomDirectionFromList(newRandomDirections);
+    }
+
+    // this.handleEnemyOutOfBorders(rect);   //testing
+  }
+
+  isOutOfBorders(rect) {
+    let deadDimension = getDeadZoneDimensionForObject(rect);
+    return (
+      rect.x <= deadDimension.x0 ||
+      rect.x >= deadDimension.x1 ||
+      rect.y <= deadDimension.y0 ||
+      rect.y >= deadDimension.y1
+    );
+  }
+
+  getRandomOppositeDirections(excluded) {
+    let newDirections = ["N", "E", "S", "W", "NE", "SE", "SW", "NW"];
+    //newDirections = directions;
+    let excludedDirections = excluded;
+    //console.log(`newDirections = ${newDirections}`);
+    //console.log(`excludedDirections = ${excludedDirections}`);
+    for (let i = 0; i < excludedDirections.length; i++) {
+      let index = newDirections.indexOf(excludedDirections[i]);
+      newDirections.splice(index, 1);
+    }
+    // console.log(`allowed newDirections = ${newDirections}`);
+    return newDirections;
+  }
+
+  getNorthDirections() {
+    var northDirections = ["NW", "N", "NE"];
+    return northDirections;
+  }
+  getEastDirections() {
+    var eastDirections = ["NE", "E", "SE"];
+    return eastDirections;
+  }
+  getSouthDirections() {
+    var southDirections = ["SE", "S", "SW"];
+    return southDirections;
+  }
+  getWestDirections() {
+    var westDirections = ["SW", "W", "NW"];
+    return westDirections;
+  }
+
+  isNorthDirection(direction) {
+    return direction == "NW" || direction == "N" || direction == "NE";
+  }
+  isEastDirection(direction) {
+    return direction == "NE" || direction == "E" || direction == "SE";
+  }
+  isSouthDirection(direction) {
+    return direction == "SE" || direction == "S" || direction == "SW";
+  }
+  isWestDirection(direction) {
+    return direction == "SW" || direction == "W" || direction == "NW";
   }
 
   /* Rrectangle | Borders Collision functions */
