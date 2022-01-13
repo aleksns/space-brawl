@@ -6,16 +6,6 @@ export default function UI(props) {
   const [playerHPColor, setPlayerHPColor] = useState(colors.HPColorGreen);
   const [foo, setFoo] = useState("");          ///hardcoded, remove after
 
-  // function updateHPColor() {
-  //   if (playerHP >= 70) {
-  //     setPlayerHPColor(HPColorGreen);
-  //   } else if (playerHP >= 35 && playerHP < 70) {
-  //     setPlayerHPColor(HPColorYellow);
-  //   } else if (playerHP < 35) {
-  //     setPlayerHPColor(HPColorRed);
-  //   }
-  // }
-
   useEffect(() => {
     let updatedHPColor = getHPColor(playerHP);
     setPlayerHPColor(updatedHPColor);

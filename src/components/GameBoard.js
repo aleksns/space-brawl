@@ -14,13 +14,4 @@ export default class GameBoard {
     this.enemyAllowedY = {y0: 50, y1: this.boardHeight / 2}
   }
 
-  isOutOfBoundries(x, y) {
-    return x <= 0 || x >= this.width || y <= 0 || y >= this.height;
-  }
-
-  changeHorizontalDirection(x) {
-    return 
-  }
-
-  //requestAnimationFrame(runLoop);
 }
