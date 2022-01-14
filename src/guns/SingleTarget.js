@@ -20,16 +20,26 @@ export class SingleTarget extends Gun {
       p2Y: 0,
     };
 
+    this.barrels = [
+      this.barrel1
+    ];
+
     this.dW = getDefaultPlayerProjectile.w; //offStep for a projectile, to make a precise center position
   }
 
-  fire() {
-    this.barrel1.p1X = getSingleGunPosition(this.owner, this.dW).x;
-    this.barrel1.p1Y = getSingleGunPosition(this.owner, this.dW).y;
+  getGunPositionP1(i) {
+    var gunPositionP1 = {
+      p1X: getSingleGunPosition(this.owner, this.dW)[i].x,
+      p1Y: getSingleGunPosition(this.owner, this.dW)[i].y,
+    }
+    return gunPositionP1;
+  }
 
-    this.barrel1.p2X = getObjectCenterPosition(this.target).x;
-    this.barrel1.p2Y = getObjectCenterPosition(this.target).y;
-
-    this.game.init.addProjectile(this, this.barrel1);
+  getGunPositionP2(i) {
+    var gunPositionP2 = {
+      p2X: getObjectCenterPosition(this.target).x,
+      p2Y: getObjectCenterPosition(this.target).y,
+    }
+    return gunPositionP2;
   }
 }

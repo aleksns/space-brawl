@@ -44,12 +44,20 @@ export class TripleFront extends Gun {
     this.dW = getDefaultPlayerProjectile.w; //offStep for a projectile, to make a better center position
   }
 
-  getGunPosition(i) {
+  getGunPositionP1(i) {
     var gunPosition = {
       p1X: getTripleGunPosition(this.owner, this.dW)[i].x,
       p1Y: getTripleGunPosition(this.owner, this.dW)[i].y,
     }
     return gunPosition;
+  }
+
+  getGunPositionP2(i) {
+    var gunPositionP2 = {
+      p2X: this.barrels[i].p1X,
+      p2Y: this.target.y,
+    }
+    return gunPositionP2;
   }
 
 }

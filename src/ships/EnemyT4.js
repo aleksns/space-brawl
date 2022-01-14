@@ -68,7 +68,7 @@ export class EnemyT4 extends Ship {
   }
 
   move() {
-    this.game.movement.move(this, this.isCheckSouthOutOfBorderOnly);
+    //this.game.movement.move(this, this.isCheckSouthOutOfBorderOnly);
     // let timePassed = (this.game.then - this.directionChangeIntervalNow) / 1000;
     // if (timePassed <= this.directionChangeInterval) {
     //   return;
