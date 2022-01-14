@@ -165,13 +165,13 @@ export default function App() {
     setDIsPressed(gameRef.current.keys.keyD);
   }
 
-  function updateUI() {
-    setPlayerHP(gameRef.current.getPlayerHP());
-    handleUiKeysPressed();
-    setScore(gameRef.current.getScore());
-    setPlayerDmg(gameRef.current.getPlayerDmg());
-    setPlayerAtkSpeed(gameRef.current.getPlayerAtkSpeed());
-  }
+  // function updateUI() {
+  //   setPlayerHP(gameRef.current.getPlayerHP());
+  //   handleUiKeysPressed();
+  //   setScore(gameRef.current.getScore());
+  //   setPlayerDmg(gameRef.current.getPlayerDmg());
+  //   setPlayerAtkSpeed(gameRef.current.getPlayerAtkSpeed());
+  // }
 
   function startIt() {
     setIsGameOver(false);
@@ -188,7 +188,7 @@ export default function App() {
       clearCanvas1();
       clearCanvas2();
       clearCanvas3();
-      updateUI();
+      //updateUI();
       gameRef.current.gameLoop();
 
       requestAnimationFrame(runLoop);
@@ -214,7 +214,7 @@ export default function App() {
           className="btn-start"
           style={!isUiOn ? { cursor: "default" } : {}}
         >
-          
+          START
         </button>
         <GithubLinkWithIcon />
       </div>

@@ -7,10 +7,11 @@ import Update from "./Update";
 import Stats from "./Stats";
 import Init from "./Init";
 import StatusEffects from "./StatusEffects";
-import { GAME_WIDTH, GAME_HEIGHT } from "../services/services";
 import Progression from "./Progression";
 import { LevelTransition } from "../ui/LevelTransition";
 import GameBoard from "./GameBoard";
+import SoundChannel from "./SoundChannel";
+import SoundList from "./SoundList";
 
 //Remove some variables FROM THE CONSTRUCTOR which are not being used
 //e.g. board height, allowed board height, etc
@@ -28,6 +29,7 @@ export default class Game {
     this.ctx3 = context3Ref;
     this.ctx4 = context4Ref;
     this.canvas4 = canvas4Ref;
+    this.soundList = new SoundList();
     this.gameBoard = new GameBoard(this);
     this.clearCanvas4 = clearCanvas4;
     this.progression = new Progression(this);
@@ -59,32 +61,35 @@ export default class Game {
     this.pauseNow = 0;
     this.pauseThen = 0;
 
-    this.startBtn = {
-      x: 200,
-      y: 200,
-      w: 100,
-      h: 100,
-      xPosText: 100,
-      yPosText: 100,
-      text: "START",
-    };
-    this.endBtn = {
-      x: 400,
-      y: 200,
-      w: 100,
-      h: 100,
-    };
+    // this.startBtn = {
+    //   x: 200,
+    //   y: 200,
+    //   w: 100,
+    //   h: 100,
+    //   xPosText: 100,
+    //   yPosText: 100,
+    //   text: "START",
+    // };
+    // this.endBtn = {
+    //   x: 400,
+    //   y: 200,
+    //   w: 100,
+    //   h: 100,
+    // };
 
-    this.btns = [];
-    this.btns.push(this.startBtn);
-    this.btns.push(this.endBtn);
+    // this.btns = [];
+    // this.btns.push(this.startBtn);
+    // this.btns.push(this.endBtn);
+    // this.elem = document.getElementById("uiScreen");
 
-    this.timePassed = 0;
-    this.elem = document.getElementById("uiScreen");
-    // console.log("CONSTRUCTOR > GAME");
-    // console.log(`============`);
-    // console.log(`w  = ${GAME_WIDTH} AND h  = ${GAME_HEIGHT}`);
-    // console.log(`============`);
+    this.timePassed = 0;  
+        
+    /*  <Sound>  */
+    this.laser = new SoundChannel(this.soundList.laser, 1, 0.04);
+    this.background = new SoundChannel(this.soundList.bgMusic, 1, 0.08);
+    /* <Sound />*/
+
+     console.log("CONSTRUCTOR > GAME");
   }
 
   isInside(position, rect) {
@@ -115,18 +120,13 @@ export default class Game {
   getScore() {
     return this.score;
   }
-  getPlayerDmg() {
-    return "tbd..."; /// change to either get stats from Stats class or change atkSpeed method to get info from Player
-  }
-  getPlayerAtkSpeed() {
-    return this.stats.player.atkSpeed; /// look above
-  }
 
   isPlayerDead() {
     return this.player.isDead;
   }
 
   gameLoop() {
+  
     this.then = Date.now();
     this.pauseNow = this.then;
     //this.clearCanvas();
@@ -137,6 +137,7 @@ export default class Game {
     }
 
     if (this.now == 0) {
+      this.background.play();
       this.update.startTimersOnInit();
       this.draw.drawUIOnInit();
       this.pauseNow = this.then;

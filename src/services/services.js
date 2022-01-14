@@ -1,8 +1,5 @@
-//export const directions = ["left", "right", "up", "down"];
-
-  export const GAME_WIDTH = window.innerWidth;
-  export const GAME_HEIGHT = window.innerHeight;
-
+export const GAME_WIDTH = window.innerWidth;
+export const GAME_HEIGHT = window.innerHeight;
 //export const GAME_WIDTH = 1536;
 //export const GAME_HEIGHT = 734;
 
@@ -263,7 +260,7 @@ export function getDeadZoneDimensionForObject(object) {
     x0: 0 - object.w,
     x1: GAME_WIDTH + object.w,
     y0: 0 - object.h,
-    y1: GAME_HEIGHT + object.h   
-  }
+    y1: GAME_HEIGHT + object.h,
+  };
   return deadDimension;
 }

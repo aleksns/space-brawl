@@ -53,6 +53,7 @@ export class Player extends Ship {
 
     this.now = Date.now();
     this.gun.fire();
+    
   }
 
 

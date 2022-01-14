@@ -78,6 +78,7 @@ export class EnemyT5 extends Ship {
     }
     this.now = Date.now();
     this.gun.fire();
+    this.game.laser.play();
   }
 
   
@@ -91,6 +92,7 @@ export class EnemyT5 extends Ship {
     this.setTargetFront();
     var newGun = new SingleFront(this.game, this);
     this.gun = newGun; 
+    console.log(`ENEMY t5 w = ${this.w}`)
   }
 
   move() {  
