@@ -1,4 +1,4 @@
-import { roundDecimalHundreds } from "../services/services";
+import { roundDecimalHundreds, getRandomInt, GAME_HEIGHT } from "../services/services";
 
 export default class Ship {
   constructor(game) {
@@ -17,7 +17,7 @@ export default class Ship {
     this.vX = 0;
     this.vY = 0;
     this.f = 0.95;
-    
+
     console.log("CONSTRUCTOR > Ship");
   }
 
@@ -26,17 +26,47 @@ export default class Ship {
   }
 
   update() {
-    if (this.health <= 0 || this.game.collision.isOutOfBorders(this)) {
+    if (this.health <= 0 || (this.game.collision.isOutOfBorders(this) && this.isCheckSouthOutOfBorderOnly == false)) {
       this.health = 0;
       this.setDead();
       this.onDeath();
+      
     }
-    if(!this.isPlayer) {
-     this.move();
+    if (!this.isPlayer) {
+      
+      this.updateShip();
+      this.move();
     }
-
-     this.fireGun();
+    this.fireGun();
   }
+
+  setTargetFront() {
+    this.target = {
+      y: GAME_HEIGHT
+    };
+  }
+
+  getEmptyPositionOnBoard() {
+    for (let i = 0; i < this.game.enemies.length; i++) {
+      while (this.game.collision.rectsColliding(this, this.game.enemies[i])) {
+        this.x = getRandomInt(this.w, this.collision.boardWidth - this.w);
+        this.y = getRandomInt(
+          this.collision.allowedY.y0,
+          Math.floor(this.collision.boardHeight / 2.5)
+        );
+      }
+    }
+  }
+
+  getEmptyPositionOutsideNorthBoard() {
+    for (let i = 0; i < this.game.enemies.length; i++) {
+      while (this.game.collision.rectsColliding(this, this.game.enemies[i])) {
+        this.x = getRandomInt(this.w, this.collision.boardWidth - this.w);
+        this.y = getRandomInt(this.w - 50, this.w - 100);
+      }
+    }
+  }
+  
 
   setDead() {
     this.isDead = true;
@@ -47,7 +77,6 @@ export default class Ship {
     if (isByProjectile) {
       this.gotHitByProjectile(projectile);
       this.playHitEffect(projectile.type);
-      
     } else {
       this.gotHitByShipHull();
     }
@@ -60,6 +89,6 @@ export default class Ship {
   }
 
   gotHitByShipHull() {
-    this.health = this.health - 0.1;  //hardcoded temporary variable
+    this.health = this.health - 0.1; //hardcoded temporary variable
   }
 }

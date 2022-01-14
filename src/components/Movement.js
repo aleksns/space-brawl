@@ -5,8 +5,36 @@ export default class Movement {
     this.boardHeight = game.boardHeight;
   }
 
-  // export const directions = ["N", "E", "S", "W", "NE", "SE", "SW", "NW"];
-  move(object, isOutOfBordersAllowed) {
+  applyVelocity(object) {
+    object.x += object.vX;
+    object.y += object.vY;
+  }
+
+  setTrajectory(object) {
+    this.calculateVectorsAndDistance(object);
+    this.applySpeedModifier(object);
+  }
+
+  //calculate vectors and distance between two objects, where p1 - start position and p2 - end position
+  calculateVectorsAndDistance(object) {
+    object.vX = object.cords.p2X - object.cords.p1X;
+    object.vY = object.cords.p2Y - object.cords.p1Y;
+
+    object.distance = Math.sqrt(object.vX * object.vX + object.vY * object.vY);
+
+    object.vX = object.vX / object.distance;
+    object.vY = object.vY / object.distance;
+
+    object.x = object.cords.p1X;
+    object.y = object.cords.p1Y;
+  }
+
+  applySpeedModifier(object) {
+    object.vX = object.vX * object.s;
+    object.vY = object.vY * object.s;
+  }
+
+  move(object, isCheckSouthOutOfBorderOnly) {
     switch (object.direction) {
       case "N":
         this.moveNorth(object);
@@ -39,13 +67,18 @@ export default class Movement {
         break;
     }
     this.applyPhysics(object);
-    if(!isOutOfBordersAllowed) {
+    
+    if (isCheckSouthOutOfBorderOnly) {
+      if (this.game.collision.isCollisionBorderDown(object, -object.h)) {
+        object.setDead();
+      }
+    } else {
       this.game.collision.handleCollisionWithBorders(object);
-    }  
+    }
   }
 
   moveNorth(object) {
-    if (object.vY > -object.s) {
+    if (object.vY < object.s) {
       object.vY -= object.a;
     }
   }
@@ -63,11 +96,10 @@ export default class Movement {
   }
 
   moveWest(object) {
-    if (object.vX > -object.s) {
+    if (object.vX < object.s) {
       object.vX -= object.a;
     }
   }
-
 
   moveNorthEast(object) {
     if (object.vY > -object.s) {
@@ -100,9 +132,8 @@ export default class Movement {
   applyPhysics(object) {
     /* apply friction to velocity */
     object.vX *= object.f;
-    object.x += object.vX;
-
     object.vY *= object.f;
-    object.y += object.vY;
+
+    this.applyVelocity(object);
   }
 }

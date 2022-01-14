@@ -6,7 +6,7 @@ import {
   getDefaultPlayerProjectile,
 } from "../services/services"; 
 
-export class SingleGun extends Gun {
+export class SingleFront extends Gun {
   constructor(game, owner) {
     super(game, owner);
     this.projectileType = "default";
@@ -21,23 +21,19 @@ export class SingleGun extends Gun {
       p2Y: 0
     }
 
+    this.barrels = [
+      this.barrel1
+    ];
+
     this.dW = getDefaultPlayerProjectile.w; //offStep for a projectile, to make a better center position
   }
 
-  fire() {
-    this.barrel1.p1X = getSingleGunPosition(this.owner, this.dW).x;
-    this.barrel1.p1Y = getSingleGunPosition(this.owner, this.dW).y;
-
-    if(this.owner.isPlayer) {
-      this.barrel1.p2X = this.barrel1.p1X;
-      this.barrel1.p2Y = 0;
+  getGunPosition(i) {
+    var gunPosition = {
+      p1X: getSingleGunPosition(this.owner, this.dW)[i].x,
+      p1Y: getSingleGunPosition(this.owner, this.dW)[i].y,
     }
-    else {
-      this.barrel1.p2X = getObjectCenterPosition(this.game.player).x;
-      this.barrel1.p2Y = getObjectCenterPosition(this.game.player).y;
-    }
-    //this.game.init.addProjectile(this.owner);
-    this.game.init.addProjectile(this.owner, this.barrel1);
+    return gunPosition;
   }
 
 }

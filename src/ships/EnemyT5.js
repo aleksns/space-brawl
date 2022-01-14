@@ -1,13 +1,14 @@
 import Ship from "./Ship";
 import {
   directions,
+  getObjectCenterPosition,
   getRandomInt,
   getEnemyT5DefaultStats,
   getEnemyT5Dimension,
+  GAME_WIDTH,
 } from "../services/services";
 import enemyImageT5 from "../images/enemyShipT5.png";
-import { SingleGun } from "../guns/SingleGun";
-import { DoubleGun } from "../guns/DoubleGun";
+import { SingleFront } from "../guns/SingleFront";
 
 export class EnemyT5 extends Ship {
   constructor(game) {
@@ -17,14 +18,19 @@ export class EnemyT5 extends Ship {
     this.y = 0;
     this.w = getEnemyT5Dimension().w;
     this.h = getEnemyT5Dimension().h;
+    this.vX = 0;
+    this.vY = 0;
+    this.dX = 0;
+    this.dY = 0;
+    this.distance = 0;
 
     this.health = this.game.stats.enemyT5.health;
     this.maxHealth = this.game.stats.enemyT5.maxHealth;
 
     this.isPlayer = false;
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
-    this.s = 2; // default was 2
-    this.a = this.s / 40; // default was this.s / 40
+    this.s = 4; // default was 2
+    this.a = this.s / 20; // default was this.s / 40
     this.direction = "S";
     /* offStep = applies additional distance for enemies to stop their movement
     before reaching allowed borders and maintaining smooth bounce effect */
@@ -38,13 +44,29 @@ export class EnemyT5 extends Ship {
     this.damage = this.game.stats.enemyT5.damage;
     this.atkSpeed = this.game.stats.enemyT5.atkSpeed;
     this.gun = undefined;
+    this.target = this.game.player;
 
     this.image = new Image();
     this.image.src = enemyImageT5;
 
+    //width and height help to detect the collision (moment when an object has arrived)
+    this.moveToPosition = {
+      x: 0,
+      y: 0,
+      w: 5,
+      h: 5
+    }
+
+    this.cords = {
+      p1X: 0,
+      p1Y: 0,
+      p2X: 0,
+      p2Y: 0
+    }
+
     this.directionChangeIntervalNow = 0;
     this.directionChangeInterval = 4;
-    this.isOutOfBordersAllowed = true;
+    this.isCheckSouthOutOfBorderOnly = true;
     console.log("CONSTRUCTOR > EnemyT5");
   }
 
@@ -57,32 +79,46 @@ export class EnemyT5 extends Ship {
     this.gun.fire();
   }
 
-  move() {
-    //console.log(`ENEMY >> this.s=${this.s} AND this.a = ${this.a}`);
-    this.game.movement.move(this, this.isOutOfBordersAllowed);
-    // let timePassed = (this.game.then - this.directionChangeIntervalNow) / 1000;
-    // if (timePassed <= this.directionChangeInterval) {
-    //   return;
-    // }
-    // this.directionChangeIntervalNow = Date.now();
-    // this.setRandomDirection();
-  }
-
+  
   initialize() {
     this.x = getRandomInt(this.w, this.collision.boardWidth - this.w);
-    this.y = 100;
-    this.getEmptyPosition();
-    var newGun = new DoubleGun(this.game, this);
+    this.y = getRandomInt(-this.h - 50, -this.h - 100);
+
+    this.getEmptyPositionOutsideNorthBoard();
+    this.setNewDirection();
+
+    this.setTargetFront();
+    var newGun = new SingleFront(this.game, this);
     this.gun = newGun;
+    
   }
 
-  getEmptyPosition() {
-    for (let i = 0; i < this.game.enemies.length; i++) {
-      while (this.game.collision.rectsColliding(this, this.game.enemies[i])) {
-        this.x = getRandomInt(this.w, this.collision.boardWidth - this.w);
-        this.y = 100;
-      }
+  move() {  
+    this.game.movement.applyVelocity(this);
+  }
+
+  updateShip() {
+    if (this.game.collision.isCollisionBorderDown(this, -this.h)) {
+      this.setDead();
     }
+  }
+
+  setNewDirection() {
+    this.moveToPosition.x = this.x;
+    this.moveToPosition.y = GAME_WIDTH + this.h;
+    console.log(`set >>>> moveToPosition.x = ${this.moveToPosition.x}, moveToPosition.y = ${this.moveToPosition.y}`)
+
+    this.setCordsOfTwoPoints();
+    this.game.movement.setTrajectory(this);
+  }
+
+  setCordsOfTwoPoints() {
+    this.cords = {
+      p1X: this.x,
+      p1Y: this.y,
+      p2X: this.moveToPosition.x,
+      p2Y: this.moveToPosition.y,
+    };
   }
 
   getAtkSpeed() {

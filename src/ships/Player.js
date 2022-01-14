@@ -2,9 +2,9 @@ import Ship from "./Ship";
 import { getPlayerT0Dimension, getPlayerDefaultStats } from "../services/services";
 import playerImage from "../images/playerShip.png";
 
-import { SingleGun } from "../guns/SingleGun";
-import { DoubleGun } from "../guns/DoubleGun";
-import { TripleGun } from "../guns/TripleGun";
+import { SingleFront } from "../guns/SingleFront";
+import { DoubleFront } from "../guns/DoubleFront";
+import { TripleFront } from "../guns/TripleFront";
 
 export class Player extends Ship {
   constructor(game) { 
@@ -18,6 +18,8 @@ export class Player extends Ship {
     this.health = this.stats.player.health;
     this.maxHealth = this.stats.player.maxHealth;
     this.isPlayer = true;
+    this.offStepX = 0;
+    this.offStepX = 0;
     
     //this.gun = "default";
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
@@ -27,10 +29,14 @@ export class Player extends Ship {
     this.damage = this.stats.player.damage;
     this.atkSpeed = this.stats.player.atkSpeed;
     this.atkSpeedCap = this.stats.player.atkSpeedCap;
-    this.singleGun = new SingleGun(this.game, this);
-    this.doubleGun = new DoubleGun(this.game, this);
-    this.tripleGun = new TripleGun(this.game, this);
-    this.gun = this.tripleGun;
+    this.target = {
+      y: 0,
+    };
+    this.SingleFront = new SingleFront(this.game, this);
+    this.DoubleFront = new DoubleFront(this.game, this);
+    this.TripleFront = new TripleFront(this.game, this);
+    this.gun = this.TripleFront;
+
 
     this.image = new Image();
     this.image.src = playerImage;

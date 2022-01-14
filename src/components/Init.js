@@ -135,28 +135,29 @@ export default class Init {
   }
 
   addEnemy() {
-    var newEnemy = new EnemyT5(this.game);
-    //this.getEmptyPosition(newEnemy);
+    var newEnemy = new EnemyT4(this.game);
+    //this.(newEnemy);
     newEnemy.initialize();
     newEnemy.startTimers();
     this.game.enemies.push(newEnemy);
   }
 
-  addProjectile(object, barrel) {
+  addProjectile(gun, barrel) {
     if (this.getCurrentNumOfProjectiles() >= this.maxNumOfProjectiles) {
       return;
     }
 
-    let newProjectile = new ProjectileDefault(this.game);
+    let newProjectile = new ProjectileDefault(this.game, gun, barrel);
 
-    if (object.isPlayer) {
-      newProjectile.setPlayerOwned(object);
+    if (gun.isPlayerOwned) {
+      newProjectile.setPlayerOwned(gun);
       this.game.playerProjectiles.push(newProjectile);
     } else {
-      newProjectile.setEnemyOwned(object);
+      newProjectile.setEnemyOwned(gun);
       this.game.enemyProjectiles.push(newProjectile);
     }
-    newProjectile.launch(barrel);
+    //newProjectile.launch(barrel);
+    newProjectile.initialize();
   }
 
   addEffect(object, effectType) {

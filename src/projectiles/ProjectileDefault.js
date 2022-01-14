@@ -2,8 +2,8 @@ import { colors, getDefaultPlayerProjectile, getDefaultEnemyProjectile } from ".
 import Projectile from "./Projectile";
 
 export class ProjectileDefault extends Projectile {
-  constructor(game) {
-    super(game);
+  constructor(game, gun, barrel) {
+    super(game, gun, barrel);
     this.game = game;
     this.stats = this.game.stats;
     this.w = 0;
@@ -19,14 +19,14 @@ export class ProjectileDefault extends Projectile {
     this.shadowBlur = 0;
   }
 
-  setProjectileStats(isPlayerOwned, object) {
+  setProjectileStats(isPlayerOwned) {
     if(isPlayerOwned) {
       this.setPlayerProjectileShape();
-      this.setPlayerProjectileStats(object);
+      this.setPlayerProjectileStats();
     }
     else {
       this.setEnemyProjectileShape();
-      this.setEnemyProjectileStats(object);
+      this.setEnemyProjectileStats();
     }
   }
 
@@ -37,8 +37,8 @@ export class ProjectileDefault extends Projectile {
     this.isFill = getDefaultPlayerProjectile.isFill;
   }
 
-  setPlayerProjectileStats(object) {
-    this.damage = object.damage;
+  setPlayerProjectileStats() {
+    this.damage = this.gun.owner.damage;
     this.s = getDefaultPlayerProjectile.s;
   }
 
@@ -49,8 +49,8 @@ export class ProjectileDefault extends Projectile {
     this.isFill = getDefaultEnemyProjectile.isFill;
   }
 
-  setEnemyProjectileStats(object) {
-    this.damage = object.damage;
+  setEnemyProjectileStats() {
+    this.damage = this.gun.owner.damage;
     this.s = getDefaultEnemyProjectile.s;
   }
 }

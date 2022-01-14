@@ -32,8 +32,8 @@ export function getEnemyT4Dimension() {
 
 export function getEnemyT5Dimension() {
   let dimension = {
-    w: GAME_WIDTH / 14,
-    h: GAME_HEIGHT / 7,
+    w: GAME_WIDTH / 16,
+    h: GAME_HEIGHT / 8,
   };
   return dimension;
 }
@@ -137,10 +137,10 @@ export const getEnemyT4DefaultStats = {
 export const getEnemyT5DefaultStats = {
   damage: 3,
   health: 75,
-  maxHealth: 100,
+  maxHealth: 75,
   rammingDmg: 0.1,
-  atkSpeed: 0.7,
-  atkSpeedCap: 0.5,
+  atkSpeed: 0.9,
+  atkSpeedCap: 0.8,
   scorePoints: 15,
 };
 
@@ -171,13 +171,14 @@ export function getObjectCenterPosition(object) {
 
 export function getSingleGunPosition(object, projectileW) {
   //projectile width
+  var toReturn = [];
+
   var centerPosition = {
     x: object.x + object.w / 2 - projectileW / 2,
     y: object.y + object.h / 2,
-    // x: object.x + object.w / 2 - projectile.w / 2,
-    // y: object.y + object.h / 2,
   };
-  return centerPosition;
+  toReturn.push(centerPosition);
+  return toReturn;
 }
 
 export function getDoubleGunPosition(object, projectileW) {
@@ -202,7 +203,7 @@ export function getTripleGunPosition(object, projectileW) {
   var toReturn = [];
 
   var leftPosition = getDoubleGunPosition(object, projectileW)[0];
-  var centerPosition = getSingleGunPosition(object, projectileW);
+  var centerPosition = getSingleGunPosition(object, projectileW)[0];
   var rightPosition = getDoubleGunPosition(object, projectileW)[1];
 
   toReturn.push(leftPosition);

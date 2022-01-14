@@ -1,61 +1,45 @@
 export default class Projectile {
-  constructor(game) {
+  constructor(game, gun, barrel) {
     this.game = game;
+    this.gun = gun;
+    this.barrel = barrel;
     this.ctx = game.ctx;
 
     this.x = 0;
     this.y = 0;
 
-    this.dX = 0;
-    this.dY = 0;
-
     this.vX = 0;
     this.vY = 0;
-    this.dist = 0;
+    this.distance = 0;
+
+    this.cords = {
+      p1X: this.barrel.p1X,
+      p1Y: this.barrel.p1Y,
+      p2X: this.barrel.p2X,
+      p2Y: this.barrel.p2Y
+    };
 
     this.isPlayerOwned = undefined;
     this.isDead = false;
   }
 
   update() {
-    this.x += this.dX;
-    this.y += this.dY;
+    this.game.movement.applyVelocity(this);
     this.removeIfOutsideScreen();
   }
 
-  setPlayerOwned(object) {
+  initialize() {
+    this.game.movement.setTrajectory(this);
+  }
+
+  setPlayerOwned(gun) {
     this.isPlayerOwned = true;
-    this.setProjectileStats(this.isPlayerOwned, object);
+    this.setProjectileStats(this.isPlayerOwned, gun);
   }
 
-  setEnemyOwned(object) {
+  setEnemyOwned(gun) {
     this.isPlayerOwned = false;
-    this.setProjectileStats(this.isPlayerOwned, object);
-  }
-
-  launch(barrel) {
-    this.calculateVectorsAndDistance(barrel);
-    this.applySpeedModifier();
-  }
-
-  // p1X/Y - start position of the projectile.
-  // p2X/Y - end position of the projectile.
-  calculateVectorsAndDistance(barrel) {
-    this.vX = barrel.p2X - barrel.p1X;
-    this.vY = barrel.p2Y - barrel.p1Y;
-
-    this.dist = Math.sqrt(this.vX * this.vX + this.vY * this.vY);
-
-    this.vX = this.vX / this.dist;
-    this.vY = this.vY / this.dist;
-
-    this.x = barrel.p1X;
-    this.y = barrel.p1Y;
-  }
-
-  applySpeedModifier() {
-    this.dX = this.vX * this.s;
-    this.dY = this.vY * this.s;
+    this.setProjectileStats(this.isPlayerOwned, gun);
   }
 
   removeIfOutsideScreen() {

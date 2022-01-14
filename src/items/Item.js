@@ -13,11 +13,11 @@ export default class Item {
     this.isSpawnOnInit = undefined;
     //this.isPlayer = false;
     this.isItem = true;
-    this.isOutOfBordersAllowed = true;
+    this.isCheckSouthOutOfBorderOnly = true;
   }
 
   update() {
-    this.game.movement.move(this, this.isOutOfBordersAllowed);
+    this.game.movement.move(this, this.isCheckSouthOutOfBorderOnly);
     //this.isTimeToRemove();
     if (this.isInteractable && this.isPickedUpByPlayer()) {
         this.applyBuff();
@@ -30,9 +30,15 @@ export default class Item {
   }
 
   isTimeToRemove() {
+    //function is turned off
+    //function is turned off
+    //function is turned off
+    
     if (this.game.collision.isCollisionBorderDown(this, -this.h)) {
       //this.isDead = true;
       this.setDead();
+      console.log(`IS TIME TO REMOVE ITEM>?>>>>>`)
+      
     }
   }
 

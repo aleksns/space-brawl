@@ -7,9 +7,7 @@ import {
   getEnemyT4Dimension,
 } from "../services/services";
 import enemyImageT4 from "../images/enemyShipT4.png";
-import { SingleGun } from "../guns/SingleGun";
-import { DoubleGun } from "../guns/DoubleGun";
-import { TripleGun } from "../guns/TripleGun";
+import { SingleTarget } from "../guns/SingleTarget";
 
 export class EnemyT4 extends Ship {
   constructor(game) {
@@ -25,7 +23,7 @@ export class EnemyT4 extends Ship {
 
     this.isPlayer = false;
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
-    this.s = 2; // default was 2
+    this.s = 2 // default was 2
     this.a = this.s / 40; // default was this.s / 40
     this.direction = getRandomDirection();
     /* offStep = applies additional distance for enemies to stop their movement
@@ -40,13 +38,14 @@ export class EnemyT4 extends Ship {
     this.damage = this.game.stats.enemyT4.damage;
     this.atkSpeed = this.game.stats.enemyT4.atkSpeed;
     this.gun = undefined;
+    this.target = this.game.player;
 
     this.image = new Image();
     this.image.src = enemyImageT4;
 
     this.directionChangeIntervalNow = 0;
     this.directionChangeInterval = 4;
-    this.isOutOfBordersAllowed = false;
+    this.isCheckSouthOutOfBorderOnly = false;
     console.log("CONSTRUCTOR > EnemyT4");
   }
 
@@ -59,9 +58,7 @@ export class EnemyT4 extends Ship {
     this.gun.fire();
   }
 
-  move() {
-    //console.log(`ENEMYT4 >> this.s=${this.s} AND this.a = ${this.a}`);
-    this.game.movement.move(this, this.isOutOfBordersAllowed);
+  updateShip() {
     let timePassed = (this.game.then - this.directionChangeIntervalNow) / 1000;
     if (timePassed <= this.directionChangeInterval) {
       return;
@@ -70,27 +67,25 @@ export class EnemyT4 extends Ship {
     this.setRandomDirection();
   }
 
+  move() {
+    this.game.movement.move(this, this.isCheckSouthOutOfBorderOnly);
+    // let timePassed = (this.game.then - this.directionChangeIntervalNow) / 1000;
+    // if (timePassed <= this.directionChangeInterval) {
+    //   return;
+    // }
+    // this.directionChangeIntervalNow = Date.now();
+    // this.setRandomDirection();
+  }
+
   initialize() {
     this.x = getRandomInt(this.w, this.collision.boardWidth - this.w);
     this.y = getRandomInt(
       this.collision.allowedY.y0,
       Math.floor(this.collision.boardHeight / 2.5)
     );
-    this.getEmptyPosition();
-    var newGun = new SingleGun(this.game, this);
+    this.getEmptyPositionOnBoard();
+    var newGun = new SingleTarget(this.game, this);
     this.gun = newGun;
-  }
-
-  getEmptyPosition() {
-    for (let i = 0; i < this.game.enemies.length; i++) {
-      while (this.game.collision.rectsColliding(this, this.game.enemies[i])) {
-        this.x = getRandomInt(this.w, this.collision.boardWidth - this.w);
-        this.y = getRandomInt(
-          this.collision.allowedY.y0,
-          Math.floor(this.collision.boardHeight / 2.5)
-        );
-      }
-    }
   }
 
   setRandomDirectionFromList(listOfDirections) {

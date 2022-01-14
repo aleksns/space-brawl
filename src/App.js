@@ -214,7 +214,7 @@ export default function App() {
           className="btn-start"
           style={!isUiOn ? { cursor: "default" } : {}}
         >
-          START
+          
         </button>
         <GithubLinkWithIcon />
       </div>

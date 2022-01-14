@@ -8,9 +8,9 @@ import {
   GAME_HEIGHT
 } from "../services/services";
 import bossImage from "../images/enemyBoss.png";
-import { SingleGun } from "../guns/SingleGun";
-import { DoubleGun } from "../guns/DoubleGun";
-import { TripleGun } from "../guns/TripleGun";
+import { SingleFront } from "../guns/SingleFront";
+import { DoubleFront } from "../guns/DoubleFront";
+import { TripleFront } from "../guns/TripleFront";
 
 
 export class Boss extends Ship {
@@ -38,6 +38,7 @@ export class Boss extends Ship {
     this.damage = this.game.stats.enemyT0.damage;
     this.atkSpeed = this.game.stats.enemyT0.atkSpeed;
     this.gun = undefined;
+    this.target = this.game.player;
 
     this.image = new Image();
     this.image.src = bossImage;
@@ -58,7 +59,7 @@ export class Boss extends Ship {
   initialize() {
     this.x = (GAME_WIDTH / 2) - (this.w / 2);
     this.y = this.collision.allowedY.y0 - 20;
-    var newGun = new TripleGun(this.game, this);
+    var newGun = new TripleFront(this.game, this);
     this.gun = newGun;
   }
 

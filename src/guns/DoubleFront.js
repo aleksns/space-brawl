@@ -6,7 +6,7 @@ import {
   getDefaultPlayerProjectile,
 } from "../services/services"; 
 
-export class DoubleGun extends Gun {
+export class DoubleFront extends Gun {
   constructor(game, owner) {
     super(game, owner);
     this.projectileType = "default";
