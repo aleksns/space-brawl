@@ -1,8 +1,6 @@
 export default class Movement {
   constructor(game) {
     this.game = game;
-    this.boardWidth = game.boardWidth;
-    this.boardHeight = game.boardHeight;
   }
 
   applyVelocity(object) {

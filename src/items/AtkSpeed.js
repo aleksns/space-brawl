@@ -41,6 +41,6 @@ export class AtkSpeed extends Item {
 
   setMinSpawnRange() {
     this.spawnRangeMinX = this.w;
-    this.spawnRangeMaxX = this.game.collision.boardWidth - this.w;
+    this.spawnRangeMaxX = this.game.gameBoard.width - this.w;
   }
 }

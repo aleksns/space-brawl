@@ -139,7 +139,7 @@ export const getEnemyT5DefaultStats = {
   health: 75,
   maxHealth: 75,
   rammingDmg: 0.1,
-  atkSpeed: 0.9,
+  atkSpeed: 1.0,
   atkSpeedCap: 0.8,
   scorePoints: 15,
 };

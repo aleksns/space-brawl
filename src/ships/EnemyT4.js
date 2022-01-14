@@ -39,6 +39,7 @@ export class EnemyT4 extends Ship {
     this.atkSpeed = this.game.stats.enemyT4.atkSpeed;
     this.gun = undefined;
     this.target = this.game.player;
+    this.projectileSpeedModifier = 0;
 
     this.image = new Image();
     this.image.src = enemyImageT4;
@@ -78,10 +79,10 @@ export class EnemyT4 extends Ship {
   }
 
   initialize() {
-    this.x = getRandomInt(this.w, this.collision.boardWidth - this.w);
+    this.x = getRandomInt(this.w, this.collision.width - this.w);
     this.y = getRandomInt(
       this.collision.allowedY.y0,
-      Math.floor(this.collision.boardHeight / 2.5)
+      Math.floor(this.collision.height / 2.5)
     );
     this.getEmptyPositionOnBoard();
     var newGun = new SingleTarget(this.game, this);

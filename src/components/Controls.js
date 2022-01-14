@@ -2,8 +2,6 @@ import "../App.css";
 
 export default class Controls {
   constructor(game) {
-    this.boardWidth = game.boardWidth;
-    this.boardHeight = game.boardHeight;
     this.keys = {
       keyW: false,
       keyA: false,

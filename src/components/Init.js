@@ -34,7 +34,14 @@ export default class Init {
         id: "atkSpeed",
       }),
     ];
-    this.testNow = 0;
+
+    this.formationLine = {
+      delay: 8,
+      numOfEnemies: 13
+    };
+
+    this.enemiesInFormation = [];
+    this.then = 0;
     this.now = 0;
   }
 
@@ -43,8 +50,9 @@ export default class Init {
       this.itemsToSpawn[i].now = Date.now();
       this.itemsToSpawn[i].then = this.itemsToSpawn[i].now;
     }
-    this.testNow = Date.now();
+
     this.now = Date.now();
+    this.then = this.now;
   }
 
   addItemsBasedOnTiming() {
@@ -114,6 +122,8 @@ export default class Init {
   }
 
   spawnEnemies() {
+    this.spawnFormationOfEnemies();
+
     if (this.game.enemies.length >= this.progression.maxNumOfEnemies) {
       return;
     }
@@ -125,7 +135,33 @@ export default class Init {
     ) {
       this.addBoss();
     }
+
     //this.addBoss();
+  }
+
+  // Create formation of enemies > put enemies in the temp list > apply formation function to enemies >
+  // > add enemies to the main list > remove temp list
+  spawnFormationOfEnemies() {
+    this.now = Date.now();
+    let timePassed = (this.now - this.then) / 1000;
+
+    if (timePassed >= this.formationLine.delay) {
+      this.then = this.now;
+    
+      for (let i = 0; i <= this.formationLine.numOfEnemies; i++) {
+        var newEnemy = new EnemyT5(this.game);
+        newEnemy.initialize();
+        newEnemy.startTimers();
+        this.enemiesInFormation.push(newEnemy);
+      }
+      this.game.gameBoard.setShipsInFormationLine(this.enemiesInFormation);
+
+      for(let i = 0; i < this.enemiesInFormation.length; i++) {
+        this.game.enemies.push(this.enemiesInFormation[i]);
+      }
+
+      this.enemiesInFormation = [];
+    }
   }
 
   addBoss() {
@@ -135,8 +171,7 @@ export default class Init {
   }
 
   addEnemy() {
-    var newEnemy = new EnemyT4(this.game);
-    //this.(newEnemy);
+    var newEnemy = new EnemyT5(this.game);
     newEnemy.initialize();
     newEnemy.startTimers();
     this.game.enemies.push(newEnemy);

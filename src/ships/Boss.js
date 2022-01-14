@@ -39,10 +39,11 @@ export class Boss extends Ship {
     this.atkSpeed = this.game.stats.enemyT0.atkSpeed;
     this.gun = undefined;
     this.target = this.game.player;
+    this.projectileSpeedModifier = 2;
 
     this.image = new Image();
     this.image.src = bossImage;
-    
+
     console.log("CONSTRUCTOR > Boss");
     //console.log(`GAME_WIDTH = ${GAME_WIDTH}`);
   }

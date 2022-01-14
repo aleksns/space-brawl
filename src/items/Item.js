@@ -65,7 +65,7 @@ export default class Item {
     if (!this.isSpawnOnInit) {
       maxY = 0 - (this.h + 25);
     } else {
-      maxY = this.game.collision.boardHeight - this.h / 2;
+      maxY = this.game.gameBoard.height - this.h / 2;
     }
 
     this.x = getRandomInt(minX, maxX);

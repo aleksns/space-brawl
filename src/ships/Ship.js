@@ -26,7 +26,8 @@ export default class Ship {
   }
 
   update() {
-    if (this.health <= 0 || (this.game.collision.isOutOfBorders(this) && this.isCheckSouthOutOfBorderOnly == false)) {
+    //if (this.health <= 0 || (this.game.collision.isOutOfBorders(this) && this.isCheckSouthOutOfBorderOnly == false)) {
+      if (this.health <= 0 || (this.game.collision.isOutOfBorders(this) && this.isCheckSouthOutOfBorderOnly == false)) {
       this.health = 0;
       this.setDead();
       this.onDeath();
@@ -49,10 +50,10 @@ export default class Ship {
   getEmptyPositionOnBoard() {
     for (let i = 0; i < this.game.enemies.length; i++) {
       while (this.game.collision.rectsColliding(this, this.game.enemies[i])) {
-        this.x = getRandomInt(this.w, this.collision.boardWidth - this.w);
+        this.x = getRandomInt(this.w, this.collision.width - this.w);
         this.y = getRandomInt(
           this.collision.allowedY.y0,
-          Math.floor(this.collision.boardHeight / 2.5)
+          Math.floor(this.collision.height / 2.5)
         );
       }
     }
@@ -61,12 +62,11 @@ export default class Ship {
   getEmptyPositionOutsideNorthBoard() {
     for (let i = 0; i < this.game.enemies.length; i++) {
       while (this.game.collision.rectsColliding(this, this.game.enemies[i])) {
-        this.x = getRandomInt(this.w, this.collision.boardWidth - this.w);
+        this.x = getRandomInt(this.w, this.collision.width - this.w);
         this.y = getRandomInt(this.w - 50, this.w - 100);
       }
     }
   }
-  
 
   setDead() {
     this.isDead = true;

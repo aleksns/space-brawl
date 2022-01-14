@@ -10,6 +10,7 @@ import StatusEffects from "./StatusEffects";
 import { GAME_WIDTH, GAME_HEIGHT } from "../services/services";
 import Progression from "./Progression";
 import { LevelTransition } from "../ui/LevelTransition";
+import GameBoard from "./GameBoard";
 
 //Remove some variables FROM THE CONSTRUCTOR which are not being used
 //e.g. board height, allowed board height, etc
@@ -27,6 +28,7 @@ export default class Game {
     this.ctx3 = context3Ref;
     this.ctx4 = context4Ref;
     this.canvas4 = canvas4Ref;
+    this.gameBoard = new GameBoard(this);
     this.clearCanvas4 = clearCanvas4;
     this.progression = new Progression(this);
     this.stats = new Stats(this); ///maybe to put into another class?

@@ -36,6 +36,7 @@ export class Player extends Ship {
     this.DoubleFront = new DoubleFront(this.game, this);
     this.TripleFront = new TripleFront(this.game, this);
     this.gun = this.TripleFront;
+    this.projectileSpeedModifier = 0;
 
 
     this.image = new Image();

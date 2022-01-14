@@ -39,7 +39,7 @@ export class ProjectileDefault extends Projectile {
 
   setPlayerProjectileStats() {
     this.damage = this.gun.owner.damage;
-    this.s = getDefaultPlayerProjectile.s;
+    this.s = getDefaultPlayerProjectile.s + this.gun.owner.projectileSpeedModifier;
   }
 
   setEnemyProjectileShape() {
@@ -51,6 +51,6 @@ export class ProjectileDefault extends Projectile {
 
   setEnemyProjectileStats() {
     this.damage = this.gun.owner.damage;
-    this.s = getDefaultEnemyProjectile.s;
+    this.s = getDefaultEnemyProjectile.s + this.gun.owner.projectileSpeedModifier;
   }
 }

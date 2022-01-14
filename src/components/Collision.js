@@ -5,8 +5,8 @@ export default class Collision {
   constructor(game) {
     this.game = game;
     this.gameBoard = new GameBoard();
-    this.boardWidth = this.gameBoard.boardWidth; ///exists in services.
-    this.boardHeight = this.gameBoard.boardHeight; ///exists in services
+    this.width = this.gameBoard.width; ///exists in services.
+    this.height = this.gameBoard.height; ///exists in services
 
     this.allowedX = this.gameBoard.allowedX;
     this.allowedY = this.gameBoard.allowedY;

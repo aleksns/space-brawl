@@ -29,8 +29,8 @@ export class EnemyT5 extends Ship {
 
     this.isPlayer = false;
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
-    this.s = 4; // default was 2
-    this.a = this.s / 20; // default was this.s / 40
+    this.s = 1; // default was 2
+    this.a = this.s / 60; // default was this.s / 40
     this.direction = "S";
     /* offStep = applies additional distance for enemies to stop their movement
     before reaching allowed borders and maintaining smooth bounce effect */
@@ -44,7 +44,8 @@ export class EnemyT5 extends Ship {
     this.damage = this.game.stats.enemyT5.damage;
     this.atkSpeed = this.game.stats.enemyT5.atkSpeed;
     this.gun = undefined;
-    this.target = this.game.player;
+    this.target = this.game.player
+    this.projectileSpeedModifier = this.s * 1.5;
 
     this.image = new Image();
     this.image.src = enemyImageT5;
@@ -81,7 +82,7 @@ export class EnemyT5 extends Ship {
 
   
   initialize() {
-    this.x = getRandomInt(this.w, this.collision.boardWidth - this.w);
+    this.x = getRandomInt(this.w, this.collision.width - this.w);
     this.y = getRandomInt(-this.h - 50, -this.h - 100);
 
     this.getEmptyPositionOutsideNorthBoard();
@@ -89,8 +90,7 @@ export class EnemyT5 extends Ship {
 
     this.setTargetFront();
     var newGun = new SingleFront(this.game, this);
-    this.gun = newGun;
-    
+    this.gun = newGun; 
   }
 
   move() {  
@@ -106,7 +106,6 @@ export class EnemyT5 extends Ship {
   setNewDirection() {
     this.moveToPosition.x = this.x;
     this.moveToPosition.y = GAME_WIDTH + this.h;
-    console.log(`set >>>> moveToPosition.x = ${this.moveToPosition.x}, moveToPosition.y = ${this.moveToPosition.y}`)
 
     this.setCordsOfTwoPoints();
     this.game.movement.setTrajectory(this);
