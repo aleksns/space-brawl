@@ -113,8 +113,8 @@ export const getPlayerDefaultStats = {
 
 export const getEnemyT0DefaultStats = {
   damage: 4,
-  health: 8000,
-  maxHealth: 8000,
+  health: 1000,
+  maxHealth: 1000,
   rammingDmg: 0.1,
   atkSpeed: 0.6,
   atkSpeedCap: 0.3,

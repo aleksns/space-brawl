@@ -1,0 +1,37 @@
+import { BossAppearance } from "./BossAppearance";
+import { BossDeath } from "./BossDeath";
+import { LevelTransition } from "./LevelTransition";
+
+export default class Cutscenes {
+  constructor(game) {
+    this.game = game;
+
+    this.levelTransition = new LevelTransition(this.game);
+
+    this.bossAppearance = new BossAppearance(this.game);
+    this.bossDeath = new BossDeath(this.game);
+
+    this.list = [];
+    this.list.push(this.levelTransition);
+    this.list.push(this.bossAppearance);
+    this.list.push(this.bossDeath);
+  }
+
+  isCutscenesNotFinished() {
+    for (let i = 0; i < this.list.length; i++) {
+      if (!this.list[i].isAnimationFinished) {
+        return true;
+      }
+    }
+  }
+
+  getCutsceneToDraw() {
+    var cutsceneToDraw;
+    for (let i = 0; i < this.list.length; i++) {
+      if (!this.list[i].isAnimationFinished) {
+        cutsceneToDraw = this.list[i];
+      }
+    }
+    return cutsceneToDraw;
+  }
+}

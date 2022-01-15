@@ -2,7 +2,7 @@ export default class Progression {
   constructor(game) {
     this.game = game;
     this.threatLevel = 0;
-    this.maxThreatLevel = 111;
+    this.maxThreatLevel = 5;
     this.threatLevelModifier = 1;
 
     this.maxNumOfEnemies = 2;
@@ -15,7 +15,7 @@ export default class Progression {
       maxHealth: 2,
       atkSpeed: 1.1,
       atkSpeedCap: 1,
-      scorePoints: 2.5,
+      scorePoints: 3,
     };
   }
 
@@ -38,8 +38,11 @@ export default class Progression {
     this.resetThreatLevel();
     this.level++;
     this.isMaxThreatLevel = false;
-    this.applyModifiers();
-    this.game.levelTransition.startAnimation();
+    //this.applyModifiers();
+    this.game.stats.applyModifiers(this);
+    this.game.setPauseOn();
+    this.game.cutscenes.levelTransition.initialize();
+    this.game.draw.drawLevelCutscene(); 
   }
 
   applyModifiers() {

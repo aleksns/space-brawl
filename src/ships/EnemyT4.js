@@ -47,6 +47,7 @@ export class EnemyT4 extends Ship {
     this.directionChangeIntervalNow = 0;
     this.directionChangeInterval = 4;
     this.isCheckSouthOutOfBorderOnly = false;
+    this.isBoss = false;
     console.log("CONSTRUCTOR > EnemyT4");
   }
 

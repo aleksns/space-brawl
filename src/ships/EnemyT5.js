@@ -26,7 +26,6 @@ export class EnemyT5 extends Ship {
 
     this.health = this.game.stats.enemyT5.health;
     this.maxHealth = this.game.stats.enemyT5.maxHealth;
-
     this.isPlayer = false;
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.s = 1; // default was 2
@@ -64,7 +63,7 @@ export class EnemyT5 extends Ship {
       p2X: 0,
       p2Y: 0
     }
-
+    this.isBoss = false;
     this.directionChangeIntervalNow = 0;
     this.directionChangeInterval = 4;
     this.isCheckSouthOutOfBorderOnly = true;
@@ -80,7 +79,7 @@ export class EnemyT5 extends Ship {
     this.gun.fire();
     this.game.laser.play();
   }
-
+ 
   
   initialize() {
     this.x = getRandomInt(this.w, this.collision.width - this.w);
@@ -92,7 +91,6 @@ export class EnemyT5 extends Ship {
     this.setTargetFront();
     var newGun = new SingleFront(this.game, this);
     this.gun = newGun; 
-    console.log(`ENEMY t5 w = ${this.w}`)
   }
 
   move() {  

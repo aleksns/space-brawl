@@ -27,7 +27,7 @@ export default class Ship {
 
   update() {
     //if (this.health <= 0 || (this.game.collision.isOutOfBorders(this) && this.isCheckSouthOutOfBorderOnly == false)) {
-      if (this.health <= 0 || (this.game.collision.isOutOfBorders(this) && this.isCheckSouthOutOfBorderOnly == false)) {
+      if ((this.health <= 0 && !this.isBoss)|| (this.game.collision.isOutOfBorders(this) && this.isCheckSouthOutOfBorderOnly == false)) {
       this.health = 0;
       this.setDead();
       this.onDeath();

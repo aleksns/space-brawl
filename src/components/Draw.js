@@ -12,6 +12,7 @@ const hpBarYOffset = -20;
 export default class Draw {
   constructor(game) {
     this.game = game;
+    this.clearCanvas4 = this.game.clearCanvas4;
     this.ctx = game.ctx;
     this.ctx2 = game.ctx2;
     this.ctx3 = game.ctx3;
@@ -19,6 +20,8 @@ export default class Draw {
 
     this.hpBarPlayer = new HpBarPlayer(this.game);
     this.threatBar = new ThreatLevelBar(this.game);
+
+    this.isDrawingAnimation = false;
   }
 
   updateUICanvas() {
@@ -39,20 +42,23 @@ export default class Draw {
   }
 
   drawUIOnInit() {
+    this.clearCanvas4();
     this.drawItem(this.hpBarPlayer.hpBarImageProps, this.ctx4);
     this.drawItem(this.threatBar.threatBarImageProps, this.ctx4);
   }
 
-  drawLevelCutscene() {
-    this.game.levelTransition.draw(this.ctx);
+  // drawLevelCutscene() {
+  //   this.game.cutscenes.levelTransition.draw(this.ctx);
+  // }
+
+  drawCurrentCutscene() {
+    this.game.cutscenes.getCutsceneToDraw().draw(this.ctx);
   }
 
   drawUI() {
     this.hpBarPlayer.draw(this.ctx);
     this.threatBar.draw(this.ctx);
     this.drawScore();
-
-    //this.levelTransition.draw(this.ctx);
   }
 
   drawScore() {

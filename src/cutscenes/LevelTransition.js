@@ -1,11 +1,9 @@
-import UICanvas from "./UICanvas";
+import Cutscene from "./Cutscene";
 import { colors, GAME_WIDTH, GAME_HEIGHT } from "../services/services";
 
-export class LevelTransition extends UICanvas {
+export class LevelTransition extends Cutscene {
   constructor(game) {
     super(game);
-    this.game = game;
-    this.progression = this.game.progression;
     this.container = {
       x: GAME_WIDTH / 2,
       y: GAME_HEIGHT / 2,
@@ -73,7 +71,7 @@ export class LevelTransition extends UICanvas {
     ctx.current.fillText(text, this.textProps.x - (offsetX / 2), this.textProps.y);
   }
 
-  startAnimation() {
+  initialize() {
     this.line1.startX = 0;
     this.line1.startY = this.container.y - this.container.margin;
     this.line1.endX = 0;
@@ -112,7 +110,7 @@ export class LevelTransition extends UICanvas {
       object.startX += this.numOfIterations;
     }
     if (object.startX >= object.destination) {
-      this.isAnimationFinished = true;
+      this.setAnimationIsFinished();
     }
   }
 
@@ -124,7 +122,7 @@ export class LevelTransition extends UICanvas {
       object.startX -= this.numOfIterations;
     }
     if (object.startX <= object.destination) {
-      this.isAnimationFinished = true;
+      this.setAnimationIsFinished();
     }
   }
 

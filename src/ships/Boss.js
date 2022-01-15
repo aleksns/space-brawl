@@ -17,10 +17,15 @@ export class Boss extends Ship {
   constructor(game) {
     super(game);
     this.game = game;
-    this.w = getEnemyT0Dimension().w;
-    this.h = getEnemyT0Dimension().h;
     this.x = 0;  
     this.y = 0;
+    this.w = getEnemyT0Dimension().w;
+    this.h = getEnemyT0Dimension().h;
+    this.vX = 0;
+    this.vY = 0;
+    this.dX = 0;
+    this.dY = 0;
+
     this.health = this.game.stats.enemyT0.health;
     this.maxHealth = this.game.stats.enemyT0.maxHealth;
     this.isPlayer = false;
@@ -28,7 +33,7 @@ export class Boss extends Ship {
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.s = 0.5;
     this.a = this.s / 60;
-    this.direction = getRandomDirection();
+    //this.direction = getRandomDirection();
     /* offStep = applies additional distance for enemies to stop their movement
     before reaching allowed borders and maintaining smooth bounce effect */
     this.offStepX = Math.floor(this.w / 2);
@@ -43,10 +48,11 @@ export class Boss extends Ship {
 
     this.image = new Image();
     this.image.src = bossImage;
-
-    console.log("CONSTRUCTOR > Boss");
+    this.isBoss = true;
+    this.isCheckSouthOutOfBorderOnly = false;
+    console.log("CONSTRUCTOR > BossT0");
     //console.log(`GAME_WIDTH = ${GAME_WIDTH}`);
-  }
+  } 
 
   fireGun() {
     let timePassed = (this.game.then - this.now) / 1000;
@@ -62,7 +68,23 @@ export class Boss extends Ship {
     this.y = this.collision.allowedY.y0 - 20;
     var newGun = new TripleFront(this.game, this);
     this.gun = newGun;
+
+    this.game.setPauseOn();
+    this.game.cutscenes.bossAppearance.initialize();
+    //this.game.cutscenes.bossAppearance.initialize();
   }
+
+  updateShip() {
+    if (this.health <= 0) {
+      this.setDead();
+      this.onDeath();
+    }
+  }
+
+  move() {
+    //tbd
+  }
+
 
   getAtkSpeed() {  
     return this.atkSpeed - this.gun.atkSpeed;

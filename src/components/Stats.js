@@ -51,10 +51,10 @@ export default class Stats {
       scorePoints: getEnemyT0DefaultStats.scorePoints,
     };
 
-    this.enemyStats = [];
-    this.enemyStats.push(this.enemyT0);
-    this.enemyStats.push(this.enemyT4);
-    this.enemyStats.push(this.enemyT5);
+    this.enemiesStats = [];
+    this.enemiesStats.push(this.enemyT0);
+    this.enemiesStats.push(this.enemyT4);
+    this.enemiesStats.push(this.enemyT5);
 
     //s - speed
     this.projectileDefaultPlayer = {
@@ -69,15 +69,9 @@ export default class Stats {
   }
 
   applyModifiers(progression) {
-    // this.enemy.damage *= progression.enemyModifiers.damage;
-    // this.enemy.health *= progression.enemyModifiers.health;
-    // this.enemy.maxHealth *= progression.enemyModifiers.maxHealth;
-    // this.enemy.atkSpeed *= progression.enemyModifiers.atkSpeed;
-    // this.enemy.atkSpeedCap *= progression.enemyModifiers.atkSpeedCap;
-    // this.enemy.scorePoints *= progression.enemyModifiers.scorePoints;
-
-    this.appplyModifiersToEnemy(progression, this.enemy);
-    this.appplyModifiersToEnemy(progression, this.boss);
+    for(let i = 0; i < this.enemiesStats.length; i++) {
+      this.appplyModifiersToEnemy(progression, this.enemiesStats[i]);
+    }
   }
 
   appplyModifiersToEnemy(progression, enemy) {
@@ -86,26 +80,8 @@ export default class Stats {
     enemy.maxHealth *= progression.enemyModifiers.maxHealth;
     enemy.atkSpeed *= progression.enemyModifiers.atkSpeed;
     enemy.atkSpeedCap *= progression.enemyModifiers.atkSpeedCap;
-    enemy.scorePoints *= progression.enemyModifiers.scorePoints;
+    enemy.scorePoints = Math.floor(enemy.scorePoints * progression.enemyModifiers.scorePoints);
   }
-
-  // applyModifiersToEnemies(progression) {
-  //   this.enemy.damage *= progression.enemyModifiers.damage;
-  //   this.enemy.health *= progression.enemyModifiers.health;
-  //   this.enemy.maxHealth *= progression.enemyModifiers.maxHealth;
-  //   this.enemy.atkSpeed *= progression.enemyModifiers.atkSpeed;
-  //   this.enemy.atkSpeedCap *= progression.enemyModifiers.atkSpeedCap;
-  //   this.enemy.scorePoints *= progression.enemyModifiers.scorePoints;
-  // }
-
-  // applyModifiersToBoss(progression) {
-  //   this.boss.damage *= progression.enemyModifiers.damage;
-  //   this.boss.health *= progression.enemyModifiers.health;
-  //   this.boss.maxHealth *= progression.enemyModifiers.maxHealth;
-  //   this.boss.atkSpeed *= progression.enemyModifiers.atkSpeed;
-  //   this.boss.atkSpeedCap *= progression.enemyModifiers.atkSpeedCap;
-  //   this.boss.scorePoints *= progression.enemyModifiers.scorePoints;
-  // }
 
   setAllToDefault() {
     ///

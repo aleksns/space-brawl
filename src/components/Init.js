@@ -36,7 +36,7 @@ export default class Init {
     ];
 
     this.formationLine = {
-      delay: 8,
+      delay: 20,
       numOfEnemies: 13
     };
 
@@ -145,7 +145,7 @@ export default class Init {
     this.now = Date.now();
     let timePassed = (this.now - this.then) / 1000;
 
-    if (timePassed >= this.formationLine.delay) {
+    if ((timePassed >= this.formationLine.delay) && !this.progression.isMaxThreatLevel) {
       this.then = this.now;
     
       for (let i = 0; i <= this.formationLine.numOfEnemies; i++) {

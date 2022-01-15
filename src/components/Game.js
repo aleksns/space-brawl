@@ -8,10 +8,12 @@ import Stats from "./Stats";
 import Init from "./Init";
 import StatusEffects from "./StatusEffects";
 import Progression from "./Progression";
-import { LevelTransition } from "../ui/LevelTransition";
+import { LevelTransition } from "../cutscenes/LevelTransition";
 import GameBoard from "./GameBoard";
 import SoundChannel from "./SoundChannel";
 import SoundList from "./SoundList";
+import { BossDeath } from "../cutscenes/BossDeath";
+import Cutscenes from "../cutscenes/Cutscenes";
 
 //Remove some variables FROM THE CONSTRUCTOR which are not being used
 //e.g. board height, allowed board height, etc
@@ -41,7 +43,11 @@ export default class Game {
     this.controls = new Controls(this);
     this.movement = new Movement(this);
     this.statusEffects = new StatusEffects(this);
-    this.levelTransition = new LevelTransition(this);
+
+    // this.levelTransition = new LevelTransition(this);
+    // this.bossDeath = new BossDeath(this);
+    this.cutscenes = new Cutscenes(this);
+
     this.draw = new Draw(this);
     this.update = new Update(this);
     this.bgElements = [];
@@ -61,6 +67,7 @@ export default class Game {
     this.pauseNow = 0;
     this.pauseThen = 0;
 
+    this.isPauseOn = true;
     // this.startBtn = {
     //   x: 200,
     //   y: 200,
@@ -82,14 +89,14 @@ export default class Game {
     // this.btns.push(this.endBtn);
     // this.elem = document.getElementById("uiScreen");
 
-    this.timePassed = 0;  
-        
+    this.timePassed = 0;
+
     /*  <Sound>  */
     this.laser = new SoundChannel(this.soundList.laser, 1, 0.04);
     this.background = new SoundChannel(this.soundList.bgMusic, 1, 0.08);
     /* <Sound />*/
 
-     console.log("CONSTRUCTOR > GAME");
+    console.log("CONSTRUCTOR > GAME");
   }
 
   isInside(position, rect) {
@@ -125,16 +132,39 @@ export default class Game {
     return this.player.isDead;
   }
 
-  gameLoop() {
-  
-    this.then = Date.now();
-    this.pauseNow = this.then;
-    //this.clearCanvas();
+  // setNewLevelStarted() {
+  //   //return this.progression.threatLevel == 0;
+  //   return this.isNewLevelStarted = true;
+  // }
 
-    if (!this.levelTransition.isAnimationFinished) {
-      this.draw.drawLevelCutscene();
+  setPauseOn() {
+    this.isPauseOn = true;
+    this.now = 0;
+    this.then = 0;
+    this.clearCanvas4();
+  }
+
+  setPauseOff() {
+    this.isPauseOn = false;
+  }
+
+
+
+  gameLoop() {
+    // if (!this.cutscenes.levelTransition.isAnimationFinished) {
+    //   this.draw.drawLevelCutscene();
+    // }
+    if (this.cutscenes.isCutscenesNotFinished()) {
+      this.draw.drawCurrentCutscene();
+    }
+
+    if (this.isPauseOn) {
       return;
     }
+
+    this.then = Date.now();
+    this.pauseNow = this.then;
+    //this.clearCanvas();  //clear the canvas here to preserve player/enemy models during cutscenes
 
     if (this.now == 0) {
       this.background.play();
@@ -142,6 +172,7 @@ export default class Game {
       this.draw.drawUIOnInit();
       this.pauseNow = this.then;
       this.pauseThen = this.pauseNow;
+      this.isPauseOn = false;
     }
 
     //  this.timePassed = (this.pauseNow - this.pauseThen) / 1000;
