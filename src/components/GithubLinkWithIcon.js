@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "600",
     "&:hover": {
       filter:
-        "invert(48%) sepia(13%) saturate(3207%) hue-rotate(170deg) brightness(100%) contrast(90%)",
+        "invert(48%) sepia(13%) saturate(3207%) hue-rotate(210deg) brightness(100%) contrast(90%)",
     },
   },
   gitLogo: {

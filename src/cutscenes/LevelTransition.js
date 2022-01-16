@@ -55,20 +55,11 @@ export class LevelTransition extends Cutscene {
 
     this.lineWidth = 7;
     this.numOfIterations = 30;   //was 18
-    this.isAnimationFinished = false;
+    this.isAnimationFinished = true;
 
     this.objectsWaypoints.forEach((obj) => {
         this.calculateWaypoints(obj);
       });
-  }
-
-  drawText(ctx) {
-    ctx.current.fillStyle = "#ffffff";
-    ctx.current.font = `bold 52px tahoma`;
-    let text = this.textProps.text + this.progression.level;
-    let offsetX = ctx.current.measureText(text).width;
-
-    ctx.current.fillText(text, this.textProps.x - (offsetX / 2), this.textProps.y);
   }
 
   initialize() {
@@ -85,10 +76,6 @@ export class LevelTransition extends Cutscene {
     this.isAnimationFinished = false;
   }
 
-  update() {
-    //
-  }
-
   draw(ctx) {
     if (this.isAnimationFinished) {
       return;
@@ -100,6 +87,19 @@ export class LevelTransition extends Cutscene {
     this.objectsWaypoints.forEach((obj) => {
       this.drawLine(obj, ctx);
     });
+  }
+
+  drawText(ctx) {
+    ctx.current.fillStyle = "#ffffff";
+    ctx.current.font = `bold 52px tahoma`;
+    let text = this.textProps.text + this.progression.level;
+    let offsetX = ctx.current.measureText(text).width;
+
+    ctx.current.fillText(text, this.textProps.x - (offsetX / 2), this.textProps.y);
+  }
+
+  update() {
+    //
   }
 
   lineIncrementLeftToRight(object) {

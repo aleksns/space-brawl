@@ -6,7 +6,7 @@ import {
   GAME_WIDTH,
   GAME_HEIGHT,
 } from "../services/services";
-import bgImage from "../images/background1.png";
+import bgImage from "../images/bg-stars.png";
 
 const minWidth = 50;
 const maxWidth = 300;
@@ -14,7 +14,7 @@ const minHeight = 50;
 const maxHeight = 250;
 const color = "#ffffff";
 //s - speed, a - acceleration
-const s = 5;
+const s = 2;
 const a = s / 10;
 
 export class BgElement extends Item {

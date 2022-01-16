@@ -1,4 +1,8 @@
-import { roundDecimalHundreds, getRandomInt, GAME_HEIGHT } from "../services/services";
+import {
+  roundDecimalHundreds,
+  getRandomInt,
+  GAME_HEIGHT,
+} from "../services/services";
 
 export default class Ship {
   constructor(game) {
@@ -9,7 +13,7 @@ export default class Ship {
     this.isGotHit = false;
     this.isDead = false;
     this.isFill = false;
-
+    this.isSlowSpeedApplied = false;
     this.shadowColor = "transparent";
     this.shadowBlur = 0;
 
@@ -26,24 +30,30 @@ export default class Ship {
   }
 
   update() {
-    //if (this.health <= 0 || (this.game.collision.isOutOfBorders(this) && this.isCheckSouthOutOfBorderOnly == false)) {
-      if ((this.health <= 0 && !this.isBoss)|| (this.game.collision.isOutOfBorders(this) && this.isCheckSouthOutOfBorderOnly == false)) {
+    if (
+      (this.health <= 0 && !this.isBoss) ||
+      (this.game.collision.isOutOfBorders(this) &&
+        this.isCheckSouthOutOfBorderOnly == false)
+    ) {
       this.health = 0;
       this.setDead();
       this.onDeath();
-      
     }
     if (!this.isPlayer) {
-      
       this.updateShip();
       this.move();
     }
-    this.fireGun();
+    let timePassed = (this.game.then - this.now) / 1000;
+    if (timePassed <= this.getAtkSpeed()) {
+      return;
+    }
+
+     this.fireGun();
   }
 
   setTargetFront() {
     this.target = {
-      y: GAME_HEIGHT
+      y: GAME_HEIGHT + this.h,
     };
   }
 

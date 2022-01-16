@@ -72,6 +72,11 @@ export default class Init {
       return;
     }
     this.addItemsBasedOnTiming();
+
+
+    ///REMOVED FOR TESTING
+
+
     ///improve code + methods here and in the update
   }
 
@@ -122,7 +127,7 @@ export default class Init {
   }
 
   spawnEnemies() {
-    this.spawnFormationOfEnemies();
+    //this.spawnFormationOfEnemies();
 
     if (this.game.enemies.length >= this.progression.maxNumOfEnemies) {
       return;
@@ -171,7 +176,7 @@ export default class Init {
   }
 
   addEnemy() {
-    var newEnemy = new EnemyT5(this.game);
+    var newEnemy = new EnemyT4(this.game);
     newEnemy.initialize();
     newEnemy.startTimers();
     this.game.enemies.push(newEnemy);

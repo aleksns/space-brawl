@@ -41,6 +41,7 @@ export class Medkit extends Item {
   }
 
   applyBuff() {
-    this.game.statusEffects.restoreHealth(this.restoredHP);
+    //this.game.statusEffects.restoreHealth(this.restoredHP);
+    this.game.stats.restoreSpeedOfEverything();
   }
 }

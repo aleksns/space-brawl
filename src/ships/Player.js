@@ -23,8 +23,8 @@ export class Player extends Ship {
     
     //this.gun = "default";
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
-    this.s = 25;
-    this.a = this.s / 10;
+    this.s = this.stats.player.s;
+    this.a = this.stats.player.a;
     this.now = 0;
     this.damage = this.stats.player.damage;
     this.atkSpeed = this.stats.player.atkSpeed;
@@ -36,7 +36,7 @@ export class Player extends Ship {
     this.DoubleFront = new DoubleFront(this.game, this);
     this.TripleFront = new TripleFront(this.game, this);
     this.gun = this.TripleFront;
-    this.projectileSpeedModifier = 0;
+    this.projectileSpeedModifier = this.stats.player.projectileSpeedModifier;
 
 
     this.image = new Image();
@@ -46,14 +46,8 @@ export class Player extends Ship {
   }
 
   fireGun() {
-    let timePassed = (this.game.then - this.now) / 1000;
-    if (timePassed <= this.getAtkSpeed()) {
-      return;
-    }
-
     this.now = Date.now();
     this.gun.fire();
-    
   }
 
 

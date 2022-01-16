@@ -23,7 +23,7 @@ export class EnemyT4 extends Ship {
 
     this.isPlayer = false;
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
-    this.s = 2 // default was 2
+    this.s = this.game.stats.enemyT4.s; // default was 2
     this.a = this.s / 40; // default was this.s / 40
     this.direction = getRandomDirection();
     /* offStep = applies additional distance for enemies to stop their movement
@@ -39,7 +39,7 @@ export class EnemyT4 extends Ship {
     this.atkSpeed = this.game.stats.enemyT4.atkSpeed;
     this.gun = undefined;
     this.target = this.game.player;
-    this.projectileSpeedModifier = 0;
+    this.projectileSpeedModifier = this.game.stats.enemyT4.projectileSpeedModifier;
 
     this.image = new Image();
     this.image.src = enemyImageT4;
@@ -52,10 +52,6 @@ export class EnemyT4 extends Ship {
   }
 
   fireGun() {
-    let timePassed = (this.game.then - this.now) / 1000;
-    if (timePassed <= this.getAtkSpeed()) {
-      return;
-    }
     this.now = Date.now();
     this.gun.fire();
   }
@@ -70,16 +66,18 @@ export class EnemyT4 extends Ship {
   }
 
   move() {
-    //this.game.movement.move(this, this.isCheckSouthOutOfBorderOnly);
-    // let timePassed = (this.game.then - this.directionChangeIntervalNow) / 1000;
-    // if (timePassed <= this.directionChangeInterval) {
-    //   return;
-    // }
-    // this.directionChangeIntervalNow = Date.now();
-    // this.setRandomDirection();
+    this.game.movement.move(this, this.isCheckSouthOutOfBorderOnly);
+    let timePassed = (this.game.then - this.directionChangeIntervalNow) / 1000;
+    if (timePassed <= this.directionChangeInterval) {
+      return;
+    }
+    this.directionChangeIntervalNow = Date.now();
+    this.setRandomDirection();
   }
 
   initialize() {
+    // this.x = 0;
+    // this.y = 0;
     this.x = getRandomInt(this.w, this.collision.width - this.w);
     this.y = getRandomInt(
       this.collision.allowedY.y0,

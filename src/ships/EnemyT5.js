@@ -18,8 +18,6 @@ export class EnemyT5 extends Ship {
     this.y = 0;
     this.w = getEnemyT5Dimension().w;
     this.h = getEnemyT5Dimension().h;
-    this.vX = 0;
-    this.vY = 0;
     this.dX = 0;
     this.dY = 0;
     this.distance = 0;
@@ -28,7 +26,7 @@ export class EnemyT5 extends Ship {
     this.maxHealth = this.game.stats.enemyT5.maxHealth;
     this.isPlayer = false;
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
-    this.s = 1; // default was 2
+    this.s = this.game.stats.enemyT5.s; // default was 2
     this.a = this.s / 60; // default was this.s / 40
     this.direction = "S";
     /* offStep = applies additional distance for enemies to stop their movement
@@ -43,8 +41,8 @@ export class EnemyT5 extends Ship {
     this.damage = this.game.stats.enemyT5.damage;
     this.atkSpeed = this.game.stats.enemyT5.atkSpeed;
     this.gun = undefined;
-    this.target = this.game.player
-    this.projectileSpeedModifier = this.s * 1.5;
+    this.target = undefined;
+    this.projectileSpeedModifier = this.s * this.game.stats.enemyT5.projectileSpeedModifier;
 
     this.image = new Image();
     this.image.src = enemyImageT5;
@@ -71,10 +69,6 @@ export class EnemyT5 extends Ship {
   }
 
   fireGun() {
-    let timePassed = (this.game.then - this.now) / 1000;
-    if (timePassed <= this.getAtkSpeed()) {
-      return;
-    }
     this.now = Date.now();
     this.gun.fire();
     this.game.laser.play();

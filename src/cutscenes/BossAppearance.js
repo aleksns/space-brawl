@@ -9,6 +9,7 @@ export class BossAppearance extends Cutscene {
       x: GAME_WIDTH / 2,
       y: GAME_HEIGHT / 2,
       margin: 100,
+      marginSides: 0,
     };
 
     this.textProps = {
@@ -22,7 +23,7 @@ export class BossAppearance extends Cutscene {
       startY: this.container.y - this.container.margin,
       endX: 0,
       endY: this.container.y - this.container.margin,
-      destination: GAME_WIDTH - 100,
+      destination: GAME_WIDTH - this.container.marginSides,
     };
 
     this.line2 = {
@@ -30,7 +31,7 @@ export class BossAppearance extends Cutscene {
       startY: this.container.y + this.container.margin,       ///hardcoded
       endX: GAME_WIDTH,
       endY: this.container.y + this.container.margin,        ///hardcoded
-      destination: 0 + 100,
+      destination: this.container.marginSides,
     };
 
     this.objectsWaypoints = [];
@@ -55,8 +56,8 @@ export class BossAppearance extends Cutscene {
     });
 
     this.lineWidth = 7;
-    this.numOfIterations = 15;   //was 18
-    this.isAnimationFinished = true;
+    this.numOfIterations = 35;   //was 18
+    this.isAnimationFinished = false;
 
     this.objectsWaypoints.forEach((obj) => {
         this.calculateWaypoints(obj);

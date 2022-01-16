@@ -11,6 +11,7 @@ export default class Movement {
   setTrajectory(object) {
     this.calculateVectorsAndDistance(object);
     this.applySpeedModifier(object);
+    //this.moveTest(object);
   }
 
   //calculate vectors and distance between two objects, where p1 - start position and p2 - end position
@@ -28,9 +29,42 @@ export default class Movement {
   }
 
   applySpeedModifier(object) {
-    object.vX = object.vX * object.s;
-    object.vY = object.vY * object.s;
+    object.vX *= object.s;
+    object.vY *= object.s;
   }
+
+
+  moveTest(object) {
+    //console.log(`-------------- Move test ----------------`);
+    //console.log(`BEFORE =====>  object.vX = ${object.vX}, object.vY = ${object.vY}`);
+    // object.vX *= object.a;
+    // object.vY *= object.a;
+    console.log(`-------------------------------------------`);
+    if(Math.sign(object.vX) == 1 && object.vX !=0 && object.vX < object.s) {
+      object.vX *= object.a;
+      console.log(`1st IF`)
+    }
+    if(Math.sign(object.vX) == -1 && object.vX !=0 && object.vX > -object.s) {
+      object.vX *= object.a;
+      console.log(`2nd IF`)
+    }
+
+    if(Math.sign(object.vY) == 1 && object.vY !=0 && object.vY < object.s) {
+      object.vY *= object.a;
+      console.log(`3rd IF`)
+    }
+    if(Math.sign(object.vY) == -1 && object.vY !=0 && object.vY > -object.s) {
+      object.vY *= object.a;
+      console.log(`4th IF`)
+    }
+    console.log(`================== ///// ==================`);
+
+    //console.log(`AFTER ----->  object.vX = ${object.vX}, object.vY = ${object.vY}`);
+    //console.log(`================== ///// ==================`);
+    //this.applyPhysics(object);
+    //this.applyVelocity(object);
+  }
+
 
   move(object, isCheckSouthOutOfBorderOnly) {
     switch (object.direction) {
@@ -76,7 +110,7 @@ export default class Movement {
   }
 
   moveNorth(object) {
-    if (object.vY < object.s) {
+    if (object.vY > -object.s) {
       object.vY -= object.a;
     }
   }
@@ -85,7 +119,7 @@ export default class Movement {
     if (object.vX < object.s) {
       object.vX += object.a;
     }
-  }
+  } 
 
   moveSouth(object) {
     if (object.vY < object.s) {
@@ -94,7 +128,7 @@ export default class Movement {
   }
 
   moveWest(object) {
-    if (object.vX < object.s) {
+    if (object.vX > -object.s) {
       object.vX -= object.a;
     }
   }

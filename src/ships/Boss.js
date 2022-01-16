@@ -21,8 +21,6 @@ export class Boss extends Ship {
     this.y = 0;
     this.w = getEnemyT0Dimension().w;
     this.h = getEnemyT0Dimension().h;
-    this.vX = 0;
-    this.vY = 0;
     this.dX = 0;
     this.dY = 0;
 
@@ -31,7 +29,7 @@ export class Boss extends Ship {
     this.isPlayer = false;
     //this.gun = "default";
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
-    this.s = 0.5;
+    this.s = this.game.stats.enemyT0.s;
     this.a = this.s / 60;
     //this.direction = getRandomDirection();
     /* offStep = applies additional distance for enemies to stop their movement
@@ -44,7 +42,7 @@ export class Boss extends Ship {
     this.atkSpeed = this.game.stats.enemyT0.atkSpeed;
     this.gun = undefined;
     this.target = this.game.player;
-    this.projectileSpeedModifier = 2;
+    this.projectileSpeedModifier = this.game.stats.enemyT0.projectileSpeedModifier;
 
     this.image = new Image();
     this.image.src = bossImage;
@@ -55,10 +53,10 @@ export class Boss extends Ship {
   } 
 
   fireGun() {
-    let timePassed = (this.game.then - this.now) / 1000;
-    if(timePassed <= this.getAtkSpeed()) {
-      return;
-    }
+    // let timePassed = (this.game.then - this.now) / 1000;
+    // if(timePassed <= this.getAtkSpeed()) {
+    //   return;
+    // }
       this.now = Date.now();
       this.gun.fire();
   }

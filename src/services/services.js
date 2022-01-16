@@ -94,8 +94,8 @@ export const getItemsStats = {
 };
 
 export const getBuffsSpawnDelay = {
-  medkit: 4.0,
-  atkSpeed: 9.0,
+  medkit: 34.0,
+  atkSpeed: 3.0,   ///9.0
 };
 
 export const getBuffsDuration = {
@@ -106,18 +106,24 @@ export const getPlayerDefaultStats = {
   damage: 10,
   health: 100,
   maxHealth: 100,
+  speed: 25,   //25
+  accelerationMod: 10,
   rammingDmg: 0.1,
-  atkSpeed: 0.15, //default was 0.2
+  atkSpeed: 0.15, //default was 0.2 -> 0.15
   atkSpeedCap: 0.04,
+  projectileSpeedModifier: 20.0, //20
 };
 
 export const getEnemyT0DefaultStats = {
   damage: 4,
   health: 1000,
   maxHealth: 1000,
+  speed: 0.5,
+  accelerationMod: 60,
   rammingDmg: 0.1,
   atkSpeed: 0.6,
   atkSpeedCap: 0.3,
+  projectileSpeedModifier: 5.5,
   scorePoints: 500,
 };
 
@@ -125,9 +131,12 @@ export const getEnemyT4DefaultStats = {
   damage: 4,
   health: 100,
   maxHealth: 100,
+  speed: 4,
+  accelerationMod: 40,
   rammingDmg: 0.1,
   atkSpeed: 1.0,
   atkSpeedCap: 0.5,
+  projectileSpeedModifier: 4.0,
   scorePoints: 25,
 };
 
@@ -135,9 +144,12 @@ export const getEnemyT5DefaultStats = {
   damage: 3,
   health: 75,
   maxHealth: 75,
+  speed: 1,
+  accelerationMod: 60,
   rammingDmg: 0.1,
   atkSpeed: 1.0,
   atkSpeedCap: 0.8,
+  projectileSpeedModifier: 5.5,
   scorePoints: 15,
 };
 
@@ -146,7 +158,7 @@ export const getDefaultPlayerProjectile = {
   w: 10,
   h: 10,
   color: "#47FFFB",
-  s: 20,
+  s: 1,  //20
   isFill: true,
 };
 // s - speed
@@ -154,7 +166,7 @@ export const getDefaultEnemyProjectile = {
   w: 10,
   h: 10,
   color: colors.red,
-  s: 5,
+  s: 1,
   isFill: true,
 };
 

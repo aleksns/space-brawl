@@ -56,7 +56,7 @@ export class BossDeath extends Cutscene {
 
     this.lineWidth = 7;
     this.numOfIterations = 50;   
-    this.isAnimationFinished = tr;
+    this.isAnimationFinished = true;
 
     this.objectsWaypoints.forEach((obj) => {
         this.calculateWaypoints(obj);

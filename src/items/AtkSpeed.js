@@ -36,7 +36,8 @@ export class AtkSpeed extends Item {
   }
 
   applyBuff() {
-    this.game.statusEffects.applyAtkSpeedStatusEffect(this.atkSpeedIncrease);
+    //this.game.statusEffects.applyAtkSpeedStatusEffect(this.atkSpeedIncrease);
+    this.game.stats.slowEverything();
   }
 
   setMinSpawnRange() {

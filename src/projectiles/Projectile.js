@@ -10,6 +10,7 @@ export default class Projectile {
 
     this.vX = 0;
     this.vY = 0;
+    this.f = 0.95;
     this.distance = 0;
 
     this.cords = {
@@ -19,12 +20,15 @@ export default class Projectile {
       p2Y: this.barrel.p2Y
     };
 
+    this.isSlowSpeedApplied = false;
     this.isPlayerOwned = undefined;
     this.isDead = false;
   }
 
   update() {
     this.game.movement.applyVelocity(this);
+
+    //this.game.movement.moveTest(this);
     this.removeIfOutsideScreen();
   }
 
