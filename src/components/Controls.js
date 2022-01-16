@@ -64,8 +64,15 @@ export default class Controls {
 
       this.game.btns.forEach((btn) =>{
         if (this.game.isInside(this.mousePosition, btn)) {
-            this.game.init.addEffect(btn, "default");
+            this.game.init.addEffect(btn, btn.effect);
+            if(btn.id == "slow") {
+              this.game.stats.slowEverything();
+            }
+            else {
+              this.game.stats.restoreSpeedOfEverything();
+            }
         }
+        
       });
 
 

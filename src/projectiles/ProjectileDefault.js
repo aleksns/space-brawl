@@ -16,7 +16,7 @@ export class ProjectileDefault extends Projectile {
     this.sModifier = 0;
     this.a = 0;
     this.isFill = undefined;
-
+    this.isSlowSpeedApplied = this.gun.owner.isSlowSpeedApplied;
     this.shadowColor = "transparent";
     this.shadowBlur = 0;
   }
@@ -41,10 +41,7 @@ export class ProjectileDefault extends Projectile {
 
   setPlayerProjectileStats() {
     this.damage = this.gun.owner.damage;
-    this.sModifier = this.gun.owner.projectileSpeedModifier;
-    //this.s = getDefaultPlayerProjectile.s + this.gun.owner.projectileSpeedModifier;
-    this.s = getDefaultPlayerProjectile.s + this.sModifier;
-    
+    this.s = this.gun.owner.projectileSpeedModifier;
 
   }
 
@@ -57,9 +54,6 @@ export class ProjectileDefault extends Projectile {
 
   setEnemyProjectileStats() {
     this.damage = this.gun.owner.damage;
-    this.sModifier = this.gun.owner.projectileSpeedModifier;
-    //this.s = getDefaultEnemyProjectile.s + this.gun.owner.projectileSpeedModifier;
-    this.s = getDefaultEnemyProjectile.s + this.sModifier;
-
+    this.s = this.gun.owner.projectileSpeedModifier;
   }
 }

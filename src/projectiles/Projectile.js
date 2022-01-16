@@ -7,7 +7,6 @@ export default class Projectile {
 
     this.x = 0;
     this.y = 0;
-
     this.vX = 0;
     this.vY = 0;
     this.f = 0.95;
@@ -20,12 +19,12 @@ export default class Projectile {
       p2Y: this.barrel.p2Y
     };
 
-    this.isSlowSpeedApplied = false;
     this.isPlayerOwned = undefined;
     this.isDead = false;
   }
 
   update() {
+   // console.log(`vX = ${this.vX}, vY = ${this.vY}`)
     this.game.movement.applyVelocity(this);
 
     //this.game.movement.moveTest(this);
@@ -50,6 +49,10 @@ export default class Projectile {
     if (this.game.collision.isCollisionWithAnyBorder(this, -50)) {
       this.setToRemove();
     }
+  }
+
+  setGlobalProjectileSpeed(value) {
+    this.s = value;
   }
 
   setToRemove() {

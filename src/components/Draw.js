@@ -45,6 +45,12 @@ export default class Draw {
     this.clearCanvas4();
     this.drawItem(this.hpBarPlayer.hpBarImageProps, this.ctx4);
     this.drawItem(this.threatBar.threatBarImageProps, this.ctx4);
+
+
+
+
+    this.drawRect(this.game.startBtn, this.ctx4);
+    this.drawRect(this.game.endBtn, this.ctx4);
   }
 
   // drawLevelCutscene() {

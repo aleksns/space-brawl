@@ -68,26 +68,29 @@ export default class Game {
     this.pauseThen = 0;
 
     this.isPauseOn = true;
-    // this.startBtn = {
-    //   x: 200,
-    //   y: 200,
-    //   w: 100,
-    //   h: 100,
-    //   xPosText: 100,
-    //   yPosText: 100,
-    //   text: "START",
-    // };
-    // this.endBtn = {
-    //   x: 400,
-    //   y: 200,
-    //   w: 100,
-    //   h: 100,
-    // };
+    this.startBtn = {
+      x: 200,
+      y: 200,
+      w: 100,
+      h: 100,
+      color: "orange",
+      effect: "default",
+      id: "slow"
+    };
+    this.endBtn = {
+      x: 400,
+      y: 200,
+      w: 100,
+      h: 100,
+      color: "green",
+      effect: "defaultBuff",
+      id: "restore"
+    };
 
-    // this.btns = [];
-    // this.btns.push(this.startBtn);
-    // this.btns.push(this.endBtn);
-    // this.elem = document.getElementById("uiScreen");
+    this.btns = [];
+    this.btns.push(this.startBtn);
+    this.btns.push(this.endBtn);
+    this.elem = document.getElementById("uiScreen");
 
     this.timePassed = 0;
 

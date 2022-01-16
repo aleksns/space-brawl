@@ -68,20 +68,9 @@ export default class Stats {
     this.enemiesStats.push(this.enemyT4);
     this.enemiesStats.push(this.enemyT5);
 
-    //s - speed
-    this.projectileDefaultPlayer = {
-      s: getDefaultPlayerProjectile.s,
-      damage: getDefaultPlayerProjectile.damage,
-    };
-    //s - speed
-    this.projectileDefaultEnemy = {
-      s: getDefaultEnemyProjectile.s,
-      damage: getDefaultEnemyProjectile.damage,
-    };
-
     this.slowModifiers = {
-      atkSpeed: 2.0,
-      atkSpeedCap: 2.0,
+      atkSpeed: 15.0,
+      atkSpeedCap: 15.0,
       s: 6,
       a: 20,
       projectileSpeedModifier: 30,
@@ -112,11 +101,10 @@ export default class Stats {
 
   slowEverything() {
     this.slowEnemies(this.game.enemies);
+    this.applySpeedStatsReduction(this.game.player);
+
     this.slowProjectiles(this.game.playerProjectiles);
     this.slowProjectiles(this.game.enemyProjectiles);
-
-    this.applySpeedStatsReduction(this.game.player);
-    //add items and bg elements here
   }
 
   slowEnemies(enemies) {
@@ -131,21 +119,16 @@ export default class Stats {
         projectiles[i].vX /= this.slowModifiers.projectiles;
         projectiles[i].vY /= this.slowModifiers.projectiles;
         projectiles[i].isSlowSpeedApplied = true;
-        
       }
     }
   }
 
   restoreSpeedOfEverything() {
-    // for (let i = 0; i < this.game.enemies.length; i++) {
-    //   this.applySpeedStatsReduction(this.game.enemies[i]);
-    // }
     this.restoreSpeedEnemies(this.game.enemies);
+    this.restoreSpeedStats(this.game.player);
+
     this.restoreSpeedProjectiles(this.game.playerProjectiles);
     this.restoreSpeedProjectiles(this.game.enemyProjectiles);
-
-    this.restoreSpeedStats(this.game.player);
-    //add items and bg elements here
   }
 
   restoreSpeedEnemies(enemies) {
@@ -157,10 +140,9 @@ export default class Stats {
   restoreSpeedProjectiles(projectiles) {
     for (let i = 0; i < projectiles.length; i++) {
       if (projectiles[i].isSlowSpeedApplied) {
-        // projectiles[i].s *= this.slowModifiers.projectiles;
         projectiles[i].vX *= this.slowModifiers.projectiles;
         projectiles[i].vY *= this.slowModifiers.projectiles;
-         projectiles[i].isSlowSpeedApplied = false;
+        projectiles[i].isSlowSpeedApplied = false;
       }
     }
   }
@@ -169,27 +151,21 @@ export default class Stats {
     if (object.isSlowSpeedApplied == true) {
       return;
     }
-    object.isSlowSpeedApplied = true;
-
-    object.atkSpeed += this.slowModifiers.atkSpeed;
-    object.atkSpeedCap += this.slowModifiers.atkSpeedCap;
+    object.atkSpeed *= this.slowModifiers.atkSpeed;
+    object.atkSpeedCap *= this.slowModifiers.atkSpeedCap;
     object.projectileSpeedModifier /= this.slowModifiers.projectileSpeedModifier;
     object.s /= this.slowModifiers.s;
     object.a /= this.slowModifiers.a;
 
-    //testing
-    // object.vX /= 20;
-    // object.vY /= 20;
-    // object.s = object.vX;
-    // object.a = object.vX;
+    object.isSlowSpeedApplied = true;
   }
 
   restoreSpeedStats(object) {
     if (object.isSlowSpeedApplied == false) {
       return;
     }
-    object.atkSpeed -= this.slowModifiers.atkSpeed;
-    object.atkSpeedCap -= this.slowModifiers.atkSpeedCap;
+    object.atkSpeed /= this.slowModifiers.atkSpeed;
+    object.atkSpeedCap /= this.slowModifiers.atkSpeedCap;
     object.projectileSpeedModifier *= this.slowModifiers.projectileSpeedModifier;
     object.s *= this.slowModifiers.s;
     object.a *= this.slowModifiers.a;

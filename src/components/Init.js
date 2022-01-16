@@ -16,7 +16,7 @@ export default class Init {
     this.progression = this.game.progression;
     this.maxNumOfProjectiles = 150;
     this.maxNumOfElements = 2;
-    this.maxNumOfItems = 2;
+    this.maxNumOfItems = 4;
 
     this.itemsToSpawn = [
       (this.medkit = {
@@ -127,7 +127,7 @@ export default class Init {
   }
 
   spawnEnemies() {
-    //this.spawnFormationOfEnemies();
+   // this.spawnFormationOfEnemies();
 
     if (this.game.enemies.length >= this.progression.maxNumOfEnemies) {
       return;
@@ -140,8 +140,6 @@ export default class Init {
     ) {
       this.addBoss();
     }
-
-    //this.addBoss();
   }
 
   // Create formation of enemies > put enemies in the temp list > apply formation function to enemies >

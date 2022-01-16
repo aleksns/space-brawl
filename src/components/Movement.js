@@ -11,6 +11,7 @@ export default class Movement {
   setTrajectory(object) {
     this.calculateVectorsAndDistance(object);
     this.applySpeedModifier(object);
+    //console.log(`object vectors vX = ${object.vX}, vY = ${object.vY}`);
     //this.moveTest(object);
   }
 

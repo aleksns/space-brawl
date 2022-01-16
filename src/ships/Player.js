@@ -20,8 +20,7 @@ export class Player extends Ship {
     this.isPlayer = true;
     this.offStepX = 0;
     this.offStepX = 0;
-    
-    //this.gun = "default";
+  
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.s = this.stats.player.s;
     this.a = this.stats.player.a;
@@ -32,10 +31,10 @@ export class Player extends Ship {
     this.target = {
       y: 0,
     };
-    this.SingleFront = new SingleFront(this.game, this);
-    this.DoubleFront = new DoubleFront(this.game, this);
-    this.TripleFront = new TripleFront(this.game, this);
-    this.gun = this.TripleFront;
+    this.singleFront = new SingleFront(this.game, this);
+    this.doubleFront = new DoubleFront(this.game, this);
+    this.tripleFront = new TripleFront(this.game, this);
+    this.gun = this.tripleFront;
     this.projectileSpeedModifier = this.stats.player.projectileSpeedModifier;
 
 
