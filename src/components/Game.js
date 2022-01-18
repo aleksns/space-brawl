@@ -73,9 +73,11 @@ export default class Game {
       y: 200,
       w: 100,
       h: 100,
-      color: "orange",
+      color: "grey",
+      isFill: true,
       effect: "default",
-      id: "slow"
+      id: "slow",
+      opacity: 0.1,
     };
     this.endBtn = {
       x: 400,

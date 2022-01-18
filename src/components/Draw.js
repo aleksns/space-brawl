@@ -1,6 +1,7 @@
 import { Pulse } from "../effects/Pulse";
 import { colors, getStatusEffectsBar, GAME_WIDTH } from "../services/services";
 import { HpBarPlayer } from "../ui/HpBarPlayer";
+import { SkillsBar } from "../ui/SkillsBar";
 import { ThreatLevelBar } from "../ui/ThreatLevelBar";
 
 const textColor = getStatusEffectsBar.color;
@@ -18,6 +19,7 @@ export default class Draw {
     this.ctx3 = game.ctx3;
     this.ctx4 = game.ctx4;
 
+    this.skillsBar = new SkillsBar(this.game);
     this.hpBarPlayer = new HpBarPlayer(this.game);
     this.threatBar = new ThreatLevelBar(this.game);
 
@@ -46,16 +48,9 @@ export default class Draw {
     this.drawItem(this.hpBarPlayer.hpBarImageProps, this.ctx4);
     this.drawItem(this.threatBar.threatBarImageProps, this.ctx4);
 
-
-
-
     this.drawRect(this.game.startBtn, this.ctx4);
     this.drawRect(this.game.endBtn, this.ctx4);
   }
-
-  // drawLevelCutscene() {
-  //   this.game.cutscenes.levelTransition.draw(this.ctx);
-  // }
 
   drawCurrentCutscene() {
     this.game.cutscenes.getCutsceneToDraw().draw(this.ctx);
@@ -65,6 +60,8 @@ export default class Draw {
     this.hpBarPlayer.draw(this.ctx);
     this.threatBar.draw(this.ctx);
     this.drawScore();
+
+    this.skillsBar.draw(this.ctx2);
   }
 
   drawScore() {
@@ -204,6 +201,8 @@ export default class Draw {
       ctx.current.stroke();
     }
     ctx.current.closePath();
+
+    ctx.current.globalAlpha = 1.0;
   }
 
   drawArc(object, ctx) {
@@ -224,5 +223,7 @@ export default class Draw {
     }
 
     ctx.current.closePath();
+
+    ctx.current.globalAlpha = 1.0;
   }
 }

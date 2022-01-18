@@ -44,6 +44,7 @@ export const colors = {
   scoreColor: "#8BE0FF",
   uiBlue: "#3498DB",
   uiBlueDark: "#000657",
+  uiBlueDarkLighter: "#1a2298",
   uiGreen: "#2ECC71",
   uiRed: "#CB4335",
   uiRedDark: "#C0392B",

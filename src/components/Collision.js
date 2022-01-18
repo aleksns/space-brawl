@@ -32,9 +32,6 @@ export default class Collision {
     if (!object.isPlayer) {
       this.handleEnemyBordersCollision(object);
     }
-    // if (object.isItem && this.isCollisionBorderDown(object, -object.h)) {
-    //   object.setDead();
-    // }
   }
 
   /* Adjust player's position if collision is detected */
