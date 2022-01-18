@@ -7,8 +7,6 @@ const shadowColor = colors.blue;
 export class AtkSpeed extends Item {
   constructor(game) {
     super(game);
-    this.x = 0;
-    this.y = 0;
     this.w = itemBuffConfig.w;
     this.h = itemBuffConfig.h;
 
@@ -18,17 +16,21 @@ export class AtkSpeed extends Item {
     this.shadowColor = shadowColor;
     this.shadowBlur = itemBuffConfig.shadowBlur;
     this.s = itemBuffConfig.s;
-    this.a = itemBuffConfig.a;
+    //this.a = itemBuffConfig.a;
     this.isFill = itemBuffConfig.isFill;
     this.isInteractable = true;
-    this.atkSpeedIncrease = getItemsStats.atkSpeedTier1;
     this.spawnRangeMinX = 0;
     this.spawnRangeMaxX = 0;
 
     this.image = new Image();
     this.image.src = atkSpeedImage;
-    
+    this.isSpawnOnInit = false;
     //this.effectType = "atkspeed";   for different effects to lay
+  }
+
+  initializeItem() {
+    
+    this.randomize();
   }
 
   onDeath() {
@@ -36,8 +38,7 @@ export class AtkSpeed extends Item {
   }
 
   applyBuff() {
-    //this.game.statusEffects.applyAtkSpeedStatusEffect(this.atkSpeedIncrease);
-    this.game.stats.slowEverything();
+    this.game.statusEffects.applyAtkSpeedStatusEffect();
   }
 
   setMinSpawnRange() {

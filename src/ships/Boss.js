@@ -5,19 +5,18 @@ import {
   getEnemyT0DefaultStats,
   getEnemyT0Dimension,
   getTripleGunPosition,
-  GAME_HEIGHT
+  GAME_HEIGHT,
 } from "../services/services";
 import bossImage from "../images/enemyBoss.png";
 import { SingleFront } from "../guns/SingleFront";
 import { DoubleFront } from "../guns/DoubleFront";
 import { TripleFront } from "../guns/TripleFront";
 
-
 export class Boss extends Ship {
   constructor(game) {
     super(game);
     this.game = game;
-    this.x = 0;  
+    this.x = 0;
     this.y = 0;
     this.w = getEnemyT0Dimension().w;
     this.h = getEnemyT0Dimension().h;
@@ -31,6 +30,9 @@ export class Boss extends Ship {
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.s = this.game.stats.enemyT0.s;
     this.a = this.s / 60;
+    this.s = 0;
+    this.a = 0;
+
     //this.direction = getRandomDirection();
     /* offStep = applies additional distance for enemies to stop their movement
     before reaching allowed borders and maintaining smooth bounce effect */
@@ -42,7 +44,8 @@ export class Boss extends Ship {
     this.atkSpeed = this.game.stats.enemyT0.atkSpeed;
     this.gun = undefined;
     this.target = this.game.player;
-    this.projectileSpeedModifier = this.game.stats.enemyT0.projectileSpeedModifier;
+    this.projectileSpeedModifier =
+      this.game.stats.enemyT0.projectileSpeedModifier;
 
     this.image = new Image();
     this.image.src = bossImage;
@@ -50,26 +53,21 @@ export class Boss extends Ship {
     this.isCheckSouthOutOfBorderOnly = false;
     console.log("CONSTRUCTOR > BossT0");
     //console.log(`GAME_WIDTH = ${GAME_WIDTH}`);
-  } 
-
-  fireGun() {
-    // let timePassed = (this.game.then - this.now) / 1000;
-    // if(timePassed <= this.getAtkSpeed()) {
-    //   return;
-    // }
-      this.now = Date.now();
-      this.gun.fire();
   }
 
-  initialize() {
-    this.x = (GAME_WIDTH / 2) - (this.w / 2);
+  fireGun() {
+    this.now = Date.now();
+    this.gun.fire();
+  }
+
+  initializeShip() {
+    this.x = GAME_WIDTH / 2 - this.w / 2;
     this.y = this.collision.allowedY.y0 - 20;
     var newGun = new TripleFront(this.game, this);
     this.gun = newGun;
 
     this.game.setPauseOn();
     this.game.cutscenes.bossAppearance.initialize();
-    //this.game.cutscenes.bossAppearance.initialize();
   }
 
   updateShip() {
@@ -79,12 +77,23 @@ export class Boss extends Ship {
     }
   }
 
+  // getDefaultSpeed() {
+  //   return this.game.stats.enemyT0.s;
+  // }
+
+  // getDefaultAcceleration() {
+  //   return this.game.stats.enemyT0.a;
+  // }
+
+  // getDefaultProjectileSpeedModifier() {
+  //   return this.game.stats.enemyT0.projectileSpeedModifier;
+  // }
+
   move() {
     //tbd
   }
 
-
-  getAtkSpeed() {  
+  getAtkSpeed() {
     return this.atkSpeed - this.gun.atkSpeed;
   }
 
@@ -102,4 +111,3 @@ export class Boss extends Ship {
     this.game.progression.advanceLevel();
   }
 }
-

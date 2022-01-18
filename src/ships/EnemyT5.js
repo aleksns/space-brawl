@@ -28,7 +28,7 @@ export class EnemyT5 extends Ship {
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.s = this.game.stats.enemyT5.s; // default was 2
     this.a = this.s / 60; // default was this.s / 40
-    this.direction = "S";
+    //this.direction = "S";
     /* offStep = applies additional distance for enemies to stop their movement
     before reaching allowed borders and maintaining smooth bounce effect */
     // this.offStepX = Math.floor(this.w / 4);
@@ -75,7 +75,7 @@ export class EnemyT5 extends Ship {
   }
  
   
-  initialize() {
+  initializeShip() {
     this.x = getRandomInt(this.w, this.collision.width - this.w);
     this.y = getRandomInt(-this.h - 50, -this.h - 100);
 

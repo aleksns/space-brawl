@@ -95,7 +95,7 @@ export default class Update {
         !this.game.enemyProjectiles[i].isPlayerOwned
       ) {
         this.game.player.gotHit(true, this.game.enemyProjectiles[i]);
-        this.game.enemyProjectiles[i].setToRemove();
+        this.game.enemyProjectiles[i].setDead();
       }
     }
   }
@@ -111,7 +111,7 @@ export default class Update {
           this.game.playerProjectiles[y].isPlayerOwned
         ) {
           this.game.enemies[i].gotHit(true, this.game.playerProjectiles[y]);
-          this.game.playerProjectiles[y].setToRemove();
+          this.game.playerProjectiles[y].setDead();
         }
       }
     }

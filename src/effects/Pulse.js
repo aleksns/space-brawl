@@ -54,7 +54,7 @@ export class Pulse extends Effect {
     this.isRect = true;
   }
 
-  setToRemove() {
+  setDead() {
     this.isDead = true;
   }
 
@@ -67,7 +67,7 @@ export class Pulse extends Effect {
 
   update() {
       if(!this.game.progression.isMaxThreatLevel) {
-          this.setToRemove();
+          this.setDead();
       }
     // if (this.opacity <= 0) {
     //     this.isDead = true;

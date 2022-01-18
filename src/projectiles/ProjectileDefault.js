@@ -16,7 +16,6 @@ export class ProjectileDefault extends Projectile {
     this.sModifier = 0;
     this.a = 0;
     this.isFill = undefined;
-    this.isSlowSpeedApplied = this.gun.owner.isSlowSpeedApplied;
     this.shadowColor = "transparent";
     this.shadowBlur = 0;
   }

@@ -7,8 +7,6 @@ const shadowColor = colors.red;
 export class Medkit extends Item {
   constructor(game) { 
     super(game); 
-    this.x = 0;
-    this.y = 0;
     this.w = itemBuffConfig.w;
     this.h = itemBuffConfig.h;
 
@@ -18,7 +16,7 @@ export class Medkit extends Item {
     this.shadowColor = shadowColor;
     this.shadowBlur = itemBuffConfig.shadowBlur;
     this.s = itemBuffConfig.s;
-    this.a = itemBuffConfig.a;
+    //this.a = itemBuffConfig.a;
     this.isFill = itemBuffConfig.isFill;
     this.isInteractable = true;
     this.restoredHP = getItemsStats.medkitTier1;
@@ -27,21 +25,24 @@ export class Medkit extends Item {
 
     this.image = new Image();
     this.image.src = medkitImage;
-    
+    this.isSpawnOnInit = false;
     //this.effectType = "medkit";   for different effects to play
+  }
+
+  initializeItem() {
+    this.randomize();
   }
 
   onDeath() {
     this.game.init.addEffect(this, "defaultBuff");
   }
 
+  applyBuff() {
+    this.game.statusEffects.restoreHealth(this.restoredHP);
+  }
+
   setMinSpawnRange() {
     this.spawnRangeMinX = this.w;
     this.spawnRangeMaxX = this.game.gameBoard.width - this.w;
-  }
-
-  applyBuff() {
-    //this.game.statusEffects.restoreHealth(this.restoredHP);
-    this.game.stats.restoreSpeedOfEverything();
   }
 }

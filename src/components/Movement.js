@@ -11,8 +11,6 @@ export default class Movement {
   setTrajectory(object) {
     this.calculateVectorsAndDistance(object);
     this.applySpeedModifier(object);
-    //console.log(`object vectors vX = ${object.vX}, vY = ${object.vY}`);
-    //this.moveTest(object);
   }
 
   //calculate vectors and distance between two objects, where p1 - start position and p2 - end position
@@ -35,36 +33,23 @@ export default class Movement {
   }
 
 
-  moveTest(object) {
-    //console.log(`-------------- Move test ----------------`);
-    //console.log(`BEFORE =====>  object.vX = ${object.vX}, object.vY = ${object.vY}`);
-    // object.vX *= object.a;
-    // object.vY *= object.a;
-    console.log(`-------------------------------------------`);
-    if(Math.sign(object.vX) == 1 && object.vX !=0 && object.vX < object.s) {
-      object.vX *= object.a;
-      console.log(`1st IF`)
-    }
-    if(Math.sign(object.vX) == -1 && object.vX !=0 && object.vX > -object.s) {
-      object.vX *= object.a;
-      console.log(`2nd IF`)
-    }
+  // moveTest(object) {
+  //   console.log(`-------------------------------------------`);
+  //   if(Math.sign(object.vX) == 1 && object.vX !=0 && object.vX < object.s) {
+  //     object.vX *= object.a;
+  //   }
+  //   if(Math.sign(object.vX) == -1 && object.vX !=0 && object.vX > -object.s) {
+  //     object.vX *= object.a;
+  //   }
 
-    if(Math.sign(object.vY) == 1 && object.vY !=0 && object.vY < object.s) {
-      object.vY *= object.a;
-      console.log(`3rd IF`)
-    }
-    if(Math.sign(object.vY) == -1 && object.vY !=0 && object.vY > -object.s) {
-      object.vY *= object.a;
-      console.log(`4th IF`)
-    }
-    console.log(`================== ///// ==================`);
-
-    //console.log(`AFTER ----->  object.vX = ${object.vX}, object.vY = ${object.vY}`);
-    //console.log(`================== ///// ==================`);
-    //this.applyPhysics(object);
-    //this.applyVelocity(object);
-  }
+  //   if(Math.sign(object.vY) == 1 && object.vY !=0 && object.vY < object.s) {
+  //     object.vY *= object.a;
+  //   }
+  //   if(Math.sign(object.vY) == -1 && object.vY !=0 && object.vY > -object.s) {
+  //     object.vY *= object.a;
+  //   }
+  //   console.log(`================== ///// ==================`);
+  // }
 
 
   move(object, isCheckSouthOutOfBorderOnly) {

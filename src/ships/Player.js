@@ -1,5 +1,8 @@
 import Ship from "./Ship";
-import { getPlayerT0Dimension, getPlayerDefaultStats } from "../services/services";
+import {
+  getPlayerT0Dimension,
+  getPlayerDefaultStats,
+} from "../services/services";
 import playerImage from "../images/playerShip.png";
 
 import { SingleFront } from "../guns/SingleFront";
@@ -7,7 +10,7 @@ import { DoubleFront } from "../guns/DoubleFront";
 import { TripleFront } from "../guns/TripleFront";
 
 export class Player extends Ship {
-  constructor(game) { 
+  constructor(game) {
     super(game);
     this.game = game;
     this.stats = this.game.stats;
@@ -20,7 +23,7 @@ export class Player extends Ship {
     this.isPlayer = true;
     this.offStepX = 0;
     this.offStepX = 0;
-  
+
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.s = this.stats.player.s;
     this.a = this.stats.player.a;
@@ -37,7 +40,6 @@ export class Player extends Ship {
     this.gun = this.tripleFront;
     this.projectileSpeedModifier = this.stats.player.projectileSpeedModifier;
 
-
     this.image = new Image();
     this.image.src = playerImage;
 
@@ -49,6 +51,13 @@ export class Player extends Ship {
     this.gun.fire();
   }
 
+  updateSpeedStats() {
+    this.atkSpeed = this.stats.player.atkSpeed;
+    this.atkSpeedCap = this.stats.player.atkSpeedCap;
+    this.s = this.stats.player.s;
+    this.a = this.stats.player.a;
+    this.projectileSpeedModifier = this.stats.player.projectileSpeedModifier;
+  }
 
   getAtkSpeed() {
     return this.atkSpeed - this.gun.atkSpeed;

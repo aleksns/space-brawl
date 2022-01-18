@@ -1,5 +1,4 @@
 import {
-  getPlayerDefaultStats,
   itemBuffConfig,
   getStatusEffectsBar,
   getBuffsDuration,
@@ -23,28 +22,30 @@ export default class StatusEffects {
       text: "Active effects",
     };
 
-    this.statusEffects = [
-      (this.atkSpeed = {
-        now: 0,
-        id: "atkSpeed",
-        x: itemBuffConfig.statusEffectX,
-        y: itemBuffConfig.statusEffectY,
-        w: itemBuffConfig.w,
-        h: itemBuffConfig.h,
-        xPosText: itemBuffConfig.statusEffectX + 5,
-        yPosText: itemBuffConfig.statusEffectY - 5,
-        imageSrc: atkSpeedImage,
-        image: new Image(),
-        isApplied: false,
-        opacity: itemBuffConfig.opacity,
-        isFill: itemBuffConfig.isFill,
-        color: "transparent",
-        shadowColor: "transparent",
-        shadowBlur: 0,
-        globalAlpha: 1.0,
-        text: 0,
-      }),
-    ];  
+    this.atkSpeed = {
+      value: 0.2,
+      now: 0,
+      id: "atkSpeed",
+      x: itemBuffConfig.statusEffectX,
+      y: itemBuffConfig.statusEffectY,
+      w: itemBuffConfig.w,
+      h: itemBuffConfig.h,
+      xPosText: itemBuffConfig.statusEffectX + 5,
+      yPosText: itemBuffConfig.statusEffectY - 5,
+      imageSrc: atkSpeedImage,
+      image: new Image(),
+      isApplied: false,
+      opacity: itemBuffConfig.opacity,
+      isFill: itemBuffConfig.isFill,
+      color: "transparent",
+      shadowColor: "transparent",
+      shadowBlur: 0,
+      globalAlpha: 1.0,
+      text: 0,
+    };
+
+    this.statusEffects = [];
+    this.statusEffects.push(this.atkSpeed);
 
     this.statusEffects[0].image.src = this.statusEffects[0].imageSrc;
     this.now = 0; //tbd
@@ -56,26 +57,27 @@ export default class StatusEffects {
   }
 
   update() {
-    //this.game.draw.drawStatusBar(this.statusEffectsBar);
-
-    this.statusEffects[0].now = Date.now();
-    let timePassed =
-      (this.statusEffects[0].now - this.statusEffects[0].then) / 1000; //hardcoded get by index method
-    //console.log(`atk.now - atk.then = ${(this.statusEffects[0].now - this.statusEffects[0].then) / 1000}`)
-    if (timePassed >= getBuffsDuration.atkSpeed) {
-      this.statusEffects[0].isApplied = false;
-      this.setPlayerAtkSpeadToDefault();
+    this.atkSpeed.now = Date.now();
+    let timePassed = (this.atkSpeed.now - this.atkSpeed.then) / 1000;
+    if (timePassed >= getBuffsDuration.atkSpeed && this.atkSpeed.isApplied) {
+      this.atkSpeed.isApplied = false;
+      this.restorePlayerAtkSpeed();
     }
-    if (this.statusEffects[0].isApplied == true) {
+    if (this.isAtkSpeedBuffApplied()) {
       let updatedText = getBuffsDuration.atkSpeed - timePassed;
       updatedText = Math.round((updatedText + Number.EPSILON) * 100) / 100;
-      this.statusEffects[0].text = updatedText;
-      this.game.draw.drawStatusEffect(this.statusEffects[0]); ///hardcoded again - index
+      this.atkSpeed.text = updatedText;
+      this.game.draw.drawStatusEffect(this.atkSpeed);
     }
   }
 
-  setPlayerAtkSpeadToDefault() {
-    this.game.player.atkSpeed = getPlayerDefaultStats.atkSpeed;
+  isAtkSpeedBuffApplied() {
+    return this.atkSpeed.isApplied;
+  }
+
+  restorePlayerAtkSpeed() {
+    this.game.stats.player.atkSpeed /= this.atkSpeed.value;
+    this.game.player.updateSpeedStats();
   }
 
   restoreHealth(amount) {
@@ -85,19 +87,23 @@ export default class StatusEffects {
     }
   }
 
-  applyAtkSpeedStatusEffect(value) {
-    this.statusEffects[0].then = this.statusEffects[0].now; //hardcoded index value
-    this.statusEffects[0].isApplied = true;
+  applyAtkSpeedStatusEffect() {
+    this.atkSpeed.then = this.atkSpeed.now;
+    this.atkSpeed.isApplied = true;
 
-    let newAtkSpeed = this.game.player.atkSpeed - value;
+    let newAtkSpeed = this.game.stats.player.atkSpeed * this.atkSpeed.value;
     newAtkSpeed = Math.round((newAtkSpeed + Number.EPSILON) * 100) / 100;
-    this.game.player.atkSpeed = newAtkSpeed;
+    this.game.stats.player.atkSpeed = newAtkSpeed;
+
     if (this.isAtkSpeedCapReached()) {
-      this.game.player.atkSpeed = this.game.player.atkSpeedCap;
+      this.game.stats.player.atkSpeed = this.game.stats.player.atkSpeedCap;
     }
+    this.game.player.updateSpeedStats();
   }
 
   isAtkSpeedCapReached() {
-    return this.game.player.atkSpeed <= this.game.player.atkSpeedCap;
+    return (
+      this.game.stats.player.atkSpeed <= this.game.stats.player.atkSpeedCap
+    );
   }
 }

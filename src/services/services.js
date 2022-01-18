@@ -35,14 +35,6 @@ export function getEnemyT5Dimension() {
   return dimension;
 }
 
-// export function getEnemyT4Dimension() {
-//   let dimension = {
-//     w: GAME_WIDTH / 8,
-//     h: GAME_HEIGHT / 8,
-//   };
-//   return dimension;
-// }
-
 export const colors = {
   green: "#00FF2D",
   yellow: "#FFAD00",

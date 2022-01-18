@@ -1,44 +1,66 @@
-import { getRandomInt } from "../services/services";
+import { getRandomInt, GAME_HEIGHT } from "../services/services";
 
 export default class Item {
   constructor(game) {
     this.game = game;
 
+    this.x = 0;
+    this.y = 0;
     this.vX = 0;
     this.vY = 0;
-
     this.f = 0.95;
-    this.direction = "S";
+    this.distance = 0;
+    this.f = 0.95;
+
+    this.cords = {
+      p1X: 0,
+      p1Y: 0,
+      p2X: 0,
+      p2Y: 0
+    };
+
     this.isDead = false;
-    this.isSpawnOnInit = undefined;
-    //this.isPlayer = false;
     this.isItem = true;
     this.isCheckSouthOutOfBorderOnly = true;
+    this.isSlowSpeedApplied = this.game.stats.isGlobalSlowAll;
+  }
+
+  initialize() {
+    this.initializeItem();
+    this.initializeP2Cords();
+
+    if(this.game.stats.isGlobalSlowAll) {
+      this.s /= this.game.stats.slowModifiers.speed;
+    }
+
+    this.game.movement.setTrajectory(this);
   }
 
   update() {
-    this.game.movement.move(this, this.isCheckSouthOutOfBorderOnly);
-    //this.isTimeToRemove();
+    this.game.movement.applyVelocity(this);
+    this.removeIfOutsideBorderDown();
+
     if (this.isInteractable && this.isPickedUpByPlayer()) {
         this.applyBuff();
+        this.setDead();
         this.onDeath();
     }
+  }
+
+  initializeP2Cords() {
+    this.cords.p1X = this.x;
+    this.cords.p1Y = this.y;
+    this.cords.p2X = this.x;
+    this.cords.p2Y = GAME_HEIGHT + this.h;
   }
 
   setDead() {
     this.isDead = true;
   }
 
-  isTimeToRemove() {
-    //function is turned off
-    //function is turned off
-    //function is turned off
-    
+  removeIfOutsideBorderDown() {
     if (this.game.collision.isCollisionBorderDown(this, -this.h)) {
-      //this.isDead = true;
       this.setDead();
-      console.log(`IS TIME TO REMOVE ITEM>?>>>>>`)
-      
     }
   }
 
@@ -47,7 +69,6 @@ export default class Item {
       this.game.collision.rectsColliding(this, this.game.player) &&
       !this.isDead
     ) {
-      this.isDead = true;
       return true;
     }
   }

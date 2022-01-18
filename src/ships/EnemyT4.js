@@ -25,6 +25,8 @@ export class EnemyT4 extends Ship {
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.s = this.game.stats.enemyT4.s; // default was 2
     this.a = this.s / 40; // default was this.s / 40
+    //this.s = 0;
+    //this.a = 0;
     this.direction = getRandomDirection();
     /* offStep = applies additional distance for enemies to stop their movement
     before reaching allowed borders and maintaining smooth bounce effect */
@@ -75,7 +77,7 @@ export class EnemyT4 extends Ship {
     this.setRandomDirection();
   }
 
-  initialize() {
+  initializeShip() {
     // this.x = 0;
     // this.y = 0;
     this.x = getRandomInt(this.w, this.collision.width - this.w);

@@ -73,10 +73,6 @@ export default class Init {
     }
     this.addItemsBasedOnTiming();
 
-
-    ///REMOVED FOR TESTING
-
-
     ///improve code + methods here and in the update
   }
 
@@ -85,16 +81,18 @@ export default class Init {
       case "medkit":
         item.now = Date.now();
         var newItem = new Medkit(this.game);
-        newItem.setIsSpawnOnInit(false);
-        newItem.randomize();
+        //newItem.setIsSpawnOnInit(false);
+        //newItem.randomize();
+        newItem.initialize();
         this.game.items.push(newItem);
         item.timesSpawned++;
         break;
       case "atkSpeed":
         item.now = Date.now();
         var newItem = new AtkSpeed(this.game);
-        newItem.setIsSpawnOnInit(false);
-        newItem.randomize();
+        //newItem.setIsSpawnOnInit(false);
+        //newItem.randomize();
+        newItem.initialize();
         this.game.items.push(newItem);
         item.timesSpawned++;
         break;
@@ -120,9 +118,8 @@ export default class Init {
   addBgElement(isSpawnOnInit) {
     let newBgElement = new BgElement(this.game);
     newBgElement.setIsSpawnOnInit(isSpawnOnInit);
-    newBgElement.setBackgroundShapeAndPosition();
-    //newBgElement.setRandomShape();
-    //newBgElement.randomize();
+    //newBgElement.setBackgroundShapeAndPosition();
+    newBgElement.initialize();
     this.game.bgElements.push(newBgElement);
   }
 

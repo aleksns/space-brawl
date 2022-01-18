@@ -1,11 +1,8 @@
 import {
-  colors,
   getPlayerDefaultStats,
   getEnemyT4DefaultStats,
   getEnemyT5DefaultStats,
   getEnemyT0DefaultStats,
-  getDefaultPlayerProjectile,
-  getDefaultEnemyProjectile,
 } from "../services/services";
 
 export default class Stats {
@@ -69,13 +66,12 @@ export default class Stats {
     this.enemiesStats.push(this.enemyT5);
 
     this.slowModifiers = {
-      atkSpeed: 15.0,
-      atkSpeedCap: 15.0,
-      s: 6,
-      a: 20,
-      projectileSpeedModifier: 30,
-      projectiles: 30,
+      atkSpeed: 55.0,
+      atkSpeedCap: 55.0,
+      speed: 120,
     };
+
+    this.isGlobalSlowAll = false;
   }
 
   applyModifiers(progression) {
@@ -95,29 +91,32 @@ export default class Stats {
     );
   }
 
-  setAllToDefault() {
-    ///
-  }
-
   slowEverything() {
     this.slowEnemies(this.game.enemies);
-    this.applySpeedStatsReduction(this.game.player);
+    this.applySpeedStatsReductionPlayer();
 
-    this.slowProjectiles(this.game.playerProjectiles);
-    this.slowProjectiles(this.game.enemyProjectiles);
+    this.slowObjectsWithTrajectoryMove(this.game.playerProjectiles);
+    this.slowObjectsWithTrajectoryMove(this.game.enemyProjectiles);
+
+    this.slowObjectsWithTrajectoryMove(this.game.items);
+    this.slowObjectsWithTrajectoryMove(this.game.bgElements);
+
+    this.isGlobalSlowAll = true;
   }
 
   slowEnemies(enemies) {
     for (let i = 0; i < enemies.length; i++) {
-      this.applySpeedStatsReduction(enemies[i]);
+      this.applySpeedReductionObject(enemies[i]);
     }
   }
 
-  slowProjectiles(projectiles) {
+  slowObjectsWithTrajectoryMove(projectiles) {
     for (let i = 0; i < projectiles.length; i++) {
       if (!projectiles[i].isSlowSpeedApplied) {
-        projectiles[i].vX /= this.slowModifiers.projectiles;
-        projectiles[i].vY /= this.slowModifiers.projectiles;
+        projectiles[i].vX /= this.slowModifiers.speed;
+        projectiles[i].vY /= this.slowModifiers.speed;
+
+        projectiles[i].s /= this.slowModifiers.speed;
         projectiles[i].isSlowSpeedApplied = true;
       }
     }
@@ -125,50 +124,85 @@ export default class Stats {
 
   restoreSpeedOfEverything() {
     this.restoreSpeedEnemies(this.game.enemies);
-    this.restoreSpeedStats(this.game.player);
+    this.restoreSpeedStatsPlayer();
 
-    this.restoreSpeedProjectiles(this.game.playerProjectiles);
-    this.restoreSpeedProjectiles(this.game.enemyProjectiles);
+    this.restoreSpeedObjectsWithTrajectoryMove(this.game.playerProjectiles);
+    this.restoreSpeedObjectsWithTrajectoryMove(this.game.enemyProjectiles);
+
+    this.restoreSpeedObjectsWithTrajectoryMove(this.game.items);
+    this.restoreSpeedObjectsWithTrajectoryMove(this.game.bgElements);
+
+    this.isGlobalSlowAll = false;
   }
 
   restoreSpeedEnemies(enemies) {
     for (let i = 0; i < enemies.length; i++) {
-      this.restoreSpeedStats(enemies[i]);
+      this.restoreSpeedObject(enemies[i]);
     }
   }
 
-  restoreSpeedProjectiles(projectiles) {
+  restoreSpeedObjectsWithTrajectoryMove(projectiles) {
     for (let i = 0; i < projectiles.length; i++) {
       if (projectiles[i].isSlowSpeedApplied) {
-        projectiles[i].vX *= this.slowModifiers.projectiles;
-        projectiles[i].vY *= this.slowModifiers.projectiles;
+        projectiles[i].vX *= this.slowModifiers.speed;
+        projectiles[i].vY *= this.slowModifiers.speed;
+
+        projectiles[i].s *= this.slowModifiers.speed;
         projectiles[i].isSlowSpeedApplied = false;
       }
     }
   }
 
-  applySpeedStatsReduction(object) {
+  applySpeedStatsReductionPlayer() {
+    if (this.game.player.isSlowSpeedApplied == true) {
+      return;
+    }
+    this.player.atkSpeed *= this.slowModifiers.atkSpeed;
+    this.player.atkSpeedCap *= this.slowModifiers.atkSpeedCap;
+    this.player.projectileSpeedModifier /= this.slowModifiers.speed;
+    this.player.s /= this.slowModifiers.speed;
+    this.player.a /= this.slowModifiers.speed;  
+
+    this.game.player.updateSpeedStats();
+    this.game.player.isSlowSpeedApplied = true;
+  }
+
+  restoreSpeedStatsPlayer() {
+    if (this.game.player.isSlowSpeedApplied == false) {
+      return;
+    }
+    this.player.atkSpeed /= this.slowModifiers.atkSpeed;
+    this.player.atkSpeedCap /= this.slowModifiers.atkSpeedCap;
+    this.player.projectileSpeedModifier *= this.slowModifiers.speed;
+    this.player.s *= this.slowModifiers.speed;
+    this.player.a *= this.slowModifiers.speed;
+
+    this.game.player.updateSpeedStats();
+    this.game.player.isSlowSpeedApplied = false;
+  }
+
+  applySpeedReductionObject(object) {
     if (object.isSlowSpeedApplied == true) {
       return;
     }
     object.atkSpeed *= this.slowModifiers.atkSpeed;
     object.atkSpeedCap *= this.slowModifiers.atkSpeedCap;
-    object.projectileSpeedModifier /= this.slowModifiers.projectileSpeedModifier;
-    object.s /= this.slowModifiers.s;
-    object.a /= this.slowModifiers.a;
+    object.projectileSpeedModifier /= this.slowModifiers.speed;
+    object.s /= this.slowModifiers.speed;
+    object.a /= this.slowModifiers.speed;
 
     object.isSlowSpeedApplied = true;
   }
 
-  restoreSpeedStats(object) {
+  restoreSpeedObject(object) {
     if (object.isSlowSpeedApplied == false) {
       return;
     }
     object.atkSpeed /= this.slowModifiers.atkSpeed;
     object.atkSpeedCap /= this.slowModifiers.atkSpeedCap;
-    object.projectileSpeedModifier *= this.slowModifiers.projectileSpeedModifier;
-    object.s *= this.slowModifiers.s;
-    object.a *= this.slowModifiers.a;
+    object.projectileSpeedModifier *= this.slowModifiers.speed;
+    object.s *= this.slowModifiers.speed;
+    object.a *= this.slowModifiers.speed;
 
     object.isSlowSpeedApplied = false;
   }

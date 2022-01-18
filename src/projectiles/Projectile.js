@@ -3,7 +3,6 @@ export default class Projectile {
     this.game = game;
     this.gun = gun;
     this.barrel = barrel;
-    this.ctx = game.ctx;
 
     this.x = 0;
     this.y = 0;
@@ -19,6 +18,7 @@ export default class Projectile {
       p2Y: this.barrel.p2Y
     };
 
+    this.isSlowSpeedApplied = this.gun.owner.isSlowSpeedApplied;
     this.isPlayerOwned = undefined;
     this.isDead = false;
   }
@@ -47,15 +47,11 @@ export default class Projectile {
 
   removeIfOutsideScreen() {
     if (this.game.collision.isCollisionWithAnyBorder(this, -50)) {
-      this.setToRemove();
+      this.setDead();
     }
   }
 
-  setGlobalProjectileSpeed(value) {
-    this.s = value;
-  }
-
-  setToRemove() {
+  setDead() {
     this.isDead = true;
   }
 }

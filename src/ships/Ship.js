@@ -29,6 +29,14 @@ export default class Ship {
     this.now = Date.now();
   }
 
+  initialize() {
+    this.initializeShip();
+
+    if(this.game.stats.isGlobalSlowAll) {
+      this.game.stats.applySpeedReductionObject(this);
+    }
+  }
+
   update() {
     if (
       (this.health <= 0 && !this.isBoss) ||
