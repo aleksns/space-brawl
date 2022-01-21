@@ -67,7 +67,6 @@ export default class Stats {
 
     this.slowModifiers = {
       atkSpeed: 55.0,
-      atkSpeedCap: 55.0,
       speed: 120,
     };
 
@@ -158,7 +157,7 @@ export default class Stats {
       return;
     }
     this.player.atkSpeed *= this.slowModifiers.atkSpeed;
-    this.player.atkSpeedCap *= this.slowModifiers.atkSpeedCap;
+    this.player.atkSpeedCap *= this.slowModifiers.atkSpeed;
     this.player.projectileSpeedModifier /= this.slowModifiers.speed;
     this.player.s /= this.slowModifiers.speed;
     this.player.a /= this.slowModifiers.speed;  
@@ -172,7 +171,7 @@ export default class Stats {
       return;
     }
     this.player.atkSpeed /= this.slowModifiers.atkSpeed;
-    this.player.atkSpeedCap /= this.slowModifiers.atkSpeedCap;
+    this.player.atkSpeedCap /= this.slowModifiers.atkSpeed;
     this.player.projectileSpeedModifier *= this.slowModifiers.speed;
     this.player.s *= this.slowModifiers.speed;
     this.player.a *= this.slowModifiers.speed;
@@ -186,7 +185,7 @@ export default class Stats {
       return;
     }
     object.atkSpeed *= this.slowModifiers.atkSpeed;
-    object.atkSpeedCap *= this.slowModifiers.atkSpeedCap;
+    object.atkSpeedCap *= this.slowModifiers.atkSpeed;
     object.projectileSpeedModifier /= this.slowModifiers.speed;
     object.s /= this.slowModifiers.speed;
     object.a /= this.slowModifiers.speed;
@@ -199,7 +198,7 @@ export default class Stats {
       return;
     }
     object.atkSpeed /= this.slowModifiers.atkSpeed;
-    object.atkSpeedCap /= this.slowModifiers.atkSpeedCap;
+    object.atkSpeedCap /= this.slowModifiers.atkSpeed;
     object.projectileSpeedModifier *= this.slowModifiers.speed;
     object.s *= this.slowModifiers.speed;
     object.a *= this.slowModifiers.speed;

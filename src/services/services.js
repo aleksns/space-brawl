@@ -93,6 +93,7 @@ export const getBuffsSpawnDelay = {
 
 export const getBuffsDuration = {
   atkSpeed: 10.0,
+  slow: 4.0,
 };
 
 export const getPlayerDefaultStats = {

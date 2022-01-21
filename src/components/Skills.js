@@ -1,30 +1,16 @@
-import {
-  itemBuffConfig,
-  getStatusEffectsBar,
-  getBuffsDuration,
-} from "../services/services";
+import { itemBuffConfig } from "../services/services";
 import atkSpeedImage from "../images/atkSpeed.png";
 
-export default class StatusEffects {
+export default class Skills {
   constructor(game) {
     this.game = game;
-
-    this.statusEffectsBar = {
-      w: getStatusEffectsBar.w,
-      h: getStatusEffectsBar.h,
-      x: getStatusEffectsBar.x,
-      y: getStatusEffectsBar.y,
-      color: getStatusEffectsBar.color,
-      isFill: getStatusEffectsBar.isFill,
-      shadowColor: getStatusEffectsBar.shadowColor,
-      shadowBlur: getStatusEffectsBar.shadowBlur,
-      opacity: getStatusEffectsBar.opacity,
-      text: "Active effects",
-    };
 
     this.atkSpeed = {
       value: 0.2,
       now: 0,
+      then: 0,
+      cd: 0,
+      duration: 10,
       id: "atkSpeed",
       x: itemBuffConfig.statusEffectX,
       y: itemBuffConfig.statusEffectY,
@@ -43,32 +29,75 @@ export default class StatusEffects {
       globalAlpha: 1.0,
       text: 0,
     };
+    this.atkSpeed.image.src = this.atkSpeed.imageSrc;
 
-    this.statusEffects = [];
-    this.statusEffects.push(this.atkSpeed);
+    this.slowTime = {
+      atkSpeed: 55,
+      speed: 120,
+      now: 0,
+      then: 0,
+      cd: 12,
+      duration: 3,
+      id: "slowTime",
+      isApplied: false,
+      text: 0,
+    };
 
-    this.statusEffects[0].image.src = this.statusEffects[0].imageSrc;
+    this.skills = [];
+    this.skills.push(this.atkSpeed);
+    this.skills.push(this.slowTime);
+
     this.now = 0; //tbd
   }
 
   startTimers() {
-    this.statusEffects[0].now = Date.now();
+    //this.atkSpeed.now = Date.now();
     this.now = Date.now(); //tbd
   }
 
   update() {
+    this.updateAtkSpeedStatusEffect();
+    this.updateSlowTimeStatusEffect();
+  }
+
+  updateAtkSpeedStatusEffect() {
     this.atkSpeed.now = Date.now();
+    if (!this.atkSpeed.isApplied) {
+      return;
+    }
     let timePassed = (this.atkSpeed.now - this.atkSpeed.then) / 1000;
-    if (timePassed >= getBuffsDuration.atkSpeed && this.atkSpeed.isApplied) {
-      this.atkSpeed.isApplied = false;
+    if (timePassed >= this.atkSpeed.duration) {
       this.restorePlayerAtkSpeed();
+      this.atkSpeed.isApplied = false;
     }
-    if (this.isAtkSpeedBuffApplied()) {
-      let updatedText = getBuffsDuration.atkSpeed - timePassed;
-      updatedText = Math.round((updatedText + Number.EPSILON) * 100) / 100;
-      this.atkSpeed.text = updatedText;
-      this.game.draw.drawStatusEffect(this.atkSpeed);
+
+    let updatedText = this.atkSpeed.duration - timePassed;
+    updatedText = Math.round((updatedText + Number.EPSILON) * 100) / 100;
+    this.atkSpeed.text = updatedText;
+    this.game.draw.drawStatusEffect(this.atkSpeed);
+  }
+
+  updateSlowTimeStatusEffect() {
+    this.slowTime.now = Date.now();
+    if (!this.slowTime.isApplied) {
+      return;
     }
+    let timePassed = (this.slowTime.now - this.slowTime.then) / 1000;
+    if (timePassed >= this.slowTime.duration) {
+      this.game.stats.restoreSpeedOfEverything();
+      this.slowTime.isApplied = false;
+    }
+
+    let updatedText = this.slowTime.duration - timePassed;
+    updatedText = Math.round((updatedText + Number.EPSILON) * 100) / 100;
+    this.slowTime.text = updatedText;
+    //this.game.draw.drawStatusEffect(this.slowTime);
+  }
+
+  applySlowTimeStatusEffect() {
+    this.slowTime.then = this.slowTime.now;
+    this.slowTime.isApplied = true;
+    this.game.stats.slowEverything();
   }
 
   isAtkSpeedBuffApplied() {

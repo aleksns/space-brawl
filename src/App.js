@@ -32,7 +32,17 @@ export default function App() {
   const canvas4Ref = useRef(null);
   const context4Ref = useRef(null);
 
+  const canvas5Ref = useRef(null);
+  const context5Ref = useRef(null);
+
   const gameRef = useRef(null);
+
+  const clearCanvas1To4 = () => {
+    clearCanvas1();
+    clearCanvas2();
+    clearCanvas3();
+    clearCanvas4();
+  };
 
   const clearCanvas1 = () => {
     contextRef.current.clearRect(
@@ -66,36 +76,14 @@ export default function App() {
       canvas4Ref.current.height
     );
   };
-
-  // const clearCanvas = () => {
-  //   contextRef.current.clearRect(
-  //     0,
-  //     0,
-  //     canvasRef.current.width,
-  //     canvasRef.current.height
-  //   );
-
-  //   context2Ref.current.clearRect(
-  //     0,
-  //     0,
-  //     canvas2Ref.current.width,
-  //     canvas2Ref.current.height
-  //   );
-
-  // context3Ref.current.clearRect(
-  //   0,
-  //   0,
-  //   canvas3Ref.current.width,
-  //   canvas3Ref.current.height
-  // );
-
-  // context4Ref.current.clearRect(
-  //   0,
-  //   0,
-  //   canvas4Ref.current.width,
-  //   canvas4Ref.current.height
-  // );
-  // };
+  const clearCanvas5 = () => {
+    context5Ref.current.clearRect(
+      0,
+      0,
+      canvas5Ref.current.width,
+      canvas5Ref.current.height
+    );
+  };
 
   useEffect(() => {
     //main game canvas
@@ -130,16 +118,23 @@ export default function App() {
     context4.lineWidth = lineWidth;
     context4Ref.current = context4;
 
+    //canvas for UI elements that are being rendered onpy upon a level start
+    const canvas5 = canvas5Ref.current;
+    canvas5.width = width;
+    canvas5.height = height;
+    const context5 = canvas5.getContext("2d");
+    context5.lineWidth = lineWidth;
+    context5Ref.current = context5;
+
     const game = new Game(
+      canvas5Ref,
       contextRef,
       context2Ref,
       context3Ref,
       context4Ref,
-      canvas4Ref,
-      // clearCanvas1,
-      // clearCanvas2,
-      // clearCanvas3,
-      clearCanvas4
+      context5Ref,
+      clearCanvas1To4,
+      clearCanvas5
     );
     gameRef.current = game;
   }, []);
@@ -185,9 +180,7 @@ export default function App() {
       // let dT = timestamp - lastTime;
       // lastTime = timestamp;
 
-      clearCanvas1();
-      clearCanvas2();
-      clearCanvas3();
+      clearCanvas1To4();
       //updateUI();
       gameRef.current.gameLoop();
 
@@ -202,6 +195,7 @@ export default function App() {
         canvas2Ref={canvas2Ref}
         canvas3Ref={canvas3Ref}
         canvas4Ref={canvas4Ref}
+        canvas5Ref={canvas5Ref}
       />
       <div
         className="ui-start-container"

@@ -1,24 +1,32 @@
 import UICanvas from "./UICanvas";
-import { colors } from "../services/services";
+import { colors, GAME_HEIGHT } from "../services/services";
 import skillsBarImage from "../images/skillsBar.png";
+import skillTimeImage from "../images/skillTime.png";
+import shieldImage from "../images/skillShield.png";
+import laserImage from "../images/skillLaser.png";
 
-//Hp bar image
-const skillsBarImageProps = {
-  x: 5,
-  y: 250,
-  w: 80,
-  h: 250,
-  color: "transparent",
-  isFill: false,
+const container = {
+  w: 95,
+  h: 260,
+  opacity: "opacity(100%)",
+  opacityVisible: "opacity(100%)",
+  opacityHide: "opacity(30%)",
+};
+const skillIcons = {
+  w: 55,
+  h: 55,
+  lineWidth: 0,
+  lineCap: "round",
+  lineJoin: "round",
 };
 
-const skillsBarProps = {
-  x: skillsBarImageProps.x + 38,
-  y: 5,
-  w: skillsBarImageProps.w - 43,
-  h: skillsBarImageProps.h - 5,
-  color: colors.uiGreen,
-  isFill: true,
+const skillsBarContainerProps = {
+  x: 5,
+  y: GAME_HEIGHT / 2 - container.h / 2,
+  w: container.w,
+  h: container.h,
+  color: "transparent",
+  isFill: false,
 };
 
 export class SkillsBar extends UICanvas {
@@ -26,29 +34,49 @@ export class SkillsBar extends UICanvas {
     super(game);
     this.game = game;
 
-    this.skillsBarImageProps = {
-      x: skillsBarImageProps.x,
-      y: skillsBarImageProps.y,
-      w: skillsBarImageProps.w,
-      h: skillsBarImageProps.h,
-      color: skillsBarImageProps.color,
-      isFill: skillsBarImageProps.isFill,
-      opacityDefault: "opacity(100%)",
-      opacityHide: "opacity(30%)",
+    this.skillsBarContainerProps = {
+      x: skillsBarContainerProps.x,
+      y: skillsBarContainerProps.y,
+      w: skillsBarContainerProps.w,
+      h: skillsBarContainerProps.h,
+      color: skillsBarContainerProps.color,
+      isFill: skillsBarContainerProps.isFill,
+      image: undefined,
+      opacity: "opacity(100%)",
+    };
+
+    this.skillsBarContainerProps.image = new Image();
+    this.skillsBarContainerProps.image.src = skillsBarImage;
+
+    this.slowTimeProps = {
+      x: skillsBarContainerProps.x + 20.5,
+      y: skillsBarContainerProps.y + 38,
+      w: skillIcons.w,
+      h: skillIcons.h,
       image: undefined,
     };
+    this.slowTimeProps.image = new Image();
+    this.slowTimeProps.image.src = skillTimeImage;
 
-    this.skillsBarImageProps.image = new Image();
-    this.skillsBarImageProps.image.src = skillsBarImage;
-
-    this.skillsBarProps = {
-      x: skillsBarProps.x,
-      y: skillsBarProps.y,
-      w: skillsBarProps.w,
-      h: skillsBarProps.h,
-      color: skillsBarProps.color,
-      isFill: skillsBarProps.isFill,
+    this.shieldProps = {
+      x: skillsBarContainerProps.x + 20,
+      y: skillsBarContainerProps.y + 106,
+      w: skillIcons.w,
+      h: skillIcons.h,
+      image: undefined,
     };
+    this.shieldProps.image = new Image();
+    this.shieldProps.image.src = shieldImage;
+
+    this.laserProps = {
+      x: skillsBarContainerProps.x + 20.5,
+      y: skillsBarContainerProps.y + 171,
+      w: skillIcons.w,
+      h: skillIcons.h,
+      image: undefined,
+    };
+    this.laserProps.image = new Image();
+    this.laserProps.image.src = laserImage;
   }
 
   update(ctx) {
@@ -58,17 +86,21 @@ export class SkillsBar extends UICanvas {
   draw(ctx) {
     if (
       this.game.collision.rectsColliding(
-        this.skillsBarImageProps,
+        this.skillsBarContainerProps,
         this.game.player
       )
     ) {
-      ctx.current.filter = this.skillsBarImageProps.opacityHide;
-    }
-    else {
-        ctx.current.filter = this.skillsBarImageProps.opacityDefault;  
+      this.skillsBarContainerProps.opacity = container.opacityHide;
+    } else {
+      this.skillsBarContainerProps.opacity = container.opacityVisible;
     }
 
-    this.game.draw.drawItem(this.skillsBarImageProps, ctx);
+    ctx.current.filter = this.skillsBarContainerProps.opacity;
+    this.game.draw.drawItem(this.skillsBarContainerProps, ctx);
+
+    this.game.draw.drawItem(this.slowTimeProps, ctx);
+    this.game.draw.drawItem(this.shieldProps, ctx);
+    this.game.draw.drawItem(this.laserProps, ctx);
 
     ctx.current.filter = "none";
   }

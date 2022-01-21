@@ -38,7 +38,7 @@ export class Medkit extends Item {
   }
 
   applyBuff() {
-    this.game.statusEffects.restoreHealth(this.restoredHP);
+    this.game.skills.restoreHealth(this.restoredHP);
   }
 
   setMinSpawnRange() {

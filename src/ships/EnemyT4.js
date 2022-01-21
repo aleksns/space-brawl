@@ -78,8 +78,6 @@ export class EnemyT4 extends Ship {
   }
 
   initializeShip() {
-    // this.x = 0;
-    // this.y = 0;
     this.x = getRandomInt(this.w, this.collision.width - this.w);
     this.y = getRandomInt(
       this.collision.allowedY.y0,

@@ -7,7 +7,7 @@ export default class Update {
     this.game.init.startTimers();
     //this.game.player.initPlayer();
     this.game.player.startTimers();
-    this.game.statusEffects.startTimers();
+    this.game.skills.startTimers();
   }
 
   update() {
@@ -36,7 +36,7 @@ export default class Update {
   }
 
   updateStatusEffects() {
-    this.game.statusEffects.update();
+    this.game.skills.update();
   }
 
   updateObjects(objects) {

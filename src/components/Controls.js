@@ -11,7 +11,7 @@ export default class Controls {
 
     this.game = game;
     this.player = game.player;
-    this.canvas4 = game.canvas4;
+    this.canvas5 = game.canvas5;
 
     window.addEventListener("keydown", (event) => {
       switch (event.code) {
@@ -57,7 +57,7 @@ export default class Controls {
       y:0
     };
 
-    this.canvas4.current.addEventListener('click', (event) => {
+    this.canvas5.current.addEventListener('click', (event) => {
       this.mousePosition = this.getMousePosition(event);
       console.log(`THIS.mousePos = ${JSON.stringify(this.mousePosition)}`)
   
@@ -66,7 +66,7 @@ export default class Controls {
         if (this.game.isInside(this.mousePosition, btn)) {
             this.game.init.addEffect(btn, btn.effect);
             if(btn.id == "slow") {
-              this.game.stats.slowEverything();
+              this.game.skills.applySlowTimeStatusEffect();
             }
             else {
               this.game.stats.restoreSpeedOfEverything();
@@ -88,7 +88,7 @@ export default class Controls {
   }
 
   getMousePosition(event) {
-    var rect = this.canvas4.current.getBoundingClientRect();
+    var rect = this.canvas5.current.getBoundingClientRect();
     return {
         x: event.clientX - rect.left,
         y: event.clientY - rect.top

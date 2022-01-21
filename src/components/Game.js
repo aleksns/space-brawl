@@ -6,7 +6,7 @@ import Draw from "./Draw";
 import Update from "./Update";
 import Stats from "./Stats";
 import Init from "./Init";
-import StatusEffects from "./StatusEffects";
+import Skills from "./Skills";
 import Progression from "./Progression";
 import { LevelTransition } from "../cutscenes/LevelTransition";
 import GameBoard from "./GameBoard";
@@ -19,21 +19,25 @@ import Cutscenes from "../cutscenes/Cutscenes";
 //e.g. board height, allowed board height, etc
 export default class Game {
   constructor(
+    canvas5Ref,
     contextRef,
     context2Ref,
     context3Ref,
     context4Ref,
-    canvas4Ref,
-    clearCanvas4
+    context5Ref,
+    clearCanvas1To4,
+    clearCanvas5
   ) {
     this.ctx = contextRef;
     this.ctx2 = context2Ref;
     this.ctx3 = context3Ref;
     this.ctx4 = context4Ref;
-    this.canvas4 = canvas4Ref;
+    this.ctx5 = context5Ref;
+    this.canvas5 = canvas5Ref;
     this.soundList = new SoundList();
     this.gameBoard = new GameBoard(this);
-    this.clearCanvas4 = clearCanvas4;
+    this.clearCanvas1To4 = clearCanvas1To4;
+    this.clearCanvas5 = clearCanvas5;
     this.progression = new Progression(this);
     this.stats = new Stats(this); ///maybe to put into another class?
     this.init = new Init(this);
@@ -42,7 +46,7 @@ export default class Game {
 
     this.controls = new Controls(this);
     this.movement = new Movement(this);
-    this.statusEffects = new StatusEffects(this);
+    this.skills = new Skills(this);
 
     // this.levelTransition = new LevelTransition(this);
     // this.bossDeath = new BossDeath(this);
@@ -70,9 +74,9 @@ export default class Game {
     this.isPauseOn = true;
     this.startBtn = {
       x: 200,
-      y: 200,
-      w: 100,
-      h: 100,
+      y: 400,
+      w: 50,
+      h: 50,
       color: "grey",
       isFill: true,
       effect: "default",
@@ -159,6 +163,7 @@ export default class Game {
     // if (!this.cutscenes.levelTransition.isAnimationFinished) {
     //   this.draw.drawLevelCutscene();
     // }
+    this.clearCanvas1To4();
     if (this.cutscenes.isCutscenesNotFinished()) {
       this.draw.drawCurrentCutscene();
     }

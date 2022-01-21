@@ -13,11 +13,12 @@ const hpBarYOffset = -20;
 export default class Draw {
   constructor(game) {
     this.game = game;
-    this.clearCanvas4 = this.game.clearCanvas4;
+    this.clearCanvas5 = this.game.clearCanvas5;
     this.ctx = game.ctx;
     this.ctx2 = game.ctx2;
     this.ctx3 = game.ctx3;
     this.ctx4 = game.ctx4;
+    this.ctx5 = game.ctx5;
 
     this.skillsBar = new SkillsBar(this.game);
     this.hpBarPlayer = new HpBarPlayer(this.game);
@@ -40,16 +41,17 @@ export default class Draw {
     this.drawPlayer();
     this.drawEnemies();
 
-    this.drawUI();
+
+    this.drawUI(); 
   }
 
   drawUIOnInit() {
-    this.clearCanvas4();
-    this.drawItem(this.hpBarPlayer.hpBarImageProps, this.ctx4);
-    this.drawItem(this.threatBar.threatBarImageProps, this.ctx4);
+    this.clearCanvas5();
+    this.drawItem(this.hpBarPlayer.hpBarImageProps, this.ctx5);
+    this.drawItem(this.threatBar.threatBarImageProps, this.ctx5);
 
-    this.drawRect(this.game.startBtn, this.ctx4);
-    this.drawRect(this.game.endBtn, this.ctx4);
+    this.drawRect(this.game.startBtn, this.ctx5);
+    this.drawRect(this.game.endBtn, this.ctx5);
   }
 
   drawCurrentCutscene() {
@@ -57,11 +59,12 @@ export default class Draw {
   }
 
   drawUI() {
-    this.hpBarPlayer.draw(this.ctx);
-    this.threatBar.draw(this.ctx);
+    this.hpBarPlayer.draw(this.ctx4);
+    this.threatBar.draw(this.ctx4);
     this.drawScore();
 
-    this.skillsBar.draw(this.ctx2);
+    this.skillsBar.draw(this.ctx4);
+    //this.skillsBar.drawSlowTimeSkill(this.ctx4);
   }
 
   drawScore() {
@@ -93,7 +96,7 @@ export default class Draw {
 
   drawItems() {
     for (let i = 0; i < this.game.items.length; i++) {
-      this.drawRect(this.game.items[i], this.ctx);
+      //this.drawRect(this.game.items[i], this.ctx);
       this.drawItem(this.game.items[i], this.ctx);
     }
   }
@@ -120,7 +123,7 @@ export default class Draw {
       this.game.player.isGotHit = false;
     }
 
-    this.drawRect(this.game.player, this.ctx);
+    //this.drawRect(this.game.player, this.ctx);
     this.drawItem(this.game.player, this.ctx);
     this.ctx.current.filter = "none";
   }
@@ -137,7 +140,7 @@ export default class Draw {
       this.ctx.current.filter = "saturate(50%) brightness(150%)";
       enemy.isGotHit = false;
     }
-    this.drawRect(enemy, this.ctx);
+   // this.drawRect(enemy, this.ctx);
     this.drawItem(enemy, this.ctx);
     this.ctx.current.filter = "none";
     this.drawEnemyHpBar(enemy);
@@ -178,18 +181,20 @@ export default class Draw {
   }
 
   drawEffect(effect) {
-    //   if(effect.isRect) {
-    //     this.drawRect(effect, this.ctx2);
-    //   }
-    // else {
+      if(effect.isRect) {
+        this.drawRect(effect, this.ctx2);
+      }
+    else {
     this.drawArc(effect, this.ctx2);
-    //}
+    }
   }
 
   drawRect(object, ctx) {
     ctx.current.shadowColor = object.shadowColor;
     ctx.current.shadowBlur = object.shadowBlur;
     ctx.current.globalAlpha = object.opacity;
+    // ctx.current.lineJoin = object.lineJoin;
+    // ctx.current.lineCap = object.lineCap;
 
     ctx.current.beginPath();
     ctx.current.rect(object.x, object.y, object.w, object.h);
@@ -209,6 +214,8 @@ export default class Draw {
     ctx.current.shadowColor = object.shadowColor;
     ctx.current.shadowBlur = object.shadowBlur;
     ctx.current.globalAlpha = object.opacity;
+    // ctx.current.lineJoin = object.lineJoin;
+    // ctx.current.lineCap = object.lineCap;
 
     ctx.current.beginPath();
     ctx.current.arc(object.x, object.y, object.radius, 0, 2 * Math.PI);

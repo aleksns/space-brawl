@@ -18,6 +18,8 @@ export default class Projectile {
       p2Y: this.barrel.p2Y
     };
 
+    this.lineJoin = "round";
+    this.lineCap = "square";
     this.isSlowSpeedApplied = this.gun.owner.isSlowSpeedApplied;
     this.isPlayerOwned = undefined;
     this.isDead = false;
