@@ -17,6 +17,7 @@ export default class Update {
     this.updateProjectiles();
     this.updateEffects();
     this.updateStatusEffects();
+    this.updateUI();
 
     this.updateGameProgression();
 
@@ -29,6 +30,10 @@ export default class Update {
     this.removeDeadEnemies();
     this.removeDeadProjectiles();
     this.removeDeadEffects();
+  }
+
+  updateUI() {
+    this.game.skillsBar.update();
   }
 
   updateGameProgression() {

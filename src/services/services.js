@@ -64,7 +64,7 @@ export const getStatusEffectsBar = {
   opacity: 0.4,
 };
 
-export const itemBuffConfig = {
+export const itemBuffProps = {
   w: 50,
   h: 50,
   color: "transparent",

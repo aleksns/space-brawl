@@ -1,11 +1,10 @@
 import { Pulse } from "../effects/Pulse";
-import { colors, getStatusEffectsBar, GAME_WIDTH } from "../services/services";
+import { colors, GAME_WIDTH } from "../services/services";
 import { HpBarPlayer } from "../ui/HpBarPlayer";
-import { SkillsBar } from "../ui/SkillsBar";
 import { ThreatLevelBar } from "../ui/ThreatLevelBar";
 
-const textColor = getStatusEffectsBar.color;
 
+const hitRegFilter = "saturate(50%) brightness(150%)";
 const hpBarHeight = 5;
 const hpBarLineWidth = 0.5;
 const hpBarYOffset = -20;
@@ -20,7 +19,7 @@ export default class Draw {
     this.ctx4 = game.ctx4;
     this.ctx5 = game.ctx5;
 
-    this.skillsBar = new SkillsBar(this.game);
+    this.skillsBar = this.game.skillsBar;
     this.hpBarPlayer = new HpBarPlayer(this.game);
     this.threatBar = new ThreatLevelBar(this.game);
 
@@ -49,9 +48,6 @@ export default class Draw {
     this.clearCanvas5();
     this.drawItem(this.hpBarPlayer.hpBarImageProps, this.ctx5);
     this.drawItem(this.threatBar.threatBarImageProps, this.ctx5);
-
-    this.drawRect(this.game.startBtn, this.ctx5);
-    this.drawRect(this.game.endBtn, this.ctx5);
   }
 
   drawCurrentCutscene() {
@@ -85,9 +81,9 @@ export default class Draw {
   }
 
   drawText(item) {
-    this.ctx.current.fillStyle = textColor;
-    this.ctx.current.font = `22px tahoma`;
-    this.ctx.current.fillText(
+    this.ctx4.current.fillStyle = item.color;
+    this.ctx4.current.font = `22px tahoma`;
+    this.ctx4.current.fillText(
       item.text,
       item.xPosText, // hardcoded, change later
       item.yPosText
@@ -96,14 +92,14 @@ export default class Draw {
 
   drawItems() {
     for (let i = 0; i < this.game.items.length; i++) {
-      //this.drawRect(this.game.items[i], this.ctx);
       this.drawItem(this.game.items[i], this.ctx);
     }
   }
 
   drawItem(item, ctx) {
-    //this.drawRect(item, ctx);
+    ctx.current.filter = item.filter;
     ctx.current.drawImage(item.image, item.x, item.y, item.w, item.h);
+    ctx.current.filter = "none";
   }
 
   drawBgElements() {
@@ -113,23 +109,22 @@ export default class Draw {
   }
 
   drawBgElement(element) {
-    //this.drawRect(element, this.ctx3);
     this.drawItem(element, this.ctx3);
   }
 
   drawPlayer() {
     if (this.game.player.isGotHit) {
-      this.ctx.current.filter = "saturate(50%) brightness(150%)";
+      this.game.player.filter = hitRegFilter;
       this.game.player.isGotHit = false;
     }
+    else {
+      this.game.player.filter = "none";
+    }
 
-    //this.drawRect(this.game.player, this.ctx);
     this.drawItem(this.game.player, this.ctx);
-    this.ctx.current.filter = "none";
   }
 
   drawEnemies() {
-    //this.ctx.current.drawImage(this.img, 600, 300, 200, 95);
     for (let i = 0; i < this.game.enemies.length; i++) {
       this.drawEnemy(this.game.enemies[i]);
     }
@@ -137,12 +132,13 @@ export default class Draw {
 
   drawEnemy(enemy) {
     if (enemy.isGotHit) {
-      this.ctx.current.filter = "saturate(50%) brightness(150%)";
+      enemy.filter = hitRegFilter;
       enemy.isGotHit = false;
     }
-   // this.drawRect(enemy, this.ctx);
+    else {
+      enemy.filter = "none";
+    }
     this.drawItem(enemy, this.ctx);
-    this.ctx.current.filter = "none";
     this.drawEnemyHpBar(enemy);
   }
 

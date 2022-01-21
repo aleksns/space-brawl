@@ -8,7 +8,7 @@ import Stats from "./Stats";
 import Init from "./Init";
 import Skills from "./Skills";
 import Progression from "./Progression";
-import { LevelTransition } from "../cutscenes/LevelTransition";
+import { SkillsBar } from "../ui/SkillsBar";
 import GameBoard from "./GameBoard";
 import SoundChannel from "./SoundChannel";
 import SoundList from "./SoundList";
@@ -38,6 +38,7 @@ export default class Game {
     this.gameBoard = new GameBoard(this);
     this.clearCanvas1To4 = clearCanvas1To4;
     this.clearCanvas5 = clearCanvas5;
+    this.skillsBar = new SkillsBar(this);
     this.progression = new Progression(this);
     this.stats = new Stats(this); ///maybe to put into another class?
     this.init = new Init(this);
@@ -106,15 +107,6 @@ export default class Game {
     /* <Sound />*/
 
     console.log("CONSTRUCTOR > GAME");
-  }
-
-  isInside(position, rect) {
-    return (
-      position.x > rect.x &&
-      position.x < rect.x + rect.w &&
-      position.y < rect.y + rect.h &&
-      position.y > rect.y
-    );
   }
 
   isGameAlive() {

@@ -1,5 +1,5 @@
 import Item from "./Item";
-import { colors, getItemsStats, itemBuffConfig } from "../services/services";
+import { colors } from "../services/services";
 import atkSpeedImage from "../images/atkSpeed.png";
 
 const shadowColor = colors.blue;
@@ -7,17 +7,17 @@ const shadowColor = colors.blue;
 export class AtkSpeed extends Item {
   constructor(game) {
     super(game);
-    this.w = itemBuffConfig.w;
-    this.h = itemBuffConfig.h;
+    this.w = this.itemBuffProps.w;
+    this.h = this.itemBuffProps.h;
 
     this.offStepY = -this.h;
-    this.color = itemBuffConfig.color;
-    this.opacity = itemBuffConfig.opacity;
+    this.color = this.itemBuffProps.color;
+    this.opacity = this.itemBuffProps.opacity;
     this.shadowColor = shadowColor;
-    this.shadowBlur = itemBuffConfig.shadowBlur;
-    this.s = itemBuffConfig.s;
-    //this.a = itemBuffConfig.a;
-    this.isFill = itemBuffConfig.isFill;
+    this.shadowBlur = this.itemBuffProps.shadowBlur;
+    this.s = this.itemBuffProps.s;
+    //this.a = itemBuffProps.a;
+    this.isFill = this.itemBuffProps.isFill;
     this.isInteractable = true;
     this.spawnRangeMinX = 0;
     this.spawnRangeMaxX = 0;

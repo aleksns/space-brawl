@@ -12,6 +12,17 @@ export default class Item {
     this.distance = 0;
     this.f = 0.95;
 
+    this.itemBuffProps = {
+      w: 50,
+      h: 50,
+      color: "transparent",
+      opacity: 1.0,
+      shadowBlur: 20,
+      isFill: false,
+      s: 6, // s - speed
+      a: 0.2, /// a - acceleration (6/30)
+    };
+
     this.cords = {
       p1X: 0,
       p1Y: 0,
@@ -19,6 +30,7 @@ export default class Item {
       p2Y: 0
     };
 
+    this.filter = "none";
     this.isDead = false;
     this.isItem = true;
     this.isCheckSouthOutOfBorderOnly = true;

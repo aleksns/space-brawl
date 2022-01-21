@@ -28,10 +28,10 @@ const buffUIProps = {
   statusEffectY: buffsContainerUI.y + 10,
 }
 
-export default class Skills {
+export default class StatusEffects {
   constructor(game) {
     this.game = game;
-    this.skillsBar = this.game.skillsBar;
+
     this.atkSpeed = {
       value: 0.2,
       now: 0,
@@ -133,18 +133,17 @@ export default class Skills {
     if (timePassed >= this.slowTime.duration) {
       this.game.stats.restoreSpeedOfEverything();
       this.slowTime.isApplied = false;
-      this.skillsBar.slowTimePropsText.isTextOn = false;
     }
 
     let updatedText = this.slowTime.duration - timePassed;
-    updatedText = Math.round((updatedText + Number.EPSILON) * 10) / 10;
-    this.skillsBar.slowTimePropsText.text = updatedText;
+    updatedText = Math.round((updatedText + Number.EPSILON) * 100) / 100;
+    this.slowTime.text = updatedText;
+    //this.game.draw.drawStatusEffect(this.slowTime);
   }
 
   applySlowTimeStatusEffect() {
     this.slowTime.then = this.slowTime.now;
     this.slowTime.isApplied = true;
-    this.skillsBar.slowTimeSkillUsed();
     this.game.stats.slowEverything();
   }
 

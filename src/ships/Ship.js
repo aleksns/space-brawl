@@ -16,6 +16,7 @@ export default class Ship {
     this.isSlowSpeedApplied = false;
     this.shadowColor = "transparent";
     this.shadowBlur = 0;
+    this.filter = "none";
 
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.vX = 0;
