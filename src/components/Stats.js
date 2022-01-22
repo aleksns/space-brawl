@@ -92,7 +92,7 @@ export default class Stats {
 
   slowEverything() {
     this.slowEnemies(this.game.enemies);
-    this.applySpeedStatsReductionPlayer();
+    //this.applySpeedStatsReductionPlayer();
 
     this.slowObjectsWithTrajectoryMove(this.game.playerProjectiles);
     this.slowObjectsWithTrajectoryMove(this.game.enemyProjectiles);
@@ -123,7 +123,7 @@ export default class Stats {
 
   restoreSpeedOfEverything() {
     this.restoreSpeedEnemies(this.game.enemies);
-    this.restoreSpeedStatsPlayer();
+   // this.restoreSpeedStatsPlayer();
 
     this.restoreSpeedObjectsWithTrajectoryMove(this.game.playerProjectiles);
     this.restoreSpeedObjectsWithTrajectoryMove(this.game.enemyProjectiles);

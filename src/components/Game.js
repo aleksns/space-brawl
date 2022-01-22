@@ -38,6 +38,7 @@ export default class Game {
     this.gameBoard = new GameBoard(this);
     this.clearCanvas1To4 = clearCanvas1To4;
     this.clearCanvas5 = clearCanvas5;
+    this.skills = new Skills(this);
     this.skillsBar = new SkillsBar(this);
     this.progression = new Progression(this);
     this.stats = new Stats(this); ///maybe to put into another class?
@@ -47,7 +48,7 @@ export default class Game {
 
     this.controls = new Controls(this);
     this.movement = new Movement(this);
-    this.skills = new Skills(this);
+    
 
     // this.levelTransition = new LevelTransition(this);
     // this.bossDeath = new BossDeath(this);

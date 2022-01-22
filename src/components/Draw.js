@@ -81,13 +81,15 @@ export default class Draw {
   }
 
   drawText(item) {
-    this.ctx4.current.fillStyle = item.color;
+    this.ctx4.current.globalAlpha = item.textOpacity;
+    this.ctx4.current.fillStyle = item.textColor;
     this.ctx4.current.font = `22px tahoma`;
     this.ctx4.current.fillText(
       item.text,
-      item.xPosText, // hardcoded, change later
-      item.yPosText
+      item.textX,
+      item.textY
     );
+    this.ctx4.current.globalAlpha = 1.0;
   }
 
   drawItems() {

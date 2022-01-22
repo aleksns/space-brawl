@@ -13,7 +13,7 @@ const buffsContainerUI = {
   shadowColor: "transparent",
   shadowBlur: 0,
   opacity: 0.4,
-}
+};
 
 const buffUIProps = {
   x: buffsContainerUI.x + 10,
@@ -26,12 +26,11 @@ const buffUIProps = {
   isFill: false,
   statusEffectX: buffsContainerUI.x + 15,
   statusEffectY: buffsContainerUI.y + 10,
-}
+};
 
 export default class Skills {
   constructor(game) {
     this.game = game;
-    this.skillsBar = this.game.skillsBar;
     this.atkSpeed = {
       value: 0.2,
       now: 0,
@@ -43,8 +42,8 @@ export default class Skills {
       y: itemBuffProps.statusEffectY,
       w: itemBuffProps.w,
       h: itemBuffProps.h,
-      xPosText: itemBuffProps.statusEffectX + 5,
-      yPosText: itemBuffProps.statusEffectY - 5,
+      textX: itemBuffProps.statusEffectX + 5,
+      textY: itemBuffProps.statusEffectY - 5,
       imageSrc: atkSpeedImage,
       image: new Image(),
       isApplied: false,
@@ -61,26 +60,51 @@ export default class Skills {
     this.slowTime = {
       atkSpeed: 55,
       speed: 120,
+      duration: 3,
+      cd: 12,
+      remainingCD: 0,
+      isApplied: false,
+      isOnCD: false,
       now: 0,
       then: 0,
-      cd: 12,
-      duration: 3,
       id: "slowTime",
+    };
+
+    this.shield = {
+      duration: 4,
+      cd: 9,
+      remainingCD: 0,
       isApplied: false,
-      text: 0,
-      color: skillCdColor,
+      isOnCD: false,
+      now: 0,
+      then: 0,
+      id: "shield",
+    };
+
+    this.laser = {
+      duration: 5,
+      cd: 10,
+      remainingCD: 0,
+      isApplied: false,
+      isOnCD: false,
+      now: 0,
+      then: 0,
+      id: "laser",
     };
 
     this.skills = [];
     this.skills.push(this.atkSpeed);
     this.skills.push(this.slowTime);
+    this.skills.push(this.shield);
+    this.skills.push(this.laser);
 
-    this.now = 0; //tbd
+    this.now = 0;
   }
 
   startTimers() {
     //this.atkSpeed.now = Date.now();
     this.now = Date.now(); //tbd
+    //this.slowTime.then = this.now;
   }
 
   update() {
@@ -91,7 +115,7 @@ export default class Skills {
 
   useSlowTimeSkill() {
     let timePassed = (this.now - this.slowTime.then) / 1000;
-    if (timePassed <= this.slowTime.cd && this.slowTime.isApplied) {
+    if (timePassed <= this.slowTime.cd || this.slowTime.isApplied) {
       return;
     }
     this.applySlowTimeStatusEffect();
@@ -126,6 +150,9 @@ export default class Skills {
 
   updateSlowTimeStatusEffect() {
     this.slowTime.now = Date.now();
+
+    this.updateSlowTimeRemainingCD();
+
     if (!this.slowTime.isApplied) {
       return;
     }
@@ -133,18 +160,25 @@ export default class Skills {
     if (timePassed >= this.slowTime.duration) {
       this.game.stats.restoreSpeedOfEverything();
       this.slowTime.isApplied = false;
-      this.skillsBar.slowTimePropsText.isTextOn = false;
     }
+  }
 
-    let updatedText = this.slowTime.duration - timePassed;
-    updatedText = Math.round((updatedText + Number.EPSILON) * 10) / 10;
-    this.skillsBar.slowTimePropsText.text = updatedText;
+  updateSlowTimeRemainingCD() {
+    if (!this.slowTime.isOnCD && !this.slowTime.isApplied) {
+      return;
+    }
+    this.slowTime.remainingCD = (this.now - this.slowTime.then) / 1000;
+    if (this.slowTime.remainingCD <= this.slowTime.cd) {
+      this.slowTime.isOnCD = true;
+    } else {
+      this.slowTime.isOnCD = false;
+    }
   }
 
   applySlowTimeStatusEffect() {
     this.slowTime.then = this.slowTime.now;
     this.slowTime.isApplied = true;
-    this.skillsBar.slowTimeSkillUsed();
+
     this.game.stats.slowEverything();
   }
 
