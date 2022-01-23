@@ -143,7 +143,7 @@ export default class Game {
     this.isPauseOn = true;
     this.now = 0;
     this.then = 0;
-    this.clearCanvas4();
+    this.clearCanvas5();
   }
 
   setPauseOff() {

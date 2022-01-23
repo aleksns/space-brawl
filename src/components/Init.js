@@ -191,7 +191,6 @@ export default class Init {
       newProjectile.setEnemyOwned(gun);
       this.game.enemyProjectiles.push(newProjectile);
     }
-    //newProjectile.launch(barrel);
     newProjectile.initialize();
   }
 

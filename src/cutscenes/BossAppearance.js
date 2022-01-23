@@ -57,7 +57,7 @@ export class BossAppearance extends Cutscene {
 
     this.lineWidth = 7;
     this.numOfIterations = 35;   //was 18
-    this.isAnimationFinished = false;
+    this.isAnimationFinished = true;
 
     this.objectsWaypoints.forEach((obj) => {
         this.calculateWaypoints(obj);

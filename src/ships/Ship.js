@@ -57,7 +57,7 @@ export default class Ship {
       return;
     }
 
-     //this.fireGun();
+     this.fireGun();
   }
 
   setTargetFront() {

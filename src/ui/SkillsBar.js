@@ -170,31 +170,40 @@ export class SkillsBar extends UICanvas {
   }
 
   updateSlowTimeContainer() {
-    this.handleIconAndTextOpacity(this.slowTimeSkill, this.slowTimeProps, this.slowTimeCDProps);
+    this.handleIconAndTextOpacity(
+      this.slowTimeSkill,
+      this.slowTimeProps,
+      this.slowTimeCDProps
+    );
 
-    let updatedText =
-      this.slowTimeSkill.cd - this.slowTimeSkill.remainingCD;
-    updatedText = Math.round((updatedText + Number.EPSILON) * 1) / 1;
+    let text = this.slowTimeSkill.cd - this.slowTimeSkill.remainingCD;
+    text = Math.round((text + Number.EPSILON) * 1) / 1;
 
-    this.slowTimeCDProps.text = updatedText;
+    this.slowTimeCDProps.text = text;
   }
 
   updateShieldContainer() {
-    this.handleIconAndTextOpacity(this.shieldSkill, this.shieldProps, this.shieldCDProps);
-
+    this.handleIconAndTextOpacity(
+      this.shieldSkill,
+      this.shieldProps,
+      this.shieldCDProps
+    );
   }
 
   updateLaserContainer() {
-    this.handleIconAndTextOpacity(this.laserSkill, this.laserProps, this.laserCDProps);
-
+    this.handleIconAndTextOpacity(
+      this.laserSkill,
+      this.laserProps,
+      this.laserCDProps
+    );
   }
 
   showOutlineIconTest(icon, ctx) {
     ctx.current.beginPath();
     ctx.current.rect(icon.x, icon.y, icon.w, icon.h);
-      ctx.current.fillStyle = "green";
-      ctx.current.strokeStyle = "green";
-      ctx.current.stroke();
+    ctx.current.fillStyle = "green";
+    ctx.current.strokeStyle = "green";
+    ctx.current.stroke();
     ctx.current.closePath();
   }
 
@@ -207,39 +216,34 @@ export class SkillsBar extends UICanvas {
     }
     this.drawSlowTimeCDText(ctx);
     this.drawSlowTimeCDBar(ctx);
-
   }
 
   drawSlowTimeCDText(ctx) {
     let offsetX = this.getTextWidth(this.slowTimeCDProps.text, ctx) / 2;
-    this.slowTimeCDProps.textX = this.slowTimeProps.x + (this.slowTimeProps.w / 2) - offsetX;
+    this.slowTimeCDProps.textX =
+      this.slowTimeProps.x + this.slowTimeProps.w / 2 - offsetX;
 
     let offSetY = this.getTextHeight(this.slowTimeCDProps.text, ctx) / 2;
-    this.slowTimeCDProps.textY = this.slowTimeProps.y + (this.slowTimeProps.h / 2) + offSetY;
+    this.slowTimeCDProps.textY =
+      this.slowTimeProps.y + this.slowTimeProps.h / 2 + offSetY;
 
     this.game.draw.drawText(this.slowTimeCDProps);
   }
 
   drawSlowTimeCDBar(ctx) {
-    let remainingCD =
-    this.slowTimeSkill.remainingCD / this.slowTimeSkill.cd;
+    let remainingCD = this.slowTimeSkill.remainingCD / this.slowTimeSkill.cd;
     let dH = this.slowTimeProps.h * remainingCD;
     let y = this.slowTimeProps.y + this.slowTimeProps.h;
 
     ctx.current.globalAlpha = this.slowTimeCDProps.barOpacity;
     ctx.current.beginPath();
     ctx.current.fillStyle = "pink";
-    ctx.current.rect(
-      this.slowTimeProps.x,
-      y,
-      this.slowTimeProps.w,
-      -dH
-    );
+    ctx.current.rect(this.slowTimeProps.x, y, this.slowTimeProps.w, -dH);
     ctx.current.fill();
     ctx.current.closePath();
     ctx.current.globalAlpha = 1.0;
   }
-  
+
   handleIconAndTextOpacity(skill, icon, iconCD) {
     if (this.isPlayerCollidingWithSkillsBar()) {
       if (skill.isOnCD) {
@@ -272,11 +276,11 @@ export class SkillsBar extends UICanvas {
     let textWidth = ctx.current.measureText(text).width;
     return textWidth;
   }
-   
 
   getTextHeight(text, ctx) {
-    let textHeight = ctx.current.measureText(text).actualBoundingBoxAscent + 
-    ctx.current.measureText(text).actualBoundingBoxDescent;
+    let textHeight =
+      ctx.current.measureText(text).actualBoundingBoxAscent +
+      ctx.current.measureText(text).actualBoundingBoxDescent;
 
     return textHeight;
   }

@@ -55,7 +55,7 @@ export class LevelTransition extends Cutscene {
 
     this.lineWidth = 7;
     this.numOfIterations = 30;   //was 18
-    this.isAnimationFinished = true;
+    this.isAnimationFinished = false;
 
     this.objectsWaypoints.forEach((obj) => {
         this.calculateWaypoints(obj);
