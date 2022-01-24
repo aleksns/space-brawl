@@ -128,7 +128,7 @@ export const getEnemyT4DefaultStats = {
   speed: 4,
   accelerationMod: 40,
   rammingDmg: 0.1,
-  atkSpeed: 3.0,
+  atkSpeed: 1.0,
   atkSpeedCap: 0.5,
   projectileSpeedModifier: 5.0,
   scorePoints: 25,

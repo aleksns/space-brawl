@@ -46,13 +46,12 @@ export default class Ship {
       (this.game.collision.isOutOfBorders(this) &&
         this.isCheckSouthOutOfBorderOnly == false)
     ) {
-      this.health = 0;
       this.setDead();
       this.onDeath();
     }
     if (!this.isPlayer) {
       this.updateShip();
-      //this.move();
+      this.move();
     }
 
     let timePassed = (this.game.now - this.then) / 1000;
@@ -105,6 +104,9 @@ export default class Ship {
     }
 
     this.health = roundDecimalHundreds(this.health);
+    if(this.health < 0) {
+      this.health = 0;
+    }
   }
 
   gotHitByProjectile(projectile) {

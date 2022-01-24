@@ -158,11 +158,6 @@ export default class Draw {
     ctx.current.rect(enemy.x, y, dW, hpBarHeight);
     ctx.current.fill();
     ctx.current.closePath();
-    console.log(`----------------------`)
-    //console.log(`enemy.x = ${enemy.x}, y = ${y}`)
-    console.log(`remainingHPBar = ${remainingHPBar}, y = ${y}`)
-    console.log(`dW = ${dW}`)
-    console.log(`----------------------`)
   }
 
   drawProjectiles() {

@@ -18,10 +18,8 @@ export class EnemyT4 extends Ship {
     this.w = getEnemyT4Dimension().w;
     this.h = getEnemyT4Dimension().h;
 
-    // this.health = this.game.stats.enemyT4.health;
-    // this.maxHealth = this.game.stats.enemyT4.maxHealth;
-    this.health = 11;
-    this.maxHealth = 11;
+    this.health = this.game.stats.enemyT4.health;
+    this.maxHealth = this.game.stats.enemyT4.maxHealth;
 
     this.isPlayer = false;
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
@@ -32,8 +30,6 @@ export class EnemyT4 extends Ship {
     this.direction = getRandomDirection();
     /* offStep = applies additional distance for enemies to stop their movement
     before reaching allowed borders and maintaining smooth bounce effect */
-    // this.offStepX = Math.floor(this.w / 4);
-    // this.offStepY = Math.floor(this.h / 2);
     this.offStepX = this.s * 20;
     this.offStepY = this.s * 20;
     this.scorePoints = this.game.stats.enemyT4.scorePoints;
