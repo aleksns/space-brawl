@@ -48,7 +48,6 @@ export default class Game {
 
     this.controls = new Controls(this);
     this.movement = new Movement(this);
-    
 
     // this.levelTransition = new LevelTransition(this);
     // this.bossDeath = new BossDeath(this);
@@ -70,9 +69,14 @@ export default class Game {
 
     this.now = 0;
     this.then = 0;
+    this.timeDifference = 0;  //to catch up with timers after pause On / Off cycle
+
     this.pauseNow = 0;
     this.pauseThen = 0;
 
+    this.isPauseTest = false;
+
+    this.isControlsOn = true;
     this.isPauseOn = true;
     this.startBtn = {
       x: 200,
@@ -92,7 +96,7 @@ export default class Game {
       h: 100,
       color: "green",
       effect: "defaultBuff",
-      id: "restore"
+      id: "restore",
     };
 
     this.btns = [];
@@ -134,15 +138,19 @@ export default class Game {
     return this.player.isDead;
   }
 
-  // setNewLevelStarted() {
-  //   //return this.progression.threatLevel == 0;
-  //   return this.isNewLevelStarted = true;
-  // }
+  setIsPauseTestOn() {
+    this.isPauseTest = !this.isPauseTest;
+    if(this.isPauseTest == true) {
+      this.then = this.now;
+    }
+    else {
+      this.timeDifference = this.now - this.then;
+      this.update.updateAllTimersAfterPauseOff();
+    }
+  }
 
   setPauseOn() {
     this.isPauseOn = true;
-    this.now = 0;
-    this.then = 0;
     this.clearCanvas5();
   }
 
@@ -150,12 +158,7 @@ export default class Game {
     this.isPauseOn = false;
   }
 
-
-
   gameLoop() {
-    // if (!this.cutscenes.levelTransition.isAnimationFinished) {
-    //   this.draw.drawLevelCutscene();
-    // }
     this.clearCanvas1To4();
     if (this.cutscenes.isCutscenesNotFinished()) {
       this.draw.drawCurrentCutscene();
@@ -165,41 +168,20 @@ export default class Game {
       return;
     }
 
-    this.then = Date.now();
-    this.pauseNow = this.then;
-    //this.clearCanvas();  //clear the canvas here to preserve player/enemy models during cutscenes
-
     if (this.now == 0) {
       this.background.play();
       this.update.startTimersOnInit();
       this.draw.drawUIOnInit();
-      this.pauseNow = this.then;
-      this.pauseThen = this.pauseNow;
       this.isPauseOn = false;
     }
 
-    //  this.timePassed = (this.pauseNow - this.pauseThen) / 1000;
-    // if(this.timePassed >= 3) {
-    //   this.controls.handleInput();
-    //   this.update.update();
-    //   this.draw.drawAll();
-    // }
-
-    // this.timePassed = (this.pauseNow - this.pauseThen) / 1000;
-
-    // console.log(`timePassed = ${this.timePassed}`)
-    // if(this.timePassed <= 3) {
-    //   return;
-    // }
-
-    this.controls.handleInput();
     this.update.update();
     this.draw.drawAll();
 
     if (this.player.isDead) {
       this.isGameOn = false;
     }
-
+    this.now = Date.now();
     //pause any action during pause time (for cutscenes, level transitions)
 
     //console.log(`timePassed = ${this.timePassed}`)
@@ -211,7 +193,7 @@ export default class Game {
     // console.log("enemy projectiles.length = " + this.enemyProjectiles.length);
     // console.log("player projectiles.length = " + this.playerProjectiles.length);
     // console.log(`---------------------------------------`);
-    this.now = this.then;
+
     //this.pauseThen = this.now;
   }
 }

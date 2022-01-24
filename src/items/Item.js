@@ -42,7 +42,7 @@ export default class Item {
     this.initializeP2Cords();
 
     if(this.game.stats.isGlobalSlowAll) {
-      this.s /= this.game.stats.slowModifiers.speed;
+      this.s /= this.game.stats.slowModifiers.speedGlobal;
     }
 
     this.game.movement.setTrajectory(this);

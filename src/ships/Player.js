@@ -46,8 +46,11 @@ export class Player extends Ship {
     console.log("CONSTRUCTOR > Player");
   }
 
+  initializeShip() {
+    //tbd
+  }
+
   fireGun() {
-    this.now = Date.now();
     this.gun.fire();
   }
 

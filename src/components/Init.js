@@ -23,45 +23,44 @@ export default class Init {
         now: 0,
         then: 0, //tbd
         delay: getBuffsSpawnDelay.medkit,
-        timesSpawned: 0, //tbd
+        //timesSpawned: 0, //tbd
         id: "medkit",
       }),
       (this.atkSpeed = {
         now: 0,
         then: 0, //tbd
         delay: getBuffsSpawnDelay.atkSpeed,
-        timesSpawned: 0, //tbd
+        //timesSpawned: 0, //tbd
         id: "atkSpeed",
       }),
     ];
 
     this.formationLine = {
       delay: 20,
-      numOfEnemies: 13
+      numOfEnemies: 13,
     };
 
     this.enemiesInFormation = [];
-    this.then = 0;
-    this.now = 0;
+    this.formationThen = 0;
   }
 
-  startTimers() {
+  initialize() {
+    this.initTimers();
+  }
+
+  initTimers() {
     for (let i = 0; i < this.itemsToSpawn.length; i++) {
-      this.itemsToSpawn[i].now = Date.now();
-      this.itemsToSpawn[i].then = this.itemsToSpawn[i].now;
+      this.itemsToSpawn[i].then = Date.now();
     }
 
-    this.now = Date.now();
-    this.then = this.now;
+    this.formationThen = Date.now();
   }
 
   addItemsBasedOnTiming() {
     for (let i = 0; i < this.itemsToSpawn.length; i++) {
-      this.itemsToSpawn[i].now = Date.now();
-      let timePassed =
-        (this.itemsToSpawn[i].now - this.itemsToSpawn[i].then) / 1000;
+      let timePassed = (this.game.now - this.itemsToSpawn[i].then) / 1000;
       if (timePassed >= this.itemsToSpawn[i].delay) {
-        this.itemsToSpawn[i].then = this.itemsToSpawn[i].now;
+        this.itemsToSpawn[i].then = this.game.now;
         this.addItem(this.itemsToSpawn[i]);
       }
     }
@@ -79,22 +78,16 @@ export default class Init {
   addItem(item) {
     switch (item.id) {
       case "medkit":
-        item.now = Date.now();
         var newItem = new Medkit(this.game);
-        //newItem.setIsSpawnOnInit(false);
-        //newItem.randomize();
         newItem.initialize();
         this.game.items.push(newItem);
-        item.timesSpawned++;
+        //item.timesSpawned++;
         break;
       case "atkSpeed":
-        item.now = Date.now();
         var newItem = new AtkSpeed(this.game);
-        //newItem.setIsSpawnOnInit(false);
-        //newItem.randomize();
         newItem.initialize();
         this.game.items.push(newItem);
-        item.timesSpawned++;
+        //item.timesSpawned++;
         break;
       default:
         console.log("Error handling `addItem function in Init class");
@@ -124,7 +117,7 @@ export default class Init {
   }
 
   spawnEnemies() {
-   // this.spawnFormationOfEnemies();
+     //this.spawnFormationOfEnemies();
 
     if (this.game.enemies.length >= this.progression.maxNumOfEnemies) {
       return;
@@ -142,21 +135,23 @@ export default class Init {
   // Create formation of enemies > put enemies in the temp list > apply formation function to enemies >
   // > add enemies to the main list > remove temp list
   spawnFormationOfEnemies() {
-    this.now = Date.now();
-    let timePassed = (this.now - this.then) / 1000;
+    let timePassed = (this.game.now - this.formationThen) / 1000;
 
-    if ((timePassed >= this.formationLine.delay) && !this.progression.isMaxThreatLevel) {
-      this.then = this.now;
-    
+    if (
+      timePassed >= this.formationLine.delay &&
+      !this.progression.isMaxThreatLevel
+    ) {
+      this.formationThen = this.game.now;
+
       for (let i = 0; i <= this.formationLine.numOfEnemies; i++) {
         var newEnemy = new EnemyT5(this.game);
         newEnemy.initialize();
-        newEnemy.startTimers();
+        //newEnemy.startTimers();
         this.enemiesInFormation.push(newEnemy);
       }
       this.game.gameBoard.setShipsInFormationLine(this.enemiesInFormation);
 
-      for(let i = 0; i < this.enemiesInFormation.length; i++) {
+      for (let i = 0; i < this.enemiesInFormation.length; i++) {
         this.game.enemies.push(this.enemiesInFormation[i]);
       }
 
@@ -173,7 +168,7 @@ export default class Init {
   addEnemy() {
     var newEnemy = new EnemyT4(this.game);
     newEnemy.initialize();
-    newEnemy.startTimers();
+    //newEnemy.startTimers();
     this.game.enemies.push(newEnemy);
   }
 

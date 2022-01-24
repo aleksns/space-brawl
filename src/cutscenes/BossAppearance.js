@@ -130,11 +130,6 @@ export class BossAppearance extends Cutscene {
     }
   }
 
-  setAnimationIsFinished() {
-    this.game.setPauseOff();
-    this.isAnimationFinished = true;
-  }
-
   drawLine(object, ctx) {
     ctx.current.lineWidth = this.lineWidth;
     ctx.current.lineCap = "round";

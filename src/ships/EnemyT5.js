@@ -69,7 +69,6 @@ export class EnemyT5 extends Ship {
   }
 
   fireGun() {
-    this.now = Date.now();
     this.gun.fire();
     this.game.laser.play();
   }

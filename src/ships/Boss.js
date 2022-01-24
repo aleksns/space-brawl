@@ -56,7 +56,6 @@ export class Boss extends Ship {
   }
 
   fireGun() {
-    this.now = Date.now();
     this.gun.fire();
   }
 
@@ -76,18 +75,6 @@ export class Boss extends Ship {
       this.onDeath();
     }
   }
-
-  // getDefaultSpeed() {
-  //   return this.game.stats.enemyT0.s;
-  // }
-
-  // getDefaultAcceleration() {
-  //   return this.game.stats.enemyT0.a;
-  // }
-
-  // getDefaultProjectileSpeedModifier() {
-  //   return this.game.stats.enemyT0.projectileSpeedModifier;
-  // }
 
   move() {
     //tbd

@@ -4,13 +4,18 @@ export default class Update {
   }
 
   startTimersOnInit() {
-    this.game.init.startTimers();
+    this.game.init.initialize();
     //this.game.player.initPlayer();
-    this.game.player.startTimers();
-    this.game.skills.startTimers();
+    this.game.player.initialize();
+    this.game.skills.initialize();
   }
 
-  update() {
+  update() {  
+    this.game.controls.update(); 
+    if(this.game.isPauseTest) {
+      return;
+    }
+
     this.updateItems();
     this.updatePlayer();
     this.updateEnemies();
@@ -23,13 +28,21 @@ export default class Update {
 
     this.updateCollisionPlayerHullWithEnemies();
     this.updateCollisionPlayerWithProjectiles();
-    this.updateCollisionEnemyWithProjectiles(); //put items collison with player on pick up here
+    this.updateCollisionEnemyWithProjectiles();
 
     this.removeDeadItems();
     this.removeDeadBgElements();
     this.removeDeadEnemies();
     this.removeDeadProjectiles();
     this.removeDeadEffects();
+  }
+
+  updateAllTimersAfterPauseOff() {
+    this.game.skills.updateTimersAfterPauseOff();
+    
+    for(let i = 0; i < this.game.enemies.length; i++) {
+      this.game.enemies[i].updateTimersAfterPauseOff();
+    }
   }
 
   updateUI() {

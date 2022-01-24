@@ -23,19 +23,21 @@ export default class Ship {
     this.vY = 0;
     this.f = 0.95;
 
+    this.then = 0;
     console.log("CONSTRUCTOR > Ship");
-  }
-
-  startTimers() {
-    this.now = Date.now();
   }
 
   initialize() {
     this.initializeShip();
+    this.initTimers();
 
     if(this.game.stats.isGlobalSlowAll) {
       this.game.stats.applySpeedReductionObject(this);
     }
+  }
+
+  initTimers() {
+    this.then = this.game.now;
   }
 
   update() {
@@ -50,13 +52,15 @@ export default class Ship {
     }
     if (!this.isPlayer) {
       this.updateShip();
-      this.move();
+      //this.move();
     }
-    let timePassed = (this.game.then - this.now) / 1000;
+
+    let timePassed = (this.game.now - this.then) / 1000;
     if (timePassed <= this.getAtkSpeed()) {
       return;
     }
 
+     this.then = this.game.now;
      this.fireGun();
   }
 
@@ -109,5 +113,9 @@ export default class Ship {
 
   gotHitByShipHull() {
     this.health = this.health - 0.1; //hardcoded temporary variable
+  }
+
+  updateTimersAfterPauseOff() {
+      this.then += this.game.timeDifference;
   }
 }

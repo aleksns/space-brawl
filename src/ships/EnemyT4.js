@@ -18,8 +18,10 @@ export class EnemyT4 extends Ship {
     this.w = getEnemyT4Dimension().w;
     this.h = getEnemyT4Dimension().h;
 
-    this.health = this.game.stats.enemyT4.health;
-    this.maxHealth = this.game.stats.enemyT4.maxHealth;
+    // this.health = this.game.stats.enemyT4.health;
+    // this.maxHealth = this.game.stats.enemyT4.maxHealth;
+    this.health = 11;
+    this.maxHealth = 11;
 
     this.isPlayer = false;
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
@@ -46,7 +48,7 @@ export class EnemyT4 extends Ship {
     this.image = new Image();
     this.image.src = enemyImageT4;
 
-    this.directionChangeIntervalNow = 0;
+    this.directionChangeIntervalThen = 0;
     this.directionChangeInterval = 4;
     this.isCheckSouthOutOfBorderOnly = false;
     this.isBoss = false;
@@ -54,27 +56,20 @@ export class EnemyT4 extends Ship {
   }
 
   fireGun() {
-    this.now = Date.now();
     this.gun.fire();
   }
 
   updateShip() {
-    let timePassed = (this.game.then - this.directionChangeIntervalNow) / 1000;
+    let timePassed = (this.game.now - this.directionChangeIntervalThen) / 1000;
     if (timePassed <= this.directionChangeInterval) {
       return;
     }
-    this.directionChangeIntervalNow = Date.now();
     this.setRandomDirection();
+    this.directionChangeIntervalThen = this.game.now;
   }
 
   move() {
     this.game.movement.move(this, this.isCheckSouthOutOfBorderOnly);
-    let timePassed = (this.game.then - this.directionChangeIntervalNow) / 1000;
-    if (timePassed <= this.directionChangeInterval) {
-      return;
-    }
-    this.directionChangeIntervalNow = Date.now();
-    this.setRandomDirection();
   }
 
   initializeShip() {
@@ -86,12 +81,13 @@ export class EnemyT4 extends Ship {
     this.getEmptyPositionOnBoard();
     var newGun = new SingleTarget(this.game, this);
     this.gun = newGun;
+    this.directionChangeIntervalThen = Date.now();
   }
 
   setRandomDirectionFromList(listOfDirections) {
     let index = getRandomInt(0, listOfDirections.length - 1);
     this.direction = directions[index];
-    this.directionChangeIntervalNow = Date.now();
+    this.directionChangeIntervalThen = this.game.now;
   }
 
   setRandomDirection() {

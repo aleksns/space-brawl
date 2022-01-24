@@ -63,6 +63,8 @@ export class LevelTransition extends Cutscene {
   }
 
   initialize() {
+    this.isAnimationFinished = false;
+
     this.line1.startX = 0;
     this.line1.startY = this.container.y - this.container.margin;
     this.line1.endX = 0;
@@ -72,8 +74,6 @@ export class LevelTransition extends Cutscene {
     this.line2.startY = this.container.y + this.container.margin;
     this.line2.endX = GAME_WIDTH;
     this.line2.endY = this.container.y + this.container.margin;
-
-    this.isAnimationFinished = false;
   }
 
   draw(ctx) {

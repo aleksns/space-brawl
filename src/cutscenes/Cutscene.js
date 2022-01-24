@@ -12,14 +12,17 @@ import {
       this.opacity = 1.0;
       this.shadowColor = "transparent";
       this.shadowBlur = 0;
-
       }
   
       setAnimationIsFinished() {
         this.game.setPauseOff();
         this.isAnimationFinished = true;
+        this.game.draw.drawUIOnInit();
       }
 
+      pauseTheObjects() {
+
+      }
 
   }
 

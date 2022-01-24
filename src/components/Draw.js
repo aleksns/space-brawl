@@ -12,7 +12,6 @@ const hpBarYOffset = -20;
 export default class Draw {
   constructor(game) {
     this.game = game;
-    this.clearCanvas5 = this.game.clearCanvas5;
     this.ctx = game.ctx;
     this.ctx2 = game.ctx2;
     this.ctx3 = game.ctx3;
@@ -45,7 +44,6 @@ export default class Draw {
   }
 
   drawUIOnInit() {
-    this.clearCanvas5();
     this.drawItem(this.hpBarPlayer.hpBarImageProps, this.ctx5);
     this.drawItem(this.threatBar.threatBarImageProps, this.ctx5);
   }
@@ -60,7 +58,6 @@ export default class Draw {
     this.drawScore();
 
     this.skillsBar.draw(this.ctx4);
-    //this.skillsBar.drawSlowTimeSkill(this.ctx4);
   }
 
   drawScore() {
@@ -141,26 +138,31 @@ export default class Draw {
       enemy.filter = "none";
     }
     this.drawItem(enemy, this.ctx);
-    this.drawEnemyHpBar(enemy);
+    this.drawEnemyHpBar(enemy, this.ctx);
   }
 
-  drawEnemyHpBar(enemy) {
+  drawEnemyHpBar(enemy, ctx) {
     let remainingHPBar = enemy.health / enemy.maxHealth;
     let dW = enemy.w * remainingHPBar;
     let y = enemy.y + hpBarYOffset;
 
-    this.ctx.current.beginPath();
-    this.ctx.current.lineWidth = hpBarLineWidth;
-    this.ctx.current.strokeStyle = "#ffffff";
-    this.ctx.current.rect(enemy.x, y, enemy.w, hpBarHeight);
-    this.ctx.current.stroke();
-    this.ctx.current.closePath();
+    ctx.current.beginPath();
+    ctx.current.lineWidth = hpBarLineWidth;
+    ctx.current.strokeStyle = "#ffffff";
+    ctx.current.rect(enemy.x, y, enemy.w, hpBarHeight);
+    ctx.current.stroke();
+    ctx.current.closePath();
 
-    this.ctx.current.beginPath();
-    this.ctx.current.fillStyle = colors.red;
-    this.ctx.current.rect(enemy.x, y, dW, hpBarHeight);
-    this.ctx.current.fill();
-    this.ctx.current.closePath();
+    ctx.current.beginPath();
+    ctx.current.fillStyle = colors.red;
+    ctx.current.rect(enemy.x, y, dW, hpBarHeight);
+    ctx.current.fill();
+    ctx.current.closePath();
+    console.log(`----------------------`)
+    //console.log(`enemy.x = ${enemy.x}, y = ${y}`)
+    console.log(`remainingHPBar = ${remainingHPBar}, y = ${y}`)
+    console.log(`dW = ${dW}`)
+    console.log(`----------------------`)
   }
 
   drawProjectiles() {

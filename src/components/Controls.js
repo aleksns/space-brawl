@@ -10,6 +10,7 @@ export default class Controls {
       key1: false,
       key2: false,
       key3: false,
+      space: false,
     };
 
     this.game = game;
@@ -44,6 +45,10 @@ export default class Controls {
             this.keys.key3 = true;
             break;
 
+          case "Space":
+            this.keys.space = true;
+            break;  
+
           default:
             console.log("Error handling 'handleKeyDown' function");
             break;
@@ -67,6 +72,7 @@ export default class Controls {
           case "KeyD":
             this.keys.keyD = false;
             break;
+
           case "Digit1":
             this.keys.key1 = false;
             break;
@@ -75,6 +81,10 @@ export default class Controls {
             break;
           case "Digit3":
             this.keys.key3 = false;
+            break;
+
+            case "Space":
+            this.keys.space = false;
             break;
           default:
             console.log("Error handling 'handleKeyUp' function");
@@ -88,6 +98,9 @@ export default class Controls {
       x: 0,
       y: 0,
     };
+
+    this.pauseThen = 0;
+    this.canPause = true;
 
     this.canvas5.current.addEventListener(
       "click",
@@ -142,7 +155,32 @@ export default class Controls {
     );
   }
 
+  handlePauseTimeBeforeActivation() {
+    let timePassed = (this.game.now - this.pauseThen) / 1000;
+    if (timePassed >= 1) {
+      this.canPause = true;
+    }
+  }
+
+  update() {
+    this.handlePauseTimeBeforeActivation();
+    this.handleInput();
+  }
+
   handleInput() {
+    // if(!this.game.isControlsOn) {
+    //   return;
+    // }
+    if (this.keys.space == true && this.canPause) {
+      this.pauseThen = this.game.now; 
+      this.canPause = false;
+      this.handleKeySpace();       
+    }
+
+    if(this.game.isPauseTest) {
+      return;
+    }
+
     if (this.keys.keyW == true) {
       this.handleKeyW();
     }
@@ -197,5 +235,9 @@ export default class Controls {
 
   handleKey3() {
     this.game.skills.useLaserSkill();
+  }
+
+  handleKeySpace() {
+    this.game.setIsPauseTestOn();
   }
 }

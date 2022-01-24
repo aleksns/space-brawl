@@ -58,14 +58,16 @@ export default class Skills {
     this.atkSpeed.image.src = this.atkSpeed.imageSrc;
 
     this.slowTime = {
-      atkSpeed: 55,
-      speed: 120,
+      atkSpeedPlayer: 10,
+      speedPlayer: 10,
+      sProjPlayer: 10,
+      atkSpeedGlobal: 55,
+      speedGlobal: 120,
       duration: 3,
-      cd: 12,
+      cd: 6,
       remainingCD: 0,
       isApplied: false,
       isOnCD: false,
-      now: 0,
       then: 0,
       id: "slowTime",
     };
@@ -76,7 +78,6 @@ export default class Skills {
       remainingCD: 0,
       isApplied: false,
       isOnCD: false,
-      now: 0,
       then: 0,
       id: "shield",
     };
@@ -87,7 +88,6 @@ export default class Skills {
       remainingCD: 0,
       isApplied: false,
       isOnCD: false,
-      now: 0,
       then: 0,
       id: "laser",
     };
@@ -97,24 +97,25 @@ export default class Skills {
     this.skills.push(this.slowTime);
     this.skills.push(this.shield);
     this.skills.push(this.laser);
-
-    this.now = 0;
   }
 
-  startTimers() {
-    //this.atkSpeed.now = Date.now();
-    this.now = Date.now(); //tbd
-    //this.slowTime.then = this.now;
+  initialize() {
+    this.game.stats.setNewSlowModifiers(this.slowTime);
+  }
+
+  updateTimersAfterPauseOff() {
+    for(let i = 0; i < this.skills.length; i++) {
+      this.skills[i].then += this.game.timeDifference;
+    }
   }
 
   update() {
-    this.now = Date.now();
     this.updateAtkSpeedStatusEffect();
     this.updateSlowTimeStatusEffect();
   }
 
   useSlowTimeSkill() {
-    let timePassed = (this.now - this.slowTime.then) / 1000;
+    let timePassed = (this.game.now - this.slowTime.then) / 1000;
     if (timePassed <= this.slowTime.cd || this.slowTime.isApplied) {
       return;
     }
@@ -132,11 +133,10 @@ export default class Skills {
   }
 
   updateAtkSpeedStatusEffect() {
-    this.atkSpeed.now = Date.now();
     if (!this.atkSpeed.isApplied) {
       return;
     }
-    let timePassed = (this.atkSpeed.now - this.atkSpeed.then) / 1000;
+    let timePassed = (this.game.now - this.atkSpeed.then) / 1000;
     if (timePassed >= this.atkSpeed.duration) {
       this.restorePlayerAtkSpeed();
       this.atkSpeed.isApplied = false;
@@ -149,16 +149,14 @@ export default class Skills {
   }
 
   updateSlowTimeStatusEffect() {
-    this.slowTime.now = Date.now();
-
     this.updateSlowTimeRemainingCD();
-
     if (!this.slowTime.isApplied) {
       return;
     }
-    let timePassed = (this.slowTime.now - this.slowTime.then) / 1000;
+    let timePassed = (this.game.now - this.slowTime.then) / 1000;
+    //console.log(`timePassed SLOW = ${timePassed}`)
     if (timePassed >= this.slowTime.duration) {
-      this.game.stats.restoreSpeedOfEverything();
+      this.game.stats.restoreSpeedOfEverything(this.slowTime);
       this.slowTime.isApplied = false;
     }
   }
@@ -167,7 +165,7 @@ export default class Skills {
     if (!this.slowTime.isOnCD && !this.slowTime.isApplied) {
       return;
     }
-    this.slowTime.remainingCD = (this.now - this.slowTime.then) / 1000;
+    this.slowTime.remainingCD = (this.game.now - this.slowTime.then) / 1000;
     if (this.slowTime.remainingCD <= this.slowTime.cd) {
       this.slowTime.isOnCD = true;
     } else {
@@ -176,10 +174,10 @@ export default class Skills {
   }
 
   applySlowTimeStatusEffect() {
-    this.slowTime.then = this.slowTime.now;
+    this.slowTime.then = this.game.now;
     this.slowTime.isApplied = true;
 
-    this.game.stats.slowEverything();
+    this.game.stats.slowEverything(this.slowTime);
   }
 
   isAtkSpeedBuffApplied() {
@@ -199,7 +197,7 @@ export default class Skills {
   }
 
   applyAtkSpeedStatusEffect() {
-    this.atkSpeed.then = this.atkSpeed.now;
+    this.atkSpeed.then = this.game.now;
     this.atkSpeed.isApplied = true;
 
     let newAtkSpeed = this.game.stats.player.atkSpeed * this.atkSpeed.value;
