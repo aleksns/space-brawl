@@ -60,9 +60,11 @@ export class LevelTransition extends Cutscene {
     this.objectsWaypoints.forEach((obj) => {
         this.calculateWaypoints(obj);
       });
+
+    this.id = "levelTransition";    
   }
 
-  initialize() {
+  initializeCutscene() {
     this.isAnimationFinished = false;
 
     this.line1.startX = 0;
@@ -92,7 +94,7 @@ export class LevelTransition extends Cutscene {
   drawText(ctx) {
     ctx.current.fillStyle = "#ffffff";
     ctx.current.font = `bold 52px tahoma`;
-    let text = this.textProps.text + this.progression.level;
+    let text = this.textProps.text + this.getCurrentLevel();
     let offsetX = ctx.current.measureText(text).width;
 
     ctx.current.fillText(text, this.textProps.x - (offsetX / 2), this.textProps.y);

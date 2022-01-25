@@ -48,8 +48,12 @@ export default class Draw {
     this.drawItem(this.threatBar.threatBarImageProps, this.ctx5);
   }
 
-  drawCurrentCutscene() {
-    this.game.cutscenes.getCutsceneToDraw().draw(this.ctx);
+  // drawCurrentCutscene() {
+  //   this.game.cutscenes.getCutsceneToDraw().draw(this.ctx);
+  // }
+
+  drawCutscene(cutscene) {
+    cutscene.draw(this.ctx);
   }
 
   drawUI() {

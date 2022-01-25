@@ -12,8 +12,8 @@ import { SkillsBar } from "../ui/SkillsBar";
 import GameBoard from "./GameBoard";
 import SoundChannel from "./SoundChannel";
 import SoundList from "./SoundList";
-import { BossDeath } from "../cutscenes/BossDeath";
 import Cutscenes from "../cutscenes/Cutscenes";
+import Script from "../scripts/Script";
 
 //Remove some variables FROM THE CONSTRUCTOR which are not being used
 //e.g. board height, allowed board height, etc
@@ -34,15 +34,15 @@ export default class Game {
     this.ctx4 = context4Ref;
     this.ctx5 = context5Ref;
     this.canvas5 = canvas5Ref;
+    this.progression = new Progression(this);
+    this.init = new Init(this);
     this.soundList = new SoundList();
     this.gameBoard = new GameBoard(this);
     this.clearCanvas1To4 = clearCanvas1To4;
     this.clearCanvas5 = clearCanvas5;
     this.skills = new Skills(this);
     this.skillsBar = new SkillsBar(this);
-    this.progression = new Progression(this);
     this.stats = new Stats(this); ///maybe to put into another class?
-    this.init = new Init(this);
     this.collision = new Collision(this);
     this.player = new Player(this);
 
@@ -52,7 +52,7 @@ export default class Game {
     // this.levelTransition = new LevelTransition(this);
     // this.bossDeath = new BossDeath(this);
     this.cutscenes = new Cutscenes(this);
-
+    this.script = new Script(this);
     this.draw = new Draw(this);
     this.update = new Update(this);
     this.bgElements = [];
@@ -69,15 +69,13 @@ export default class Game {
 
     this.now = 0;
     this.then = 0;
-    this.timeDifference = 0;  //to catch up with timers after pause On / Off cycle
+    this.timeDifference = 0; //to catch up with timers after pause On / Off cycle
 
-    this.pauseNow = 0;
-    this.pauseThen = 0;
-
-    this.isPauseTest = false;
+    this.isPauseOn = false;
+    this.isGlobalActionRestricted = false;
 
     this.isControlsOn = true;
-    this.isPauseOn = true;
+    this.isGameOnHold = false;
     this.startBtn = {
       x: 200,
       y: 400,
@@ -138,41 +136,50 @@ export default class Game {
     return this.player.isDead;
   }
 
-  setIsPauseTestOn() {
-    this.isPauseTest = !this.isPauseTest;
-    if(this.isPauseTest == true) {
+  stopAllAction() {
+    this.isGlobalActionRestricted = !this.isGlobalActionRestricted;
+    if (this.isGlobalActionRestricted == true) {
       this.then = this.now;
-    }
-    else {
-      this.timeDifference = this.now - this.then;
-      this.update.updateAllTimersAfterPauseOff();
+    } else {
+      this.updateTimeDifference();
     }
   }
 
-  setPauseOn() {
-    this.isPauseOn = true;
-    this.clearCanvas5();
+  setPause() {
+    this.isPauseOn = !this.isPauseOn;
+    if (this.isPauseOn == true) {
+      this.then = this.now;
+    } else {
+      this.updateTimeDifference();
+    }
   }
 
-  setPauseOff() {
-    this.isPauseOn = false;
+  updateTimeDifference() {
+    this.timeDifference = this.now - this.then;
+    this.update.updateAllTimersAfterPauseOff();
+  }
+
+  setGameOnHold() {
+    this.isGameOnHold = true;
+  }
+
+  setGameOffHold() {
+    this.isGameOnHold = false;
   }
 
   gameLoop() {
-    this.clearCanvas1To4();
-    if (this.cutscenes.isCutscenesNotFinished()) {
-      this.draw.drawCurrentCutscene();
-    }
+    this.script.update();
 
-    if (this.isPauseOn) {
+    if (this.isGameOnHold) {
       return;
     }
+
+    this.clearCanvas1To4();
 
     if (this.now == 0) {
       this.background.play();
       this.update.startTimersOnInit();
       this.draw.drawUIOnInit();
-      this.isPauseOn = false;
     }
 
     this.update.update();
@@ -194,6 +201,5 @@ export default class Game {
     // console.log("player projectiles.length = " + this.playerProjectiles.length);
     // console.log(`---------------------------------------`);
 
-    //this.pauseThen = this.now;
   }
 }

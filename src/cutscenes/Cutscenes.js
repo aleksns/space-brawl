@@ -1,4 +1,4 @@
-import { BossAppearance } from "./BossAppearance";
+import { BossTransition } from "./BossTransition";
 import { BossDeath } from "./BossDeath";
 import { LevelTransition } from "./LevelTransition";
 
@@ -8,12 +8,12 @@ export default class Cutscenes {
 
     this.levelTransition = new LevelTransition(this.game);
 
-    this.bossAppearance = new BossAppearance(this.game);
+    this.bossTransition = new BossTransition(this.game);
     this.bossDeath = new BossDeath(this.game);
 
     this.list = [];
     this.list.push(this.levelTransition);
-    this.list.push(this.bossAppearance);
+    this.list.push(this.bossTransition);
     this.list.push(this.bossDeath);
   }
 

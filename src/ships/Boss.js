@@ -64,9 +64,6 @@ export class Boss extends Ship {
     this.y = this.collision.allowedY.y0 - 20;
     var newGun = new TripleFront(this.game, this);
     this.gun = newGun;
-
-    this.game.setPauseOn();
-    this.game.cutscenes.bossAppearance.initialize();
   }
 
   updateShip() {

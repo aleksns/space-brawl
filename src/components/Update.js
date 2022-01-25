@@ -12,7 +12,7 @@ export default class Update {
 
   update() {  
     this.game.controls.update(); 
-    if(this.game.isPauseTest) {
+    if(this.game.isPauseOn) {
       return;
     }
 
@@ -39,7 +39,7 @@ export default class Update {
 
   updateAllTimersAfterPauseOff() {
     this.game.skills.updateTimersAfterPauseOff();
-    
+    this.game.init.updateTimersAfterPauseOff();
     for(let i = 0; i < this.game.enemies.length; i++) {
       this.game.enemies[i].updateTimersAfterPauseOff();
     }
@@ -76,7 +76,7 @@ export default class Update {
   }
 
   updateEnemies() {
-    this.game.init.spawnEnemies();
+    //this.game.init.spawnEnemies();
     this.updateObjects(this.game.enemies);
   }
 

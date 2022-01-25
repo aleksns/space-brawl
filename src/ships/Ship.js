@@ -41,6 +41,10 @@ export default class Ship {
   }
 
   update() {
+    if(this.game.isGlobalActionRestricted) {
+      return;
+
+    }
     if (
       (this.health <= 0 && !this.isBoss) ||
       (this.game.collision.isOutOfBorders(this) &&

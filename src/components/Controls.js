@@ -47,7 +47,7 @@ export default class Controls {
 
           case "Space":
             this.keys.space = true;
-            break;  
+            break;
 
           default:
             console.log("Error handling 'handleKeyDown' function");
@@ -83,7 +83,7 @@ export default class Controls {
             this.keys.key3 = false;
             break;
 
-            case "Space":
+          case "Space":
             this.keys.space = false;
             break;
           default:
@@ -101,6 +101,9 @@ export default class Controls {
 
     this.pauseThen = 0;
     this.canPause = true;
+
+    this.testThen = 0;
+    this.canTest = true;
 
     this.canvas5.current.addEventListener(
       "click",
@@ -162,8 +165,16 @@ export default class Controls {
     }
   }
 
+  handleTest() {
+    let timePassed = (this.game.now - this.testThen) / 1000;
+    if (timePassed >= 1) {
+      this.canTest = true;
+    }
+  }
+
   update() {
     this.handlePauseTimeBeforeActivation();
+    this.handleTest();
     this.handleInput();
   }
 
@@ -171,13 +182,16 @@ export default class Controls {
     // if(!this.game.isControlsOn) {
     //   return;
     // }
-    if (this.keys.space == true && this.canPause) {
-      this.pauseThen = this.game.now; 
-      this.canPause = false;
-      this.handleKeySpace();       
+
+    if (this.keys.space == true) {
+      this.handleKeySpace();
     }
 
-    if(this.game.isPauseTest) {
+    if (this.keys.key2 == true) {
+      this.handleKey2();
+    }
+
+    if (this.game.isPauseOn || this.game.isGlobalActionRestricted) {
       return;
     }
 
@@ -197,9 +211,10 @@ export default class Controls {
     if (this.keys.key1 == true) {
       this.handleKey1();
     }
-    if (this.keys.key2 == true) {
-      this.handleKey2();
-    }
+
+    ///////key 2
+
+
     if (this.keys.key3 == true) {
       this.handleKey3();
     }
@@ -230,7 +245,14 @@ export default class Controls {
   }
 
   handleKey2() {
-    this.game.skills.useShieldSkill();
+    //this.game.skills.useShieldSkill();
+
+    if (!this.canTest) {
+      return;
+    }
+    this.testThen = this.game.now;
+    this.canTest = false;
+    this.game.stopAllAction();
   }
 
   handleKey3() {
@@ -238,6 +260,11 @@ export default class Controls {
   }
 
   handleKeySpace() {
-    this.game.setIsPauseTestOn();
+    if (!this.canPause || this.game.isGlobalActionRestricted) {
+      return;
+    }
+    this.pauseThen = this.game.now;
+    this.canPause = false;
+    this.game.setPause();
   }
 }

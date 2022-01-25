@@ -1,7 +1,7 @@
 import Cutscene from "./Cutscene";
 import { colors, GAME_WIDTH, GAME_HEIGHT } from "../services/services";
 
-export class BossAppearance extends Cutscene {
+export class BossTransition extends Cutscene {
   constructor(game) {
     super(game);
 
@@ -62,6 +62,8 @@ export class BossAppearance extends Cutscene {
     this.objectsWaypoints.forEach((obj) => {
         this.calculateWaypoints(obj);
       });
+
+    this.id = "bossTransition";      
   }
 
   drawText(ctx) {
@@ -73,7 +75,7 @@ export class BossAppearance extends Cutscene {
     ctx.current.fillText(text, this.textProps.x - (offsetX / 2), this.textProps.y);
   }
 
-  initialize() {
+  initializeCutscene() {
     this.line1.startX = 0;
     this.line1.startY = this.container.y - this.container.margin;
     this.line1.endX = 0;

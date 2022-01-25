@@ -57,6 +57,9 @@ export default class Init {
   }
 
   addItemsBasedOnTiming() {
+    if(this.game.isGlobalActionRestricted) {
+      return;
+    }
     for (let i = 0; i < this.itemsToSpawn.length; i++) {
       let timePassed = (this.game.now - this.itemsToSpawn[i].then) / 1000;
       if (timePassed >= this.itemsToSpawn[i].delay) {
@@ -116,21 +119,21 @@ export default class Init {
     this.game.bgElements.push(newBgElement);
   }
 
-  spawnEnemies() {
-     //this.spawnFormationOfEnemies();
+  // spawnEnemies() {
+  //    //this.spawnFormationOfEnemies();
 
-    if (this.game.enemies.length >= this.progression.maxNumOfEnemies) {
-      return;
-    }
-    if (!this.progression.isMaxThreatLevel) {
-      this.addEnemy();
-    } else if (
-      this.progression.isMaxThreatLevel &&
-      this.game.enemies.length == 0
-    ) {
-      this.addBoss();
-    }
-  }
+  //   if (this.game.enemies.length >= this.progression.maxNumOfEnemies) {
+  //     return;
+  //   }
+  //   if (!this.progression.isMaxThreatLevel) {
+  //     this.addEnemy();
+  //   } else if (
+  //     this.progression.isMaxThreatLevel &&
+  //     this.game.enemies.length == 0
+  //   ) {
+  //     this.addBoss();
+  //   }
+  // }
 
   // Create formation of enemies > put enemies in the temp list > apply formation function to enemies >
   // > add enemies to the main list > remove temp list
@@ -212,5 +215,12 @@ export default class Init {
     let a = this.game.enemyProjectiles.length;
     let b = this.game.playerProjectiles.length;
     return a + b;
+  }
+
+  updateTimersAfterPauseOff() {
+    for (let i = 0; i < this.itemsToSpawn.length; i++) {
+      this.itemsToSpawn[i].then += this.game.timeDifference;
+    }
+    this.formationThen += this.game.timeDifference;
   }
 }

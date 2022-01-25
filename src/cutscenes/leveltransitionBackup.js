@@ -73,7 +73,7 @@ export class LevelTransition extends Cutscene {
     ctx.current.fillText(text, this.textProps.x - (offsetX / 2), this.textProps.y);
   }
 
-  initialize() {
+  initializeCutscene() {
     this.line1.startX = 0;
     this.line1.startY = this.container.y - this.container.margin;
     this.line1.endX = 0;
@@ -131,7 +131,7 @@ export class LevelTransition extends Cutscene {
   }
 
   setAnimationIsFinished() {
-    this.game.setPauseOff();
+    this.game.setGameOffHold();
     this.isAnimationFinished = true;
   }
 
