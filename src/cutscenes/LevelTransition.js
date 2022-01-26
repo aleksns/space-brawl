@@ -8,6 +8,7 @@ export class LevelTransition extends Cutscene {
       x: GAME_WIDTH / 2,
       y: GAME_HEIGHT / 2,
       margin: 100,
+      marginSides: 0,
     };
 
     this.textProps = {
@@ -21,15 +22,15 @@ export class LevelTransition extends Cutscene {
       startY: this.container.y - this.container.margin,
       endX: 0,
       endY: this.container.y - this.container.margin,
-      destination: GAME_WIDTH - 100,
+      destination: GAME_WIDTH - this.container.marginSides,
     };
 
     this.line2 = {
       startX: GAME_WIDTH,
-      startY: this.container.y + this.container.margin,       ///hardcoded
+      startY: this.container.y + this.container.margin,
       endX: GAME_WIDTH,
-      endY: this.container.y + this.container.margin,        ///hardcoded
-      destination: 0 + 100,
+      endY: this.container.y + this.container.margin,
+      destination: 0 + this.container.marginSides,
     };
 
     this.objectsWaypoints = [];

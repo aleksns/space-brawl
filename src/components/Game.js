@@ -168,18 +168,21 @@ export default class Game {
   }
 
   gameLoop() {
+    this.clearCanvas1To4();
+    if(this.isGlobalActionRestricted || this.isGameOnHold) {
+      this.clearCanvas5();
+    }
+
     this.script.update();
 
     if (this.isGameOnHold) {
       return;
     }
 
-    this.clearCanvas1To4();
-
     if (this.now == 0) {
       this.background.play();
       this.update.startTimersOnInit();
-      this.draw.drawUIOnInit();
+      //this.draw.drawUIOnInit();
     }
 
     this.update.update();

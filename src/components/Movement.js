@@ -11,6 +11,8 @@ export default class Movement {
   setTrajectory(object) {
     this.calculateVectorsAndDistance(object);
     this.applySpeedModifier(object);
+
+   // console.log(`trajectory >>object.cords.p2X = ${object.cords.p2X}, object.cords.p2Y = ${object.cords.p2Y}`)
   }
 
   //calculate vectors and distance between two objects, where p1 - start position and p2 - end position

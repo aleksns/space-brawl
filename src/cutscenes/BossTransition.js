@@ -56,7 +56,7 @@ export class BossTransition extends Cutscene {
     });
 
     this.lineWidth = 7;
-    this.numOfIterations = 35;   //was 18
+    this.numOfIterations = 20;   //was 18
     this.isAnimationFinished = true;
 
     this.objectsWaypoints.forEach((obj) => {

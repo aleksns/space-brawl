@@ -40,6 +40,9 @@ export default class Draw {
     this.drawEnemies();
 
 
+    if(this.game.isGlobalActionRestricted) {
+      return;
+    }
     this.drawUI(); 
   }
 
@@ -48,12 +51,8 @@ export default class Draw {
     this.drawItem(this.threatBar.threatBarImageProps, this.ctx5);
   }
 
-  // drawCurrentCutscene() {
-  //   this.game.cutscenes.getCutsceneToDraw().draw(this.ctx);
-  // }
-
-  drawCutscene(cutscene) {
-    cutscene.draw(this.ctx);
+  drawCutscene(cutscene, ctx) {
+    cutscene.draw(ctx);
   }
 
   drawUI() {
@@ -174,6 +173,9 @@ export default class Draw {
   }
 
   drawEffects() {
+    if(this.game.isGlobalActionRestricted) {
+      return;
+    }
     for (let i = 0; i < this.game.effects.length; i++) {
       this.drawEffect(this.game.effects[i]);
     }

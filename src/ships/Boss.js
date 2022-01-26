@@ -30,8 +30,6 @@ export class Boss extends Ship {
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.s = this.game.stats.enemyT0.s;
     this.a = this.s / 60;
-    this.s = 0;
-    this.a = 0;
 
     //this.direction = getRandomDirection();
     /* offStep = applies additional distance for enemies to stop their movement
@@ -50,7 +48,22 @@ export class Boss extends Ship {
     this.image = new Image();
     this.image.src = bossImage;
     this.isBoss = true;
-    this.isCheckSouthOutOfBorderOnly = false;
+    this.isCheckSouthOutOfBorderOnly = true;
+
+    this.moveToPosition = {
+      x: 0,
+      y: 0,
+      w: 5,
+      h: 5
+    }
+
+    this.cords = {
+      p1X: 0,
+      p1Y: 0,
+      p2X: 0,
+      p2Y: 0
+    }
+
     console.log("CONSTRUCTOR > BossT0");
     //console.log(`GAME_WIDTH = ${GAME_WIDTH}`);
   }
@@ -60,10 +73,14 @@ export class Boss extends Ship {
   }
 
   initializeShip() {
+    // this.x = 0;
+    // this.y = this.collision.allowedY.y0 - 20;
     this.x = GAME_WIDTH / 2 - this.w / 2;
-    this.y = this.collision.allowedY.y0 - 20;
+    this.y = -this.h;
     var newGun = new TripleFront(this.game, this);
     this.gun = newGun;
+
+    this.setNewDirection();
   }
 
   updateShip() {
@@ -75,6 +92,31 @@ export class Boss extends Ship {
 
   move() {
     //tbd
+  }
+
+  animateBossAppearance() {
+    this.game.movement.applyVelocity(this);
+  }
+
+  isAtThePosition() {
+    return (this.x == this.moveToPosition.x && this.y >= this.moveToPosition.y);
+  }
+
+  setNewDirection() {
+    this.moveToPosition.x = this.x;
+    this.moveToPosition.y = this.collision.allowedY.y0;
+
+    this.setCordsOfTwoPoints();
+    this.game.movement.setTrajectory(this);
+  }
+
+  setCordsOfTwoPoints() {
+    this.cords = {
+      p1X: this.x,
+      p1Y: this.y,
+      p2X: this.moveToPosition.x,
+      p2Y: this.moveToPosition.y,
+    };
   }
 
   getAtkSpeed() {

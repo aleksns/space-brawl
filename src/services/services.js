@@ -14,7 +14,7 @@ export function getPlayerT0Dimension() {
 export function getEnemyT0Dimension() {
   let dimension = {
     w: GAME_WIDTH / 2,
-    h: GAME_HEIGHT / 2.5,
+    h: GAME_HEIGHT / 3.5,
   };
   return dimension;
 }
@@ -50,6 +50,7 @@ export const colors = {
   uiRedDark: "#C0392B",
   uiPurple: "#7700ff",
   uiPurpleDark: "#4d00a5",
+  uiGrey: "#3B3B3B",
 };
 
 export const getStatusEffectsBar = {
@@ -112,7 +113,7 @@ export const getEnemyT0DefaultStats = {
   damage: 4,
   health: 1000,
   maxHealth: 1000,
-  speed: 0.5,
+  speed: 2,
   accelerationMod: 60,
   rammingDmg: 0.1,
   atkSpeed: 0.6,

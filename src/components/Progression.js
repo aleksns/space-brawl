@@ -2,7 +2,7 @@ export default class Progression {
   constructor(game) {
     this.game = game;
     this.threatLevel = 0;
-    this.maxThreatLevel = 2;
+    this.maxThreatLevel = 1;
     this.threatLevelModifier = 1;
 
     this.maxNumOfEnemies = 1;

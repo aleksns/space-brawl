@@ -1,3 +1,4 @@
+import { Boss } from "../ships/Boss";
 import Level1 from "./Level1";
 
 export default class Script {
@@ -13,26 +14,33 @@ export default class Script {
     this.isBossLevelTransitionPlayed = false;
     this.isBossCutscenePlayed = false;
     this.isBossSpawned = false;
+    this.boss = undefined;
   }
 
   update() {
-    // if (!this.levelInit) {
-    //   this.initialize();
-    // }
-
     this.handleStartLevelTransition();
 
     this.handleEnemiesSpawn();
 
-    if (this.isThreatAtMaxAndEnemiesKilled()) {
+    if (this.isThreatAtMaxAndEnemiesKilled() && !this.isBossSpawned) {
+      this.handleBossLevelTransition();
       this.handleBossSpawn();
     }
+
+    if (!this.isBossSpawned) {
+      return;
+    }
+    this.handleBossCutscene();
+
+    if (!this.isBossCutscenePlayed) {
+      return;
+    }
+    this.resumeGame();
   }
 
   handleStartLevelTransition() {
     if (!this.game.isGameOnHold && !this.isStartLevelTransitionPlayed) {
       this.game.setGameOnHold();
-      this.game.clearCanvas5();
       this.clearScreenFromObjects();
     }
 
@@ -42,20 +50,31 @@ export default class Script {
     }
   }
 
-  // initialize() {
-  //   this.levelInit = true;
-  //   this.game.clearCanvas5();
-  // }
-
-  handleBossSpawn() {
+  handleBossLevelTransition() {
     if (!this.game.isGameOnHold && !this.isBossLevelTransitionPlayed) {
       this.game.setGameOnHold();
-      this.game.clearCanvas5();
       this.clearScreenFromObjects();
+      this.game.isGlobalActionRestricted = true;
     }
 
     if (!this.isBossLevelTransitionPlayed) {
       this.playBossLevelTransitionAnimation();
+    }
+  }
+
+  handleBossSpawn() {
+    if (!this.isBossLevelTransitionPlayed) {
+      return;
+    }
+    if (this.isBossSpawned == false) {
+      this.createBoss();
+      this.isBossSpawned = true;
+    }
+  }
+
+  handleBossCutscene() {
+    if (!this.boss.isAtThePosition()) {
+      this.boss.animateBossAppearance();
       return;
     }
 
@@ -63,24 +82,22 @@ export default class Script {
       this.playBossCutscene();
       return;
     }
-    
+    this.game.isGlobalActionRestricted = false;
   }
 
   playLevelTransitionAnimation() {
     this.currentLvl.levelTransition.initialize();
-    this.game.draw.drawCutscene(this.currentLvl.levelTransition);
+    this.game.draw.drawCutscene(this.currentLvl.levelTransition, this.game.ctx);
   }
 
   playBossLevelTransitionAnimation() {
     this.currentLvl.bossTransition.initialize();
-    this.game.draw.drawCutscene(this.currentLvl.bossTransition);
+    this.game.draw.drawCutscene(this.currentLvl.bossTransition, this.game.ctx);
   }
 
   playBossCutscene() {
-    this.init.addBoss();
-    this.isBossCutscenePlayed = true;
-
-    this.isBossSpawned = true;  //tbd
+    this.currentLvl.bossCutscene.initialize();
+    this.game.draw.drawCutscene(this.currentLvl.bossCutscene, this.game.ctx4);
   }
 
   handleEnemiesSpawn() {
@@ -94,13 +111,21 @@ export default class Script {
     }
   }
 
+  resumeGame() {
+    this.game.isGlobalActionRestricted = false;
+    this.game.draw.drawUIOnInit();
+  }
+
   cutsceneFinished(cutsceneID) {
     switch (cutsceneID) {
       case "levelTransition":
         this.isStartLevelTransitionPlayed = true;
+        this.game.setGameOffHold();
+        this.game.draw.drawUIOnInit();
         break;
       case "bossTransition":
         this.isBossLevelTransitionPlayed = true;
+        this.game.setGameOffHold();
         break;
       case "bossCutscene":
         this.isBossCutscenePlayed = true;
@@ -110,20 +135,24 @@ export default class Script {
         break;
     }
 
-    this.game.draw.drawUIOnInit();
-    this.game.setGameOffHold();
   }
 
   clearScreenFromObjects() {
-    for(let i = 0; i < this.game.enemyProjectiles.length; i++) {
+    for (let i = 0; i < this.game.enemyProjectiles.length; i++) {
       this.game.enemyProjectiles[i].setDead();
     }
-    for(let i = 0; i < this.game.playerProjectiles.length; i++) {
+    for (let i = 0; i < this.game.playerProjectiles.length; i++) {
       this.game.playerProjectiles[i].setDead();
     }
-    for(let i = 0; i < this.game.items.length; i++) {
+    for (let i = 0; i < this.game.items.length; i++) {
       this.game.items[i].setDead();
     }
+  }
+
+  createBoss() {
+    this.boss = new Boss(this.game);
+    this.boss.initialize();
+    this.game.init.addBoss(this.boss);
   }
 
   isThreatAtMaxAndEnemiesKilled() {

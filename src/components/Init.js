@@ -1,5 +1,4 @@
 import { EnemyT4 } from "../ships/EnemyT4";
-import { Boss } from "../ships/Boss";
 import { ProjectileDefault } from "../projectiles/ProjectileDefault";
 import { ExplosionDefault } from "../effects/ExplosionDefault";
 import { BgElement } from "../items/BgElement";
@@ -119,22 +118,6 @@ export default class Init {
     this.game.bgElements.push(newBgElement);
   }
 
-  // spawnEnemies() {
-  //    //this.spawnFormationOfEnemies();
-
-  //   if (this.game.enemies.length >= this.progression.maxNumOfEnemies) {
-  //     return;
-  //   }
-  //   if (!this.progression.isMaxThreatLevel) {
-  //     this.addEnemy();
-  //   } else if (
-  //     this.progression.isMaxThreatLevel &&
-  //     this.game.enemies.length == 0
-  //   ) {
-  //     this.addBoss();
-  //   }
-  // }
-
   // Create formation of enemies > put enemies in the temp list > apply formation function to enemies >
   // > add enemies to the main list > remove temp list
   spawnFormationOfEnemies() {
@@ -162,10 +145,8 @@ export default class Init {
     }
   }
 
-  addBoss() {
-    var newEnemy = new Boss(this.game);
-    newEnemy.initialize();
-    this.game.enemies.push(newEnemy);
+  addBoss(boss) {
+    this.game.enemies.push(boss);
   }
 
   addEnemy() {
