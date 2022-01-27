@@ -104,7 +104,7 @@ export class Boss extends Ship {
 
   setNewDirection() {
     this.moveToPosition.x = this.x;
-    this.moveToPosition.y = this.collision.allowedY.y0;
+    this.moveToPosition.y = this.collision.allowedY.y0 / 2;
 
     this.setCordsOfTwoPoints();
     this.game.movement.setTrajectory(this);

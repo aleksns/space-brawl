@@ -137,7 +137,7 @@ export default class Skills {
       return;
     }
     let timePassed = (this.game.now - this.atkSpeed.then) / 1000;
-    if (timePassed >= this.atkSpeed.duration) {
+    if (timePassed >= this.atkSpeed.duration || this.game.isGlobalActionRestricted) {
       this.restorePlayerAtkSpeed();
       this.atkSpeed.isApplied = false;
     }
@@ -155,7 +155,7 @@ export default class Skills {
     }
     let timePassed = (this.game.now - this.slowTime.then) / 1000;
     //console.log(`timePassed SLOW = ${timePassed}`)
-    if (timePassed >= this.slowTime.duration) {
+    if (timePassed >= this.slowTime.duration || this.game.isGlobalActionRestricted) {
       this.game.stats.restoreSpeedOfEverything(this.slowTime);
       this.slowTime.isApplied = false;
     }

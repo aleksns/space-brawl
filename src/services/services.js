@@ -14,7 +14,7 @@ export function getPlayerT0Dimension() {
 export function getEnemyT0Dimension() {
   let dimension = {
     w: GAME_WIDTH / 2,
-    h: GAME_HEIGHT / 3.5,
+    h: GAME_HEIGHT / 3,
   };
   return dimension;
 }

@@ -187,10 +187,6 @@ export default class Controls {
       this.handleKeySpace();
     }
 
-    if (this.keys.key2 == true) {
-      this.handleKey2();
-    }
-
     if (this.game.isPauseOn || this.game.isGlobalActionRestricted) {
       return;
     }
@@ -212,8 +208,9 @@ export default class Controls {
       this.handleKey1();
     }
 
-    ///////key 2
-
+    if (this.keys.key2 == true) {
+      this.handleKey2();
+    }
 
     if (this.keys.key3 == true) {
       this.handleKey3();
@@ -245,14 +242,14 @@ export default class Controls {
   }
 
   handleKey2() {
-    //this.game.skills.useShieldSkill();
+    this.game.skills.useShieldSkill();
 
-    if (!this.canTest) {
-      return;
-    }
-    this.testThen = this.game.now;
-    this.canTest = false;
-    this.game.stopAllAction();
+    // if (!this.canTest) {
+    //   return;
+    // }
+    // this.testThen = this.game.now;
+    // this.canTest = false;
+    // this.game.stopAllAction();
   }
 
   handleKey3() {
