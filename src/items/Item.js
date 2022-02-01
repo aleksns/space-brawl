@@ -8,9 +8,8 @@ export default class Item {
     this.y = 0;
     this.vX = 0;
     this.vY = 0;
-    this.f = 0.95;
-    this.distance = 0;
-    this.f = 0.95;
+    this.dX = 0;
+    this.dY = 0;
 
     this.itemBuffProps = {
       w: 50,
@@ -21,13 +20,24 @@ export default class Item {
       isFill: false,
       s: 6, // s - speed
       a: 0.2, /// a - acceleration (6/30)
+      visionRange: 70,
     };
 
-    this.cords = {
-      p1X: 0,
-      p1Y: 0,
-      p2X: 0,
-      p2Y: 0
+    this.itemCoinProps = {
+      w: 25,
+      h: 25,
+      color: "transparent",
+      opacity: 1.0,
+      shadowBlur: 20,
+      isFill: false,
+      s: 1.6,
+      a: 0.05,
+      visionRange: 140,
+    };
+
+    this.destination = {
+      x: 0,
+      y: 0
     };
 
     this.filter = "none";
@@ -39,31 +49,78 @@ export default class Item {
 
   initialize() {
     this.initializeItem();
-    this.initializeP2Cords();
+    this.setDestinationCords();
 
     if(this.game.stats.isGlobalSlowAll) {
       this.s /= this.game.stats.slowModifiers.speedGlobal;
     }
 
-    this.game.movement.setTrajectory(this);
+    this.game.movement.calculateVectorsAndDistance(this);
   }
 
   update() {
-    this.game.movement.applyVelocity(this);
-    this.removeIfOutsideBorderDown();
+    this.updateImage();
+    this.updateItem();
+
+    if(this.isInteractable) {
+    this.game.gameBoard.updateVisionRange(this);
+    this.updateDestinationCords();
+    this.handleItemMove();
+    this.drawVisionRange();
+    }
+    else {
+      this.handleBgElementMove();
+    }
+
+    this.game.movement.moveSouth(this);
 
     if (this.isInteractable && this.isPickedUpByPlayer()) {
-        this.applyBuff();
+        this.applyEffect();
         this.setDead();
         this.onDeath();
     }
+
+    this.removeIfOutsideBorderDown();
   }
 
-  initializeP2Cords() {
-    this.cords.p1X = this.x;
-    this.cords.p1Y = this.y;
-    this.cords.p2X = this.x;
-    this.cords.p2Y = GAME_HEIGHT + this.h;
+  handleItemMove() {
+    if (this.game.gameBoard.isInsideVisionRange(this.game.player, this.visionRange)) {
+      this.game.movement.calculateVectorsAndDistance(this);
+      this.game.movement.accelerateObject(this);
+      this.game.ctx.current.strokeStyle = "orange";
+    } else {
+      this.game.ctx.current.strokeStyle = "green";
+    }
+
+    this.game.movement.applyFrictionAndVelocity(this);
+  }
+
+  handleBgElementMove() {
+    this.game.movement.applyVelocity(this);
+  }
+
+  updateDestinationCords() {
+    this.destination.x = this.game.gameBoard.getCenterOfObject(this.game.player).x; //hardcoded for testing
+    this.destination.y = this.game.gameBoard.getCenterOfObject(this.game.player).y; //hardcoded for testing
+  }
+
+  setDestinationCords() {
+    this.destination.x = this.x;
+    this.destination.y = GAME_HEIGHT + this.h;
+  }
+
+  drawVisionRange() {
+    this.game.ctx.current.lineWidth = 3;
+    this.game.ctx.current.beginPath();
+    this.game.ctx.current.arc(
+      this.visionRange.x,
+      this.visionRange.y,
+      this.visionRange.r,
+      0,
+      2 * Math.PI
+    );
+    this.game.ctx.current.stroke();
+    this.game.ctx.current.closePath();
   }
 
   setDead() {
@@ -71,7 +128,7 @@ export default class Item {
   }
 
   removeIfOutsideBorderDown() {
-    if (this.game.collision.isCollisionBorderDown(this, -this.h)) {
+    if (this.game.collision.isCollisionBorderDown(this, this.h)) {
       this.setDead();
     }
   }
@@ -85,8 +142,8 @@ export default class Item {
     }
   }
 
-  setIsSpawnOnInit(boolean) {
-    this.isSpawnOnInit = boolean;
+  setIsSpawnOnScreen(boolean) {
+    this.isSpawnOnScreen = boolean;
   }
 
   setRandomPosition() {
@@ -95,7 +152,7 @@ export default class Item {
     let minY = 0 - (this.h + 50);
     let maxY;
 
-    if (!this.isSpawnOnInit) {
+    if (!this.isSpawnOnScreen) {
       maxY = 0 - (this.h + 25);
     } else {
       maxY = this.game.gameBoard.height - this.h / 2;

@@ -1,7 +1,5 @@
 import Gun from "./Gun";
-import { colors, getGunsStats } from "../services/services";
 import {
-  getObjectCenterPosition,
   getDoubleGunPosition,
   getDefaultPlayerProjectile,
 } from "../services/services"; 
@@ -11,21 +9,18 @@ export class DoubleFront extends Gun {
     super(game, owner);
     this.projectileType = "default";
 
-    // p1 - start point of a projectile, p2 - end point
-    // each barrel has its own start/end points
-
     this.barrel1 = {
-      p1X: 0,
-      p1Y: 0,
-      p2X: 0,
-      p2Y: 0
+      x: 0,
+      y: 0,
+      destinationX: 0,
+      destinationY: 0
     }
 
     this.barrel2 = {
-      p1X: 0,
-      p1Y: 0,
-      p2X: 0,
-      p2Y: 0
+      x: 0,
+      y: 0,
+      destinationX: 0,
+      destinationY: 0
     }
 
     this.barrels = [
@@ -33,23 +28,22 @@ export class DoubleFront extends Gun {
       this.barrel2
     ]
 
-    this.dW = getDefaultPlayerProjectile.w; //offStep for a projectile, to make a better center position
+    this.dW = getDefaultPlayerProjectile.w; //offStep for a projectile, to make centered position
   }
 
   fire() {
     for(let i = 0; i < this.barrels.length; i++) {
-      this.barrels[i].p1X = getDoubleGunPosition(this.owner, this.dW)[i].x;
-      this.barrels[i].p1Y = getDoubleGunPosition(this.owner, this.dW)[i].y;
+      this.barrels[i].x = getDoubleGunPosition(this.owner, this.dW)[i].x;
+      this.barrels[i].y = getDoubleGunPosition(this.owner, this.dW)[i].y;
   
       if(this.owner.isPlayer) {
-        this.barrels[i].p2X = this.barrels[i].p1X;
-        this.barrels[i].p2Y = 0;
+        this.barrels[i].destinationX = this.barrels[i].x;
+        this.barrels[i].destinationY = 0;
       }
       else {
-        this.barrels[i].p2X = getObjectCenterPosition(this.game.player).x;
-        this.barrels[i].p2Y = getObjectCenterPosition(this.game.player).y;
+        this.barrels[i].destinationX = this.game.gameBoard.getCenterOfObject(this.game.player).x;
+        this.barrels[i].destinationY = this.game.gameBoard.getCenterOfObject(this.game.player).y;
       }
-      //this.game.init.addProjectile(this.owner);
       this.game.init.addProjectile(this.owner, this.barrels[i]);
     }
 

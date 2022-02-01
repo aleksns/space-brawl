@@ -8,29 +8,39 @@ import { AtkSpeed } from "../items/AtkSpeed";
 import { getBuffsSpawnDelay } from "../services/services";
 import { Pulse } from "../effects/Pulse";
 import { EnemyT5 } from "../ships/EnemyT5";
+import { Coin } from "../items/Coin";
 
 export default class Init {
   constructor(game) {
     this.game = game;
     this.progression = this.game.progression;
-    this.maxNumOfProjectiles = 150;
+    this.maxNumOfProjectiles = 300;
     this.maxNumOfElements = 2;
-    this.maxNumOfItems = 4;
+    this.maxNumOfItems = 8;
 
     this.itemsToSpawn = [
       (this.medkit = {
         now: 0,
         then: 0, //tbd
-        delay: getBuffsSpawnDelay.medkit,
+        //delay: getBuffsSpawnDelay.medkit,
+        delay: 3,
         //timesSpawned: 0, //tbd
         id: "medkit",
       }),
       (this.atkSpeed = {
         now: 0,
         then: 0, //tbd
-        delay: getBuffsSpawnDelay.atkSpeed,
+        //delay: getBuffsSpawnDelay.atkSpeed,
+        delay: 3,
         //timesSpawned: 0, //tbd
         id: "atkSpeed",
+      }),
+      (this.coin = {
+        now: 0,
+        then: 0, //tbd
+        delay: 11,
+        //timesSpawned: 0, //tbd
+        id: "coin",
       }),
     ];
 
@@ -91,8 +101,14 @@ export default class Init {
         this.game.items.push(newItem);
         //item.timesSpawned++;
         break;
+        case "coin":
+          var newItem = new Coin(this.game);
+          newItem.initialize();
+          this.game.items.push(newItem);
+          //item.timesSpawned++;
+          break;  
       default:
-        console.log("Error handling `addItem function in Init class");
+        //console.log("Error handling `addItem function in Init class");
         break;
     }
   }
@@ -101,7 +117,7 @@ export default class Init {
     if (this.game.bgElements.length >= this.maxNumOfElements) {
       return;
     }
-    if (!this.game.now == 0) {
+    if (this.game.bgElements.length != 0) {
       this.addBgElement(false);
     } else {
       for (let i = 0; i < this.maxNumOfElements; i++) {
@@ -110,9 +126,9 @@ export default class Init {
     }
   }
 
-  addBgElement(isSpawnOnInit) {
+  addBgElement(isSpawnOnScreen) {
     let newBgElement = new BgElement(this.game);
-    newBgElement.setIsSpawnOnInit(isSpawnOnInit);
+    newBgElement.setIsSpawnOnScreen(isSpawnOnScreen);
     //newBgElement.setBackgroundShapeAndPosition();
     newBgElement.initialize();
     this.game.bgElements.push(newBgElement);

@@ -21,7 +21,6 @@ export default class Ship {
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.vX = 0;
     this.vY = 0;
-    this.f = 0.95;
 
     this.then = 0;
     console.log("CONSTRUCTOR > Ship");
@@ -43,7 +42,6 @@ export default class Ship {
   update() {
     if(this.game.isGlobalActionRestricted) {
       return;
-
     }
     if (
       (this.health <= 0 && !this.isBoss) ||

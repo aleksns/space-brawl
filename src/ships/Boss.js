@@ -20,18 +20,18 @@ export class Boss extends Ship {
     this.y = 0;
     this.w = getEnemyT0Dimension().w;
     this.h = getEnemyT0Dimension().h;
+    this.vX = 0;
+    this.vY = 0;
     this.dX = 0;
     this.dY = 0;
 
     this.health = this.game.stats.enemyT0.health;
     this.maxHealth = this.game.stats.enemyT0.maxHealth;
     this.isPlayer = false;
-    //this.gun = "default";
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.s = this.game.stats.enemyT0.s;
     this.a = this.s / 60;
 
-    //this.direction = getRandomDirection();
     /* offStep = applies additional distance for enemies to stop their movement
     before reaching allowed borders and maintaining smooth bounce effect */
     this.offStepX = Math.floor(this.w / 2);
@@ -50,22 +50,12 @@ export class Boss extends Ship {
     this.isBoss = true;
     this.isCheckSouthOutOfBorderOnly = true;
 
-    this.moveToPosition = {
+    this.destination = {
       x: 0,
-      y: 0,
-      w: 5,
-      h: 5
-    }
-
-    this.cords = {
-      p1X: 0,
-      p1Y: 0,
-      p2X: 0,
-      p2Y: 0
+      y: 0
     }
 
     console.log("CONSTRUCTOR > BossT0");
-    //console.log(`GAME_WIDTH = ${GAME_WIDTH}`);
   }
 
   fireGun() {
@@ -73,8 +63,6 @@ export class Boss extends Ship {
   }
 
   initializeShip() {
-    // this.x = 0;
-    // this.y = this.collision.allowedY.y0 - 20;
     this.x = GAME_WIDTH / 2 - this.w / 2;
     this.y = -this.h;
     var newGun = new TripleFront(this.game, this);
@@ -95,28 +83,23 @@ export class Boss extends Ship {
   }
 
   animateBossAppearance() {
+    this.game.movement.calculateVectorsAndDistance(this);
+    this.game.movement.moveSouth(this);
     this.game.movement.applyVelocity(this);
   }
 
   isAtThePosition() {
-    return (this.x == this.moveToPosition.x && this.y >= this.moveToPosition.y);
+    return (this.y >= this.destination.y);
   }
 
   setNewDirection() {
-    this.moveToPosition.x = this.x;
-    this.moveToPosition.y = this.collision.allowedY.y0 / 2;
-
-    this.setCordsOfTwoPoints();
-    this.game.movement.setTrajectory(this);
+    this.setDestinationCords();
+    this.game.movement.calculateVectorsAndDistance(this);
   }
 
-  setCordsOfTwoPoints() {
-    this.cords = {
-      p1X: this.x,
-      p1Y: this.y,
-      p2X: this.moveToPosition.x,
-      p2Y: this.moveToPosition.y,
-    };
+  setDestinationCords() {
+    this.destination.x = this.x;
+    this.destination.y = this.collision.allowedY.y0 / 2;
   }
 
   getAtkSpeed() {

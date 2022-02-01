@@ -3,56 +3,24 @@ export default class Movement {
     this.game = game;
   }
 
-  applyVelocity(object) {
-    object.x += object.vX;
-    object.y += object.vY;
+  accelerateObject(object) {
+    if (Math.abs(object.vX) < object.s) {
+      object.vX += object.dX;
+    }
+    if (Math.abs(object.vY) < object.s) {
+      object.vY += object.dY;
+    }
   }
 
-  setTrajectory(object) {
-    this.calculateVectorsAndDistance(object);
-    this.applySpeedModifier(object);
-
-   // console.log(`trajectory >>object.cords.p2X = ${object.cords.p2X}, object.cords.p2Y = ${object.cords.p2Y}`)
-  }
-
-  //calculate vectors and distance between two objects, where p1 - start position and p2 - end position
   calculateVectorsAndDistance(object) {
-    object.vX = object.cords.p2X - object.cords.p1X;
-    object.vY = object.cords.p2Y - object.cords.p1Y;
+    object.dX = object.destination.x - object.x;
+    object.dY = object.destination.y - object.y;
 
-    object.distance = Math.sqrt(object.vX * object.vX + object.vY * object.vY);
+    let distance = Math.sqrt(object.dX * object.dX + object.dY * object.dY);
 
-    object.vX = object.vX / object.distance;
-    object.vY = object.vY / object.distance;
-
-    object.x = object.cords.p1X;
-    object.y = object.cords.p1Y;
+    object.dX = object.dX / distance;
+    object.dY = object.dY / distance;
   }
-
-  applySpeedModifier(object) {
-    object.vX *= object.s;
-    object.vY *= object.s;
-  }
-
-
-  // moveTest(object) {
-  //   console.log(`-------------------------------------------`);
-  //   if(Math.sign(object.vX) == 1 && object.vX !=0 && object.vX < object.s) {
-  //     object.vX *= object.a;
-  //   }
-  //   if(Math.sign(object.vX) == -1 && object.vX !=0 && object.vX > -object.s) {
-  //     object.vX *= object.a;
-  //   }
-
-  //   if(Math.sign(object.vY) == 1 && object.vY !=0 && object.vY < object.s) {
-  //     object.vY *= object.a;
-  //   }
-  //   if(Math.sign(object.vY) == -1 && object.vY !=0 && object.vY > -object.s) {
-  //     object.vY *= object.a;
-  //   }
-  //   console.log(`================== ///// ==================`);
-  // }
-
 
   move(object, isCheckSouthOutOfBorderOnly) {
     switch (object.direction) {
@@ -86,8 +54,8 @@ export default class Movement {
         //console.log("Error handling 'move' function in Movement class");
         break;
     }
-    this.applyPhysics(object);
-    
+    this.applyFrictionAndVelocity(object);
+
     if (isCheckSouthOutOfBorderOnly) {
       if (this.game.collision.isCollisionBorderDown(object, -object.h)) {
         object.setDead();
@@ -107,7 +75,7 @@ export default class Movement {
     if (object.vX < object.s) {
       object.vX += object.a;
     }
-  } 
+  }
 
   moveSouth(object) {
     if (object.vY < object.s) {
@@ -149,11 +117,14 @@ export default class Movement {
     }
   }
 
-  applyPhysics(object) {
-    /* apply friction to velocity */
-    object.vX *= object.f;
-    object.vY *= object.f;
-
+  applyFrictionAndVelocity(object) {
+    object.vX *= this.game.gameBoard.friction;
+    object.vY *= this.game.gameBoard.friction;
     this.applyVelocity(object);
+  }
+
+  applyVelocity(object) {
+    object.x += object.vX;
+    object.y += object.vY;
   }
 }

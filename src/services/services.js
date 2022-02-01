@@ -42,6 +42,7 @@ export const colors = {
   blue: "#2F60FF",
   hitRegColor: "#ffffff",
   scoreColor: "#8BE0FF",
+  uiOrange: "#FFAA00",
   uiBlue: "#3498DB",
   uiBlueDark: "#000657",
   uiBlueDarkLighter: "#1a2298",
@@ -51,6 +52,10 @@ export const colors = {
   uiPurple: "#7700ff",
   uiPurpleDark: "#4d00a5",
   uiGrey: "#3B3B3B",
+  projectileYellow: "#FFEB00",
+  projectileYellowDark: "#FFD000",
+  projectileRed: "#FF1800",
+  projectileRedDark: "#CF1300",
 };
 
 export const getStatusEffectsBar = {
@@ -129,7 +134,7 @@ export const getEnemyT4DefaultStats = {
   speed: 4,
   accelerationMod: 40,
   rammingDmg: 0.1,
-  atkSpeed: 1.0,
+  atkSpeed: 1.0,   //1.0
   atkSpeedCap: 0.5,
   projectileSpeedModifier: 5.0,
   scorePoints: 25,
@@ -150,26 +155,18 @@ export const getEnemyT5DefaultStats = {
 
 // s - speed
 export const getDefaultPlayerProjectile = {
-  w: 10,
-  h: 10,
+  w: 20,
+  h: 20,
   color: "#47FFFB",
   isFill: true,
 };
 // s - speed
 export const getDefaultEnemyProjectile = {
-  w: 10,
-  h: 10,
+  w: 20,
+  h: 20,
   color: colors.red,
   isFill: true,
 };
-
-export function getObjectCenterPosition(object) {
-  var centerPosition = {
-    x: Math.floor(object.x + object.w / 2),
-    y: Math.floor(object.y + object.h / 2),
-  };
-  return centerPosition;
-}
 
 export function getSingleGunPosition(object, projectileW) {
   //projectile width

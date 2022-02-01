@@ -2,6 +2,8 @@ import Ship from "./Ship";
 import {
   getPlayerT0Dimension,
   getPlayerDefaultStats,
+  GAME_WIDTH,
+  GAME_HEIGHT
 } from "../services/services";
 import playerImage from "../images/playerShip.png";
 
@@ -9,13 +11,18 @@ import { SingleFront } from "../guns/SingleFront";
 import { DoubleFront } from "../guns/DoubleFront";
 import { TripleFront } from "../guns/TripleFront";
 
+const defaultPosition = {
+  x: GAME_WIDTH / 2,
+  y: GAME_HEIGHT - getPlayerT0Dimension().h,
+}
+
 export class Player extends Ship {
   constructor(game) {
     super(game);
     this.game = game;
     this.stats = this.game.stats;
-    this.x = 300;
-    this.y = 600;
+    this.x = defaultPosition.x;
+    this.y = defaultPosition.y;
     this.w = getPlayerT0Dimension().w;
     this.h = getPlayerT0Dimension().h;
     this.health = this.stats.player.health;
@@ -32,7 +39,7 @@ export class Player extends Ship {
     this.atkSpeed = this.stats.player.atkSpeed;
     this.atkSpeedCap = this.stats.player.atkSpeedCap;
     this.target = {
-      y: 0,
+      y: 440,
     };
     this.singleFront = new SingleFront(this.game, this);
     this.doubleFront = new DoubleFront(this.game, this);
@@ -40,8 +47,8 @@ export class Player extends Ship {
     this.gun = this.tripleFront;
     this.projectileSpeedModifier = this.stats.player.projectileSpeedModifier;
 
-    this.image = new Image();
-    this.image.src = playerImage;
+     this.image = new Image();
+     this.image.src = playerImage;
 
     console.log("CONSTRUCTOR > Player");
   }
@@ -68,6 +75,11 @@ export class Player extends Ship {
 
   setDefaultAtkSpeed() {
     this.atkSpeed = getPlayerDefaultStats.atkSpeed;
+  }
+  
+  setDefaultPosition() {
+    this.x = defaultPosition.x;
+    this.y = defaultPosition.y;
   }
 
   playHitEffect(projectileType) {

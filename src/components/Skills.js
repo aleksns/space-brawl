@@ -136,6 +136,9 @@ export default class Skills {
     if (!this.atkSpeed.isApplied) {
       return;
     }
+    if (this.slowTime.isApplied) {
+      this.atkSpeed.then *= 2;
+    }
     let timePassed = (this.game.now - this.atkSpeed.then) / 1000;
     if (timePassed >= this.atkSpeed.duration || this.game.isGlobalActionRestricted) {
       this.restorePlayerAtkSpeed();
@@ -154,7 +157,8 @@ export default class Skills {
       return;
     }
     let timePassed = (this.game.now - this.slowTime.then) / 1000;
-    //console.log(`timePassed SLOW = ${timePassed}`)
+    console.log(`this.game.now = ${this.game.now}`)
+    console.log(`timePassed = ${timePassed}`)
     if (timePassed >= this.slowTime.duration || this.game.isGlobalActionRestricted) {
       this.game.stats.restoreSpeedOfEverything(this.slowTime);
       this.slowTime.isApplied = false;
@@ -176,7 +180,6 @@ export default class Skills {
   applySlowTimeStatusEffect() {
     this.slowTime.then = this.game.now;
     this.slowTime.isApplied = true;
-
     this.game.stats.slowEverything(this.slowTime);
   }
 

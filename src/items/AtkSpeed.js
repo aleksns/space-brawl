@@ -16,16 +16,31 @@ export class AtkSpeed extends Item {
     this.shadowColor = shadowColor;
     this.shadowBlur = this.itemBuffProps.shadowBlur;
     this.s = this.itemBuffProps.s;
-    //this.a = itemBuffProps.a;
+    this.a = this.itemBuffProps.a;
     this.isFill = this.itemBuffProps.isFill;
     this.isInteractable = true;
     this.spawnRangeMinX = 0;
     this.spawnRangeMaxX = 0;
 
+    this.visionRange = {
+      x: 0,
+      y: 0,
+      r: this.itemBuffProps.visionRange,
+      color: "green",
+    };
+
     this.image = new Image();
     this.image.src = atkSpeedImage;
-    this.isSpawnOnInit = false;
+    this.isSpawnOnScreen = false;
     //this.effectType = "atkspeed";   for different effects to lay
+  }
+
+  updateItem() {
+    
+  }
+
+  updateImage() {
+    ///tbd
   }
 
   initializeItem() {
@@ -37,7 +52,7 @@ export class AtkSpeed extends Item {
     this.game.init.addEffect(this, "defaultBuff");
   }
 
-  applyBuff() {
+  applyEffect() {
     this.game.skills.applyAtkSpeedStatusEffect();
   }
 

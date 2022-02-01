@@ -1,4 +1,6 @@
-import { getTripleGunPosition, getGunsStats } from "../services/services";
+import { getGunsStats, GAME_HEIGHT } from "../services/services";
+
+
 
 export default class Gun {
   constructor(game, owner) {
@@ -7,6 +9,13 @@ export default class Gun {
     this.isPlayerOwned = this.owner.isPlayer;
     this.atkSpeed = getGunsStats.singleAtkSpeed;
     this.target = this.owner.target;
+
+    this.playerFrontGunTarget = {
+      y: - 100
+    };
+    this.enemyFrontGunTarget = {
+      y: GAME_HEIGHT + 100
+    };
   }
 
 
@@ -15,11 +24,11 @@ export default class Gun {
   fire() {
     for(let i = 0; i < this.barrels.length; i++) {
       
-      this.barrels[i].p1X = this.getGunPositionP1(i).p1X;
-      this.barrels[i].p1Y = this.getGunPositionP1(i).p1Y;
+      this.barrels[i].x = this.getGunPosition(i).x;
+      this.barrels[i].y = this.getGunPosition(i).y;
       
-      this.barrels[i].p2X = this.getGunPositionP2(i).p2X;
-      this.barrels[i].p2Y = this.getGunPositionP2(i).p2Y;
+      this.barrels[i].destinationX = this.getGunDestination(i).destinationX;
+      this.barrels[i].destinationY = this.getGunDestination(i).destinationY;
 
       this.game.init.addProjectile(this, this.barrels[i]);
     }

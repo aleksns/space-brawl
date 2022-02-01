@@ -8,6 +8,7 @@ import {
 } from "../services/services";
 import enemyImageT4 from "../images/enemyShipT4.png";
 import { SingleTarget } from "../guns/SingleTarget";
+import { TripleFront } from "../guns/TripleFront";
 
 export class EnemyT4 extends Ship {
   constructor(game) {
@@ -76,6 +77,7 @@ export class EnemyT4 extends Ship {
     );
     this.getEmptyPositionOnBoard();
     var newGun = new SingleTarget(this.game, this);
+    //var newGun = new TripleFront(this.game, this);
     this.gun = newGun;
     this.directionChangeIntervalThen = Date.now();
   }

@@ -134,7 +134,7 @@ export default class Script {
         console.log(`Error handling cutsceneFinished in Script class`);
         break;
     }
-
+    this.game.player.setDefaultPosition();
   }
 
   clearScreenFromObjects() {

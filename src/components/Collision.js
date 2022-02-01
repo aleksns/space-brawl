@@ -1,10 +1,9 @@
 import { getDeadZoneDimensionForObject } from "../services/services";
-import GameBoard from "./GameBoard";
 
 export default class Collision {
   constructor(game) {
     this.game = game;
-    this.gameBoard = new GameBoard();
+    this.gameBoard = this.game.gameBoard;
     this.width = this.gameBoard.width; ///exists in services.
     this.height = this.gameBoard.height; ///exists in services
 
@@ -93,7 +92,6 @@ export default class Collision {
       );
       //rect.x = this.allowedX.x1 - rect.w;//// testing
     }
-    //console.log(`COLLSION > newRandomDirections = ${JSON.stringify(newRandomDirections) }`)
     if (newRandomDirections.length != 0) {
       rect.setRandomDirectionFromList(newRandomDirections);
     }
@@ -167,19 +165,19 @@ export default class Collision {
   }
 
   isCollisionBorderUp(rect, offStep) {
-    return rect.y <= this.allowedY.y0 + offStep;
+    return rect.y <= this.allowedY.y0 - offStep;
   }
 
   isCollisionBorderDown(rect, offStep) {
-    return rect.y + rect.h >= this.allowedY.y1 - offStep;
+    return rect.y + rect.h >= this.allowedY.y1 + offStep;
   }
 
   isCollisionBorderLeft(rect, offStep) {
-    return rect.x <= this.allowedX.x0 + offStep;
+    return rect.x <= this.allowedX.x0 - offStep;
   }
 
   isCollisionBorderRight(rect, offStep) {
-    return rect.x + rect.w >= this.allowedX.x1 - offStep;
+    return rect.x + rect.w >= this.allowedX.x1 + offStep;
   }
 
   rectCircleColliding(rect, circle) {

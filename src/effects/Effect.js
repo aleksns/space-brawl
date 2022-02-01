@@ -1,4 +1,3 @@
-import { colors, getObjectCenterPosition } from "../services/services";
 
 export default class Effect {
     constructor(game, object, type) {

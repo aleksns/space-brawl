@@ -1,7 +1,5 @@
 import Gun from "./Gun";
-import { colors, getGunsStats } from "../services/services";
 import {
-  getObjectCenterPosition,
   getTripleGunPosition,
   getDefaultPlayerProjectile,
 } from "../services/services"; 
@@ -11,28 +9,25 @@ export class TripleFront extends Gun {
     super(game, owner);
     this.projectileType = "default";
 
-    // p1 - start point of a projectile, p2 - end point
-    // each barrel has its own start/end points
-
     this.barrel1 = {
-      p1X: 0,
-      p1Y: 0,
-      p2X: 0,
-      p2Y: 0
+      x: 0,
+      y: 0,
+      destinationX: 0,
+      destinationY: 0
     }
 
     this.barrel2 = {
-      p1X: 0,
-      p1Y: 0,
-      p2X: 0,
-      p2Y: 0
+      x: 0,
+      y: 0,
+      destinationX: 0,
+      destinationY: 0
     }
 
     this.barrel3 = {
-        p1X: 0,
-        p1Y: 0,
-        p2X: 0,
-        p2Y: 0
+        x: 0,
+        y: 0,
+        destinationX: 0,
+        destinationY: 0
       }
 
     this.barrels = [
@@ -41,21 +36,28 @@ export class TripleFront extends Gun {
       this.barrel3
     ]
 
-    this.dW = getDefaultPlayerProjectile.w; //offStep for a projectile, to make a better center position
+    this.dW = getDefaultPlayerProjectile.w; //offStep for a projectile, to make centered position
   }
 
-  getGunPositionP1(i) {
+  getGunPosition(i) {
     var gunPosition = {
-      p1X: getTripleGunPosition(this.owner, this.dW)[i].x,
-      p1Y: getTripleGunPosition(this.owner, this.dW)[i].y,
+      x: getTripleGunPosition(this.owner, this.dW)[i].x,
+      y: getTripleGunPosition(this.owner, this.dW)[i].y,
     }
     return gunPosition;
   }
 
-  getGunPositionP2(i) {
-    var gunPositionP2 = {
-      p2X: this.barrels[i].p1X,
-      p2Y: this.target.y,
+  getGunDestination(i) {
+    let y;
+    if(this.owner.isPlayer) {
+      y = this.playerFrontGunTarget.y;
+    }
+    else {
+      y = this.enemyFrontGunTarget.y;
+    }
+        var gunPositionP2 = {
+      destinationX: this.barrels[i].x,
+      destinationY: y,
     }
     return gunPositionP2;
   }

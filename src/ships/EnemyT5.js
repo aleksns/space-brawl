@@ -1,7 +1,5 @@
 import Ship from "./Ship";
 import {
-  directions,
-  getObjectCenterPosition,
   getRandomInt,
   getEnemyT5DefaultStats,
   getEnemyT5Dimension,
@@ -20,7 +18,6 @@ export class EnemyT5 extends Ship {
     this.h = getEnemyT5Dimension().h;
     this.dX = 0;
     this.dY = 0;
-    this.distance = 0;
 
     this.health = this.game.stats.enemyT5.health;
     this.maxHealth = this.game.stats.enemyT5.maxHealth;
@@ -55,11 +52,9 @@ export class EnemyT5 extends Ship {
       h: 5
     }
 
-    this.cords = {
-      p1X: 0,
-      p1Y: 0,
-      p2X: 0,
-      p2Y: 0
+    this.destination = {
+      x: 0,
+      y: 0
     }
     this.isBoss = false;
     this.directionChangeIntervalNow = 0;
@@ -87,7 +82,7 @@ export class EnemyT5 extends Ship {
   }
 
   move() {  
-    this.game.movement.applyVelocity(this);
+    this.game.movement.applyFrictionAndVelocity(this);
   }
 
   updateShip() {
@@ -100,17 +95,13 @@ export class EnemyT5 extends Ship {
     this.moveToPosition.x = this.x;
     this.moveToPosition.y = GAME_WIDTH + this.h;
 
-    this.setCordsOfTwoPoints();
-    this.game.movement.setTrajectory(this);
+    this.setDestinationCords();
+    this.game.movement.calculateVectorsAndDistance(this);
   }
 
-  setCordsOfTwoPoints() {
-    this.cords = {
-      p1X: this.x,
-      p1Y: this.y,
-      p2X: this.moveToPosition.x,
-      p2Y: this.moveToPosition.y,
-    };
+  setDestinationCords() {
+    this.destination.x = this.moveToPosition.x;
+    this.destination.y = this.moveToPosition.y;
   }
 
   getAtkSpeed() {

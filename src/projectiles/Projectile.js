@@ -4,18 +4,24 @@ export default class Projectile {
     this.gun = gun;
     this.barrel = barrel;
 
-    this.x = 0;
-    this.y = 0;
+    this.x = this.barrel.x;
+    this.y = this.barrel.y;
     this.vX = 0;
     this.vY = 0;
-    this.f = 0.95;
-    this.distance = 0;
+    this.dX = 0;
+    this.dY = 0;
+    this.offStep = 100;
 
-    this.cords = {
-      p1X: this.barrel.p1X,
-      p1Y: this.barrel.p1Y,
-      p2X: this.barrel.p2X,
-      p2Y: this.barrel.p2Y
+    this.destination = {
+      x: this.barrel.destinationX,
+      y: this.barrel.destinationY,
+    };
+
+    this.visionRange = {
+      x: 0,
+      y: 0,
+      r: 300,
+      color: "green",
     };
 
     this.lineJoin = "round";
@@ -25,16 +31,20 @@ export default class Projectile {
     this.isDead = false;
   }
 
-  update() {
-   // console.log(`vX = ${this.vX}, vY = ${this.vY}`)
-    this.game.movement.applyVelocity(this);
+  update() {  //toDo - handle target projectiles with reworked movement system
+   
 
-    //this.game.movement.moveTest(this);
+    this.game.movement.calculateVectorsAndDistance(this);
+    this.game.movement.accelerateObject(this);
+
+    this.game.movement.applyFrictionAndVelocity(this);
     this.removeIfOutsideScreen();
   }
 
-  initialize() {
-    this.game.movement.setTrajectory(this);
+  initialize() {//toDo - handle target projectiles with reworked movement system
+
+    //this.game.movement.calculateVectorsAndDistance(this);
+    //this.game.movement.accelerateObject(this);
   }
 
   setPlayerOwned(gun) {
@@ -48,7 +58,7 @@ export default class Projectile {
   }
 
   removeIfOutsideScreen() {
-    if (this.game.collision.isCollisionWithAnyBorder(this, -50)) {
+    if (this.game.collision.isCollisionWithAnyBorder(this, this.offStep)) {
       this.setDead();
     }
   }

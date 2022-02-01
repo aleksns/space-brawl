@@ -1,5 +1,5 @@
 import Effect from "./Effect";
-import { colors, getObjectCenterPosition } from "../services/services";
+import { colors } from "../services/services";
 
 export const buffDefault = {
   opacity: 0.1,
@@ -39,8 +39,8 @@ export class BuffDefault extends Effect {
       this.opacityModifier = -this.opacityModifier;
     }
 
-    this.x = getObjectCenterPosition(this.object).x;
-    this.y = getObjectCenterPosition(this.object).y;
+    this.x = this.game.gameBoard.getCenterOfObject(this.object).x;
+    this.y = this.game.gameBoard.getCenterOfObject(this.object).y;
 
     this.radius += this.radiusModifier;
     this.opacity += this.opacityModifier;

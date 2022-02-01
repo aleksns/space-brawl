@@ -216,9 +216,9 @@ export default class Controls {
       this.handleKey3();
     }
 
-    //having collision check before applyPhysics adds smooth back off effect when reaching borders
+    //having collision check before applyFrictionAndVelocity adds smooth back off effect when reaching borders
     this.game.collision.handleCollisionWithBorders(this.player);
-    this.game.movement.applyPhysics(this.player);
+    this.game.movement.applyFrictionAndVelocity(this.player);
   }
 
   handleKeyW() {

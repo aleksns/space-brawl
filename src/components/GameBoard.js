@@ -1,7 +1,11 @@
 import { getRandomInt, GAME_WIDTH, GAME_HEIGHT } from "../services/services";
 
+import projectilePlayer from "../images/projectilePlayer.png";
+import projectileEnemy from "../images/projectileEnemy.png";
+
 export default class GameBoard {
-  constructor() {
+  constructor(game) {
+    this.game = game;
     this.width = GAME_WIDTH;
     this.height = GAME_HEIGHT;
     this.allowedX = { x0: 5, x1: this.width - 5 };
@@ -10,7 +14,23 @@ export default class GameBoard {
     this.enemyAllowedX = { x0: 5, x1: this.width - 5 };
     this.enemyAllowedY = { y0: 50, y1: this.height / 2 };
 
+    this.friction = 0.95;
     this.formationMargin = 15;
+
+    this.projectileDefaultImgPlayer = new Image();
+    this.projectileDefaultImgPlayer.src = projectilePlayer;
+
+    this.projectileDefaultImgEnemey = new Image();
+    this.projectileDefaultImgEnemey.src = projectileEnemy;
+  }
+
+  updateVisionRange(object) {
+    object.visionRange.x = this.getCenterOfObject(object).x;
+    object.visionRange.y = this.getCenterOfObject(object).y;
+  }
+
+  isInsideVisionRange(target, visionRangeOwner) {
+    return this.game.collision.rectCircleColliding(target, visionRangeOwner);
   }
 
   getRandomCordsWithinBounds(object) {
@@ -46,4 +66,12 @@ export default class GameBoard {
   getFormationLinePosX() {}
 
   getFormationTriangle() {}
+
+  getCenterOfObject(object) {
+    var center = {
+      x: object.x + object.w / 2,
+      y: object.y + object.h / 2,
+    }
+    return center;
+  }
 }

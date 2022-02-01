@@ -20,6 +20,7 @@ export default class Update {
     this.updatePlayer();
     this.updateEnemies();
     this.updateProjectiles();
+    this.updateAnimations();
     this.updateEffects();
     this.updateStatusEffects();
     this.updateUI();
@@ -35,6 +36,12 @@ export default class Update {
     this.removeDeadEnemies();
     this.removeDeadProjectiles();
     this.removeDeadEffects();
+  }
+
+  updateAnimations() {
+    for(let i = 0; i < this.game.animations.list.length; i++) {
+      this.game.animations.list[i].update();
+    }
   }
 
   updateAllTimersAfterPauseOff() {
@@ -76,7 +83,6 @@ export default class Update {
   }
 
   updateEnemies() {
-    //this.game.init.spawnEnemies();
     this.updateObjects(this.game.enemies);
   }
 

@@ -146,12 +146,12 @@ export class SkillsBar extends UICanvas {
   }
 
   draw(ctx) {
-    this.game.draw.drawItem(this.skillsBarContainerProps, ctx);
+    this.game.draw.drawObject(this.skillsBarContainerProps, ctx);
 
     this.drawSlowTimeIcon(ctx);
 
-    this.game.draw.drawItem(this.shieldProps, ctx);
-    this.game.draw.drawItem(this.laserProps, ctx);
+    this.game.draw.drawObject(this.shieldProps, ctx);
+    this.game.draw.drawObject(this.laserProps, ctx);
   }
 
   update() {
@@ -210,7 +210,7 @@ export class SkillsBar extends UICanvas {
   drawSlowTimeIcon(ctx) {
     //this.showOutlineIconTest(this.slowTimeProps, ctx);    //testing purpose
 
-    this.game.draw.drawItem(this.slowTimeProps, ctx);
+    this.game.draw.drawObject(this.slowTimeProps, ctx);
     if (!this.slowTimeSkill.isOnCD) {
       return;
     }

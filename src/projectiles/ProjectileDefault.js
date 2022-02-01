@@ -16,8 +16,7 @@ export class ProjectileDefault extends Projectile {
     this.sModifier = 0;
     this.a = 0;
     this.isFill = undefined;
-    this.shadowColor = "transparent";
-    this.shadowBlur = 0;
+    this.image = undefined;
   }
 
   setProjectileStats(isPlayerOwned) {
@@ -36,12 +35,12 @@ export class ProjectileDefault extends Projectile {
     this.h = getDefaultPlayerProjectile.h;
     this.color = getDefaultPlayerProjectile.color;
     this.isFill = getDefaultPlayerProjectile.isFill;
+    this.image = this.game.gameBoard.projectileDefaultImgPlayer;
   }
 
   setPlayerProjectileStats() {
     this.damage = this.gun.owner.damage;
     this.s = this.gun.owner.projectileSpeedModifier;
-
   }
 
   setEnemyProjectileShape() {
@@ -49,6 +48,7 @@ export class ProjectileDefault extends Projectile {
     this.h = getDefaultEnemyProjectile.h;
     this.color = getDefaultEnemyProjectile.color;
     this.isFill = getDefaultEnemyProjectile.isFill;
+    this.image = this.game.gameBoard.projectileDefaultImgEnemey;
   }
 
   setEnemyProjectileStats() {

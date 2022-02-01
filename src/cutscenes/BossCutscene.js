@@ -74,7 +74,7 @@ export class BossCutscene extends Cutscene {
       this.textProps.then = this.game.now;
     }
 
-    this.game.draw.drawItem(this.container, ctx);
+    this.game.draw.drawObject(this.container, ctx);
     let name = this.dialogs[this.i].name;
     let offsetX = this.container.x + margin.textSides;
     let offsetY = this.container.y + margin.textTop;

@@ -3,7 +3,6 @@ import { colors, GAME_WIDTH } from "../services/services";
 import { HpBarPlayer } from "../ui/HpBarPlayer";
 import { ThreatLevelBar } from "../ui/ThreatLevelBar";
 
-
 const hitRegFilter = "saturate(50%) brightness(150%)";
 const hpBarHeight = 5;
 const hpBarLineWidth = 0.5;
@@ -21,8 +20,6 @@ export default class Draw {
     this.skillsBar = this.game.skillsBar;
     this.hpBarPlayer = new HpBarPlayer(this.game);
     this.threatBar = new ThreatLevelBar(this.game);
-
-    this.isDrawingAnimation = false;
   }
 
   updateUICanvas() {
@@ -39,16 +36,15 @@ export default class Draw {
     this.drawPlayer();
     this.drawEnemies();
 
-
     if(this.game.isGlobalActionRestricted) {
       return;
     }
-    this.drawUI(); 
+    this.drawUI(this.ctx); 
   }
 
   drawUIOnInit() {
-    this.drawItem(this.hpBarPlayer.hpBarImageProps, this.ctx5);
-    this.drawItem(this.threatBar.threatBarImageProps, this.ctx5);
+    this.drawObject(this.hpBarPlayer.hpBarImageProps, this.ctx5);
+    this.drawObject(this.threatBar.threatBarImageProps, this.ctx5);
   }
 
   drawCutscene(cutscene, ctx) {
@@ -94,13 +90,18 @@ export default class Draw {
 
   drawItems() {
     for (let i = 0; i < this.game.items.length; i++) {
-      this.drawItem(this.game.items[i], this.ctx);
+      this.drawObject(this.game.items[i], this.ctx);
     }
   }
 
-  drawItem(item, ctx) {
-    ctx.current.filter = item.filter;
-    ctx.current.drawImage(item.image, item.x, item.y, item.w, item.h);
+  drawObject(object, ctx) {
+    if(object.shadowBlur != null && object.shadowColor != null) {
+      ctx.current.shadowColor = object.shadowColor;
+      ctx.current.shadowBlur = object.shadowBlur;
+    }
+
+    ctx.current.filter = object.filter;
+    ctx.current.drawImage(object.image, object.x, object.y, object.w, object.h);
     ctx.current.filter = "none";
   }
 
@@ -111,7 +112,7 @@ export default class Draw {
   }
 
   drawBgElement(element) {
-    this.drawItem(element, this.ctx3);
+    this.drawObject(element, this.ctx3);
   }
 
   drawPlayer() {
@@ -123,7 +124,7 @@ export default class Draw {
       this.game.player.filter = "none";
     }
 
-    this.drawItem(this.game.player, this.ctx);
+    this.drawObject(this.game.player, this.ctx);
   }
 
   drawEnemies() {
@@ -140,7 +141,7 @@ export default class Draw {
     else {
       enemy.filter = "none";
     }
-    this.drawItem(enemy, this.ctx);
+    this.drawObject(enemy, this.ctx);
     this.drawEnemyHpBar(enemy, this.ctx);
   }
 
@@ -165,10 +166,10 @@ export default class Draw {
 
   drawProjectiles() {
     for (let i = 0; i < this.game.enemyProjectiles.length; i++) {
-      this.drawRect(this.game.enemyProjectiles[i], this.ctx);
+      this.drawObject(this.game.enemyProjectiles[i], this.ctx);
     }
     for (let i = 0; i < this.game.playerProjectiles.length; i++) {
-      this.drawRect(this.game.playerProjectiles[i], this.ctx);
+      this.drawObject(this.game.playerProjectiles[i], this.ctx);
     }
   }
 
@@ -191,8 +192,6 @@ export default class Draw {
   }
 
   drawRect(object, ctx) {
-    ctx.current.shadowColor = object.shadowColor;
-    ctx.current.shadowBlur = object.shadowBlur;
     ctx.current.globalAlpha = object.opacity;
     // ctx.current.lineJoin = object.lineJoin;
     // ctx.current.lineCap = object.lineCap;
@@ -212,8 +211,6 @@ export default class Draw {
   }
 
   drawArc(object, ctx) {
-    ctx.current.shadowColor = object.shadowColor;
-    ctx.current.shadowBlur = object.shadowBlur;
     ctx.current.globalAlpha = object.opacity;
     // ctx.current.lineJoin = object.lineJoin;
     // ctx.current.lineCap = object.lineCap;

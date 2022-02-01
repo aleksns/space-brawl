@@ -13,6 +13,7 @@ import GameBoard from "./GameBoard";
 import SoundChannel from "./SoundChannel";
 import SoundList from "./SoundList";
 import Cutscenes from "../cutscenes/Cutscenes";
+import Animations from "../animations/Animations";
 import Script from "../scripts/Script";
 
 //Remove some variables FROM THE CONSTRUCTOR which are not being used
@@ -34,6 +35,7 @@ export default class Game {
     this.ctx4 = context4Ref;
     this.ctx5 = context5Ref;
     this.canvas5 = canvas5Ref;
+    this.animations = new Animations(this);
     this.progression = new Progression(this);
     this.init = new Init(this);
     this.soundList = new SoundList();
@@ -51,6 +53,7 @@ export default class Game {
 
     // this.levelTransition = new LevelTransition(this);
     // this.bossDeath = new BossDeath(this);
+
     this.cutscenes = new Cutscenes(this);
     this.script = new Script(this);
     this.draw = new Draw(this);
@@ -116,15 +119,6 @@ export default class Game {
     return this.isGameOn;
   }
 
-  /* For testing purpose <test> */
-
-  speedBoost(value) {
-    console.log("speed value = " + value);
-    console.log("this.player.speed = " + this.player.speed);
-    this.player.speed = value;
-  }
-  /* For testing purpose </test> */
-
   getPlayerHP() {
     return this.player.health;
   }
@@ -169,7 +163,7 @@ export default class Game {
 
   gameLoop() {
     this.clearCanvas1To4();
-    if(this.isGlobalActionRestricted || this.isGameOnHold) {
+    if (this.isGlobalActionRestricted || this.isGameOnHold) {
       this.clearCanvas5();
     }
 
@@ -200,9 +194,8 @@ export default class Game {
     // console.log("bgElements.length = " + this.bgElements.length);
     // console.log("enemies.length = " + this.enemies.length);
     // console.log("effects.length = " + this.effects.length);
-    // console.log("enemy projectiles.length = " + this.enemyProjectiles.length);
-    // console.log("player projectiles.length = " + this.playerProjectiles.length);
+    //console.log("enemy projectiles.length = " + this.enemyProjectiles.length);
+    //console.log("player projectiles.length = " + this.playerProjectiles.length);
     // console.log(`---------------------------------------`);
-
   }
 }

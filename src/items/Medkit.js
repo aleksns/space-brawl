@@ -16,17 +16,32 @@ export class Medkit extends Item {
     this.shadowColor = shadowColor;
     this.shadowBlur = this.itemBuffProps.shadowBlur;
     this.s = this.itemBuffProps.s;
-    //this.a = this.itemBuffProps.a;
+    this.a = this.itemBuffProps.a;
     this.isFill = this.itemBuffProps.isFill;
     this.isInteractable = true;
     this.restoredHP = getItemsStats.medkitTier1;
     this.spawnRangeMinX = 0;
     this.spawnRangeMaxX = 0;
 
+    this.visionRange = {
+      x: 0,
+      y: 0,
+      r: this.itemBuffProps.visionRange,
+      color: "green",
+    };
+
     this.image = new Image();
     this.image.src = medkitImage;
-    this.isSpawnOnInit = false;
+    this.isSpawnOnScreen = false;
     //this.effectType = "medkit";   for different effects to play
+  }
+
+  updateItem() {
+    
+  }
+
+  updateImage() {
+    ///tbd
   }
 
   initializeItem() {
@@ -37,7 +52,7 @@ export class Medkit extends Item {
     this.game.init.addEffect(this, "defaultBuff");
   }
 
-  applyBuff() {
+  applyEffect() {
     this.game.skills.restoreHealth(this.restoredHP);
   }
 

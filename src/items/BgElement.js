@@ -14,8 +14,8 @@ const minHeight = 50;
 const maxHeight = 250;
 const color = "#ffffff";
 //s - speed, a - acceleration
-const s = 4;   //default 2
-const a = s / 10;
+const s = 4; //default 2
+const a = s / 30;
 
 export class BgElement extends Item {
   constructor(game) {
@@ -28,22 +28,30 @@ export class BgElement extends Item {
     this.color = "transparent";
     this.opacity = 0;
     this.s = s;
-    //this.a = a;
+    this.a = a;
     this.isFill = undefined;
     this.shadowColor = "transparent";
     this.shadowBlur = 0;
     this.spawnRangeMinX = 0;
     this.spawnRangeMaxX = 0;
     this.isInteractable = false;
-    
+
     this.image = new Image();
     this.image.src = bgImage;
-    this.isSpawnOnInit = undefined;
-    }
+    this.isSpawnOnScreen = undefined;
+  }
 
-    initializeItem() {
-      this.setBackgroundShapeAndPosition();
-    }
+  updateItem() {
+    
+  }
+
+  updateImage() {
+    ///tbd
+  }
+
+  initializeItem() {
+    this.setBackgroundShapeAndPosition();
+  }
 
   setBackgroundShapeAndPosition() {
     this.isFill = false;
@@ -62,5 +70,4 @@ export class BgElement extends Item {
       this.y = this.game.bgElements[0].y - this.game.bgElements[0].h + 30;
     }
   }
-
 }
