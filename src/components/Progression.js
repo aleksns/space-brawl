@@ -5,9 +5,12 @@ export default class Progression {
     this.maxThreatLevel = 31;
     this.threatLevelModifier = 1;
 
-    this.maxNumOfEnemies = 1;
+    this.maxNumOfEnemies = 6;
     this.level = 1;
     this.isMaxThreatLevel = false;
+
+    this.score = 0;
+    this.coinsPoints = 0;
 
     this.enemyModifiers = {
       damage: 1.5,

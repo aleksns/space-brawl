@@ -10,7 +10,6 @@ export class AtkSpeed extends Item {
     this.w = this.itemBuffProps.w;
     this.h = this.itemBuffProps.h;
 
-    this.offStepY = -this.h;
     this.color = this.itemBuffProps.color;
     this.opacity = this.itemBuffProps.opacity;
     this.shadowColor = shadowColor;
@@ -43,8 +42,7 @@ export class AtkSpeed extends Item {
     ///tbd
   }
 
-  initializeItem() {
-    
+  initializeItem() {  
     this.randomize();
   }
 

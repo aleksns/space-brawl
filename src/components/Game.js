@@ -66,7 +66,6 @@ export default class Game {
     this.enemyProjectiles = [];
     this.playerProjectiles = [];
     this.effects = [];
-    this.score = 0;
     this.keys = this.controls.keys;
     this.isGameOn = false;
 

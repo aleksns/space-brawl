@@ -8,7 +8,7 @@ export default class Effect {
   }
 
   update() {
-    console.log("update from PAPA")
+    ///
   } 
 
   explosion() {

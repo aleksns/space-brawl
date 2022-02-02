@@ -40,6 +40,8 @@ export default class Item {
       y: 0
     };
 
+    this.offStep = undefined;
+
     this.filter = "none";
     this.isDead = false;
     this.isItem = true;
@@ -49,13 +51,19 @@ export default class Item {
 
   initialize() {
     this.initializeItem();
+    this.offStep = -this.h;
     this.setDestinationCords();
+    this.game.movement.calculateVectorsAndDistance(this);
 
     if(this.game.stats.isGlobalSlowAll) {
       this.s /= this.game.stats.slowModifiers.speedGlobal;
     }
 
-    this.game.movement.calculateVectorsAndDistance(this);
+    if (this.isInteractable) {
+      this.game.movement.applyAcceleration(this);
+    } else {
+      this.game.movement.applyConstantSpeed(this);
+    }   
   }
 
   update() {
@@ -69,7 +77,7 @@ export default class Item {
     this.drawVisionRange();
     }
     else {
-      this.handleBgElementMove();
+      this.game.movement.applyVelocity(this);
     }
 
     this.game.movement.moveSouth(this);
@@ -86,17 +94,12 @@ export default class Item {
   handleItemMove() {
     if (this.game.gameBoard.isInsideVisionRange(this.game.player, this.visionRange)) {
       this.game.movement.calculateVectorsAndDistance(this);
-      this.game.movement.accelerateObject(this);
+      this.game.movement.applyAcceleration(this);
       this.game.ctx.current.strokeStyle = "orange";
     } else {
       this.game.ctx.current.strokeStyle = "green";
     }
-
     this.game.movement.applyFrictionAndVelocity(this);
-  }
-
-  handleBgElementMove() {
-    this.game.movement.applyVelocity(this);
   }
 
   updateDestinationCords() {
@@ -123,12 +126,13 @@ export default class Item {
     this.game.ctx.current.closePath();
   }
 
+
   setDead() {
     this.isDead = true;
   }
 
   removeIfOutsideBorderDown() {
-    if (this.game.collision.isCollisionBorderDown(this, this.h)) {
+    if (this.game.collision.isCollisionBorderDown(this, this.offStep)) {
       this.setDead();
     }
   }
@@ -144,6 +148,16 @@ export default class Item {
 
   setIsSpawnOnScreen(boolean) {
     this.isSpawnOnScreen = boolean;
+  }
+
+  initializeCoin(object) {
+    this.setPosition(object);
+    this.value = object.itemToDrop.value;
+  }
+
+  setPosition(object) {
+    this.x = this.game.gameBoard.getCenterOfObject(object).x;
+    this.y = this.game.gameBoard.getCenterOfObject(object).y;
   }
 
   setRandomPosition() {

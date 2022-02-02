@@ -49,6 +49,11 @@ export class EnemyT4 extends Ship {
     this.directionChangeInterval = 4;
     this.isCheckSouthOutOfBorderOnly = false;
     this.isBoss = false;
+
+    this.itemToDrop = {
+      id: "coin",
+      value: 3,
+    }
     console.log("CONSTRUCTOR > EnemyT4");
   }
 
@@ -106,7 +111,8 @@ export class EnemyT4 extends Ship {
 
   onDeath() {
     this.game.init.addEffect(this, "default");
-    this.game.score += this.scorePoints;
+    this.game.progression.score += this.scorePoints;
     this.game.progression.increaseThreatLevel();
+    this.game.init.addItemOnDrop(this.itemToDrop, this);
   }
 }

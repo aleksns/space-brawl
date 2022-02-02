@@ -44,6 +44,7 @@ export default class Skills {
       h: itemBuffProps.h,
       textX: itemBuffProps.statusEffectX + 5,
       textY: itemBuffProps.statusEffectY - 5,
+      font: "22px tahoma",
       imageSrc: atkSpeedImage,
       image: new Image(),
       isApplied: false,
@@ -157,8 +158,6 @@ export default class Skills {
       return;
     }
     let timePassed = (this.game.now - this.slowTime.then) / 1000;
-    console.log(`this.game.now = ${this.game.now}`)
-    console.log(`timePassed = ${timePassed}`)
     if (timePassed >= this.slowTime.duration || this.game.isGlobalActionRestricted) {
       this.game.stats.restoreSpeedOfEverything(this.slowTime);
       this.slowTime.isApplied = false;

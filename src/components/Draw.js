@@ -1,6 +1,7 @@
 import { Pulse } from "../effects/Pulse";
 import { colors, GAME_WIDTH } from "../services/services";
 import { HpBarPlayer } from "../ui/HpBarPlayer";
+import { ScoreAndCoins } from "../ui/ScoreAndCoins";
 import { ThreatLevelBar } from "../ui/ThreatLevelBar";
 
 const hitRegFilter = "saturate(50%) brightness(150%)";
@@ -20,6 +21,7 @@ export default class Draw {
     this.skillsBar = this.game.skillsBar;
     this.hpBarPlayer = new HpBarPlayer(this.game);
     this.threatBar = new ThreatLevelBar(this.game);
+    this.scoreAndCoins = new ScoreAndCoins(this.game);
   }
 
   updateUICanvas() {
@@ -45,6 +47,7 @@ export default class Draw {
   drawUIOnInit() {
     this.drawObject(this.hpBarPlayer.hpBarImageProps, this.ctx5);
     this.drawObject(this.threatBar.threatBarImageProps, this.ctx5);
+    this.drawObject(this.scoreAndCoins.coinsImageProps, this.ctx5);
   }
 
   drawCutscene(cutscene, ctx) {
@@ -54,21 +57,8 @@ export default class Draw {
   drawUI() {
     this.hpBarPlayer.draw(this.ctx4);
     this.threatBar.draw(this.ctx4);
-    this.drawScore();
-
+    this.scoreAndCoins.drawScoreAndCoinsText();
     this.skillsBar.draw(this.ctx4);
-  }
-
-  drawScore() {
-    ///combine with draw text (status effects method)
-    var score = "Score: " + this.game.score;
-    this.ctx.current.fillStyle = colors.scoreColor;
-    this.ctx.current.font = `bold 20px tahoma`;
-    this.ctx.current.fillText(
-      score,
-      GAME_WIDTH - 250, // hardcoded, change later
-      65
-    );
   }
 
   drawStatusEffect(item) {
@@ -79,7 +69,7 @@ export default class Draw {
   drawText(item) {
     this.ctx4.current.globalAlpha = item.textOpacity;
     this.ctx4.current.fillStyle = item.textColor;
-    this.ctx4.current.font = `22px tahoma`;
+    this.ctx4.current.font = item.font;
     this.ctx4.current.fillText(
       item.text,
       item.textX,
@@ -103,6 +93,11 @@ export default class Draw {
     ctx.current.filter = object.filter;
     ctx.current.drawImage(object.image, object.x, object.y, object.w, object.h);
     ctx.current.filter = "none";
+
+    if(object.shadowBlur != null && object.shadowColor != null) {
+      ctx.current.shadowColor = "none";
+      ctx.current.shadowBlur = 0;
+    }
   }
 
   drawBgElements() {

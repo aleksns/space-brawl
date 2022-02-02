@@ -23,8 +23,6 @@ export class BgElement extends Item {
     this.w = GAME_WIDTH;
     this.h = GAME_HEIGHT;
 
-    this.offStepX = 0;
-    this.offStepY = 0;
     this.color = "transparent";
     this.opacity = 0;
     this.s = s;

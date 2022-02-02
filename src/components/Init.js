@@ -35,13 +35,6 @@ export default class Init {
         //timesSpawned: 0, //tbd
         id: "atkSpeed",
       }),
-      (this.coin = {
-        now: 0,
-        then: 0, //tbd
-        delay: 11,
-        //timesSpawned: 0, //tbd
-        id: "coin",
-      }),
     ];
 
     this.formationLine = {
@@ -78,6 +71,10 @@ export default class Init {
     }
   }
 
+  addItemOnDrop(item, object) {
+    this.addItem(item, object);
+  }
+
   addItems() {
     if (this.game.items.length >= this.maxNumOfItems) {
       return;
@@ -87,7 +84,7 @@ export default class Init {
     ///improve code + methods here and in the update
   }
 
-  addItem(item) {
+  addItem(item, object) {
     switch (item.id) {
       case "medkit":
         var newItem = new Medkit(this.game);
@@ -102,9 +99,10 @@ export default class Init {
         //item.timesSpawned++;
         break;
         case "coin":
-          var newItem = new Coin(this.game);
-          newItem.initialize();
-          this.game.items.push(newItem);
+          var newCoin = new Coin(this.game);
+          newCoin.initialize();
+          newCoin.initializeCoin(object);
+          this.game.items.push(newCoin);
           //item.timesSpawned++;
           break;  
       default:

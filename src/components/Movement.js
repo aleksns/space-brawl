@@ -3,13 +3,18 @@ export default class Movement {
     this.game = game;
   }
 
-  accelerateObject(object) {
+  applyAcceleration(object) {
     if (Math.abs(object.vX) < object.s) {
       object.vX += object.dX;
     }
     if (Math.abs(object.vY) < object.s) {
       object.vY += object.dY;
     }
+  }
+
+  applyConstantSpeed(object) {
+    object.vX += object.dX * object.s;
+    object.vY += object.dY * object.s;
   }
 
   calculateVectorsAndDistance(object) {

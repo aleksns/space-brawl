@@ -113,13 +113,11 @@ export default class Collision {
     let newDirections = ["N", "E", "S", "W", "NE", "SE", "SW", "NW"];
     //newDirections = directions;
     let excludedDirections = excluded;
-    //console.log(`newDirections = ${newDirections}`);
-    //console.log(`excludedDirections = ${excludedDirections}`);
+
     for (let i = 0; i < excludedDirections.length; i++) {
       let index = newDirections.indexOf(excludedDirections[i]);
       newDirections.splice(index, 1);
     }
-    // console.log(`allowed newDirections = ${newDirections}`);
     return newDirections;
   }
 
@@ -165,19 +163,19 @@ export default class Collision {
   }
 
   isCollisionBorderUp(rect, offStep) {
-    return rect.y <= this.allowedY.y0 - offStep;
+    return rect.y <= this.allowedY.y0 + offStep;
   }
 
   isCollisionBorderDown(rect, offStep) {
-    return rect.y + rect.h >= this.allowedY.y1 + offStep;
+    return rect.y + rect.h >= this.allowedY.y1 - offStep;
   }
 
   isCollisionBorderLeft(rect, offStep) {
-    return rect.x <= this.allowedX.x0 - offStep;
+    return rect.x <= this.allowedX.x0 + offStep;
   }
 
   isCollisionBorderRight(rect, offStep) {
-    return rect.x + rect.w >= this.allowedX.x1 + offStep;
+    return rect.x + rect.w >= this.allowedX.x1 - offStep;
   }
 
   rectCircleColliding(rect, circle) {

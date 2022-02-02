@@ -6,7 +6,6 @@ export class Coin extends Item {
     this.w = this.itemCoinProps.w;
     this.h = this.itemCoinProps.h;
 
-    this.offStepY = -this.h;
     this.color = this.itemCoinProps.color;
     this.opacity = this.itemCoinProps.opacity;
     this.shadowColor = "yellow";
@@ -21,7 +20,7 @@ export class Coin extends Item {
 
     this.image = this.game.animations.coinAnimation.image;
     this.isSpawnOnScreen = true;
-    //tbd this.coinValue = 0; ///tbd
+    this.value = 0; ///tbd
 
     this.visionRange = {
       x: 0,
@@ -40,7 +39,7 @@ export class Coin extends Item {
   }
 
   initializeItem() {
-    this.randomize();
+    //
   }
 
   onDeath() {
@@ -48,7 +47,7 @@ export class Coin extends Item {
   }
 
   applyEffect() {
-    /// coins++
+   this.game.progression.coinsPoints += this.value;
   }
 
   setMinSpawnRange() {

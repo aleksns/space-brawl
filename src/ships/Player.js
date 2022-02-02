@@ -31,7 +31,7 @@ export class Player extends Ship {
     this.offStepX = 0;
     this.offStepX = 0;
 
-    /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
+    /* s - speed, a - acceleration */
     this.s = this.stats.player.s;
     this.a = this.stats.player.a;
     this.now = 0;
@@ -47,8 +47,8 @@ export class Player extends Ship {
     this.gun = this.tripleFront;
     this.projectileSpeedModifier = this.stats.player.projectileSpeedModifier;
 
-     this.image = new Image();
-     this.image.src = playerImage;
+    this.image = new Image();
+    this.image.src = playerImage;
 
     console.log("CONSTRUCTOR > Player");
   }

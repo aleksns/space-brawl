@@ -129,10 +129,10 @@ export default class Controls {
         // });
 
         // if (this.isInside(this.mousePosition, this.game.startBtn)) {
-        //     console.log('clicked inside rect');
+        //     console.log('clicked inside btn');
         //     this.game.init.addEffect(this.game.startBtn, "default");
         // }else{
-        //     console.log('clicked outside rect');
+        //     console.log('clicked outside btn');
         // }
       },
       false

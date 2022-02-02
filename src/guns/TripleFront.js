@@ -36,6 +36,7 @@ export class TripleFront extends Gun {
       this.barrel3
     ]
 
+    this.isAccelerationType = true;
     this.dW = getDefaultPlayerProjectile.w; //offStep for a projectile, to make centered position
   }
 

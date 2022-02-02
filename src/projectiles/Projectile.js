@@ -10,7 +10,7 @@ export default class Projectile {
     this.vY = 0;
     this.dX = 0;
     this.dY = 0;
-    this.offStep = 100;
+    this.offStep = -100;
 
     this.destination = {
       x: this.barrel.destinationX,
@@ -23,7 +23,7 @@ export default class Projectile {
       r: 300,
       color: "green",
     };
-
+    this.isAccelerationType = this.gun.isAccelerationType;
     this.lineJoin = "round";
     this.lineCap = "square";
     this.isSlowSpeedApplied = this.gun.owner.isSlowSpeedApplied;
@@ -31,20 +31,29 @@ export default class Projectile {
     this.isDead = false;
   }
 
-  update() {  //toDo - handle target projectiles with reworked movement system
-   
-
+  initialize() {
     this.game.movement.calculateVectorsAndDistance(this);
-    this.game.movement.accelerateObject(this);
+    if (this.isAccelerationType) {
+      this.game.movement.applyAcceleration(this);
+    } else {
+      this.game.movement.applyConstantSpeed(this);
+    } 
+  }
 
-    this.game.movement.applyFrictionAndVelocity(this);
+  update() {
+    if (this.isAccelerationType) {
+      this.handleAccelerationType();
+    } else {
+      this.game.movement.applyVelocity(this);
+    }
+
     this.removeIfOutsideScreen();
   }
 
-  initialize() {//toDo - handle target projectiles with reworked movement system
-
-    //this.game.movement.calculateVectorsAndDistance(this);
-    //this.game.movement.accelerateObject(this);
+  handleAccelerationType() {
+    this.game.movement.calculateVectorsAndDistance(this);
+    this.game.movement.applyAcceleration(this);
+    this.game.movement.applyFrictionAndVelocity(this);
   }
 
   setPlayerOwned(gun) {

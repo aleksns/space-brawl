@@ -10,7 +10,6 @@ export class Medkit extends Item {
     this.w = this.itemBuffProps.w;
     this.h = this.itemBuffProps.h;
 
-    this.offStepY = -this.h;
     this.color = this.itemBuffProps.color;
     this.opacity = this.itemBuffProps.opacity;
     this.shadowColor = shadowColor;

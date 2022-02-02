@@ -85,6 +85,7 @@ export class SkillsBar extends UICanvas {
       textOpacity: 1.0,
       text: "",
       barOpacity: 1.0,
+      font: "22px tahoma",
     };
     this.slowTimeProps.image = new Image();
     this.slowTimeProps.image.src = skillTimeImage;
@@ -112,6 +113,7 @@ export class SkillsBar extends UICanvas {
       textOpacity: 1.0,
       text: "",
       barOpacity: 1.0,
+      font: "22px tahoma",
     };
     this.shieldProps.image = new Image();
     this.shieldProps.image.src = shieldImage;
@@ -135,6 +137,7 @@ export class SkillsBar extends UICanvas {
       h: 50,
       text: "0",
       opacity: 1.0,
+      font: "22px tahoma",
     };
     this.laserProps.image = new Image();
     this.laserProps.image.src = laserImage;
