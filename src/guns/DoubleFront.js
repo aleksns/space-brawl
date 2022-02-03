@@ -28,6 +28,16 @@ export class DoubleFront extends Gun {
       this.barrel2
     ];
 
+    this.atkSpeed = 0;
+    
+    if(this.owner.isPlayer) {
+      this.atkSpeed = 3;
+    }
+    else {
+      this.atkSpeed = -2;
+    }
+
+    
     this.isAccelerationType = true;
     this.dW = getDefaultPlayerProjectile.w; //offStep for a projectile, to make centered position
   }

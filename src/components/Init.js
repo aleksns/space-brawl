@@ -14,7 +14,7 @@ export default class Init {
   constructor(game) {
     this.game = game;
     this.progression = this.game.progression;
-    this.maxNumOfProjectiles = 300;
+    this.maxNumOfProjectiles = 500;
     this.maxNumOfElements = 2;
     this.maxNumOfItems = 8;
 

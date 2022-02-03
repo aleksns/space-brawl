@@ -20,6 +20,15 @@ export class SingleTarget extends Gun {
       this.barrel1
     ];
 
+    this.atkSpeed = 0;
+    
+    if(this.owner.isPlayer) {
+      this.atkSpeed = 1;
+    }
+    else {
+      this.atkSpeed = -1;
+    }
+
     this.isAccelerationType = false;
     this.dW = getDefaultPlayerProjectile.w; //offStep for a projectile, to make centered position
   }

@@ -83,10 +83,6 @@ export const itemBuffProps = {
   statusEffectY: getStatusEffectsBar.y + 10,
 };
 
-export const getGunsStats = {
-  singleAtkSpeed: 0, // 0 means no modifiers added to the gun at speed
-};
-
 export const getItemsStats = {
   medkitTier1: 25,
   atkSpeedTier1: 0.2, //higher values give more atk speed

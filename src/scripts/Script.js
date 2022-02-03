@@ -35,6 +35,10 @@ export default class Script {
     if (!this.isBossCutscenePlayed) {
       return;
     }
+
+    if(!this.game.isGlobalActionRestricted) {
+      return;
+    }
     this.resumeGame();
   }
 

@@ -26,8 +26,8 @@ export class ScoreAndCoins extends UICanvas {
     this.coinsImageProps = {
       x: container.x,
       y: this.scoreProps.textY + container.margin,
-      w: 25,
-      h: 25,
+      w: 20,
+      h: 20,
       filter: "none",
       image: undefined,
       shadowColor: "yellow",
@@ -62,7 +62,4 @@ export class ScoreAndCoins extends UICanvas {
     this.game.draw.drawText(this.coinsProps);
   }
 
-  drawCoinImg() {
-    //this.game.draw.drawObject(this.coinsImageProps, this.game.ctx5);
-  }
 }

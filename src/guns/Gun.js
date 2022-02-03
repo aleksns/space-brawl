@@ -1,4 +1,4 @@
-import { getGunsStats, GAME_HEIGHT } from "../services/services";
+import { GAME_HEIGHT } from "../services/services";
 
 
 
@@ -7,7 +7,6 @@ export default class Gun {
     this.game = game;
     this.owner = owner;
     this.isPlayerOwned = this.owner.isPlayer;
-    this.atkSpeed = getGunsStats.singleAtkSpeed;
     this.target = this.owner.target;
 
     this.playerFrontGunTarget = {
@@ -16,6 +15,10 @@ export default class Gun {
     this.enemyFrontGunTarget = {
       y: GAME_HEIGHT + 100
     };
+  }
+
+  initialize() {
+  //  this.initializeGun();
   }
 
 

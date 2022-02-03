@@ -74,7 +74,7 @@ export default class Item {
     this.game.gameBoard.updateVisionRange(this);
     this.updateDestinationCords();
     this.handleItemMove();
-    this.drawVisionRange();
+    //this.drawVisionRange();
     }
     else {
       this.game.movement.applyVelocity(this);
