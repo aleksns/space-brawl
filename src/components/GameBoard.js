@@ -2,6 +2,8 @@ import { getRandomInt, GAME_WIDTH, GAME_HEIGHT } from "../services/services";
 
 import projectilePlayer from "../images/projectilePlayer.png";
 import projectileEnemy from "../images/projectileEnemy.png";
+import projectileLaserPlayer from "../images/projectileLaserPlayer.png";
+
 
 export default class GameBoard {
   constructor(game) {
@@ -22,6 +24,9 @@ export default class GameBoard {
 
     this.projectileDefaultImgEnemey = new Image();
     this.projectileDefaultImgEnemey.src = projectileEnemy;
+
+    this.projectileLaserImgPlayer = new Image();
+    this.projectileLaserImgPlayer.src = projectileLaserPlayer;
   }
 
   updateVisionRange(object) {

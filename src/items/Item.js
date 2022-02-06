@@ -24,11 +24,11 @@ export default class Item {
     };
 
     this.itemCoinProps = {
-      w: 25,
-      h: 25,
+      w: 20,
+      h: 20,
       color: "transparent",
       opacity: 1.0,
-      shadowBlur: 20,
+      shadowBlur: 5,
       isFill: false,
       s: 1.6,
       a: 0.05,
@@ -46,7 +46,7 @@ export default class Item {
     this.isDead = false;
     this.isItem = true;
     this.isCheckSouthOutOfBorderOnly = true;
-    this.isSlowSpeedApplied = this.game.stats.isGlobalSlowAll;
+    //this.isSlowSpeedApplied = this.game.stats.isGlobalSlowAll;
   }
 
   initialize() {
@@ -55,15 +55,15 @@ export default class Item {
     this.setDestinationCords();
     this.game.movement.calculateVectorsAndDistance(this);
 
-    if(this.game.stats.isGlobalSlowAll) {
-      this.s /= this.game.stats.slowModifiers.speedGlobal;
-    }
-
     if (this.isInteractable) {
       this.game.movement.applyAcceleration(this);
     } else {
       this.game.movement.applyConstantSpeed(this);
     }   
+
+    if(this.game.stats.isGlobalSlowAll) {
+      this.game.stats.decreaseObjectSpeed(this);
+    }
   }
 
   update() {
@@ -80,7 +80,9 @@ export default class Item {
       this.game.movement.applyVelocity(this);
     }
 
-    this.game.movement.moveSouth(this);
+    if(!this.game.stats.isGlobalSlowAll) {
+      this.game.movement.moveSouth(this);
+    }
 
     if (this.isInteractable && this.isPickedUpByPlayer()) {
         this.applyEffect();

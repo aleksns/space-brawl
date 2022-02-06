@@ -107,19 +107,17 @@ export const getPlayerDefaultStats = {
   rammingDmg: 0.1,
   atkSpeed: 0.15, //default was 0.2 -> 0.15
   atkSpeedCap: 0.04,
-  projectileSpeedModifier: 20.0, //20
 };
 
 export const getEnemyT0DefaultStats = {
   damage: 4,
-  health: 1000,
-  maxHealth: 1000,
+  health: 100000,
+  maxHealth: 100000,
   speed: 2,
   accelerationMod: 60,
   rammingDmg: 0.1,
   atkSpeed: 0.6,
   atkSpeedCap: 0.3,
-  projectileSpeedModifier: 6.5,
   scorePoints: 500,
 };
 
@@ -132,7 +130,6 @@ export const getEnemyT4DefaultStats = {
   rammingDmg: 0.1,
   atkSpeed: 1.0,   //1.0
   atkSpeedCap: 0.5,
-  projectileSpeedModifier: 5.0,
   scorePoints: 25,
 };
 
@@ -145,19 +142,32 @@ export const getEnemyT5DefaultStats = {
   rammingDmg: 0.1,
   atkSpeed: 2.5,
   atkSpeedCap: 1.5,
-  projectileSpeedModifier: 6.5,
   scorePoints: 15,
 };
 
-// s - speed
+
 export const getDefaultPlayerProjectile = {
   w: 20,
   h: 20,
   color: "#47FFFB",
   isFill: true,
 };
-// s - speed
+
 export const getDefaultEnemyProjectile = {
+  w: 20,
+  h: 20,
+  color: colors.red,
+  isFill: true,
+};
+
+export const getPlayerLaser = {
+  w: 40,
+  h: GAME_HEIGHT + 250,
+  color: "#47FFFB",
+  isFill: true,
+};
+
+export const getEnemyLaser = {
   w: 20,
   h: 20,
   color: colors.red,

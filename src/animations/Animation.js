@@ -8,7 +8,7 @@ export default class Animation {
 
   update() {
     let timePassed = (this.game.now - this.then) / 1000;
-    if (timePassed <= this.framesRefresh) {
+    if (timePassed <= this.framesRefresh || this.game.stats.isGlobalSlowAll) {
       return;
     }
     this.image = this.images[this.i];

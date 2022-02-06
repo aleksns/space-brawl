@@ -130,7 +130,7 @@ export default class Controls {
 
         // if (this.isInside(this.mousePosition, this.game.startBtn)) {
         //     console.log('clicked inside btn');
-        //     this.game.init.addEffect(this.game.startBtn, "default");
+        //     this.game.init.addEffect(this.game.startBtn, "explosionDefault");
         // }else{
         //     console.log('clicked outside btn');
         // }
@@ -238,11 +238,11 @@ export default class Controls {
   }
 
   handleKey1() {
-    this.game.skills.useSlowTimeSkill();
+    this.game.skills.turnOnSlowTimeSkill();
   }
 
   handleKey2() {
-    this.game.skills.useShieldSkill();
+    this.game.skills.turnOnShieldSkill();
 
     // if (!this.canTest) {
     //   return;
@@ -253,7 +253,7 @@ export default class Controls {
   }
 
   handleKey3() {
-    this.game.skills.useLaserSkill();
+    this.game.skills.turnOnLaserSkill();
   }
 
   handleKeySpace() {

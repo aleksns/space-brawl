@@ -17,12 +17,16 @@ export default class Movement {
     object.vY += object.dY * object.s;
   }
 
+  applyConstantAcceleration(object) {
+    object.vX += object.dX * object.a;
+    object.vY += object.dY * object.a;
+  }
+
   calculateVectorsAndDistance(object) {
     object.dX = object.destination.x - object.x;
     object.dY = object.destination.y - object.y;
-
+    
     let distance = Math.sqrt(object.dX * object.dX + object.dY * object.dY);
-
     object.dX = object.dX / distance;
     object.dY = object.dY / distance;
   }

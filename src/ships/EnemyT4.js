@@ -5,10 +5,14 @@ import {
   getRandomInt,
   getEnemyT4DefaultStats,
   getEnemyT4Dimension,
+  getDefaultEnemyProjectile,
 } from "../services/services";
 import enemyImageT4 from "../images/enemyShipT4.png";
 import { SingleTarget } from "../guns/SingleTarget";
 import { TripleFront } from "../guns/TripleFront";
+import { BurstTripleFront } from "../guns/BurstTripleFront";
+import { Double45Angle } from "../guns/Double45Angle";
+import { getEnemyT4GunProps } from "../services/gunsProps";
 
 export class EnemyT4 extends Ship {
   constructor(game) {
@@ -40,7 +44,6 @@ export class EnemyT4 extends Ship {
     this.atkSpeed = this.game.stats.enemyT4.atkSpeed;
     this.gun = undefined;
     this.target = this.game.player;
-    this.projectileSpeedModifier = this.game.stats.enemyT4.projectileSpeedModifier;
 
     this.image = new Image();
     this.image.src = enemyImageT4;
@@ -54,7 +57,7 @@ export class EnemyT4 extends Ship {
       id: "coin",
       value: 3,
     }
-    console.log("CONSTRUCTOR > EnemyT4");
+    //console.log("CONSTRUCTOR > EnemyT4");
   }
 
   fireGun() {
@@ -81,9 +84,14 @@ export class EnemyT4 extends Ship {
       Math.floor(this.collision.height / 2.5)
     );
     this.getEmptyPositionOnBoard();
-    var newGun = new SingleTarget(this.game, this);
-    //var newGun = new TripleFront(this.game, this);
+    let newGun = new SingleTarget(this.game, this);
+    newGun.initialize(getEnemyT4GunProps, getDefaultEnemyProjectile);
+    //let newGun = new TripleFront(this.game, this);
+    //let newGun = new Double45Angle(this.game, this);
+    //let newGun = new BurstTripleFront(this.game, this);
+    this.game.enemyGuns.push(newGun);
     this.gun = newGun;
+
     this.directionChangeIntervalThen = Date.now();
   }
 
@@ -98,7 +106,8 @@ export class EnemyT4 extends Ship {
   }
 
   getAtkSpeed() {
-    return this.atkSpeed - this.gun.atkSpeed;
+    //return this.atkSpeed - this.gun.atkSpeed;
+    return this.atkSpeed;
   }
 
   setDefaultAtkSpeed() {
@@ -110,7 +119,7 @@ export class EnemyT4 extends Ship {
   }
 
   onDeath() {
-    this.game.init.addEffect(this, "default");
+    this.game.init.addEffect(this, "explosionDefault");
     this.game.progression.score += this.scorePoints;
     this.game.progression.increaseThreatLevel();
     this.game.init.addItemOnDrop(this.itemToDrop, this);

@@ -32,11 +32,11 @@ export default class Skills {
   constructor(game) {
     this.game = game;
     this.atkSpeed = {
-      value: 0.2,
+      value: 4,
       now: 0,
       then: 0,
       cd: 0,
-      duration: 10,
+      duration: 8,
       id: "atkSpeed",
       x: itemBuffProps.statusEffectX,
       y: itemBuffProps.statusEffectY,
@@ -96,7 +96,7 @@ export default class Skills {
     this.skills = [];
     this.skills.push(this.atkSpeed);
     this.skills.push(this.slowTime);
-    this.skills.push(this.shield);
+   // this.skills.push(this.shield);
     this.skills.push(this.laser);
   }
 
@@ -105,45 +105,105 @@ export default class Skills {
   }
 
   updateTimersAfterPauseOff() {
-    for(let i = 0; i < this.skills.length; i++) {
+    for (let i = 0; i < this.skills.length; i++) {
       this.skills[i].then += this.game.timeDifference;
     }
   }
 
   update() {
-    this.updateAtkSpeedStatusEffect();
-    this.updateSlowTimeStatusEffect();
+    for(let i = 0; i < this.skills.length; i++) {
+      this.updateSkill(this.skills[i]);
+    }
+    //this.updateSkill(this.atkSpeed)
+    //this.updateAtkSpeedStatusEffect();
+    //this.updateSlowTimeStatusEffect();
   }
 
-  useSlowTimeSkill() {
+  turnOnSlowTimeSkill() {
     let timePassed = (this.game.now - this.slowTime.then) / 1000;
     if (timePassed <= this.slowTime.cd || this.slowTime.isApplied) {
       return;
     }
-    this.applySlowTimeStatusEffect();
+
+    this.slowTime.then = this.game.now;
+    this.slowTime.isApplied = true;
+    this.game.stats.decreaseSpeedOfEverything();
   }
 
-  useShieldSkill() {
-    //this.applySlowTimeStatusEffect();
+  turnOffSlowTimeSkill() {
+    this.game.stats.increaseSpeedOfEverything();
+    this.slowTime.isApplied = false;
+  }
+
+  turnOnShieldSkill() {
     console.log(`Shield has been activated`);
   }
 
-  useLaserSkill() {
-    //this.applySlowTimeStatusEffect();
-    console.log(`Laser has been activated`);
-  }
-
-  updateAtkSpeedStatusEffect() {
-    if (!this.atkSpeed.isApplied) {
+  turnOnLaserSkill() {
+    let timePassed = (this.game.now - this.laser.then) / 1000;
+    if (timePassed <= this.laser.cd || this.laser.isApplied) {
       return;
     }
-    if (this.slowTime.isApplied) {
-      this.atkSpeed.then *= 2;
+    this.laser.then = this.game.now;
+    this.laser.isApplied = true;
+    this.game.player.isLaserOn = true;
+
+    //this.game.init.addLaser(this.game.player);
+  }
+
+  turnOffLaserSkill() {
+    this.laser.isApplied = false;
+    this.game.player.isLaserOn = false;
+  }
+
+  // updateAtkSpeedStatusEffect() {
+  //   if (!this.atkSpeed.isApplied) {
+  //     return;
+  //   }
+
+  //   let timePassed = (this.game.now - this.atkSpeed.then) / 1000;
+  //   if (
+  //     timePassed >= this.atkSpeed.duration ||
+  //     this.game.isGlobalActionRestricted
+  //   ) {
+  //     this.turnOffAtkSpeedSkill();
+  //   }
+
+  //   let updatedText = this.atkSpeed.duration - timePassed;
+  //   updatedText = Math.round((updatedText + Number.EPSILON) * 100) / 100;
+  //   this.atkSpeed.text = updatedText;
+  //   this.game.draw.drawStatusEffect(this.atkSpeed);
+  // }
+  ///
+  updateSkillRemainingCD(skill) {
+    if (!skill.isOnCD && !skill.isApplied) {
+      return;
     }
-    let timePassed = (this.game.now - this.atkSpeed.then) / 1000;
-    if (timePassed >= this.atkSpeed.duration || this.game.isGlobalActionRestricted) {
-      this.restorePlayerAtkSpeed();
-      this.atkSpeed.isApplied = false;
+    skill.remainingCD = (this.game.now - skill.then) / 1000;
+    if (skill.remainingCD <= skill.cd) {
+      skill.isOnCD = true;
+    } else {
+      skill.isOnCD = false;
+    }
+  }
+  ////
+
+  updateSkill(skill) {
+    //this.updateSlowTimeRemainingCD();
+    if(skill.id != "atkSpeed") {
+      this.updateSkillRemainingCD(skill);
+    }
+   
+    if (!skill.isApplied) {
+      return;
+    }
+    let timePassed = (this.game.now - skill.then) / 1000;
+    if (timePassed >= skill.duration || this.game.isGlobalActionRestricted) {
+      this.turnOffSkill(skill);
+    }
+
+    if(skill.id != "atkSpeed") {
+      return;
     }
 
     let updatedText = this.atkSpeed.duration - timePassed;
@@ -152,43 +212,86 @@ export default class Skills {
     this.game.draw.drawStatusEffect(this.atkSpeed);
   }
 
-  updateSlowTimeStatusEffect() {
-    this.updateSlowTimeRemainingCD();
-    if (!this.slowTime.isApplied) {
+  turnOffSkill(skill) {
+    switch (skill.id) {
+      case "slowTime":
+        this.turnOffSlowTimeSkill();
+        break;
+      case "shield":
+        //this.turnOffSlowTimeSkill();
+        break;
+      case "laser":
+        this.turnOffLaserSkill();
+        break;
+      case "atkSpeed":
+        this.turnOffAtkSpeedSkill();
+        break;
+        default:
+          console.log(`Error handling "turnOffSkill" in Skills class`);
+          break;
+    }
+  }
+
+  ///
+  // updateSlowTimeStatusEffect() {
+  //   //this.updateSlowTimeRemainingCD();
+  //   this.updateSkillRemainingCD(this.slowTime);
+  //   if (!this.slowTime.isApplied) {
+  //     return;
+  //   }
+  //   let timePassed = (this.game.now - this.slowTime.then) / 1000;
+  //   if (
+  //     timePassed >= this.slowTime.duration ||
+  //     this.game.isGlobalActionRestricted
+  //   ) {
+  //     this.turnOffSlowTimeSkill();
+  //   }
+  // }
+
+  // updateSlowTimeRemainingCD() {
+  //   if (!this.slowTime.isOnCD && !this.slowTime.isApplied) {
+  //     return;
+  //   }
+  //   this.slowTime.remainingCD = (this.game.now - this.slowTime.then) / 1000;
+  //   if (this.slowTime.remainingCD <= this.slowTime.cd) {
+  //     this.slowTime.isOnCD = true;
+  //   } else {
+  //     this.slowTime.isOnCD = false;
+  //   }
+  // }
+
+  turnOnAtkSpeedSkill() {
+    if (this.atkSpeed.isApplied) {
+      this.atkSpeed.then = this.game.now;
       return;
     }
-    let timePassed = (this.game.now - this.slowTime.then) / 1000;
-    if (timePassed >= this.slowTime.duration || this.game.isGlobalActionRestricted) {
-      this.game.stats.restoreSpeedOfEverything(this.slowTime);
-      this.slowTime.isApplied = false;
+    this.atkSpeed.then = this.game.now;
+    this.atkSpeed.isApplied = true;
+
+    this.game.stats.increaseGunsAtkSpeed(
+      this.game.playerGuns,
+      this.atkSpeed.value
+    );
+    this.handleAtkSpeedCapReached(this.game.playerGuns);
+  }
+
+  turnOffAtkSpeedSkill() {
+    this.atkSpeed.isApplied = false;
+    this.game.stats.decreaseGunsAtkSpeed(
+      this.game.playerGuns,
+      this.atkSpeed.value
+    );
+  }
+
+  handleAtkSpeedCapReached(guns) {
+    for (let i = 0; i < guns.length; i++) {
+      if (guns[i].atkSpeed <= guns[i].atkSpeedCap) {
+        guns[i].atkSpeed = guns[i].atkSpeedCap;
+      }
+      if (guns[i].rateOfFire <= guns[i].rateOfFireCap) {
+        guns[i].rateOfFire = guns[i].rateOfFireCap;
+      }
     }
-  }
-
-  updateSlowTimeRemainingCD() {
-    if (!this.slowTime.isOnCD && !this.slowTime.isApplied) {
-      return;
-    }
-    this.slowTime.remainingCD = (this.game.now - this.slowTime.then) / 1000;
-    if (this.slowTime.remainingCD <= this.slowTime.cd) {
-      this.slowTime.isOnCD = true;
-    } else {
-      this.slowTime.isOnCD = false;
-    }
-  }
-
-  applySlowTimeStatusEffect() {
-    this.slowTime.then = this.game.now;
-    this.slowTime.isApplied = true;
-    this.game.stats.slowEverything(this.slowTime);
-  }
-
-  isAtkSpeedBuffApplied() {
-    return this.atkSpeed.isApplied;
-  }
-
-  restorePlayerAtkSpeed() {
-    this.game.stats.player.atkSpeed /= this.atkSpeed.value;
-    this.game.player.updateSpeedStats();
   }
 
   restoreHealth(amount) {
@@ -196,25 +299,5 @@ export default class Skills {
     if (this.game.player.health > this.game.player.maxHealth) {
       this.game.player.health = this.game.player.maxHealth;
     }
-  }
-
-  applyAtkSpeedStatusEffect() {
-    this.atkSpeed.then = this.game.now;
-    this.atkSpeed.isApplied = true;
-
-    let newAtkSpeed = this.game.stats.player.atkSpeed * this.atkSpeed.value;
-    newAtkSpeed = Math.round((newAtkSpeed + Number.EPSILON) * 100) / 100;
-    this.game.stats.player.atkSpeed = newAtkSpeed;
-
-    if (this.isAtkSpeedCapReached()) {
-      this.game.stats.player.atkSpeed = this.game.stats.player.atkSpeedCap;
-    }
-    this.game.player.updateSpeedStats();
-  }
-
-  isAtkSpeedCapReached() {
-    return (
-      this.game.stats.player.atkSpeed <= this.game.stats.player.atkSpeedCap
-    );
   }
 }

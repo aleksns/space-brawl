@@ -1,10 +1,10 @@
 import Gun from "./Gun";
 import {
-getSingleGunPosition,
+  getTripleGunPosition,
   getDefaultPlayerProjectile,
 } from "../services/services"; 
 
-export class SingleFront extends Gun {
+export class BurstTripleFront extends Gun {
   constructor(game, owner) {
     super(game, owner);
     this.projectileType = "default";
@@ -16,17 +16,43 @@ export class SingleFront extends Gun {
       destinationY: 0
     }
 
+    this.barrel2 = {
+      x: 0,
+      y: 0,
+      destinationX: 0,
+      destinationY: 0
+    }
+
+    this.barrel3 = {
+        x: 0,
+        y: 0,
+        destinationX: 0,
+        destinationY: 0
+      }
+
     this.barrels = [
       this.barrel1,
+      this.barrel2,
+      this.barrel3
     ];
+
+    // this.atkSpeed = 0;
+
+    // if(this.owner.isPlayer) {
+    //   this.atkSpeed = 1.0;
+    // }
+    // else {
+    //   this.atkSpeed = 0.2;
+    // }
+
 
     this.isAccelerationType = true;
   }
 
   getGunPosition(i) {
     var gunPosition = {
-      x: getSingleGunPosition(this.owner, this.dW)[i].x,
-      y: getSingleGunPosition(this.owner, this.dW)[i].y,
+      x: getTripleGunPosition(this.owner, this.dW)[i].x,
+      y: getTripleGunPosition(this.owner, this.dW)[i].y,
     }
     return gunPosition;
   }

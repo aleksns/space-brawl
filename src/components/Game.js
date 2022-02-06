@@ -60,7 +60,10 @@ export default class Game {
     this.update = new Update(this);
     this.bgElements = [];
     this.items = [];
-
+    this.coins = [];
+    this.enemyGuns = [];
+    this.bossGuns = [];
+    this.playerGuns = [];
     this.enemies = [];
 
     this.enemyProjectiles = [];
@@ -189,6 +192,7 @@ export default class Game {
     //console.log(`timePassed = ${this.timePassed}`)
     // console.log(`---------------------------------------`);
     // console.log("items.length = " + this.items.length);
+    // console.log("coins.length = " + this.coins.length);
     // console.log("bgElements.length = " + this.bgElements.length);
     // console.log("enemies.length = " + this.enemies.length);
     // console.log("effects.length = " + this.effects.length);

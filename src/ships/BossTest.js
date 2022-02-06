@@ -6,13 +6,15 @@ import {
   getEnemyT0Dimension,
   getTripleGunPosition,
   GAME_HEIGHT,
+  getDefaultEnemyProjectile,
 } from "../services/services";
 import bossImage from "../images/enemyBoss.png";
 import { SingleFront } from "../guns/SingleFront";
 import { DoubleFront } from "../guns/DoubleFront";
 import { TripleFront } from "../guns/TripleFront";
+import { getBossT4TripleBurstGunProps } from "../services/gunsProps";
 
-export class Boss extends Ship {
+export class BossTest extends Ship {
   constructor(game) {
     super(game);
     this.game = game;
@@ -38,9 +40,7 @@ export class Boss extends Ship {
     this.offStepY = Math.floor(this.h / 2);
     this.scorePoints = this.game.stats.enemyT0.scorePoints;
     this.now = 0;
-    this.damage = this.game.stats.enemyT0.damage;
-    this.atkSpeed = this.game.stats.enemyT0.atkSpeed;
-    this.gun = undefined;
+    
     this.target = this.game.player;
 
     this.image = new Image();
@@ -57,16 +57,19 @@ export class Boss extends Ship {
   }
 
   fireGun() {
-    this.gun.fire();
+    // for (let i = 0; i < this.game.bossGuns.length; i++) {
+    //   this.game.bossGuns[i].fire();
+    // }
   }
 
   initializeShip() {
     this.x = GAME_WIDTH / 2 - this.w / 2;
-    this.y = -this.h;
-    var newGun = new TripleFront(this.game, this);
-    this.gun = newGun;
+    this.y = 50;
 
-    this.setNewDirection();
+    let tripleFront = new TripleFront(this.game, this);
+    tripleFront.initialize(getBossT4TripleBurstGunProps, getDefaultEnemyProjectile);
+
+    this.game.bossGuns.push(tripleFront);
   }
 
   updateShip() {
@@ -80,39 +83,21 @@ export class Boss extends Ship {
     //tbd
   }
 
-  animateBossAppearance() {
-    this.game.movement.calculateVectorsAndDistance(this);
-    this.game.movement.moveSouth(this);
-    this.game.movement.applyVelocity(this);
-  }
-
-  isAtThePosition() {
-    return (this.y >= this.destination.y);
-  }
-
-  setNewDirection() {
-    this.setDestinationCords();
-    this.game.movement.calculateVectorsAndDistance(this);
-  }
-
-  setDestinationCords() {
-    this.destination.x = this.x;
-    this.destination.y = this.collision.allowedY.y0 / 2;
-  }
-
   getAtkSpeed() {
-    return this.atkSpeed - this.gun.atkSpeed;
+    return this.atkSpeed;
   }
 
   setDefaultAtkSpeed() {
     this.atkSpeed = getEnemyT0DefaultStats.atkSpeed;
   }
 
-  playHitEffect(projectileType) {
-    this.game.init.addEffect(this, projectileType);
+
+  playHitEffect(projectile) {
+    this.game.init.addEffect(projectile, projectile.type);
   }
 
   onDeath() {
+    this.game.bossGuns = [];
     this.game.init.addEffect(this, "explosionDefault");
     this.game.progression.score += this.scorePoints;
     this.game.progression.advanceLevel();

@@ -38,8 +38,6 @@ export class EnemyT5 extends Ship {
     this.damage = this.game.stats.enemyT5.damage;
     this.atkSpeed = this.game.stats.enemyT5.atkSpeed;
     this.gun = undefined;
-    this.target = undefined;
-    this.projectileSpeedModifier = this.s * this.game.stats.enemyT5.projectileSpeedModifier;
 
     this.image = new Image();
     this.image.src = enemyImageT5;
@@ -111,7 +109,8 @@ export class EnemyT5 extends Ship {
   }
 
   getAtkSpeed() {
-    return this.atkSpeed - this.gun.atkSpeed;
+    return this.atkSpeed;
+    //return this.atkSpeed - this.gun.atkSpeed;
   }
 
   setDefaultAtkSpeed() {
@@ -123,7 +122,7 @@ export class EnemyT5 extends Ship {
   }
 
   onDeath() {
-    this.game.init.addEffect(this, "default");
+    this.game.init.addEffect(this, "explosionDefault");
     this.game.progression.score += this.scorePoints;
     this.game.progression.increaseThreatLevel();
     this.game.init.addItemOnDrop(this.itemToDrop, this);

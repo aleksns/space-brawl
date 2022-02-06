@@ -10,13 +10,15 @@ export default class Update {
     this.game.skills.initialize();
   }
 
-  update() {  
-    this.game.controls.update(); 
-    if(this.game.isPauseOn) {
+  update() {
+    this.game.controls.update();
+    if (this.game.isPauseOn) {
       return;
     }
 
+    this.updateGuns();
     this.updateItems();
+    this.updateCoins();
     this.updatePlayer();
     this.updateEnemies();
     this.updateProjectiles();
@@ -31,6 +33,8 @@ export default class Update {
     this.updateCollisionPlayerWithProjectiles();
     this.updateCollisionEnemyWithProjectiles();
 
+    this.removeDeadGuns();
+    this.removeDeadCoins();
     this.removeDeadItems();
     this.removeDeadBgElements();
     this.removeDeadEnemies();
@@ -39,7 +43,7 @@ export default class Update {
   }
 
   updateAnimations() {
-    for(let i = 0; i < this.game.animations.list.length; i++) {
+    for (let i = 0; i < this.game.animations.list.length; i++) {
       this.game.animations.list[i].update();
     }
   }
@@ -47,7 +51,7 @@ export default class Update {
   updateAllTimersAfterPauseOff() {
     this.game.skills.updateTimersAfterPauseOff();
     this.game.init.updateTimersAfterPauseOff();
-    for(let i = 0; i < this.game.enemies.length; i++) {
+    for (let i = 0; i < this.game.enemies.length; i++) {
       this.game.enemies[i].updateTimersAfterPauseOff();
     }
   }
@@ -68,6 +72,17 @@ export default class Update {
     for (let i = 0; i < objects.length; i++) {
       objects[i].update();
     }
+  }
+
+  updateGuns() {
+    this.updateObjects(this.game.enemyGuns);
+    this.updateObjects(this.game.bossGuns);
+    this.updateObjects(this.game.playerGuns);
+    this.game.player.laserGun.update();
+  }
+
+  updateCoins() {
+    this.updateObjects(this.game.coins);
   }
 
   updateItems() {
@@ -134,8 +149,11 @@ export default class Update {
           ) &&
           this.game.playerProjectiles[y].isPlayerOwned
         ) {
+          console.log(`collison with player projectile`)
           this.game.enemies[i].gotHit(true, this.game.playerProjectiles[y]);
-          this.game.playerProjectiles[y].setDead();
+          if (!this.game.playerProjectiles[y].isLaserType) {
+            this.game.playerProjectiles[y].setDead();
+          }
         }
       }
     }
@@ -152,6 +170,14 @@ export default class Update {
       let index = objects.indexOf(objectsToRemove[i]);
       objects.splice(index, 1);
     }
+  }
+
+  removeDeadGuns() {
+    this.removeDeadObjects(this.game.enemyGuns);
+  }
+
+  removeDeadCoins() {
+    this.removeDeadObjects(this.game.coins);
   }
 
   removeDeadItems() {

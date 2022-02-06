@@ -5,17 +5,17 @@ export class ProjectileDefault extends Projectile {
   constructor(game, gun, barrel) {
     super(game, gun, barrel);
     this.game = game;
-    this.stats = this.game.stats;
     this.w = 0;
     this.h = 0;
     this.color = undefined;
-    this.type = "default";
+    this.explosionColor = undefined;
+    this.type = "explosionSmall";
     this.damage = 0;
     this.opacity = 1.0;
     this.s = 0;
-    this.sModifier = 0;
     this.a = 0;
     this.isFill = undefined;
+    this.isLaserType = false;
     this.image = undefined;
   }
 
@@ -34,25 +34,29 @@ export class ProjectileDefault extends Projectile {
     this.w = getDefaultPlayerProjectile.w;
     this.h = getDefaultPlayerProjectile.h;
     this.color = getDefaultPlayerProjectile.color;
+    this.explosionColor = "orange";
     this.isFill = getDefaultPlayerProjectile.isFill;
     this.image = this.game.gameBoard.projectileDefaultImgPlayer;
   }
 
   setPlayerProjectileStats() {
-    this.damage = this.gun.owner.damage;
-    this.s = this.gun.owner.projectileSpeedModifier;
+    this.damage = this.gun.damage;
+    this.s = this.gun.projectileSpeed;
+    this.a = this.gun.projectileAcceleration;
   }
 
   setEnemyProjectileShape() {
     this.w = getDefaultEnemyProjectile.w;
     this.h = getDefaultEnemyProjectile.h;
     this.color = getDefaultEnemyProjectile.color;
+    this.explosionColor = "red";
     this.isFill = getDefaultEnemyProjectile.isFill;
     this.image = this.game.gameBoard.projectileDefaultImgEnemey;
   }
 
   setEnemyProjectileStats() {
-    this.damage = this.gun.owner.damage;
-    this.s = this.gun.owner.projectileSpeedModifier;
+    this.damage = this.gun.damage;
+    this.s = this.gun.projectileSpeed;
+    this.a = this.gun.projectileAcceleration;
   }
 }

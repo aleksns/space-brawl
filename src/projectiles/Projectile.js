@@ -1,21 +1,24 @@
 export default class Projectile {
   constructor(game, gun, barrel) {
     this.game = game;
+
     this.gun = gun;
     this.barrel = barrel;
-
     this.x = this.barrel.x;
     this.y = this.barrel.y;
-    this.vX = 0;
-    this.vY = 0;
-    this.dX = 0;
-    this.dY = 0;
-    this.offStep = -100;
 
     this.destination = {
       x: this.barrel.destinationX,
       y: this.barrel.destinationY,
     };
+
+    this.isAccelerationType = this.gun.isAccelerationType;
+
+    this.vX = 0;
+    this.vY = 0;
+    this.dX = 0;
+    this.dY = 0;
+    this.offStep = -100;
 
     this.visionRange = {
       x: 0,
@@ -23,24 +26,39 @@ export default class Projectile {
       r: 300,
       color: "green",
     };
-    this.isAccelerationType = this.gun.isAccelerationType;
+
     this.lineJoin = "round";
     this.lineCap = "square";
-    this.isSlowSpeedApplied = this.gun.owner.isSlowSpeedApplied;
+    //this.isSlowSpeedApplied = false;
     this.isPlayerOwned = undefined;
     this.isDead = false;
   }
 
   initialize() {
+    if (this.isLaserType) {
+      this.x = this.barrel.x;
+      this.y = this.barrel.y - this.h;
+      return;
+    }
     this.game.movement.calculateVectorsAndDistance(this);
     if (this.isAccelerationType) {
+      this.game.movement.applyConstantAcceleration(this);
       this.game.movement.applyAcceleration(this);
     } else {
       this.game.movement.applyConstantSpeed(this);
-    } 
+    }
+
+    if (this.game.stats.isGlobalSlowAll) {
+      this.game.stats.decreaseObjectSpeed(this);
+    }
   }
 
   update() {
+    if (this.isLaserType) {
+      this.x = this.barrel.x;
+      this.y = this.barrel.y - this.h;
+      return;
+    }
     if (this.isAccelerationType) {
       this.handleAccelerationType();
     } else {
@@ -51,7 +69,9 @@ export default class Projectile {
   }
 
   handleAccelerationType() {
-    this.game.movement.calculateVectorsAndDistance(this);
+    if (!this.game.stats.isGlobalSlowAll) {
+      this.game.movement.calculateVectorsAndDistance(this);
+    }
     this.game.movement.applyAcceleration(this);
     this.game.movement.applyFrictionAndVelocity(this);
   }

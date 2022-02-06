@@ -82,6 +82,9 @@ export default class Draw {
     for (let i = 0; i < this.game.items.length; i++) {
       this.drawObject(this.game.items[i], this.ctx);
     }
+    for (let i = 0; i < this.game.coins.length; i++) {
+      this.drawObject(this.game.coins[i], this.ctx);
+    }
   }
 
   drawObject(object, ctx) {
@@ -225,5 +228,20 @@ export default class Draw {
     ctx.current.closePath();
 
     ctx.current.globalAlpha = 1.0;
+  }
+
+  drawVisionRange(visionRange) {
+    this.game.ctx.current.strokeStyle = visionRange.color;
+    this.game.ctx.current.lineWidth = 3;
+    this.game.ctx.current.beginPath();
+    this.game.ctx.current.arc(
+      visionRange.x,
+      visionRange.y,
+      visionRange.r,
+      0,
+      2 * Math.PI
+    );
+    this.game.ctx.current.stroke();
+    this.game.ctx.current.closePath();
   }
 }

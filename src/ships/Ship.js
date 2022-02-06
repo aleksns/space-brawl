@@ -13,7 +13,7 @@ export default class Ship {
     this.isGotHit = false;
     this.isDead = false;
     this.isFill = false;
-    this.isSlowSpeedApplied = false;
+    //this.isSlowSpeedApplied = false;
     this.shadowColor = "transparent";
     this.shadowBlur = 0;
     this.filter = "none";
@@ -30,8 +30,11 @@ export default class Ship {
     this.initializeShip();
     this.initTimers();
 
-    if(this.game.stats.isGlobalSlowAll) {
-      this.game.stats.applySpeedReductionObject(this);
+    if (this.game.stats.isGlobalSlowAll && !this.isPlayer) {
+      this.game.stats.decreaseShipSpeed(
+        this,
+        this.game.stats.slowModifiers.speedGlobal
+      );
     }
   }
 
@@ -40,7 +43,7 @@ export default class Ship {
   }
 
   update() {
-    if(this.game.isGlobalActionRestricted) {
+    if (this.game.isGlobalActionRestricted) {
       return;
     }
     if (
@@ -55,14 +58,18 @@ export default class Ship {
       this.updateShip();
       this.move();
     }
-
-    let timePassed = (this.game.now - this.then) / 1000;
-    if (timePassed <= this.getAtkSpeed()) {
-      return;
+    else {
+      this.game.gameBoard.updateVisionRange(this);
+      this.game.draw.drawVisionRange(this.visionRange);
     }
 
-     this.then = this.game.now;
-     this.fireGun();
+    // let timePassed = (this.game.now - this.then) / 1000;
+    // if (timePassed <= this.getAtkSpeed()) {
+    //   return;
+    // }
+
+    //  this.then = this.game.now;
+    this.fireGun();
   }
 
   setTargetFront() {
@@ -100,13 +107,13 @@ export default class Ship {
     this.isGotHit = true;
     if (isByProjectile) {
       this.gotHitByProjectile(projectile);
-      this.playHitEffect(projectile.type);
+      this.playHitEffect(projectile);
     } else {
       this.gotHitByShipHull();
     }
 
     this.health = roundDecimalHundreds(this.health);
-    if(this.health < 0) {
+    if (this.health < 0) {
       this.health = 0;
     }
   }
@@ -120,6 +127,6 @@ export default class Ship {
   }
 
   updateTimersAfterPauseOff() {
-      this.then += this.game.timeDifference;
+    this.then += this.game.timeDifference;
   }
 }

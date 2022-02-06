@@ -35,18 +35,8 @@ export class TripleFront extends Gun {
       this.barrel2,
       this.barrel3
     ];
-
-    this.atkSpeed = 0;
     
-    if(this.owner.isPlayer) {
-      this.atkSpeed = 0.02;
-    }
-    else {
-      this.atkSpeed = -1;
-    }
-
     this.isAccelerationType = true;
-    this.dW = getDefaultPlayerProjectile.w; //offStep for a projectile, to make centered position
   }
 
   getGunPosition(i) {

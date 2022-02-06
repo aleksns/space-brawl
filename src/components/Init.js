@@ -9,6 +9,9 @@ import { getBuffsSpawnDelay } from "../services/services";
 import { Pulse } from "../effects/Pulse";
 import { EnemyT5 } from "../ships/EnemyT5";
 import { Coin } from "../items/Coin";
+import { BossTest } from "../ships/BossTest";
+import { ExplosionSmall } from "../effects/ExplosionSmall";
+import { Laser } from "../projectiles/Laser";
 
 export default class Init {
   constructor(game) {
@@ -59,7 +62,7 @@ export default class Init {
   }
 
   addItemsBasedOnTiming() {
-    if(this.game.isGlobalActionRestricted) {
+    if (this.game.isGlobalActionRestricted) {
       return;
     }
     for (let i = 0; i < this.itemsToSpawn.length; i++) {
@@ -98,13 +101,13 @@ export default class Init {
         this.game.items.push(newItem);
         //item.timesSpawned++;
         break;
-        case "coin":
-          var newCoin = new Coin(this.game);
-          newCoin.initialize();
-          newCoin.initializeCoin(object);
-          this.game.items.push(newCoin);
-          //item.timesSpawned++;
-          break;  
+      case "coin":
+        var newCoin = new Coin(this.game);
+        newCoin.initialize();
+        newCoin.initializeCoin(object);
+        this.game.coins.push(newCoin);
+        //item.timesSpawned++;
+        break;
       default:
         //console.log("Error handling `addItem function in Init class");
         break;
@@ -164,7 +167,8 @@ export default class Init {
   }
 
   addEnemy() {
-    var newEnemy = new EnemyT4(this.game);
+    let newEnemy = new EnemyT4(this.game);
+    //let newEnemy = new BossTest(this.game);
     newEnemy.initialize();
     //newEnemy.startTimers();
     this.game.enemies.push(newEnemy);
@@ -187,11 +191,30 @@ export default class Init {
     newProjectile.initialize();
   }
 
-  addEffect(object, effectType) {
+  addLaser(gun, barrel) {
+    let newLaser = new Laser(this.game, gun, barrel);
+    
+    if(gun.isPlayerOwned) {
+      this.game.playerProjectiles.push(newLaser);
+    }
+    else {
+      this.game.enemyProjectiles.push(newLaser);
+    }
+    newLaser.setLaserStats(gun);
+    newLaser.initialize();
+  }
+
+  addEffect(object, effectType, projectile) {
+    // if(this.game.effects.length > 3) {
+    //   return;
+    // }
     let newEffect;
     switch (effectType) {
-      case "default":
+      case "explosionDefault":
         newEffect = new ExplosionDefault(this.game, object);
+        break;
+      case "explosionSmall":
+        newEffect = new ExplosionSmall(this.game, object);
         break;
       case "defaultBuff":
         newEffect = new BuffDefault(this.game, object);
