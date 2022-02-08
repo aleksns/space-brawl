@@ -23,6 +23,7 @@ export default class Draw {
     this.threatBar = new ThreatLevelBar(this.game);
     this.scoreAndCoins = new ScoreAndCoins(this.game);
 
+    // proejctile filters
     this.brightnessNum = 100;
     this.saturationNum = 100;
     this.brightnessModifier = 2;
