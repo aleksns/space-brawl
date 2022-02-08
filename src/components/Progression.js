@@ -16,8 +16,6 @@ export default class Progression {
       damage: 1.5,
       health: 2,
       maxHealth: 2,
-      atkSpeed: 1.1,
-      atkSpeedCap: 1,
       scorePoints: 3,
     };
   }

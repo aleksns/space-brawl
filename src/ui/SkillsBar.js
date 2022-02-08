@@ -135,8 +135,12 @@ export class SkillsBar extends UICanvas {
       y: this.laserProps.y,
       w: 50,
       h: 50,
-      text: "0",
-      opacity: 1.0,
+      textX: 0,
+      textY: 0,
+      textColor: skillIcons.textColor,
+      textOpacity: 1.0,
+      text: "",
+      barOpacity: 1.0,
       font: "22px tahoma",
     };
     this.laserProps.image = new Image();
@@ -151,10 +155,8 @@ export class SkillsBar extends UICanvas {
   draw(ctx) {
     this.game.draw.drawObject(this.skillsBarContainerProps, ctx);
 
-    this.drawSlowTimeIcon(ctx);
-
-    this.game.draw.drawObject(this.shieldProps, ctx);
-    this.game.draw.drawObject(this.laserProps, ctx);
+    this.drawSkillIconAndCD(ctx, this.slowTimeSkill, this.slowTimeProps, this.slowTimeCDProps);
+    this.drawSkillIconAndCD(ctx, this.laserSkill, this.laserProps, this.laserCDProps);
   }
 
   update() {
@@ -179,10 +181,7 @@ export class SkillsBar extends UICanvas {
       this.slowTimeCDProps
     );
 
-    let text = this.slowTimeSkill.cd - this.slowTimeSkill.remainingCD;
-    text = Math.round((text + Number.EPSILON) * 1) / 1;
-
-    this.slowTimeCDProps.text = text;
+    this.updateCDText(this.slowTimeSkill, this.slowTimeCDProps);
   }
 
   updateShieldContainer() {
@@ -191,6 +190,7 @@ export class SkillsBar extends UICanvas {
       this.shieldProps,
       this.shieldCDProps
     );
+    //this.updateCDText(this.shieldSkill, this.shieldCDProps);
   }
 
   updateLaserContainer() {
@@ -199,49 +199,54 @@ export class SkillsBar extends UICanvas {
       this.laserProps,
       this.laserCDProps
     );
+    this.updateCDText(this.laserSkill, this.laserCDProps);
   }
 
-  showOutlineIconTest(icon, ctx) {
-    ctx.current.beginPath();
-    ctx.current.rect(icon.x, icon.y, icon.w, icon.h);
-    ctx.current.fillStyle = "green";
-    ctx.current.strokeStyle = "green";
-    ctx.current.stroke();
-    ctx.current.closePath();
+  updateCDText(skill, cdProps) {
+    let text = skill.cd - skill.remainingCD;
+    text = Math.round((text + Number.EPSILON) * 1) / 1;
+
+    cdProps.text = text;
   }
 
-  drawSlowTimeIcon(ctx) {
-    //this.showOutlineIconTest(this.slowTimeProps, ctx);    //testing purpose
+  // showOutlineIconTest(icon, ctx) {
+  //   ctx.current.beginPath();
+  //   ctx.current.rect(icon.x, icon.y, icon.w, icon.h);
+  //   ctx.current.fillStyle = "green";
+  //   ctx.current.strokeStyle = "green";
+  //   ctx.current.stroke();
+  //   ctx.current.closePath();
+  // }
 
-    this.game.draw.drawObject(this.slowTimeProps, ctx);
-    if (!this.slowTimeSkill.isOnCD) {
+  drawSkillIconAndCD(ctx, skill, skillProps, cdProps) {
+    this.game.draw.drawObject(skillProps, ctx);
+    if (!skill.isOnCD) {
       return;
     }
-    this.drawSlowTimeCDText(ctx);
-    this.drawSlowTimeCDBar(ctx);
+
+    this.drawCDText(ctx, skillProps, cdProps);
+    this.drawCDBar(ctx, skill, skillProps, cdProps);
   }
 
-  drawSlowTimeCDText(ctx) {
-    let offsetX = this.getTextWidth(this.slowTimeCDProps.text, ctx) / 2;
-    this.slowTimeCDProps.textX =
-      this.slowTimeProps.x + this.slowTimeProps.w / 2 - offsetX;
+  drawCDText(ctx, skillProps, cdProps) {
+    let offsetX = this.getTextWidth(cdProps.text, ctx) / 2;
+    cdProps.textX = skillProps.x + skillProps.w / 2 - offsetX;
 
-    let offSetY = this.getTextHeight(this.slowTimeCDProps.text, ctx) / 2;
-    this.slowTimeCDProps.textY =
-      this.slowTimeProps.y + this.slowTimeProps.h / 2 + offSetY;
+    let offSetY = this.getTextHeight(cdProps.text, ctx) / 2;
+    cdProps.textY = skillProps.y + skillProps.h / 2 + offSetY;
 
-    this.game.draw.drawText(this.slowTimeCDProps);
+    this.game.draw.drawText(cdProps);
   }
 
-  drawSlowTimeCDBar(ctx) {
-    let remainingCD = this.slowTimeSkill.remainingCD / this.slowTimeSkill.cd;
-    let dH = this.slowTimeProps.h * remainingCD;
-    let y = this.slowTimeProps.y + this.slowTimeProps.h;
+  drawCDBar(ctx, skill, skillProps, cdProps) {
+    let remainingCD = skill.remainingCD / skill.cd;
+    let dH = skillProps.h * remainingCD;
+    let y = skillProps.y + skillProps.h;
 
-    ctx.current.globalAlpha = this.slowTimeCDProps.barOpacity;
+    ctx.current.globalAlpha = cdProps.barOpacity;
     ctx.current.beginPath();
-    ctx.current.fillStyle = "pink";
-    ctx.current.rect(this.slowTimeProps.x, y, this.slowTimeProps.w, -dH);
+    ctx.current.fillStyle = "#ffffff";
+    ctx.current.rect(skillProps.x, y, skillProps.w, -dH);
     ctx.current.fill();
     ctx.current.closePath();
     ctx.current.globalAlpha = 1.0;

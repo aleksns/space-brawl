@@ -1,21 +1,17 @@
 import Ship from "./Ship";
 import {
   getPlayerT0Dimension,
-  getPlayerDefaultStats,
   GAME_WIDTH,
   GAME_HEIGHT,
   getDefaultPlayerProjectile,
   getPlayerLaser,
 } from "../services/services";
-import { getPlayerLaserGunProps, getPlayerT445AngleGunProps, getPlayerT4SingleFrontGunProps } from "../services/gunsProps";
+import { getPlayerLaserGun, getPlayerT4DoubleFront, getPlayerT4Rotating } from "../services/gunsProps";
 
 import playerImage from "../images/playerShip.png";
 
-import { SingleFront } from "../guns/SingleFront";
-import { DoubleFront } from "../guns/DoubleFront";
-import { TripleFront } from "../guns/TripleFront";
-import { BurstTripleFront } from "../guns/BurstTripleFront";
-import { Double45Angle } from "../guns/Double45Angle";
+import { DoubleGun } from "../guns/DoubleGun";
+import { SingleGun } from "../guns/SingleGun";
 
 const defaultPosition = {
   x: GAME_WIDTH / 2,
@@ -48,42 +44,19 @@ export class Player extends Ship {
     this.image = new Image();
     this.image.src = playerImage;
 
-    this.visionRange = {
-      x: 0,
-      y: 0,
-      r: 500,
-      color: "green",
-    };
-
-    this.isLaserOn = true;
-    this.laserGun = new SingleFront(this.game, this);
+    this.isLaserOn = false;
+    this.laserGun = undefined;
     console.log("CONSTRUCTOR > Player");
   }
 
   initializeShip() {
-    this.laserGun.initialize(getPlayerLaserGunProps, getPlayerLaser);
-
-    let singleFront = new SingleFront(this.game, this);
-    singleFront.initialize(getPlayerT4SingleFrontGunProps, getDefaultPlayerProjectile);
+    this.laserGun = new SingleGun(this.game, this);
+    this.laserGun.initialize(getPlayerLaserGun, getPlayerLaser);
     
-    let double45Angle = new Double45Angle(this.game, this);
-    double45Angle.initialize(getPlayerT445AngleGunProps, getDefaultPlayerProjectile);
+    let doubleGun = new DoubleGun(this.game, this);
+    doubleGun.initialize(getPlayerT4DoubleFront, getDefaultPlayerProjectile);
 
-    let doubleFront = new DoubleFront(this.game, this);
-    let tripleFront = new TripleFront(this.game, this);
-    let burstTripleFront = new BurstTripleFront(this.game, this);
-
-    //this.gun = singleFront;
-    //this.gun.initialize(getPlayerT4SingleFrontGunProps);
-
-    //this.gun2 = double45Angle;
-    //this.gun2.initialize(getPlayerT490AngleGunProps);
-    //this.game.playerGuns.push(singleFront);
-    //this.game.playerGuns.push(doubleFront);
-    //this.game.playerGuns.push(tripleFront);
-    //this.game.playerGuns.push(singleFront);
-    this.game.playerGuns.push(double45Angle);
-    //this.game.playerGuns.push(burstTripleFront);
+    this.game.playerGuns.push(doubleGun);
   }
 
   fireGun() {

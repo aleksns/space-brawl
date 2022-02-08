@@ -16,8 +16,6 @@ export default class Stats {
       s: getPlayerDefaultStats.speed,
       a: getPlayerDefaultStats.speed / getPlayerDefaultStats.accelerationMod,
       rammingDmg: getPlayerDefaultStats.rammingDmg,
-      atkSpeed: getPlayerDefaultStats.atkSpeed,
-      atkSpeedCap: getPlayerDefaultStats.atkSpeedCap,
     };
 
     this.enemyT4 = {
@@ -27,8 +25,6 @@ export default class Stats {
       s: getEnemyT4DefaultStats.speed,
       a: getEnemyT4DefaultStats.speed / getEnemyT4DefaultStats.accelerationMod,
       rammingDmg: getEnemyT4DefaultStats.rammingDmg,
-      atkSpeed: getEnemyT4DefaultStats.atkSpeed,
-      atkSpeedCap: getEnemyT4DefaultStats.atkSpeedCap,
       scorePoints: getEnemyT4DefaultStats.scorePoints,
     };
 
@@ -39,8 +35,6 @@ export default class Stats {
       s: getEnemyT5DefaultStats.speed,
       a: getEnemyT5DefaultStats.speed / getEnemyT5DefaultStats.accelerationMod,
       rammingDmg: getEnemyT5DefaultStats.rammingDmg,
-      atkSpeed: getEnemyT5DefaultStats.atkSpeed,
-      atkSpeedCap: getEnemyT5DefaultStats.atkSpeedCap,
       scorePoints: getEnemyT5DefaultStats.scorePoints,
     };
 
@@ -51,8 +45,6 @@ export default class Stats {
       s: getEnemyT0DefaultStats.speed,
       a: getEnemyT5DefaultStats.speed / getEnemyT0DefaultStats.accelerationMod,
       rammingDmg: getEnemyT0DefaultStats.rammingDmg,
-      atkSpeed: getEnemyT0DefaultStats.atkSpeed,
-      atkSpeedCap: getEnemyT0DefaultStats.atkSpeedCap,
       scorePoints: getEnemyT0DefaultStats.scorePoints,
     };
 
@@ -83,8 +75,6 @@ export default class Stats {
     enemy.damage *= progression.enemyModifiers.damage;
     enemy.health *= progression.enemyModifiers.health;
     enemy.maxHealth *= progression.enemyModifiers.maxHealth;
-    enemy.atkSpeed *= progression.enemyModifiers.atkSpeed;
-    enemy.atkSpeedCap *= progression.enemyModifiers.atkSpeedCap;
     enemy.scorePoints = Math.floor(
       enemy.scorePoints * progression.enemyModifiers.scorePoints
     );

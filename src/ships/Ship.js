@@ -58,17 +58,7 @@ export default class Ship {
       this.updateShip();
       this.move();
     }
-    else {
-      this.game.gameBoard.updateVisionRange(this);
-      this.game.draw.drawVisionRange(this.visionRange);
-    }
 
-    // let timePassed = (this.game.now - this.then) / 1000;
-    // if (timePassed <= this.getAtkSpeed()) {
-    //   return;
-    // }
-
-    //  this.then = this.game.now;
     this.fireGun();
   }
 

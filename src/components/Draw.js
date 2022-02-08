@@ -22,6 +22,16 @@ export default class Draw {
     this.hpBarPlayer = new HpBarPlayer(this.game);
     this.threatBar = new ThreatLevelBar(this.game);
     this.scoreAndCoins = new ScoreAndCoins(this.game);
+
+    this.brightnessNum = 100;
+    this.saturationNum = 100;
+    this.brightnessModifier = 2;
+    this.saturationModifier = -2.5;
+    this.brightnessMin = 100;
+    this.brightnessMax = 200;
+    this.saturationMin = 50;
+    this.saturationMax = 100;
+    this.filter = `saturate(${this.saturationNum}%) brightness(${this.brightnessNum}%)`;
   }
 
   updateUICanvas() {
@@ -163,10 +173,13 @@ export default class Draw {
   }
 
   drawProjectiles() {
+    this.updateFilter();
     for (let i = 0; i < this.game.enemyProjectiles.length; i++) {
+      this.game.enemyProjectiles[i].setFilter(this.filter);
       this.drawObject(this.game.enemyProjectiles[i], this.ctx);
     }
     for (let i = 0; i < this.game.playerProjectiles.length; i++) {
+      this.game.playerProjectiles[i].setFilter(this.filter);
       this.drawObject(this.game.playerProjectiles[i], this.ctx);
     }
   }
@@ -243,5 +256,20 @@ export default class Draw {
     );
     this.game.ctx.current.stroke();
     this.game.ctx.current.closePath();
+  }
+
+  updateFilter() {
+    this.brightnessNum += this.brightnessModifier;
+    this.saturationNum += this.saturationModifier;
+
+    if (this.brightnessNum >= this.brightnessMax || this.brightnessNum < this.brightnessMin) {
+      this.brightnessModifier = -this.brightnessModifier;
+    }
+
+    if (this.saturationNum >= this.saturationMax || this.saturationNum < this.saturationMin) {
+      this.saturationModifier = -this.saturationModifier;
+    }
+
+    this.filter = `saturate(${this.saturationNum}%) brightness(${this.brightnessNum}%)`;
   }
 }

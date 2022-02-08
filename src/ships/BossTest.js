@@ -1,18 +1,13 @@
 import Ship from "./Ship";
 import {
   GAME_WIDTH,
-  getRandomDirection,
-  getEnemyT0DefaultStats,
   getEnemyT0Dimension,
-  getTripleGunPosition,
-  GAME_HEIGHT,
   getDefaultEnemyProjectile,
 } from "../services/services";
 import bossImage from "../images/enemyBoss.png";
-import { SingleFront } from "../guns/SingleFront";
-import { DoubleFront } from "../guns/DoubleFront";
-import { TripleFront } from "../guns/TripleFront";
-import { getBossT4TripleBurstGunProps } from "../services/gunsProps";
+import { getBossT4DoubleSpray, getBossT4TripleBurst, getBossDoubleBurstCenteredGun, getBossT4TripleTarget } from "../services/gunsProps";
+import { DoubleGun } from "../guns/DoubleGun";
+import { TripleGun } from "../guns/TripleGun";
 
 export class BossTest extends Ship {
   constructor(game) {
@@ -57,19 +52,32 @@ export class BossTest extends Ship {
   }
 
   fireGun() {
-    // for (let i = 0; i < this.game.bossGuns.length; i++) {
-    //   this.game.bossGuns[i].fire();
-    // }
+    for (let i = 0; i < this.game.bossGuns.length; i++) {
+    //  this.game.bossGuns[i].fire();
+    }
   }
 
   initializeShip() {
     this.x = GAME_WIDTH / 2 - this.w / 2;
     this.y = 50;
 
-    let tripleFront = new TripleFront(this.game, this);
-    tripleFront.initialize(getBossT4TripleBurstGunProps, getDefaultEnemyProjectile);
+    // let newTripleTarget = new TripleGun(this.game, this);
+    // newTripleTarget.initialize(getBossT4TripleTarget, getDefaultEnemyProjectile);
+    // newTripleTarget.setOnTarget();
 
-    this.game.bossGuns.push(tripleFront);
+    // let newTripleBurstGun = new TripleGun(this.game, this);
+    // newTripleBurstGun.initialize(getBossT4TripleBurst, getDefaultEnemyProjectile);
+
+    // let newDoubleBurstCenteredGun = new DoubleGun(this.game, this);
+    // newDoubleBurstCenteredGun.initialize(getBossDoubleBurstCenteredGun, getDefaultEnemyProjectile);
+
+    // let newDoubleSprayGun = new DoubleGun(this.game, this);
+    // newDoubleSprayGun.initialize(getBossT4DoubleSpray, getDefaultEnemyProjectile);
+
+    // this.game.bossGuns.push(newTripleTarget);
+    // this.game.bossGuns.push(newTripleBurstGun);
+    // this.game.bossGuns.push(newDoubleBurstCenteredGun);
+    // this.game.bossGuns.push(newDoubleSprayGun);
   }
 
   updateShip() {
@@ -82,15 +90,6 @@ export class BossTest extends Ship {
   move() {
     //tbd
   }
-
-  getAtkSpeed() {
-    return this.atkSpeed;
-  }
-
-  setDefaultAtkSpeed() {
-    this.atkSpeed = getEnemyT0DefaultStats.atkSpeed;
-  }
-
 
   playHitEffect(projectile) {
     this.game.init.addEffect(projectile, projectile.type);

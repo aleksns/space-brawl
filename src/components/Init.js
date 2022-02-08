@@ -167,8 +167,8 @@ export default class Init {
   }
 
   addEnemy() {
-    let newEnemy = new EnemyT4(this.game);
-    //let newEnemy = new BossTest(this.game);
+    //let newEnemy = new EnemyT4(this.game);
+    let newEnemy = new BossTest(this.game);
     newEnemy.initialize();
     //newEnemy.startTimers();
     this.game.enemies.push(newEnemy);
@@ -191,17 +191,16 @@ export default class Init {
     newProjectile.initialize();
   }
 
-  addLaser(gun, barrel) {
-    let newLaser = new Laser(this.game, gun, barrel);
-    
+  addLaser(gun, laserProjectile) {
+    laserProjectile.setLaserStats(gun);
+    laserProjectile.initialize();
+
     if(gun.isPlayerOwned) {
-      this.game.playerProjectiles.push(newLaser);
+      this.game.playerProjectiles.push(laserProjectile);
     }
     else {
-      this.game.enemyProjectiles.push(newLaser);
+      this.game.enemyProjectiles.push(laserProjectile);
     }
-    newLaser.setLaserStats(gun);
-    newLaser.initialize();
   }
 
   addEffect(object, effectType, projectile) {

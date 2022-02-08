@@ -149,9 +149,8 @@ export default class Update {
           ) &&
           this.game.playerProjectiles[y].isPlayerOwned
         ) {
-          console.log(`collison with player projectile`)
           this.game.enemies[i].gotHit(true, this.game.playerProjectiles[y]);
-          if (!this.game.playerProjectiles[y].isLaserType) {
+          if (!this.game.playerProjectiles[y].isLaser) {
             this.game.playerProjectiles[y].setDead();
           }
         }

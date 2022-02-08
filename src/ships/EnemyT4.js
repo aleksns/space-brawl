@@ -6,13 +6,12 @@ import {
   getEnemyT4DefaultStats,
   getEnemyT4Dimension,
   getDefaultEnemyProjectile,
+  getDefaultPlayerProjectile,
 } from "../services/services";
 import enemyImageT4 from "../images/enemyShipT4.png";
-import { SingleTarget } from "../guns/SingleTarget";
-import { TripleFront } from "../guns/TripleFront";
-import { BurstTripleFront } from "../guns/BurstTripleFront";
-import { Double45Angle } from "../guns/Double45Angle";
-import { getEnemyT4GunProps } from "../services/gunsProps";
+import { SingleGun } from "../guns/SingleGun";
+import { DoubleGun } from "../guns/DoubleGun";
+import { getEnemyT4GunProps, getPlayerT4Rotating } from "../services/gunsProps";
 
 export class EnemyT4 extends Ship {
   constructor(game) {
@@ -30,8 +29,6 @@ export class EnemyT4 extends Ship {
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.s = this.game.stats.enemyT4.s; // default was 2
     this.a = this.s / 40; // default was this.s / 40
-    //this.s = 0;
-    //this.a = 0;
     this.direction = getRandomDirection();
     /* offStep = applies additional distance for enemies to stop their movement
     before reaching allowed borders and maintaining smooth bounce effect */
@@ -41,7 +38,6 @@ export class EnemyT4 extends Ship {
     this.now = 0;
 
     this.damage = this.game.stats.enemyT4.damage;
-    this.atkSpeed = this.game.stats.enemyT4.atkSpeed;
     this.gun = undefined;
     this.target = this.game.player;
 
@@ -84,13 +80,18 @@ export class EnemyT4 extends Ship {
       Math.floor(this.collision.height / 2.5)
     );
     this.getEmptyPositionOnBoard();
-    let newGun = new SingleTarget(this.game, this);
-    newGun.initialize(getEnemyT4GunProps, getDefaultEnemyProjectile);
-    //let newGun = new TripleFront(this.game, this);
-    //let newGun = new Double45Angle(this.game, this);
-    //let newGun = new BurstTripleFront(this.game, this);
-    this.game.enemyGuns.push(newGun);
-    this.gun = newGun;
+
+    let newSingleGun = new SingleGun(this.game, this);
+    newSingleGun.initialize(getPlayerT4Rotating, getDefaultEnemyProjectile);
+    newSingleGun.setOnTarget();
+
+    let newDoubleGun = new DoubleGun(this.game, this);
+    newDoubleGun.initialize(getPlayerT4Rotating, getDefaultEnemyProjectile);
+    newDoubleGun.setOnTarget();
+
+    this.game.enemyGuns.push(newDoubleGun);
+    this.game.enemyGuns.push(newSingleGun);
+    this.gun = newSingleGun;
 
     this.directionChangeIntervalThen = Date.now();
   }
@@ -103,15 +104,6 @@ export class EnemyT4 extends Ship {
 
   setRandomDirection() {
     this.direction = getRandomDirection();
-  }
-
-  getAtkSpeed() {
-    //return this.atkSpeed - this.gun.atkSpeed;
-    return this.atkSpeed;
-  }
-
-  setDefaultAtkSpeed() {
-    this.atkSpeed = getEnemyT4DefaultStats.atkSpeed;
   }
 
   playHitEffect(projectileType) {

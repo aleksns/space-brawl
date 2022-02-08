@@ -6,7 +6,7 @@ import {
   GAME_WIDTH,
 } from "../services/services";
 import enemyImageT5 from "../images/enemyShipT5.png";
-import { SingleFront } from "../guns/SingleFront";
+import { SingleGun } from "../guns/SingleGun";
 
 export class EnemyT5 extends Ship {
   constructor(game) {
@@ -36,7 +36,6 @@ export class EnemyT5 extends Ship {
     this.now = 0;
 
     this.damage = this.game.stats.enemyT5.damage;
-    this.atkSpeed = this.game.stats.enemyT5.atkSpeed;
     this.gun = undefined;
 
     this.image = new Image();
@@ -81,7 +80,7 @@ export class EnemyT5 extends Ship {
     this.setNewDirection();
 
     this.setTargetFront();
-    var newGun = new SingleFront(this.game, this);
+    var newGun = new SingleGun(this.game, this);
     this.gun = newGun; 
   }
 
@@ -106,15 +105,6 @@ export class EnemyT5 extends Ship {
   setDestinationCords() {
     this.destination.x = this.moveToPosition.x;
     this.destination.y = this.moveToPosition.y;
-  }
-
-  getAtkSpeed() {
-    return this.atkSpeed;
-    //return this.atkSpeed - this.gun.atkSpeed;
-  }
-
-  setDefaultAtkSpeed() {
-    this.atkSpeed = getEnemyT5DefaultStats.atkSpeed;
   }
 
   playHitEffect(projectileType) {

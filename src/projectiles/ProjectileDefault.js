@@ -15,7 +15,7 @@ export class ProjectileDefault extends Projectile {
     this.s = 0;
     this.a = 0;
     this.isFill = undefined;
-    this.isLaserType = false;
+    this.isLaser = false;
     this.image = undefined;
   }
 

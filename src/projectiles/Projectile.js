@@ -27,15 +27,18 @@ export default class Projectile {
       color: "green",
     };
 
+    this.filter = "saturate(100%) brightness(100%)";
+
     this.lineJoin = "round";
     this.lineCap = "square";
     //this.isSlowSpeedApplied = false;
     this.isPlayerOwned = undefined;
-    this.isDead = false;
+    this.isDead = undefined;
   }
 
   initialize() {
-    if (this.isLaserType) {
+    this.isDead = false;
+    if (this.isLaser) {
       this.x = this.barrel.x;
       this.y = this.barrel.y - this.h;
       return;
@@ -54,7 +57,7 @@ export default class Projectile {
   }
 
   update() {
-    if (this.isLaserType) {
+    if (this.isLaser) {
       this.x = this.barrel.x;
       this.y = this.barrel.y - this.h;
       return;
@@ -90,6 +93,10 @@ export default class Projectile {
     if (this.game.collision.isCollisionWithAnyBorder(this, this.offStep)) {
       this.setDead();
     }
+  }
+
+  setFilter(filterValue) {
+    this.filter = filterValue;
   }
 
   setDead() {

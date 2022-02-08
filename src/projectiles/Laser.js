@@ -7,6 +7,8 @@ export class Laser extends Projectile {
     this.game = game;
     this.w = 0;
     this.h = 0;
+    //dW is needed to apply proper width to the laser, depending on the remaining time
+    this.dW = 0;
     this.color = undefined;
     this.explosionColor = undefined;
     this.type = "explosionSmall";
@@ -15,7 +17,7 @@ export class Laser extends Projectile {
     this.s = 0;
     this.a = 0;
     this.isFill = undefined;
-    this.isLaserType = true;
+    this.isLaser = true;
     this.image = undefined;
   }
 
@@ -33,6 +35,7 @@ export class Laser extends Projectile {
   setPlayerLaserShape() {
     this.w = getPlayerLaser.w;
     this.h = getPlayerLaser.h;
+    this.dW = this.w;
     this.color = getPlayerLaser.color;
     this.explosionColor = "orange";
     this.isFill = getPlayerLaser.isFill;
@@ -60,5 +63,9 @@ export class Laser extends Projectile {
     this.s = this.gun.projectileSpeed;
     this.a = this.gun.projectileAcceleration;
     this.isPlayerOwned = false;
+  }
+
+  setLaserWidth(value) {
+    this.w = value;
   }
 }

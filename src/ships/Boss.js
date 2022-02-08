@@ -8,9 +8,8 @@ import {
   GAME_HEIGHT,
 } from "../services/services";
 import bossImage from "../images/enemyBoss.png";
-import { SingleFront } from "../guns/SingleFront";
-import { DoubleFront } from "../guns/DoubleFront";
-import { TripleFront } from "../guns/TripleFront";
+import { SingleGun } from "../guns/SingleGun";
+import { TripleGun } from "../guns/TripleGun";
 
 export class Boss extends Ship {
   constructor(game) {
@@ -39,7 +38,6 @@ export class Boss extends Ship {
     this.scorePoints = this.game.stats.enemyT0.scorePoints;
     this.now = 0;
     this.damage = this.game.stats.enemyT0.damage;
-    this.atkSpeed = this.game.stats.enemyT0.atkSpeed;
     this.gun = undefined;
     this.target = this.game.player;
 
@@ -63,7 +61,7 @@ export class Boss extends Ship {
   initializeShip() {
     this.x = GAME_WIDTH / 2 - this.w / 2;
     this.y = -this.h;
-    var newGun = new TripleFront(this.game, this);
+    var newGun = new TripleGun(this.game, this);
     this.gun = newGun;
 
     this.setNewDirection();
@@ -98,14 +96,6 @@ export class Boss extends Ship {
   setDestinationCords() {
     this.destination.x = this.x;
     this.destination.y = this.collision.allowedY.y0 / 2;
-  }
-
-  getAtkSpeed() {
-    return this.atkSpeed - this.gun.atkSpeed;
-  }
-
-  setDefaultAtkSpeed() {
-    this.atkSpeed = getEnemyT0DefaultStats.atkSpeed;
   }
 
   playHitEffect(projectileType) {

@@ -105,8 +105,6 @@ export const getPlayerDefaultStats = {
   speed: 25,   //25
   accelerationMod: 10,
   rammingDmg: 0.1,
-  atkSpeed: 0.15, //default was 0.2 -> 0.15
-  atkSpeedCap: 0.04,
 };
 
 export const getEnemyT0DefaultStats = {
@@ -116,8 +114,6 @@ export const getEnemyT0DefaultStats = {
   speed: 2,
   accelerationMod: 60,
   rammingDmg: 0.1,
-  atkSpeed: 0.6,
-  atkSpeedCap: 0.3,
   scorePoints: 500,
 };
 
@@ -128,8 +124,6 @@ export const getEnemyT4DefaultStats = {
   speed: 4,
   accelerationMod: 40,
   rammingDmg: 0.1,
-  atkSpeed: 1.0,   //1.0
-  atkSpeedCap: 0.5,
   scorePoints: 25,
 };
 
@@ -140,8 +134,6 @@ export const getEnemyT5DefaultStats = {
   speed: 1,
   accelerationMod: 60,
   rammingDmg: 0.1,
-  atkSpeed: 2.5,
-  atkSpeedCap: 1.5,
   scorePoints: 15,
 };
 
@@ -174,29 +166,42 @@ export const getEnemyLaser = {
   isFill: true,
 };
 
-export function getSingleGunPosition(object, projectileW) {
-  //projectile width
+export function centerSingleGunWithProjectile(gun, projectileW) {
+  var centeredGunPos = {
+    x: gun.x + gun.w / 2 - projectileW / 2,
+    y: gun.y + gun.h / 2,
+  };
+  return centeredGunPos;
+}
+
+export function getSingleGunPosition(gun, projectileW) {
+  //projectileW - width
   var toReturn = [];
 
-  var centerPosition = {
-    x: object.x + object.w / 2 - projectileW / 2,
-    y: object.y + object.h / 2,
+  // var centerPosition = {
+  //   x: gun.x + gun.w / 2 - projectileW / 2,
+  //   y: gun.y + gun.h / 2,
+  // };
+    var centerPosition = {
+    x: centerSingleGunWithProjectile(gun, projectileW).x,
+    y: centerSingleGunWithProjectile(gun, projectileW).y,
   };
+
   toReturn.push(centerPosition);
   return toReturn;
 }
 
-export function getDoubleGunPosition(object, projectileW) {
+export function getDoubleGunPosition(gun, projectileW) {
   var toReturn = [];
 
   var leftPosition = {
-    x: object.x,
-    y: object.y + object.h / 2,
+    x: gun.x,
+    y: gun.y + gun.h / 2,
   };
 
   var rightPosition = {
-    x: object.x + object.w - projectileW,
-    y: object.y + object.h / 2,
+    x: gun.x + gun.w - projectileW,
+    y: gun.y + gun.h / 2,
   };
   toReturn.push(leftPosition);
   toReturn.push(rightPosition);
@@ -204,12 +209,12 @@ export function getDoubleGunPosition(object, projectileW) {
   return toReturn;
 }
 
-export function getTripleGunPosition(object, projectileW) {
+export function getTripleGunPosition(gun, projectileW) {
   var toReturn = [];
 
-  var leftPosition = getDoubleGunPosition(object, projectileW)[0];
-  var centerPosition = getSingleGunPosition(object, projectileW)[0];
-  var rightPosition = getDoubleGunPosition(object, projectileW)[1];
+  var leftPosition = getDoubleGunPosition(gun, projectileW)[0];
+  var centerPosition = getSingleGunPosition(gun, projectileW)[0];
+  var rightPosition = getDoubleGunPosition(gun, projectileW)[1];
 
   toReturn.push(leftPosition);
   toReturn.push(centerPosition);
