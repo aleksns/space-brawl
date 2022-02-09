@@ -12,6 +12,7 @@ import enemyImageT4 from "../images/enemyShipT4.png";
 import { SingleGun } from "../guns/SingleGun";
 import { DoubleGun } from "../guns/DoubleGun";
 import { getEnemyT4GunProps, getPlayerT4Rotating } from "../services/gunsProps";
+import { LevelUP } from "../effects/LevelUP";
 
 export class EnemyT4 extends Ship {
   constructor(game) {
@@ -82,14 +83,14 @@ export class EnemyT4 extends Ship {
     this.getEmptyPositionOnBoard();
 
     let newSingleGun = new SingleGun(this.game, this);
-    newSingleGun.initialize(getPlayerT4Rotating, getDefaultEnemyProjectile);
+    newSingleGun.initialize(getEnemyT4GunProps, getDefaultEnemyProjectile);
     newSingleGun.setOnTarget();
 
     let newDoubleGun = new DoubleGun(this.game, this);
-    newDoubleGun.initialize(getPlayerT4Rotating, getDefaultEnemyProjectile);
+    newDoubleGun.initialize(getEnemyT4GunProps, getDefaultEnemyProjectile);
     newDoubleGun.setOnTarget();
 
-    this.game.enemyGuns.push(newDoubleGun);
+    //this.game.enemyGuns.push(newDoubleGun);
     this.game.enemyGuns.push(newSingleGun);
     this.gun = newSingleGun;
 

@@ -13,8 +13,8 @@ export const buffDefault = {
 
 export class BuffDefault extends Effect {
   constructor(game, object) {
-    super(game, object, "defaultBuff");
-
+    super(game, object);
+    this.object = object;
     this.x = 0;
     this.y = 0;
 
@@ -29,7 +29,13 @@ export class BuffDefault extends Effect {
     this.isRect = false;
   }
 
-  update() {
+  drawEffect(ctx) {
+   this.game.draw.drawArc(this, ctx);
+
+  }
+
+  updateEffect() {
+    console.log(`updating BUFF`)
     if (this.opacity <= 0) {
       this.isDead = true;
       return;

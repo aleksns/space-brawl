@@ -13,8 +13,7 @@ export const pulse = {
 
 export class Pulse extends Effect {
   constructor(game, object) {
-    super(game);
-
+    super(game, object);
     this.object = object;
     this.x = this.game.gameBoard.getCenterOfObject(this.object).x - 105;
     this.y = this.game.gameBoard.getCenterOfObject(this.object).y;
@@ -51,7 +50,11 @@ export class Pulse extends Effect {
     this.scale = 0.5 + Math.abs(Math.cos(this.angle));
   }
 
-  update() {
+  drawEffect(ctx) {
+    this.game.draw.drawArc(this, ctx);
+  }
+
+  updateEffect() {
     if (!this.game.progression.isMaxThreatLevel) {
       this.setDead();
     }

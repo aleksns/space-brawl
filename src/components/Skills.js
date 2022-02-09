@@ -59,9 +59,9 @@ export default class Skills {
     this.atkSpeed.image.src = this.atkSpeed.imageSrc;
 
     this.slowTime = {
-      atkSpeedPlayer: 10,
-      speedPlayer: 10,
-      sProjPlayer: 10,
+      atkSpeedPlayer: 2,
+      speedPlayer: 5,
+      sProjPlayer: 5,
       atkSpeedGlobal: 55,
       speedGlobal: 120,
       duration: 3,
@@ -74,8 +74,8 @@ export default class Skills {
     };
 
     this.shield = {
-      duration: 4,
-      cd: 9,
+      duration: 5,
+      cd: 7,
       remainingCD: 0,
       isApplied: false,
       isOnCD: false,
@@ -115,6 +115,7 @@ export default class Skills {
   update() {
     this.updateSlowTimeSkill();
     this.updateLaserSkill();
+    this.updateShieldSkill();
     this.updateAtkSpeedSkill();
   }
 
@@ -124,7 +125,7 @@ export default class Skills {
       return;
     }
 
-    this.updateTimersBeforeSlowSkill();
+    //this.updateTimersBeforeSlowSkill();
     this.slowTime.then = this.game.now;
     this.slowTime.isApplied = true;
     this.game.stats.decreaseSpeedOfEverything();
@@ -133,7 +134,7 @@ export default class Skills {
   turnOffSlowTimeSkill() {
     this.game.stats.increaseSpeedOfEverything();
     this.slowTime.isApplied = false;
-    this.updateTimersAfterSlowSkill()
+    //this.updateTimersAfterSlowSkill()
   }
 
   updateTimersBeforeSlowSkill() {
@@ -169,7 +170,18 @@ export default class Skills {
   }
 
   turnOnShieldSkill() {
-    console.log(`Shield has been activated`);
+    let timePassed = (this.game.now - this.shield.then) / 1000;
+    if (timePassed <= this.shield.cd || this.shield.isApplied) {
+      return;
+    }
+    this.shield.then = this.game.now;
+    this.shield.isApplied = true;
+    this.game.player.isShieldOn = true;
+  }
+
+  turnOffShieldSkill() {
+    this.shield.isApplied = false;
+    this.game.player.isShieldOn = false;
   }
 
   updateSkillRemainingCD(skill) {
@@ -183,7 +195,6 @@ export default class Skills {
       skill.isOnCD = false;
     }
   }
-  ////
 
   updateAtkSpeedSkill() {
     if (!this.atkSpeed.isApplied) {
@@ -227,9 +238,9 @@ export default class Skills {
       return;
     }
 
-    if(this.game.stats.isGlobalSlowAll) {
-      return;
-    }
+    // if(this.game.stats.isGlobalSlowAll) {
+    //   return;
+    // }
     let timePassed = (this.game.now - this.laser.then) / 1000;
     this.changeLaserWidthDependingOnRemainingTime(timePassed);
 
@@ -238,6 +249,29 @@ export default class Skills {
       this.game.isGlobalActionRestricted
     ) {
       this.turnOffLaserSkill();
+    }
+  }
+
+  updateShieldSkill() {
+    this.updateSkillRemainingCD(this.shield);
+
+    if (!this.shield.isApplied) {
+      return;
+    }
+
+    // if(this.game.stats.isGlobalSlowAll) {
+    //   return;
+    // }
+    let timePassed = (this.game.now - this.shield.then) / 1000;
+    if(timePassed >= this.shield.duration / 2) {
+      this.changeShieldDependingOnRemainingTime(timePassed);
+    }
+    
+    if (
+      timePassed >= this.shield.duration ||
+      this.game.isGlobalActionRestricted
+    ) {
+      this.turnOffShieldSkill();
     }
   }
 
@@ -275,5 +309,12 @@ export default class Skills {
     let remainingLaserW = remainingTime / this.laser.duration;
     let dW = this.game.player.laserGun.laserProjectile.dW * remainingLaserW;
     this.game.player.laserGun.laserProjectile.setLaserWidth(dW);
+  }
+
+  changeShieldDependingOnRemainingTime(timePassed) {
+    let remainingTime = this.shield.duration - timePassed;
+    let remainingShieldTime = remainingTime / this.shield.duration;
+    let o = this.game.player.shieldOrb.props.opacityMax * remainingShieldTime;
+    this.game.player.shieldOrb.setOpacity(o);
   }
 }

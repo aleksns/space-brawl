@@ -13,8 +13,8 @@ export const explosionSmall = {
 
 export class ExplosionSmall extends Effect {
   constructor(game, object) {
-    super(game, object, "default");
-
+    super(game);
+    this.object = object;
     this.x = 0;
     this.y = 0;
 
@@ -29,8 +29,12 @@ export class ExplosionSmall extends Effect {
     this.isDead = false;
     this.isRect = false;
   }
+  
+  drawEffect(ctx) {
+    this.game.draw.drawArc(this, ctx);
+  }
 
-  update() {
+  updateEffect() {
     if (this.opacity <= 0) {
       this.isDead = true;
       return;

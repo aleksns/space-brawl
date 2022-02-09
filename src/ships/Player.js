@@ -9,9 +9,11 @@ import {
 import { getPlayerLaserGun, getPlayerT4DoubleFront, getPlayerT4Rotating } from "../services/gunsProps";
 
 import playerImage from "../images/playerShip.png";
+import shieldOrb1 from "../images/animations-images/shieldOrb-images/shieldOrb1.png";
 
 import { DoubleGun } from "../guns/DoubleGun";
 import { SingleGun } from "../guns/SingleGun";
+import { ShieldOrb } from "../effects/ShieldOrb";
 
 const defaultPosition = {
   x: GAME_WIDTH / 2,
@@ -29,8 +31,8 @@ export class Player extends Ship {
     this.h = getPlayerT0Dimension().h;
     // this.health = this.stats.player.health;
     // this.maxHealth = this.stats.player.maxHealth;
-    this.health = 999999;
-    this.maxHealth = 999999;
+    this.health = 99;
+    this.maxHealth = 99;
     this.isPlayer = true;
     this.offStepX = 0;
     this.offStepX = 0;
@@ -46,6 +48,9 @@ export class Player extends Ship {
 
     this.isLaserOn = false;
     this.laserGun = undefined;
+    this.isShieldOn = false;
+    this.shieldOrb = undefined;
+
     console.log("CONSTRUCTOR > Player");
   }
 
@@ -57,6 +62,15 @@ export class Player extends Ship {
     doubleGun.initialize(getPlayerT4DoubleFront, getDefaultPlayerProjectile);
 
     this.game.playerGuns.push(doubleGun);
+
+    this.shieldOrb = new ShieldOrb(this.game, this);
+  }
+
+  updateShip() {
+    if(this.isShieldOn) {
+      this.shieldOrb.updateShieldOrb();
+    }
+    
   }
 
   fireGun() {

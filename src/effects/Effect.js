@@ -1,25 +1,15 @@
 
 export default class Effect {
-    constructor(game, object, type) {
+    constructor(game) {
     this.game = game;
-
-    this.object = object;
-    this.type = type;
   }
 
   update() {
-    ///
+    this.updateEffect();
   } 
 
-  explosion() {
-    switch (this.type) {
-        case "default":
-          this.play();
-          break;
-        default:
-        console.log("Error handling `explosion` function in Effects class");
-        break;
-    }    
+  draw(ctx) {
+    this.drawEffect(ctx);
   }
 
 }

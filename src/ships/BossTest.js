@@ -35,7 +35,6 @@ export class BossTest extends Ship {
     this.offStepY = Math.floor(this.h / 2);
     this.scorePoints = this.game.stats.enemyT0.scorePoints;
     this.now = 0;
-    
     this.target = this.game.player;
 
     this.image = new Image();

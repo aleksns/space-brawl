@@ -157,6 +157,7 @@ export class SkillsBar extends UICanvas {
 
     this.drawSkillIconAndCD(ctx, this.slowTimeSkill, this.slowTimeProps, this.slowTimeCDProps);
     this.drawSkillIconAndCD(ctx, this.laserSkill, this.laserProps, this.laserCDProps);
+    this.drawSkillIconAndCD(ctx, this.shieldSkill, this.shieldProps, this.shieldCDProps);
   }
 
   update() {
@@ -190,7 +191,7 @@ export class SkillsBar extends UICanvas {
       this.shieldProps,
       this.shieldCDProps
     );
-    //this.updateCDText(this.shieldSkill, this.shieldCDProps);
+    this.updateCDText(this.shieldSkill, this.shieldCDProps);
   }
 
   updateLaserContainer() {

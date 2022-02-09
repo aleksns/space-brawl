@@ -54,11 +54,12 @@ export default class Ship {
       this.setDead();
       this.onDeath();
     }
+
     if (!this.isPlayer) {
-      this.updateShip();
       this.move();
     }
 
+    this.updateShip();
     this.fireGun();
   }
 
@@ -94,6 +95,9 @@ export default class Ship {
   }
 
   gotHit(isByProjectile, projectile) {
+    if(this.isShieldOn) {
+      return;
+    }
     this.isGotHit = true;
     if (isByProjectile) {
       this.gotHitByProjectile(projectile);

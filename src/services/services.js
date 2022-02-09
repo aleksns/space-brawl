@@ -5,8 +5,10 @@ export const GAME_HEIGHT = window.innerHeight;
 
 export function getPlayerT0Dimension() {
   let dimension = {
-    w: GAME_WIDTH / 12,
-    h: GAME_HEIGHT / 9,
+    // w: GAME_WIDTH / 12,
+    // h: GAME_HEIGHT / 9,
+    w: GAME_HEIGHT / 8,
+    h: GAME_HEIGHT / 8,
   };
   return dimension;
 }

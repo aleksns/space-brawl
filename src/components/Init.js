@@ -167,8 +167,8 @@ export default class Init {
   }
 
   addEnemy() {
-    //let newEnemy = new EnemyT4(this.game);
-    let newEnemy = new BossTest(this.game);
+    let newEnemy = new EnemyT4(this.game);
+    //let newEnemy = new BossTest(this.game);
     newEnemy.initialize();
     //newEnemy.startTimers();
     this.game.enemies.push(newEnemy);
@@ -203,10 +203,10 @@ export default class Init {
     }
   }
 
-  addEffect(object, effectType, projectile) {
-    // if(this.game.effects.length > 3) {
-    //   return;
-    // }
+  addEffect(object, effectType) {
+    if(this.game.effects.length > 5) {
+      return;
+    }
     let newEffect;
     switch (effectType) {
       case "explosionDefault":

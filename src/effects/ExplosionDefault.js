@@ -13,8 +13,8 @@ export const explosionDefault = {
 
 export class ExplosionDefault extends Effect {
   constructor(game, object) {
-    super(game, object, "default");
-
+    super(game);
+    this.object = object;
     this.x = 0;
     this.y = 0;
 
@@ -30,7 +30,11 @@ export class ExplosionDefault extends Effect {
     this.isRect = false;
   }
 
-  update() {
+  drawEffect(ctx) {
+    this.game.draw.drawArc(this, ctx);
+  }
+
+  updateEffect() {
     if (this.opacity <= 0) {
       this.isDead = true;
       return;
@@ -47,4 +51,6 @@ export class ExplosionDefault extends Effect {
     this.opacity += this.opacityModifier;
     this.opacity = Math.round((this.opacity + Number.EPSILON) * 100) / 100;
   }
+
+
 }

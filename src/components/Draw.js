@@ -23,7 +23,7 @@ export default class Draw {
     this.threatBar = new ThreatLevelBar(this.game);
     this.scoreAndCoins = new ScoreAndCoins(this.game);
 
-    // proejctile filters
+    // projectile filters
     this.brightnessNum = 100;
     this.saturationNum = 100;
     this.brightnessModifier = 2;
@@ -105,6 +105,7 @@ export default class Draw {
     }
 
     ctx.current.filter = object.filter;
+    ctx.current.globalAlpha = object.opacity;
     ctx.current.drawImage(object.image, object.x, object.y, object.w, object.h);
     ctx.current.filter = "none";
 
@@ -134,6 +135,9 @@ export default class Draw {
     }
 
     this.drawObject(this.game.player, this.ctx);
+    if(this.game.player.isShieldOn) {
+      this.drawObject(this.game.player.shieldOrb.props, this.ctx);
+    }
   }
 
   drawEnemies() {
@@ -190,18 +194,19 @@ export default class Draw {
       return;
     }
     for (let i = 0; i < this.game.effects.length; i++) {
-      this.drawEffect(this.game.effects[i]);
+      //this.drawEffect(this.game.effects[i]);
+      this.game.effects[i].draw(this.ctx2);
     }
   }
 
-  drawEffect(effect) {
-      if(effect.isRect) {
-        this.drawRect(effect, this.ctx2);
-      }
-    else {
-    this.drawArc(effect, this.ctx2);
-    }
-  }
+  // drawEffect(effect) {
+  //     if(effect.isRect) {
+  //       this.drawRect(effect, this.ctx2);
+  //     }
+  //   else {
+  //   this.drawArc(effect, this.ctx2);
+  //   }
+  // }
 
   drawRect(object, ctx) {
     ctx.current.globalAlpha = object.opacity;

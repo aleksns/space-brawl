@@ -177,7 +177,7 @@ export default class Game {
 
     if (this.now == 0) {
       this.background.play();
-      this.update.startTimersOnInit();
+      this.update.updateOnInit();
     }
 
     this.update.update();
