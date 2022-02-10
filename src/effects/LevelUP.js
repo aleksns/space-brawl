@@ -30,6 +30,10 @@ export class LevelUP extends Effect{
   }
 
   drawEffect(ctx) {
+    if (this.props.opacity <= 0) {
+      return;
+    }
+    
     this.game.draw.drawObject(this.props, ctx);
   }
 

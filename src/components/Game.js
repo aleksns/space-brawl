@@ -15,6 +15,7 @@ import SoundList from "./SoundList";
 import Cutscenes from "../cutscenes/Cutscenes";
 import Animations from "../animations/Animations";
 import Script from "../scripts/Script";
+import Media from "./Media";
 
 //Remove some variables FROM THE CONSTRUCTOR which are not being used
 //e.g. board height, allowed board height, etc
@@ -35,6 +36,7 @@ export default class Game {
     this.ctx4 = context4Ref;
     this.ctx5 = context5Ref;
     this.canvas5 = canvas5Ref;
+    this.media = new Media();
     this.animations = new Animations(this);
     this.progression = new Progression(this);
     this.init = new Init(this);
@@ -117,21 +119,6 @@ export default class Game {
     console.log("CONSTRUCTOR > GAME");
   }
 
-  isGameAlive() {
-    return this.isGameOn;
-  }
-
-  getPlayerHP() {
-    return this.player.health;
-  }
-  getScore() {
-    return this.score;
-  }
-
-  isPlayerDead() {
-    return this.player.isDead;
-  }
-
   stopAllAction() {
     this.isGlobalActionRestricted = !this.isGlobalActionRestricted;
     if (this.isGlobalActionRestricted == true) {
@@ -177,7 +164,8 @@ export default class Game {
 
     if (this.now == 0) {
       this.background.play();
-      this.update.updateOnInit();
+      this.init.initialize();
+     // this.update.updateOnInit();
     }
 
     this.update.update();

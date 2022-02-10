@@ -4,8 +4,8 @@ import { colors } from "../services/services";
 export const buffDefault = {
   opacity: 0.1,
   opacityModifier: 0.10,
-  radius: 15,
-  radiusModifier: 10,
+  radius: 10,
+  radiusModifier: 6,
   lineWidth: 6,
   color: colors.green,
   isFill: true,

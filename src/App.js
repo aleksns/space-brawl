@@ -160,13 +160,6 @@ export default function App() {
     setDIsPressed(gameRef.current.keys.keyD);
   }
 
-  // function updateUI() {
-  //   setPlayerHP(gameRef.current.getPlayerHP());
-  //   handleUiKeysPressed();
-  //   setScore(gameRef.current.getScore());
-  //   setPlayerDmg(gameRef.current.getPlayerDmg());
-  //   setPlayerAtkSpeed(gameRef.current.getPlayerAtkSpeed());
-  // }
 
   function startIt() {
     setIsGameOver(false);

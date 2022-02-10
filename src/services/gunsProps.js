@@ -2,12 +2,48 @@ export const aimFrontPlayer = -360;
 export const aimFrontEnemy = 0;
 
 /* < Player > */
-export const getPlayerT4DoubleFront = {
-  projectileSpeed: 10,
-  projectileAcceleration: 4,
+export const getPlayerT4SingleFront = {
+  projectileSpeed: 30,
+  projectileAcceleration: 15,
 
-  atkSpeed: 0.3,
-  rateOfFire: 0.3,
+  atkSpeed: 0.2,
+  rateOfFire: 0.2,
+
+  isRotating: false,
+  angle: aimFrontPlayer,
+  angleModifier: 0,
+  angleMin: aimFrontPlayer,
+  angleMax: 0,
+
+  damage: 10,
+  numOfRounds: 1,
+  isLaserGun: false,
+};
+
+export const getPlayerT4DoubleFront = {
+  projectileSpeed: 30,
+  projectileAcceleration: 15,
+
+  atkSpeed: 0.15,
+  rateOfFire: 0.15,
+
+  isRotating: false,
+  angle: aimFrontPlayer,
+  angleModifier: 0,
+  angleMin: aimFrontPlayer,
+  angleMax: 0,
+
+  damage: 10,
+  numOfRounds: 1,
+  isLaserGun: false,
+};
+
+export const getPlayerT4TripleFront = {
+  projectileSpeed: 30,
+  projectileAcceleration: 15,
+
+  atkSpeed: 0.15,
+  rateOfFire: 0.15,
 
   isRotating: false,
   angle: aimFrontPlayer,
@@ -55,24 +91,6 @@ export const getPlayerT4Rotating = {
   numOfRounds: 1,
   isLaserGun: false,
 };
-
-export const getPlayerT4SingleFrontGunProps = {
-    projectileSpeed: 30,
-    projectileAcceleration: 15,
-  
-    atkSpeed: 0.2,
-    rateOfFire: 0.2,
-
-    isRotating: false,
-    angle: -360,
-    angleModifier: 3,
-    angleMin: -360,
-    angleMax: 0,
-  
-    damage: 10,
-    numOfRounds: 1,
-    isLaserGun: false,
-  };
 
   export const getPlayerLaserGun = {
     projectileSpeed: 0,

@@ -1,5 +1,5 @@
 import {
-  getPlayerDefaultStats,
+  getPlayerT3Stats,
   getEnemyT4DefaultStats,
   getEnemyT5DefaultStats,
   getEnemyT0DefaultStats,
@@ -10,12 +10,9 @@ export default class Stats {
     this.game = game;
 
     this.player = {
-      damage: getPlayerDefaultStats.damage,
-      health: getPlayerDefaultStats.health,
-      maxHealth: getPlayerDefaultStats.maxHealth,
-      s: getPlayerDefaultStats.speed,
-      a: getPlayerDefaultStats.speed / getPlayerDefaultStats.accelerationMod,
-      rammingDmg: getPlayerDefaultStats.rammingDmg,
+      s: getPlayerT3Stats.speed,
+      a: getPlayerT3Stats.speed / getPlayerT3Stats.accelerationMod,
+      rammingDmg: getPlayerT3Stats.rammingDmg,
     };
 
     this.enemyT4 = {

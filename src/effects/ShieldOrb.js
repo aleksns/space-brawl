@@ -1,6 +1,6 @@
-import shieldOrb1 from "../images/animations-images/shieldOrb-images/shieldOrb1.png";
+import shieldOrb from "../images/shieldOrb.png";
 
-export class ShieldOrb {
+export default class ShieldOrb {
   constructor(game, owner) {
     this.game = game;
     this.owner = owner;
@@ -22,10 +22,17 @@ export class ShieldOrb {
       opacityMax: 1.0
     };
     this.props.image = new Image();
-    this.props.image.src = shieldOrb1;
+    this.props.image.src = shieldOrb;
   }
 
-  updateShieldOrb() {
+  reset() {
+    this.brightness = 100;
+    this.brightnessModifier = 2;
+    this.props.opacity = 1.0;
+    this.filter = `brightness(${this.brightness}%)`;
+  }
+
+  update() {
     // this.props.image = this.game.animations.propsAnimation.image;
 
     this.props.x = this.owner.x - this.offStep;
@@ -47,7 +54,6 @@ export class ShieldOrb {
     }
 
     this.props.filter = `brightness(${this.brightness}%)`;
-    console.log(`from orb, BRIGHTNESS + ${this.brightness}`);
   }
 
   setOpacity(value) {

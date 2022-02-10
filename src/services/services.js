@@ -3,11 +3,27 @@ export const GAME_HEIGHT = window.innerHeight;
 //export const GAME_WIDTH = 1536;
 //export const GAME_HEIGHT = 734;
 
-export function getPlayerT0Dimension() {
+export function getPlayerT1Dimension() {
+  let dimension = {
+    w: GAME_HEIGHT / 5,
+    h: GAME_HEIGHT / 7.5,
+  };
+  return dimension;
+}
+
+export function getPlayerT2Dimension() {
+  let dimension = {
+    w: GAME_HEIGHT / 5.5,
+    h: GAME_HEIGHT / 8,
+  };
+  return dimension;
+}
+
+export function getPlayerT3Dimension() {
   let dimension = {
     // w: GAME_WIDTH / 12,
     // h: GAME_HEIGHT / 9,
-    w: GAME_HEIGHT / 8,
+    w: GAME_HEIGHT / 6,
     h: GAME_HEIGHT / 8,
   };
   return dimension;
@@ -100,8 +116,23 @@ export const getBuffsDuration = {
   slow: 4.0,
 };
 
-export const getPlayerDefaultStats = {
-  damage: 10,
+export const getPlayerT1Stats = {
+  health: 400,
+  maxHealth: 400,
+  speed: 25,   //25
+  accelerationMod: 10,
+  rammingDmg: 0.1,
+};
+
+export const getPlayerT2Stats = {
+  health: 200,
+  maxHealth: 200,
+  speed: 25,   //25
+  accelerationMod: 10,
+  rammingDmg: 0.1,
+};
+
+export const getPlayerT3Stats = {
   health: 100,
   maxHealth: 100,
   speed: 25,   //25

@@ -12,6 +12,7 @@ import { Coin } from "../items/Coin";
 import { BossTest } from "../ships/BossTest";
 import { ExplosionSmall } from "../effects/ExplosionSmall";
 import { Laser } from "../projectiles/Laser";
+import { initMedia } from "../services/media";
 
 export default class Init {
   constructor(game) {
@@ -51,6 +52,8 @@ export default class Init {
 
   initialize() {
     this.initTimers();
+    this.game.player.initialize();
+    this.game.skills.initialize();
   }
 
   initTimers() {

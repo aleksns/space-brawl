@@ -1,17 +1,15 @@
-import { initAnimationFrames } from "../animations/ListOfFrames";
-
 export default class Update {
   constructor(game) {
     this.game = game;
   }
 
-  updateOnInit() {
-    this.game.init.initialize();
-    //this.game.player.initPlayer();
-    this.game.player.initialize();
-    this.game.skills.initialize();
-    initAnimationFrames();
-  }
+  // updateOnInit() {
+  //   this.game.init.initialize();
+  //   //this.game.player.initPlayer();
+  //   this.game.player.initialize();
+  //   this.game.skills.initialize();
+  //   initMedia();
+  // }
 
   update() {
     this.game.controls.update();

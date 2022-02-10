@@ -94,7 +94,7 @@ export default class Skills {
     };
 
     this.skills = [];
-    this.skills.push(this.atkSpeed);
+    //this.skills.push(this.atkSpeed);
     this.skills.push(this.slowTime);
     this.skills.push(this.shield);
     this.skills.push(this.laser);
@@ -142,7 +142,7 @@ export default class Skills {
   }
 
   updateTimersAfterSlowSkill() {
-    let slowTimeDifference =  this.game.now - this.timeBeforeSlow;
+    let slowTimeDifference = this.game.now - this.timeBeforeSlow;
     for (let i = 0; i < this.skills.length; i++) {
       //this.skills[i].then += slowTimeDifference;    //toDo - assign diferent variable to CD calculation, to avoid reseting CD
     }
@@ -182,6 +182,7 @@ export default class Skills {
   turnOffShieldSkill() {
     this.shield.isApplied = false;
     this.game.player.isShieldOn = false;
+    this.game.player.shieldOrb.reset();
   }
 
   updateSkillRemainingCD(skill) {
@@ -263,10 +264,10 @@ export default class Skills {
     //   return;
     // }
     let timePassed = (this.game.now - this.shield.then) / 1000;
-    if(timePassed >= this.shield.duration / 2) {
+    if (timePassed >= this.shield.duration / 2) {
       this.changeShieldDependingOnRemainingTime(timePassed);
     }
-    
+
     if (
       timePassed >= this.shield.duration ||
       this.game.isGlobalActionRestricted
@@ -295,6 +296,32 @@ export default class Skills {
       this.game.playerGuns,
       this.atkSpeed.value
     );
+  }
+
+  resetAllSkillsCD() {
+    for (let i = 0; i < this.skills.length; i++) {
+      this.skills[i].remainingCD = 0;
+      this.skills[i].then = 0;
+      this.skills[i].isOnCD = false;
+    }
+  }
+
+  turnOffAllSkills() {
+    if (this.slowTime.isApplied) {
+      this.turnOffSlowTimeSkill();
+    }
+
+    if (this.shield.isApplied) {
+      this.turnOffShieldSkill();
+    }
+
+    if (this.atkSpeed.isApplied) {
+      this.turnOffAtkSpeedSkill();
+    }
+
+    if (this.laser.isApplied) {
+      this.turnOffLaserSkill();
+    }
   }
 
   restoreHealth(amount) {
