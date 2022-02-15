@@ -1,18 +1,16 @@
-export const aimFrontPlayer = -360;
-export const aimFrontEnemy = 0;
 
 /* < Player > */
 export const getPlayerT4SingleFront = {
-  projectileSpeed: 30,
-  projectileAcceleration: 15,
+  projectileSpeed: 25,
+  projectileAcceleration: 12,
 
   atkSpeed: 0.2,
   rateOfFire: 0.2,
 
   isRotating: false,
-  angle: aimFrontPlayer,
+  angle: -360,
   angleModifier: 0,
-  angleMin: aimFrontPlayer,
+  angleMin: -360,
   angleMax: 0,
 
   damage: 10,
@@ -28,9 +26,9 @@ export const getPlayerT4DoubleFront = {
   rateOfFire: 0.15,
 
   isRotating: false,
-  angle: aimFrontPlayer,
+  angle: -360,
   angleModifier: 0,
-  angleMin: aimFrontPlayer,
+  angleMin: -360,
   angleMax: 0,
 
   damage: 10,
@@ -46,9 +44,9 @@ export const getPlayerT4TripleFront = {
   rateOfFire: 0.15,
 
   isRotating: false,
-  angle: aimFrontPlayer,
+  angle: -360,
   angleModifier: 0,
-  angleMin: aimFrontPlayer,
+  angleMin: -360,
   angleMax: 0,
 
   damage: 10,
@@ -92,7 +90,43 @@ export const getPlayerT4Rotating = {
   isLaserGun: false,
 };
 
-  export const getPlayerLaserGun = {
+export const getPlayerT1LaserGun = {
+  projectileSpeed: 0,
+  projectileAcceleration: 0,
+
+  atkSpeed: 1000.0,
+  rateOfFire: 1000.0,
+
+  isRotating: false,
+  angle: -360,
+  angleModifier: 0,
+  angleMin: -360,
+  angleMax: 0,
+
+  damage: 14,
+  numOfRounds: 1,
+  isLaserGun: true,
+};  
+
+export const getPlayerT2LaserGun = {
+  projectileSpeed: 0,
+  projectileAcceleration: 0,
+
+  atkSpeed: 1000.0,
+  rateOfFire: 1000.0,
+
+  isRotating: false,
+  angle: -360,
+  angleModifier: 0,
+  angleMin: -360,
+  angleMax: 0,
+
+  damage: 7,
+  numOfRounds: 1,
+  isLaserGun: true,
+};  
+
+  export const getPlayerT3LaserGun = {
     projectileSpeed: 0,
     projectileAcceleration: 0,
   
@@ -100,9 +134,9 @@ export const getPlayerT4Rotating = {
     rateOfFire: 1000.0,
 
     isRotating: false,
-    angle: aimFrontPlayer,
+    angle: 0,
     angleModifier: 0,
-    angleMin: aimFrontPlayer,
+    angleMin: 0,
     angleMax: 0,
   
     damage: 3,
@@ -118,6 +152,12 @@ export const getEnemyT4GunProps = {
 
   atkSpeed: 1.0,
   rateOfFire: 1.0,
+
+  isRotating: false,
+  angle: 0,
+  angleModifier: 0,
+  angleMin: 0,
+  angleMax: 0,
 
   damage: 3,
   numOfRounds: 1,
@@ -177,6 +217,24 @@ export const getBossDoubleBurstCenteredGun = {
 
   damage: 1,
   numOfRounds: 20,
+  isLaserGun: false,
+};
+
+export const getBossT3DoubleSpray = {
+  projectileSpeed: 6,
+  projectileAcceleration: 4,
+
+  atkSpeed: 0.1,
+  rateOfFire: 0.1,
+
+  isRotating: true,
+  angle: 0,
+  angleModifier: -3,
+  angleMin: -360,
+  angleMax: 0,
+
+  damage: 1,
+  numOfRounds: 1,
   isLaserGun: false,
 };
 

@@ -65,7 +65,7 @@ export default class Skills {
       atkSpeedGlobal: 55,
       speedGlobal: 120,
       duration: 3,
-      cd: 6,
+      cd: 5,
       remainingCD: 0,
       isApplied: false,
       isOnCD: false,
@@ -85,7 +85,7 @@ export default class Skills {
 
     this.laser = {
       duration: 8,
-      cd: 30,
+      cd: 9,
       remainingCD: 0,
       isApplied: false,
       isOnCD: false,

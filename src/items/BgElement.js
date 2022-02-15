@@ -14,7 +14,7 @@ const minHeight = 50;
 const maxHeight = 250;
 const color = "#ffffff";
 //s - speed, a - acceleration
-const s = 4; //default 2
+const s = 3; //default 2
 const a = s / 30;
 
 export class BgElement extends Item {
@@ -39,9 +39,6 @@ export class BgElement extends Item {
     this.isSpawnOnScreen = undefined;
   }
 
-  updateItem() {
-    
-  }
 
   updateImage() {
     ///tbd

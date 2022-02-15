@@ -1,15 +1,8 @@
 export default class Update {
   constructor(game) {
     this.game = game;
-  }
 
-  // updateOnInit() {
-  //   this.game.init.initialize();
-  //   //this.game.player.initPlayer();
-  //   this.game.player.initialize();
-  //   this.game.skills.initialize();
-  //   initMedia();
-  // }
+  }
 
   update() {
     this.game.controls.update();
@@ -100,6 +93,7 @@ export default class Update {
 
   updateEnemies() {
     this.updateObjects(this.game.enemies);
+    this.game.gameBoard.setEmptyPositionForT5Enemies();
   }
 
   updateProjectiles() {
@@ -119,8 +113,8 @@ export default class Update {
           this.game.enemies[i]
         )
       ) {
-        this.game.enemies[i].gotHit(false);
-        this.game.player.gotHit(false);
+        this.game.enemies[i].gotHitByShipHull(this.game.player);
+        this.game.player.gotHitByShipHull(this.game.enemies[i]);
       }
     }
   }
@@ -134,7 +128,7 @@ export default class Update {
         ) &&
         !this.game.enemyProjectiles[i].isPlayerOwned
       ) {
-        this.game.player.gotHit(true, this.game.enemyProjectiles[i]);
+        this.game.player.gotHitByProjectile(this.game.enemyProjectiles[i]);
         this.game.enemyProjectiles[i].setDead();
       }
     }
@@ -150,7 +144,9 @@ export default class Update {
           ) &&
           this.game.playerProjectiles[y].isPlayerOwned
         ) {
-          this.game.enemies[i].gotHit(true, this.game.playerProjectiles[y]);
+          this.game.enemies[i].gotHitByProjectile(
+            this.game.playerProjectiles[y]
+          );
           if (!this.game.playerProjectiles[y].isLaser) {
             this.game.playerProjectiles[y].setDead();
           }

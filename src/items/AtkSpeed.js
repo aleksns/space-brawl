@@ -34,15 +34,11 @@ export class AtkSpeed extends Item {
     //this.effectType = "atkspeed";   for different effects to lay
   }
 
-  updateItem() {
-    
-  }
-
   updateImage() {
     ///tbd
   }
 
-  initializeItem() {  
+  initializeItem() {
     this.randomize();
   }
 

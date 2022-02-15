@@ -18,7 +18,6 @@ export default class Projectile {
     this.vY = 0;
     this.dX = 0;
     this.dY = 0;
-    this.offStep = -100;
 
     this.visionRange = {
       x: 0,
@@ -60,6 +59,7 @@ export default class Projectile {
     if (this.isLaser) {
       this.x = this.barrel.x;
       this.y = this.barrel.y - this.h;
+      this.h = this.getLaserHeight();
       return;
     }
     if (this.isAccelerationType) {
@@ -90,9 +90,37 @@ export default class Projectile {
   }
 
   removeIfOutsideScreen() {
-    if (this.game.collision.isCollisionWithAnyBorder(this, this.offStep)) {
+    if (
+      this.game.collision.isCollisionBorderUp(this, this.getOffstepY0()) ||
+      this.game.collision.isCollisionBorderDown(this, this.getOffstepY1()) ||
+      this.game.collision.isCollisionBorderLeft(this, this.getOffstepX0()) ||
+      this.game.collision.isCollisionBorderRight(this, this.getOffstepX1())
+    ) {
       this.setDead();
     }
+  }
+
+  getOffstepX0() {
+    let offStepX0 = -this.game.gameBoard.allowedX.x0 - this.w;
+    return offStepX0;
+  }
+  getOffstepX1() {
+    let offStepX1 = -this.w;
+    return offStepX1;
+  }
+
+  getOffstepY0() {
+    let offStepY0 = -this.game.gameBoard.allowedY.y0 - this.h;
+    return offStepY0;
+  }
+  getOffstepY1() {
+    let offStepY1 = -this.h;
+    return offStepY1;
+  }
+
+  getLaserHeight() {
+    let h = this.gun.owner.y + this.gun.owner.h;
+    return h;
   }
 
   setFilter(filterValue) {

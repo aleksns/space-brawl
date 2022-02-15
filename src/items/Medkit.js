@@ -35,10 +35,6 @@ export class Medkit extends Item {
     //this.effectType = "medkit";   for different effects to play
   }
 
-  updateItem() {
-    
-  }
-
   updateImage() {
     ///tbd
   }

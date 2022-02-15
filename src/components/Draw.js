@@ -1,7 +1,7 @@
 import { Pulse } from "../effects/Pulse";
 import { colors, GAME_WIDTH } from "../services/services";
 import { HpBarPlayer } from "../ui/HpBarPlayer";
-import { ScoreAndCoins } from "../ui/ScoreAndCoins";
+import { ScoreAndExp } from "../ui/ScoreAndExp";
 import { ThreatLevelBar } from "../ui/ThreatLevelBar";
 
 const hitRegFilter = "saturate(50%) brightness(150%)";
@@ -21,7 +21,7 @@ export default class Draw {
     this.skillsBar = this.game.skillsBar;
     this.hpBarPlayer = new HpBarPlayer(this.game);
     this.threatBar = new ThreatLevelBar(this.game);
-    this.scoreAndCoins = new ScoreAndCoins(this.game);
+    this.scoreAndExp = new ScoreAndExp(this.game);
 
     // projectile filters
     this.brightnessNum = 100;
@@ -30,7 +30,7 @@ export default class Draw {
     this.saturationModifier = -2.5;
     this.brightnessMin = 100;
     this.brightnessMax = 200;
-    this.saturationMin = 50;
+    this.saturationMin = 60;
     this.saturationMax = 100;
     this.filter = `saturate(${this.saturationNum}%) brightness(${this.brightnessNum}%)`;
   }
@@ -58,7 +58,7 @@ export default class Draw {
   drawUIOnInit() {
     this.drawObject(this.hpBarPlayer.hpBarImageProps, this.ctx5);
     this.drawObject(this.threatBar.threatBarImageProps, this.ctx5);
-    this.drawObject(this.scoreAndCoins.coinsImageProps, this.ctx5);
+    this.drawObject(this.scoreAndExp.coinImageProps, this.ctx5);
   }
 
   drawCutscene(cutscene, ctx) {
@@ -68,7 +68,7 @@ export default class Draw {
   drawUI() {
     this.hpBarPlayer.draw(this.ctx4);
     this.threatBar.draw(this.ctx4);
-    this.scoreAndCoins.drawScoreAndCoinsText();
+    this.scoreAndExp.drawScoreAndExpBar(this.ctx4);
     this.skillsBar.draw(this.ctx4);
   }
 
@@ -135,6 +135,14 @@ export default class Draw {
     }
 
     this.drawObject(this.game.player, this.ctx);
+    
+    // this.ctx.current.lineWidth = 12;
+    // this.ctx.current.beginPath();
+    // this.ctx.current.rect(this.game.player.x, this.game.player.y, this.game.player.w, this.game.player.h);
+    //   this.ctx.current.strokeStyle = "green";
+    //   this.ctx.current.stroke();
+    // this.ctx.current.closePath();
+
     if(this.game.player.isShieldOn) {
       this.drawObject(this.game.player.shieldOrb.props, this.ctx);
     }
@@ -250,18 +258,18 @@ export default class Draw {
   }
 
   drawVisionRange(visionRange) {
-    this.game.ctx.current.strokeStyle = visionRange.color;
-    this.game.ctx.current.lineWidth = 3;
-    this.game.ctx.current.beginPath();
-    this.game.ctx.current.arc(
+    this.ctx.current.strokeStyle = visionRange.color;
+    this.ctx.current.lineWidth = 3;
+    this.ctx.current.beginPath();
+    this.ctx.current.arc(
       visionRange.x,
       visionRange.y,
       visionRange.r,
       0,
       2 * Math.PI
     );
-    this.game.ctx.current.stroke();
-    this.game.ctx.current.closePath();
+    this.ctx.current.stroke();
+    this.ctx.current.closePath();
   }
 
   updateFilter() {

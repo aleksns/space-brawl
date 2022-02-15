@@ -1,12 +1,13 @@
 import Ship from "./Ship";
 import {
   getRandomInt,
-  getEnemyT5DefaultStats,
   getEnemyT5Dimension,
   GAME_WIDTH,
+  getDefaultEnemyProjectile,
+  GAME_HEIGHT,
 } from "../services/services";
-import enemyImageT5 from "../images/enemyShipT5.png";
 import { SingleGun } from "../guns/SingleGun";
+import { getEnemyT4GunProps } from "../services/gunsProps";
 
 export class EnemyT5 extends Ship {
   constructor(game) {
@@ -21,11 +22,11 @@ export class EnemyT5 extends Ship {
 
     this.health = this.game.stats.enemyT5.health;
     this.maxHealth = this.game.stats.enemyT5.maxHealth;
+    this.rammingDmg = this.game.stats.enemyT5.rammingDmg
     this.isPlayer = false;
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.s = this.game.stats.enemyT5.s; // default was 2
     this.a = this.s / 60; // default was this.s / 40
-    //this.direction = "S";
     /* offStep = applies additional distance for enemies to stop their movement
     before reaching allowed borders and maintaining smooth bounce effect */
     // this.offStepX = Math.floor(this.w / 4);
@@ -38,16 +39,7 @@ export class EnemyT5 extends Ship {
     this.damage = this.game.stats.enemyT5.damage;
     this.gun = undefined;
 
-    this.image = new Image();
-    this.image.src = enemyImageT5;
-
-    //width and height help to detect the collision (moment when an object has arrived)
-    this.moveToPosition = {
-      x: 0,
-      y: 0,
-      w: 5,
-      h: 5
-    }
+    this.image = this.game.media.enemyShipT5;
 
     this.destination = {
       x: 0,
@@ -57,35 +49,36 @@ export class EnemyT5 extends Ship {
     this.directionChangeIntervalNow = 0;
     this.directionChangeInterval = 4;
     this.isCheckSouthOutOfBorderOnly = true;
+    this.isMovingToPosition = false;
 
     this.itemToDrop = {
       id: "coin",
       value: 2,
     }
-
+    this.id = "t5";
     console.log("CONSTRUCTOR > EnemyT5");
   }
 
   fireGun() {
     this.gun.fire();
-    this.game.laser.play();
   }
  
   
-  initializeShip() {
-    this.x = getRandomInt(this.w, this.collision.width - this.w);
-    this.y = getRandomInt(-this.h - 50, -this.h - 100);
-
-    this.getEmptyPositionOutsideNorthBoard();
+  initializeShip() {  
+    this.setNewPosition();
     this.setNewDirection();
-
+    this.game.movement.applyConstantSpeed(this);    
     this.setTargetFront();
-    var newGun = new SingleGun(this.game, this);
-    this.gun = newGun; 
+
+    let newSingleGun = new SingleGun(this.game, this);
+    newSingleGun.initialize(getEnemyT4GunProps, getDefaultEnemyProjectile);
+    newSingleGun.setProjectileImage(this.game.media.projectileGreenImg);
+
+    this.gun = newSingleGun; 
   }
 
   move() {  
-    this.game.movement.applyFrictionAndVelocity(this);
+    this.game.movement.applyVelocity(this);
   }
 
   updateShip() {
@@ -94,17 +87,19 @@ export class EnemyT5 extends Ship {
     }
   }
 
-  setNewDirection() {
-    this.moveToPosition.x = this.x;
-    this.moveToPosition.y = GAME_WIDTH + this.h;
+  setNewPosition() {
+    this.x = this.game.gameBoard.getPositionOutsideNorthBoard(this).x;
+    this.y = this.game.gameBoard.getPositionOutsideNorthBoard(this).y;
+  }
 
+  setNewDirection() {
     this.setDestinationCords();
     this.game.movement.calculateVectorsAndDistance(this);
   }
 
   setDestinationCords() {
-    this.destination.x = this.moveToPosition.x;
-    this.destination.y = this.moveToPosition.y;
+    this.destination.x = this.x;
+    this.destination.y = GAME_HEIGHT + this.h;
   }
 
   playHitEffect(projectileType) {

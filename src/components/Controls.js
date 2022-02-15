@@ -160,7 +160,7 @@ export default class Controls {
 
   handlePauseTimeBeforeActivation() {
     let timePassed = (this.game.now - this.pauseThen) / 1000;
-    if (timePassed >= 1) {
+    if (timePassed >= 0.4) {
       this.canPause = true;
     }
   }

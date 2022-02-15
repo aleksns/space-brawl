@@ -6,6 +6,7 @@ export default class Gun {
     this.game = game;
     this.owner = owner;
     this.isPlayerOwned = this.owner.isPlayer;
+    this.projectileImage = undefined;
 
     this.isOnTarget = false;
     this.target = this.owner.target;
@@ -165,6 +166,10 @@ export default class Gun {
     this.dW = projectileProps.w;
   }
 
+  setProjectileImage(image) {
+    this.projectileImage = image;
+  }
+ 
   updateLaserdW() {
     this.dW = this.laserProjectile.w;
   }

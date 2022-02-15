@@ -3,6 +3,7 @@ import {
   getEnemyT4DefaultStats,
   getEnemyT5DefaultStats,
   getEnemyT0DefaultStats,
+  getEnemyT3DefaultStats,
 } from "../services/services";
 
 export default class Stats {
@@ -13,6 +14,16 @@ export default class Stats {
       s: getPlayerT3Stats.speed,
       a: getPlayerT3Stats.speed / getPlayerT3Stats.accelerationMod,
       rammingDmg: getPlayerT3Stats.rammingDmg,
+    };
+
+    this.enemyT3 = {
+      damage: getEnemyT3DefaultStats.damage,
+      health: getEnemyT3DefaultStats.health,
+      maxHealth: getEnemyT3DefaultStats.maxHealth,
+      s: getEnemyT3DefaultStats.speed,
+      a: getEnemyT3DefaultStats.speed / getEnemyT3DefaultStats.accelerationMod,
+      rammingDmg: getEnemyT3DefaultStats.rammingDmg,
+      scorePoints: getEnemyT3DefaultStats.scorePoints,
     };
 
     this.enemyT4 = {
@@ -47,6 +58,7 @@ export default class Stats {
 
     this.enemiesStats = [];
     this.enemiesStats.push(this.enemyT0);
+    this.enemiesStats.push(this.enemyT3);
     this.enemiesStats.push(this.enemyT4);
     this.enemiesStats.push(this.enemyT5);
 
@@ -99,6 +111,7 @@ export default class Stats {
     this.decreaseObjectsSpeed(this.game.enemyProjectiles);
 
     this.decreaseObjectsSpeed(this.game.items);
+    this.decreaseObjectsSpeed(this.game.coins);
     this.decreaseObjectsSpeed(this.game.bgElements);
   }
 
@@ -144,6 +157,7 @@ export default class Stats {
     this.increaseObjectsSpeed(this.game.enemyProjectiles);
 
     this.increaseObjectsSpeed(this.game.items);
+    this.increaseObjectsSpeed(this.game.coins);
     this.increaseObjectsSpeed(this.game.bgElements);
 
     this.isGlobalSlowAll = false;
@@ -186,6 +200,9 @@ export default class Stats {
     }
     ship.s /= speed;
     ship.a /= speed;
+    ////
+    ship.vX /= speed;
+    ship.vY /= speed;
     //object.isSlowSpeedApplied = true;
   }
 
@@ -195,6 +212,9 @@ export default class Stats {
     }
     ship.s *= speed;
     ship.a *= speed;
+    ///
+    ship.vX *= speed;
+    ship.vY *= speed;
     //object.isSlowSpeedApplied = false;
   }
 
@@ -207,12 +227,12 @@ export default class Stats {
   }
 
   decreaseGunAtkSpeed(gun, value) {
-    console.log(`DECREASE BEFORE gun.atkSpeed = ${gun.atkSpeed}, rateOfFire = ${gun.rateOfFire}`)
+    //console.log(`DECREASE BEFORE gun.atkSpeed = ${gun.atkSpeed}, rateOfFire = ${gun.rateOfFire}`)
     gun.atkSpeed *= value;
     gun.rateOfFire *= value;
     //gun.isSlowSpeedApplied = true;
-    console.log(`DECREASE AFTER gun.atkSpeed = ${gun.atkSpeed}, rateOfFire = ${gun.rateOfFire}`)
-    console.log(`------------------`)
+    //console.log(`DECREASE AFTER gun.atkSpeed = ${gun.atkSpeed}, rateOfFire = ${gun.rateOfFire}`)
+    //console.log(`------------------`)
   }
 
   increaseGunsAtkSpeed(guns, value) {
@@ -224,11 +244,11 @@ export default class Stats {
   }
 
   increaseGunAtkSpeed(gun, value) {
-    console.log(`INCREASE BEFORE gun.atkSpeed = ${gun.atkSpeed}, rateOfFire = ${gun.rateOfFire}`)
+    //console.log(`INCREASE BEFORE gun.atkSpeed = ${gun.atkSpeed}, rateOfFire = ${gun.rateOfFire}`)
     gun.atkSpeed /= value;
     gun.rateOfFire /= value;
-    console.log(`INCREASE AFTER gun.atkSpeed = ${gun.atkSpeed}, rateOfFire = ${gun.rateOfFire}`)
-    console.log(`===============`)
+    //console.log(`INCREASE AFTER gun.atkSpeed = ${gun.atkSpeed}, rateOfFire = ${gun.rateOfFire}`)
+    //console.log(`===============`)
     //gun.isSlowSpeedApplied = true;
   }
 }

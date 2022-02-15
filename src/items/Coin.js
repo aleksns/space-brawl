@@ -30,10 +30,6 @@ export class Coin extends Item {
     };
   }
 
-  updateItem() {
-    //tbd
-  }
-
   updateImage() {
     this.image = this.game.animations.coinAnimation.image;
   }
@@ -47,7 +43,7 @@ export class Coin extends Item {
   }
 
   applyEffect() {
-   this.game.progression.coinsPoints += this.value;
+   this.game.progression.increaseExp(this.value);
   }
 
   setMinSpawnRange() {

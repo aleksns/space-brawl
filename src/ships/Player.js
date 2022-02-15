@@ -11,7 +11,7 @@ import {
   getPlayerT1Stats,
   getPlayerT2Stats,
 } from "../services/services";
-import { getPlayerLaserGun, getPlayerT4DoubleFront, getPlayerT4Rotating, getPlayerT4SingleFront, getPlayerT4TripleFront } from "../services/gunsProps";
+import { getBossT3DoubleSpray, getPlayerT1LaserGun, getPlayerT2LaserGun, getPlayerT3LaserGun, getPlayerT4DoubleFront, getPlayerT4Rotating, getPlayerT4SingleFront, getPlayerT4TripleFront } from "../services/gunsProps";
 
 import { DoubleGun } from "../guns/DoubleGun";
 import { SingleGun } from "../guns/SingleGun";
@@ -32,12 +32,14 @@ export class Player extends Ship {
     this.y = defaultPosition.y;
     this.w = getPlayerT3Dimension().w;
     this.h = getPlayerT3Dimension().h;
-    this.health = getPlayerT3Stats.health;
-    this.maxHealth = getPlayerT3Stats.maxHealth;
+    // this.health = getPlayerT3Stats.health;
+    // this.maxHealth = getPlayerT3Stats.maxHealth;
+    this.health = 99999999;
+    this.maxHealth = 99999999;
     this.isPlayer = true;
     this.offStepX = 0;
     this.offStepX = 0;
-
+    this.rammingDmg = getPlayerT3Stats.rammingDmg;
     /* s - speed, a - acceleration */
     this.s = this.stats.player.s;
     this.a = this.stats.player.a;
@@ -46,7 +48,11 @@ export class Player extends Ship {
     this.image = this.game.media.playerShipT3;
     ;
     this.isLaserOn = false;
+    this.laserGunT1 = undefined;
+    this.laserGunT2 = undefined;
+    this.laserGunT3 = undefined;
     this.laserGun = undefined;
+
     this.isShieldOn = false;
     this.shieldOrb = undefined;
 
@@ -59,7 +65,9 @@ export class Player extends Ship {
   initializeShip() {
     this.game.playerGuns = [];
     this.initializePlayerGuns();
+    this.laserGun = this.laserGunT3;
     this.game.playerGuns.push(this.singleGun);
+    //this.game.playerGuns.push(this.doubleGun);
     this.shieldOrb = new ShieldOrb(this.game, this);
   }
 
@@ -67,7 +75,6 @@ export class Player extends Ship {
     if(this.isShieldOn) {
       this.shieldOrb.update();
     }
-    
   }
 
   fireGun() {
@@ -92,6 +99,7 @@ export class Player extends Ship {
     this.game.skills.resetAllSkillsCD();
     this.game.playerGuns = [];
     this.game.playerGuns.push(this.tripleGun);
+    this.laserGun = this.laserGunT1;
   }
 
   setTier2() {
@@ -105,6 +113,7 @@ export class Player extends Ship {
     this.game.skills.resetAllSkillsCD();
     this.game.playerGuns = [];
     this.game.playerGuns.push(this.doubleGun);
+    this.laserGun = this.laserGunT2;
   }
 
   setTier3() {
@@ -118,6 +127,7 @@ export class Player extends Ship {
     this.game.skills.resetAllSkillsCD();
     this.game.playerGuns = [];
     this.game.playerGuns.push(this.singleGun);
+    this.laserGun = this.laserGunT3;
   }
 
   setDefaultPosition() {
@@ -134,17 +144,26 @@ export class Player extends Ship {
   }
 
   initializePlayerGuns() {
-    this.laserGun = new SingleGun(this.game, this);
-    this.laserGun.initialize(getPlayerLaserGun, getPlayerLaser);
+    this.laserGunT1 = new SingleGun(this.game, this);
+    this.laserGunT1.initialize(getPlayerT1LaserGun, getPlayerLaser);
+
+    this.laserGunT2 = new SingleGun(this.game, this);
+    this.laserGunT2.initialize(getPlayerT2LaserGun, getPlayerLaser);
+
+    this.laserGunT3 = new SingleGun(this.game, this);
+    this.laserGunT3.initialize(getPlayerT3LaserGun, getPlayerLaser);
     
     this.singleGun = new SingleGun(this.game, this);
     this.singleGun.initialize(getPlayerT4SingleFront, getDefaultPlayerProjectile);
+    this.singleGun.setProjectileImage(this.game.media.projectilePlayerImg);
 
     this.doubleGun = new DoubleGun(this.game, this);
     this.doubleGun.initialize(getPlayerT4DoubleFront, getDefaultPlayerProjectile);
+    this.doubleGun.setProjectileImage(this.game.media.projectilePlayerImg);
 
     this.tripleGun = new TripleGun(this.game, this);
     this.tripleGun.initialize(getPlayerT4TripleFront, getDefaultPlayerProjectile);
+    this.tripleGun.setProjectileImage(this.game.media.projectilePlayerImg);
   }
   
 }

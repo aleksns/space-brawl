@@ -46,15 +46,12 @@ export default class Game {
     this.clearCanvas5 = clearCanvas5;
     this.skills = new Skills(this);
     this.skillsBar = new SkillsBar(this);
-    this.stats = new Stats(this); ///maybe to put into another class?
+    this.stats = new Stats(this);
     this.collision = new Collision(this);
     this.player = new Player(this);
 
     this.controls = new Controls(this);
     this.movement = new Movement(this);
-
-    // this.levelTransition = new LevelTransition(this);
-    // this.bossDeath = new BossDeath(this);
 
     this.cutscenes = new Cutscenes(this);
     this.script = new Script(this);
@@ -165,7 +162,6 @@ export default class Game {
     if (this.now == 0) {
       this.background.play();
       this.init.initialize();
-     // this.update.updateOnInit();
     }
 
     this.update.update();
@@ -175,7 +171,6 @@ export default class Game {
       this.isGameOn = false;
     }
     this.now = Date.now();
-    //pause any action during pause time (for cutscenes, level transitions)
 
     //console.log(`timePassed = ${this.timePassed}`)
     // console.log(`---------------------------------------`);

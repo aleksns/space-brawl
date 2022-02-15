@@ -18,9 +18,9 @@ export default class Item {
       opacity: 1.0,
       shadowBlur: 20,
       isFill: false,
-      s: 6, // s - speed
+      s: 4, // s - speed
       a: 0.2, /// a - acceleration (6/30)
-      visionRange: 70,
+      visionRange: 150,
     };
 
     this.itemCoinProps = {
@@ -30,14 +30,14 @@ export default class Item {
       opacity: 1.0,
       shadowBlur: 5,
       isFill: false,
-      s: 1.6,
+      s: 4,
       a: 0.05,
       visionRange: 140,
     };
 
     this.destination = {
       x: 0,
-      y: 0
+      y: 0,
     };
 
     this.offStep = undefined;
@@ -53,60 +53,73 @@ export default class Item {
     this.initializeItem();
     this.offStep = -this.h;
     this.setDestinationCords();
+
     this.game.movement.calculateVectorsAndDistance(this);
+    this.game.movement.applyConstantSpeed(this);
 
-    if (this.isInteractable) {
-      this.game.movement.applyAcceleration(this);
-    } else {
-      this.game.movement.applyConstantSpeed(this);
-    }   
-
-    if(this.game.stats.isGlobalSlowAll) {
+    if (this.game.stats.isGlobalSlowAll) {
       this.game.stats.decreaseObjectSpeed(this);
     }
   }
 
   update() {
     this.updateImage();
-    this.updateItem();
 
-    if(this.isInteractable) {
-    this.game.gameBoard.updateVisionRange(this);
-    this.updateDestinationCords();
-    this.handleItemMove();
-    //this.drawVisionRange();
-    }
-    else {
+    if (this.isInteractable) {
+      this.moveInteractableItem();
+    } else {
       this.game.movement.applyVelocity(this);
     }
 
-    if(!this.game.stats.isGlobalSlowAll) {
-      this.game.movement.moveSouth(this);
-    }
-
     if (this.isInteractable && this.isPickedUpByPlayer()) {
-        this.applyEffect();
-        this.setDead();
-        this.onDeath();
+      this.applyEffect();
+      this.setDead();
+      this.onDeath();
     }
 
     this.removeIfOutsideBorderDown();
+    //this.drawVisionRange();  
   }
 
-  handleItemMove() {
-    if (this.game.gameBoard.isInsideVisionRange(this.game.player, this.visionRange)) {
-      this.game.movement.calculateVectorsAndDistance(this);
-      this.game.movement.applyAcceleration(this);
-      this.game.ctx.current.strokeStyle = "orange";
-    } else {
-      this.game.ctx.current.strokeStyle = "green";
+  moveInteractableItem() {
+    this.game.gameBoard.updateVisionRange(this);
+
+    if (this.isPlayerInsideVisionRange()) {
+      this.moveItemToPlayer();
     }
+    else {
+      this.game.movement.moveSouth(this);
+    }
+
     this.game.movement.applyFrictionAndVelocity(this);
   }
 
+  moveItemToPlayer() {
+    //if (this.isPlayerInsideVisionRange()) {
+      this.updateDestinationCords();
+      this.game.movement.calculateVectorsAndDistance(this);
+      this.game.movement.applyAcceleration(this);
+      //this.game.ctx.current.strokeStyle = "orange";
+   // } else {
+      //this.game.ctx.current.strokeStyle = "green";
+  // }
+  }
+
+  isPlayerInsideVisionRange() {
+    let boolean = this.game.gameBoard.isInsideVisionRange(
+      this.game.player,
+      this.visionRange
+    );
+    return boolean;
+  }
+
   updateDestinationCords() {
-    this.destination.x = this.game.gameBoard.getCenterOfObject(this.game.player).x; //hardcoded for testing
-    this.destination.y = this.game.gameBoard.getCenterOfObject(this.game.player).y; //hardcoded for testing
+    this.destination.x = this.game.gameBoard.getCenterOfObject(
+      this.game.player
+    ).x;
+    this.destination.y = this.game.gameBoard.getCenterOfObject(
+      this.game.player
+    ).y;
   }
 
   setDestinationCords() {
@@ -127,7 +140,6 @@ export default class Item {
     this.game.ctx.current.stroke();
     this.game.ctx.current.closePath();
   }
-
 
   setDead() {
     this.isDead = true;

@@ -5,16 +5,16 @@ export const GAME_HEIGHT = window.innerHeight;
 
 export function getPlayerT1Dimension() {
   let dimension = {
-    w: GAME_HEIGHT / 5,
-    h: GAME_HEIGHT / 7.5,
+    w: GAME_HEIGHT / 4,
+    h: GAME_HEIGHT / 6.5,
   };
   return dimension;
 }
 
 export function getPlayerT2Dimension() {
   let dimension = {
-    w: GAME_HEIGHT / 5.5,
-    h: GAME_HEIGHT / 8,
+    w: GAME_HEIGHT / 4.5,
+    h: GAME_HEIGHT / 7,
   };
   return dimension;
 }
@@ -33,6 +33,14 @@ export function getEnemyT0Dimension() {
   let dimension = {
     w: GAME_WIDTH / 2,
     h: GAME_HEIGHT / 3,
+  };
+  return dimension;
+}
+
+export function getEnemyT3Dimension() {
+  let dimension = {
+    w: GAME_WIDTH / 4.5,
+    h: GAME_HEIGHT / 4.5,
   };
   return dimension;
 }
@@ -142,20 +150,30 @@ export const getPlayerT3Stats = {
 
 export const getEnemyT0DefaultStats = {
   damage: 4,
-  health: 100000,
-  maxHealth: 100000,
+  health: 10000,
+  maxHealth: 10000,
   speed: 2,
   accelerationMod: 60,
+  rammingDmg: 1,
+  scorePoints: 1000,
+};
+
+export const getEnemyT3DefaultStats = {
+  damage: 4,
+  health: 1000,
+  maxHealth: 1000,
+  speed: 2,
+  accelerationMod: 20,
   rammingDmg: 0.1,
-  scorePoints: 500,
+  scorePoints: 250,
 };
 
 export const getEnemyT4DefaultStats = {
   damage: 4,
   health: 100,
   maxHealth: 100,
-  speed: 4,
-  accelerationMod: 40,
+  speed: 2,
+  accelerationMod: 20,
   rammingDmg: 0.1,
   scorePoints: 25,
 };
@@ -164,7 +182,7 @@ export const getEnemyT5DefaultStats = {
   damage: 3,
   health: 75,
   maxHealth: 75,
-  speed: 1,
+  speed: 2,
   accelerationMod: 60,
   rammingDmg: 0.1,
   scorePoints: 15,
@@ -187,7 +205,7 @@ export const getDefaultEnemyProjectile = {
 
 export const getPlayerLaser = {
   w: 40,
-  h: GAME_HEIGHT + 250,
+  h: GAME_HEIGHT,
   color: "#47FFFB",
   isFill: true,
 };
@@ -210,11 +228,6 @@ export function centerSingleGunWithProjectile(gun, projectileW) {
 export function getSingleGunPosition(gun, projectileW) {
   //projectileW - width
   var toReturn = [];
-
-  // var centerPosition = {
-  //   x: gun.x + gun.w / 2 - projectileW / 2,
-  //   y: gun.y + gun.h / 2,
-  // };
     var centerPosition = {
     x: centerSingleGunWithProjectile(gun, projectileW).x,
     y: centerSingleGunWithProjectile(gun, projectileW).y,
@@ -265,6 +278,7 @@ export function getHPColor(health) {
     return colors.red;
   }
 }
+
 
 export function getTrueBasedOnChance(chance) {
   let foo = Math.random() * 100;

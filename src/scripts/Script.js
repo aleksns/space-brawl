@@ -8,7 +8,6 @@ export default class Script {
     this.init = this.game.init;
     this.level1 = new Level1(this.game);
     this.currentLvl = this.level1;
-    this.levelInit = false;
 
     this.isStartLevelTransitionPlayed = false;
     this.isBossLevelTransitionPlayed = false;
@@ -17,7 +16,16 @@ export default class Script {
     this.boss = undefined;
   }
 
+  initialize() {
+    this.currentLvl.initialize();
+  }
+
   update() {
+    if(!this.currentLvl.isLevelInit) {
+      this.initialize();
+      this.currentLvl.isLevelInit = true;
+    }
+
     this.handleStartLevelTransition();
 
     this.handleEnemiesSpawn();
@@ -36,7 +44,7 @@ export default class Script {
       return;
     }
 
-    if(!this.game.isGlobalActionRestricted) {
+    if (!this.game.isGlobalActionRestricted) {
       return;
     }
     this.resumeGame();
@@ -46,6 +54,7 @@ export default class Script {
     if (!this.game.isGameOnHold && !this.isStartLevelTransitionPlayed) {
       this.game.setGameOnHold();
       this.clearScreenFromObjects();
+      this.game.skills.turnOffAllSkills();
     }
 
     if (!this.isStartLevelTransitionPlayed) {
@@ -58,6 +67,7 @@ export default class Script {
     if (!this.game.isGameOnHold && !this.isBossLevelTransitionPlayed) {
       this.game.setGameOnHold();
       this.clearScreenFromObjects();
+      this.game.skills.turnOffAllSkills();
       this.game.isGlobalActionRestricted = true;
     }
 
@@ -71,7 +81,7 @@ export default class Script {
       return;
     }
     if (this.isBossSpawned == false) {
-      this.createBoss();
+      this.initBoss();
       this.isBossSpawned = true;
     }
   }
@@ -105,13 +115,16 @@ export default class Script {
   }
 
   handleEnemiesSpawn() {
-    //this.spawnFormationOfEnemies();
+    //this.game.init.spawnFormationOfEnemies();
 
-    if (this.game.enemies.length >= this.progression.maxNumOfEnemies) {
+    if (
+      //this.game.enemies.length >= this.progression.maxNumOfEnemies ||
+      !this.isStartLevelTransitionPlayed || this.game.isGlobalActionRestricted
+    ) {
       return;
     }
     if (!this.progression.isMaxThreatLevel) {
-      this.init.addEnemy();
+      this.currentLvl.handleWavesOfEnemies();
     }
   }
 
@@ -151,12 +164,15 @@ export default class Script {
     for (let i = 0; i < this.game.items.length; i++) {
       this.game.items[i].setDead();
     }
+    for (let i = 0; i < this.game.coins.length; i++) {
+      this.game.coins[i].setDead();
+    }
   }
 
-  createBoss() {
+  initBoss() {
     this.boss = new Boss(this.game);
     this.boss.initialize();
-    this.game.init.addBoss(this.boss);
+    this.game.init.spawnBoss(this.boss);
   }
 
   isThreatAtMaxAndEnemiesKilled() {
@@ -168,5 +184,7 @@ export default class Script {
     this.isBossLevelTransitionPlayed = false;
     this.isBossCutscenePlayed = false;
     this.isBossSpawned = false;
+    this.game.animations.bossShipAnimation.resetAnimation();
+    this.isScriptInit = false;
   }
 }

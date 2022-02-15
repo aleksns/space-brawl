@@ -35,7 +35,6 @@ export class BuffDefault extends Effect {
   }
 
   updateEffect() {
-    console.log(`updating BUFF`)
     if (this.opacity <= 0) {
       this.isDead = true;
       return;

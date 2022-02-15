@@ -2,6 +2,8 @@ import {
   roundDecimalHundreds,
   getRandomInt,
   GAME_HEIGHT,
+  GAME_WIDTH,
+  getRandomDirection,
 } from "../services/services";
 
 export default class Ship {
@@ -21,8 +23,8 @@ export default class Ship {
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
     this.vX = 0;
     this.vY = 0;
-
     this.then = 0;
+    this.id = undefined;
     console.log("CONSTRUCTOR > Ship");
   }
 
@@ -46,14 +48,13 @@ export default class Ship {
     if (this.game.isGlobalActionRestricted) {
       return;
     }
-    if (
-      (this.health <= 0 && !this.isBoss) ||
-      (this.game.collision.isOutOfBorders(this) &&
-        this.isCheckSouthOutOfBorderOnly == false)
-    ) {
+    if (this.health <= 0) {
       this.setDead();
       this.onDeath();
+      return;
     }
+
+    this.respawnIfOutsideBorders();
 
     if (!this.isPlayer) {
       this.move();
@@ -69,55 +70,63 @@ export default class Ship {
     };
   }
 
-  getEmptyPositionOnBoard() {
-    for (let i = 0; i < this.game.enemies.length; i++) {
-      while (this.game.collision.rectsColliding(this, this.game.enemies[i])) {
-        this.x = getRandomInt(this.w, this.collision.width - this.w);
-        this.y = getRandomInt(
-          this.collision.allowedY.y0,
-          Math.floor(this.collision.height / 2.5)
-        );
-      }
-    }
-  }
-
-  getEmptyPositionOutsideNorthBoard() {
-    for (let i = 0; i < this.game.enemies.length; i++) {
-      while (this.game.collision.rectsColliding(this, this.game.enemies[i])) {
-        this.x = getRandomInt(this.w, this.collision.width - this.w);
-        this.y = getRandomInt(this.w - 50, this.w - 100);
-      }
-    }
-  }
-
   setDead() {
     this.isDead = true;
   }
 
-  gotHit(isByProjectile, projectile) {
-    if(this.isShieldOn) {
+  respawnIfOutsideBorders() {
+    if (this.isMovingToPosition) {
+      return;
+    }
+
+    if (
+      this.game.collision.isOutOfBorders(this) &&
+      !this.isCheckSouthOutOfBorderOnly
+    ) {
+      this.respawn();
+    }
+  }
+
+  respawn() {
+    console.log(`Error. Ship's OUTSIDE borders. Last x = ${this.x}, last y = ${this.y}`);
+    this.x = GAME_WIDTH / 2;
+    this.y = GAME_HEIGHT / 2;
+  }
+
+  gotHitByProjectile(projectile) {
+    if (this.isShieldOn) {
       return;
     }
     this.isGotHit = true;
-    if (isByProjectile) {
-      this.gotHitByProjectile(projectile);
-      this.playHitEffect(projectile);
-    } else {
-      this.gotHitByShipHull();
-    }
+    this.health = this.health - projectile.damage;
+    this.updateHealth();
+  }
 
+  updateHealth() {
     this.health = roundDecimalHundreds(this.health);
     if (this.health < 0) {
       this.health = 0;
     }
   }
 
-  gotHitByProjectile(projectile) {
-    this.health = this.health - projectile.damage;
+  gotHitTest() {
+    this.isGotHit = true;
   }
 
-  gotHitByShipHull() {
-    this.health = this.health - 0.1; //hardcoded temporary variable
+  gotHitByShipHull(ship) {
+    this.isGotHit = true;
+    if (this.isShieldOn) {
+      this.health = this.health - ship.rammingDmg / 10;
+    } else {
+      this.health = this.health - ship.rammingDmg;
+    }
+  }
+
+  setRandomDirection() {
+    if(this.isMovingToPosition) {
+      return;
+    }
+    this.direction = getRandomDirection();
   }
 
   updateTimersAfterPauseOff() {

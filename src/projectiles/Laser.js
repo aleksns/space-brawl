@@ -39,7 +39,7 @@ export class Laser extends Projectile {
     this.color = getPlayerLaser.color;
     this.explosionColor = "orange";
     this.isFill = getPlayerLaser.isFill;
-    this.image = this.game.gameBoard.projectileLaserImgPlayer;
+    this.image = this.game.media.projectileLaserImgPlayer;
   }
 
   setPlayerLaserStats() {
@@ -55,7 +55,7 @@ export class Laser extends Projectile {
     this.color = getEnemyLaser.color;
     this.explosionColor = "red";
     this.isFill = getEnemyLaser.isFill;
-    //this.image = this.game.gameBoard.projectileDefaultImgEnemey;
+    //this.image = this.game.gameBoard.projectileRedImg;
   }
 
   setEnemyLaserStats() {

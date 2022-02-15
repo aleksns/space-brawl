@@ -11,12 +11,14 @@ export default class Animation {
     if (timePassed <= this.framesRefresh || this.game.stats.isGlobalSlowAll) {
       return;
     }
-    this.image = this.images[this.i];
-    this.then = this.game.now;
-    this.i++;
-    if(this.i > this.images.length-1) {
-      this.i = 0;
-    }
+    this.updateAnimation();
+
+    // this.image = this.images[this.i];
+    // this.then = this.game.now;
+    // this.i++;
+    // if(this.i > this.images.length-1) {
+    //   this.i = 0;
+    // }
   }
 
 }

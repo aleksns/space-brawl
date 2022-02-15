@@ -13,7 +13,6 @@ import coin155Deg from "../images/animations-images/coin-images/coin155Deg.png";
 export class CoinAnimation extends Animation {
   constructor(game) {
     super(game);
-
     this.img1 = new Image();
     this.img1.src = coin0Deg;
     
@@ -62,5 +61,13 @@ export class CoinAnimation extends Animation {
     this.then = 0;
   }
 
+  updateAnimation() {
+    this.image = this.images[this.i];
+    this.then = this.game.now;
+    this.i++;
+    if(this.i > this.images.length-1) {
+      this.i = 0;
+    }
+  }
 
 }

@@ -13,6 +13,7 @@ import { BossTest } from "../ships/BossTest";
 import { ExplosionSmall } from "../effects/ExplosionSmall";
 import { Laser } from "../projectiles/Laser";
 import { initMedia } from "../services/media";
+import { EnemyT3 } from "../ships/EnemyT3";
 
 export default class Init {
   constructor(game) {
@@ -43,7 +44,7 @@ export default class Init {
 
     this.formationLine = {
       delay: 20,
-      numOfEnemies: 13,
+      numOfEnemies: 8,
     };
 
     this.enemiesInFormation = [];
@@ -51,7 +52,7 @@ export default class Init {
   }
 
   initialize() {
-    this.initTimers();
+    //this.initTimers();
     this.game.player.initialize();
     this.game.skills.initialize();
   }
@@ -86,8 +87,6 @@ export default class Init {
       return;
     }
     this.addItemsBasedOnTiming();
-
-    ///improve code + methods here and in the update
   }
 
   addItem(item, object) {
@@ -152,10 +151,10 @@ export default class Init {
       for (let i = 0; i <= this.formationLine.numOfEnemies; i++) {
         var newEnemy = new EnemyT5(this.game);
         newEnemy.initialize();
-        //newEnemy.startTimers();
         this.enemiesInFormation.push(newEnemy);
       }
-      this.game.gameBoard.setShipsInFormationLine(this.enemiesInFormation);
+      let margin = 15;
+      this.game.gameBoard.setShipsInFormationLine(this.enemiesInFormation, margin);
 
       for (let i = 0; i < this.enemiesInFormation.length; i++) {
         this.game.enemies.push(this.enemiesInFormation[i]);
@@ -165,16 +164,45 @@ export default class Init {
     }
   }
 
-  addBoss(boss) {
+  spawnBoss(boss) {
     this.game.enemies.push(boss);
   }
 
-  addEnemy() {
-    let newEnemy = new EnemyT4(this.game);
-    //let newEnemy = new BossTest(this.game);
-    newEnemy.initialize();
-    //newEnemy.startTimers();
-    this.game.enemies.push(newEnemy);
+  initEnemy(tier) {
+    let newEnemy;
+
+    switch (tier) {
+      case "t5":
+        newEnemy = new EnemyT5(this.game);
+        break;
+      case "t4":
+        newEnemy = new EnemyT4(this.game);
+        break;
+      case "t3":
+        newEnemy = new EnemyT3(this.game);
+        break;
+    }
+
+    //newEnemy.initialize();
+   
+    return newEnemy;
+  }
+
+  initWaveOfEnemies(waveMap, wave) {
+    for(let i = 0; i < waveMap.length; i++) {
+      var newEnemy =  this.initEnemy(waveMap[i]);
+      newEnemy.initialize();
+      wave.push(newEnemy);
+      //wave.push(this.initEnemy(waveMap[i]));
+    }
+  }
+
+  spawnWaveOfEnemies(wave) {
+    for (let i = 0; i < wave.length; i++) {
+      
+      //this.game.gameBoard.setEmptyPositionForT5Enemies(wave[i]);
+      this.game.enemies.push(wave[i]);
+    }
   }
 
   addProjectile(gun, barrel) {
@@ -198,16 +226,15 @@ export default class Init {
     laserProjectile.setLaserStats(gun);
     laserProjectile.initialize();
 
-    if(gun.isPlayerOwned) {
+    if (gun.isPlayerOwned) {
       this.game.playerProjectiles.push(laserProjectile);
-    }
-    else {
+    } else {
       this.game.enemyProjectiles.push(laserProjectile);
     }
   }
 
   addEffect(object, effectType) {
-    if(this.game.effects.length > 5) {
+    if (this.game.effects.length > 5) {
       return;
     }
     let newEffect;

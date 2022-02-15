@@ -1,54 +1,25 @@
 import UICanvas from "./UICanvas";
-import { colors, GAME_WIDTH, GAME_HEIGHT } from "../services/services";
-import hpBarImage from "../images/threatLevelBar.png";
-
-//Hp bar image
-const threatBarImageProps = {
-  x: GAME_WIDTH - 255,
-  y: 5,
-  w: 250,
-  h: 35,
-  color: "transparent",
-  isFill: false,
-};
-
-const threatBarProps = {
-  x: threatBarImageProps.x + 38,
-  y: 5,
-  w: threatBarImageProps.w - 43,
-  h: threatBarImageProps.h - 5,
-  color: colors.uiRedDark,
-  isFill: true,
-};
-
 
 export class ThreatLevelBar extends UICanvas {
   constructor(game) {
     super(game);
     this.game = game;
 
-    //this.hpImage = new Image();
-   // this.hpImage.src = hpBarImage;
     this.threatBarImageProps = {
-      x: threatBarImageProps.x,
-      y: threatBarImageProps.y,
-      w: threatBarImageProps.w,
-      h: threatBarImageProps.h,
-      color: threatBarImageProps.color,
-      isFill: threatBarImageProps.isFill,
-      image: undefined,
+      x: this.threatBarImgContainer.x,
+      y: this.threatBarImgContainer.y,
+      w: this.threatBarImgContainer.w,
+      h: this.threatBarImgContainer.h,
+      image: this.threatBarImgContainer.image,
     }
 
-    this.threatBarImageProps.image = new Image();
-    this.threatBarImageProps.image.src = hpBarImage;
-
     this.threatBarProps = {
-      x: threatBarProps.x,
-      y: threatBarProps.y,
-      w: threatBarProps.w,
-      h: threatBarProps.h,
-      color: threatBarProps.color,
-      isFill: threatBarProps.isFill,
+      x: this.threatBarPropsContainer.x,
+      y: this.threatBarPropsContainer.y,
+      w: this.threatBarPropsContainer.w,
+      h: this.threatBarPropsContainer.h,
+      color: this.threatBarPropsContainer.color,
+      isFill: this.threatBarPropsContainer.isFill,
     };
     
     this.isPulseOn = false;
