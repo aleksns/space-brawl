@@ -1,4 +1,4 @@
-import { getRandomInt, GAME_HEIGHT } from "../services/services";
+import { getRandomIntInclusive, GAME_HEIGHT } from "../services/services";
 
 export default class Item {
   constructor(game) {
@@ -46,7 +46,6 @@ export default class Item {
     this.isDead = false;
     this.isItem = true;
     this.isCheckSouthOutOfBorderOnly = true;
-    //this.isSlowSpeedApplied = this.game.stats.isGlobalSlowAll;
   }
 
   initialize() {
@@ -186,8 +185,8 @@ export default class Item {
       maxY = this.game.gameBoard.height - this.h / 2;
     }
 
-    this.x = getRandomInt(minX, maxX);
-    this.y = getRandomInt(minY, maxY);
+    this.x = getRandomIntInclusive(minX, maxX);
+    this.y = getRandomIntInclusive(minY, maxY);
   }
 
   randomize() {

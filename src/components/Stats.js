@@ -123,9 +123,7 @@ export default class Stats {
 
   decreaseObjectsSpeed(objects) {
     for (let i = 0; i < objects.length; i++) {
-      //if (!objects[i].isSlowSpeedApplied) {
         this.decreaseObjectSpeed(objects[i]);
-     // }
     }
   }
 
@@ -143,7 +141,6 @@ export default class Stats {
       object.vY /= this.slowModifiers.speedGlobal;
       object.s /= this.slowModifiers.speedGlobal;
     }
-    //object.isSlowSpeedApplied = true;
   }
 
   increaseSpeedOfEverything() {
@@ -171,9 +168,7 @@ export default class Stats {
 
   increaseObjectsSpeed(objects) {
     for (let i = 0; i < objects.length; i++) {
-     // if (objects[i].isSlowSpeedApplied) {
         this.increaseObjectSpeed(objects[i]);
-     // }
     }
   }
 
@@ -191,38 +186,25 @@ export default class Stats {
       object.vY *= this.slowModifiers.speedGlobal;
       object.s *= this.slowModifiers.speedGlobal;
     }
-    //object.isSlowSpeedApplied = false;
   }
 
   decreaseShipSpeed(ship, speed) {
-    if (ship.isSlowSpeedApplied == true) {
-     // return;
-    }
     ship.s /= speed;
     ship.a /= speed;
-    ////
     ship.vX /= speed;
     ship.vY /= speed;
-    //object.isSlowSpeedApplied = true;
   }
 
   increaseShipSpeed(ship, speed) {
-    if (ship.isSlowSpeedApplied == false) {
-     // return;
-    }
     ship.s *= speed;
     ship.a *= speed;
-    ///
     ship.vX *= speed;
     ship.vY *= speed;
-    //object.isSlowSpeedApplied = false;
   }
 
   decreaseGunsAtkSpeed(guns, value) {
     for (let i = 0; i < guns.length; i++) {
-      //if (!guns[i].isSlowSpeedApplied) {
         this.decreaseGunAtkSpeed(guns[i], value);
-      //}
     }
   }
 
@@ -230,16 +212,13 @@ export default class Stats {
     //console.log(`DECREASE BEFORE gun.atkSpeed = ${gun.atkSpeed}, rateOfFire = ${gun.rateOfFire}`)
     gun.atkSpeed *= value;
     gun.rateOfFire *= value;
-    //gun.isSlowSpeedApplied = true;
     //console.log(`DECREASE AFTER gun.atkSpeed = ${gun.atkSpeed}, rateOfFire = ${gun.rateOfFire}`)
     //console.log(`------------------`)
   }
 
   increaseGunsAtkSpeed(guns, value) {
     for (let i = 0; i < guns.length; i++) {
-      //if (!guns[i].isSlowSpeedApplied) {
         this.increaseGunAtkSpeed(guns[i], value);
-      //}
     }
   }
 
@@ -249,6 +228,5 @@ export default class Stats {
     gun.rateOfFire /= value;
     //console.log(`INCREASE AFTER gun.atkSpeed = ${gun.atkSpeed}, rateOfFire = ${gun.rateOfFire}`)
     //console.log(`===============`)
-    //gun.isSlowSpeedApplied = true;
   }
 }

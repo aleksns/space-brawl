@@ -20,9 +20,21 @@ export class ThreatLevelBar extends UICanvas {
       h: this.threatBarPropsContainer.h,
       color: this.threatBarPropsContainer.color,
       isFill: this.threatBarPropsContainer.isFill,
+      colorDefault: this.threatBarPropsContainer.color,
     };
     
     this.isPulseOn = false;
+    this.saturation = 100;
+    this.satModifier = -0.5;
+    this.satMax = 100;
+    this.satMin = 70;
+
+    this.lightness = 50;
+    this.lightModifier = -0.5;
+    this.lightMax = 50;
+    this.lightMin = 30;
+
+    
   }
 
   draw(ctx) {  
@@ -30,14 +42,29 @@ export class ThreatLevelBar extends UICanvas {
       this.game.init.addEffect(this.threatBarImageProps, "pulse");
       this.isPulseOn = true;
     }
-    if(!this.game.progression.isMaxThreatLevel) {
-      this.isPulseOn = false;
-    }
+
     let remainingThreatBar = this.game.progression.threatLevel / this.game.progression.maxThreatLevel;
     let dW = this.threatBarProps.w * remainingThreatBar;
 
     ctx.current.beginPath();
-   // this.ctx.current.lineWidth = hpBarLineWidth;
+
+
+    if(this.game.progression.isMaxThreatLevel) {   
+      this.saturation += this.satModifier;
+      if(this.saturation <= this.satMin || this.saturation >= this.satMax) {
+        this.satModifier = -this.satModifier;
+      }
+      this.lightness += this.lightModifier;
+      if(this.lightness <= this.lightMin || this.lightness >= this.lightMax) {
+        this.lightModifier = -this.lightModifier;
+      }
+      this.threatBarProps.color = `hsl(${0},${this.saturation}%,${this.lightness}%)`
+    }
+    else {
+      this.threatBarProps.color = this.threatBarProps.colorDefault;
+    }
+
+
     ctx.current.fillStyle = this.threatBarProps.color;
     ctx.current.rect(this.threatBarProps.x, this.threatBarProps.y, dW, this.threatBarProps.h)
     ctx.current.fill();

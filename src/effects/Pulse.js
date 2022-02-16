@@ -57,6 +57,7 @@ export class Pulse extends Effect {
   updateEffect() {
     if (!this.game.progression.isMaxThreatLevel) {
       this.setDead();
+      this.game.draw.threatBar.isPulseOn = false;
     }
 
     if (this.opacity >= 0.5 || this.opacity <= 0.1) {

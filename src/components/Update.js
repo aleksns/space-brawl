@@ -93,7 +93,9 @@ export default class Update {
 
   updateEnemies() {
     this.updateObjects(this.game.enemies);
-    this.game.gameBoard.setEmptyPositionForT5Enemies();
+    if(!this.game.script.currentLvl.isFormation) {
+      this.game.gameBoard.setEmptyPositionForT5Enemies();
+    }
   }
 
   updateProjectiles() {

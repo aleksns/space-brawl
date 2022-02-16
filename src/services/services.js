@@ -281,7 +281,7 @@ export function getHPColor(health) {
 
 
 export function getTrueBasedOnChance(chance) {
-  let foo = Math.random() * 100;
+  let foo = roundDecimalHundreds(Math.random());
 
   if (foo < chance) {
     return true;
@@ -294,15 +294,14 @@ export function roundDecimalHundreds(decimal) {
   return Math.round((decimal + Number.EPSILON) * 100) / 100;
 }
 
-export function getRandomInt(min, max) {
+export function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min);
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 export function getRandomDecimal(min, max) {
-  let randomDecimal = Math.random() * (max - min) + min;
-  //randomDecimal = Math.round((randomDecimal + Number.EPSILON) * 100) / 100;
+  let randomDecimal = Math.random() * (max - min + 0.01) + min;
   randomDecimal = roundDecimalHundreds(randomDecimal);
   return randomDecimal;
 }
@@ -311,7 +310,7 @@ export function getRandomDecimal(min, max) {
 export const directions = ["N", "E", "S", "W", "NE", "SE", "SW", "NW"];
 
 export function getRandomDirection() {
-  let randomDirectionIndex = getRandomInt(0, directions.length);
+  let randomDirectionIndex = getRandomIntInclusive(0, directions.length);
   return directions[randomDirectionIndex];
 }
 

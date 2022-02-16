@@ -30,7 +30,6 @@ export default class Projectile {
 
     this.lineJoin = "round";
     this.lineCap = "square";
-    //this.isSlowSpeedApplied = false;
     this.isPlayerOwned = undefined;
     this.isDead = undefined;
   }

@@ -1,3 +1,11 @@
+import {
+  getRandomDecimal,
+  getTrueBasedOnChance,
+  getRandomIntInclusive,
+  roundDecimalHundreds,
+  GAME_WIDTH,
+} from "../services/services";
+
 export default class Level1 {
   constructor(game) {
     this.game = game;
@@ -7,48 +15,32 @@ export default class Level1 {
 
     this.isStartLevelCutscenePlayed = false;
 
-    this.waves = [];
-
     this.i = 0;
     this.currentWave = [];
-    this.currentWave = 0;
 
-    this.wave1 = {
-      wave: [],
-      map: ["t5", "t5", "t5", "t5"],
-      //map: ["t4", "t4", "t4", "t4", "t4"],
-    }
+    this.wave = [];
+    this.waveMap = [];
+    this.listOfEnemyTier = ["t5", "t4"];
 
-    this.wave2 = {
-      wave: [],
-      map: ["t5", "t5", "t5", "t5", "t5", "t5", "t5", "t5", "t5", "t5"],
-    }
+    this.minNumOfEnemies = 3;
+    this.maxNumOfEnemies = 10;
 
-    this.wave3 = {
-      wave: [],
-      map: ["t4", "t4", "t4", "t4", "t4", "t5", "t5", "t5", "t5", "t5"],
-    }
-
-    this.wave4 = {
-      wave: [],
-      map: ["t4", "t4", "t4", "t4", "t5", "t5", "t5"],
-    }
-
+    this.isFormation = false;
   }
 
   initialize() {
-    this.resetWaves();
-
-    this.initWaves();
+    this.generateWave();
+    this.initWave(this.waveMap, this.wave);
 
     this.i = 0;
-    this.currentWave = [];
     this.isLevelInit = false;
-    this.currentWave = this.waves[this.i];
+    this.currentWave = [];
+    this.currentWave = this.wave;
   }
 
   update() {
     if (this.game.enemies.length == 0 && this.currentWave.length == 0) {
+      this.isFormation = false;
       this.advanceWave();
     }
   }
@@ -62,20 +54,52 @@ export default class Level1 {
     this.currentWave = [];
   }
 
-  initWaves() {
-    this.initWave(this.wave1.map, this.wave1.wave);
+  generateWave() {
+    this.waveMap = [];
+    this.wave = [];
 
-    this.initWave(this.wave2.map, this.wave2.wave);
-    this.game.gameBoard.setShipsInFormationLine(this.wave2.wave, 15);
+    if (this.i % 4 == 0 && this.i != 0) {
+      this.generateT3Wave();
+    } else {
+      let chanceToSpawnFormation = roundDecimalHundreds(Math.random());
+      if (getTrueBasedOnChance(chanceToSpawnFormation)) {
+        this.generateFormationWave();
+      } else {
+        this.generateDefaultWave();
+      }
+    }
+  }
 
-    this.initWave(this.wave3.map, this.wave3.wave);
-    this.initWave(this.wave4.map, this.wave4.wave);
+  generateFormationWave() {
+    this.isFormation = true;
+    let numOfEnemies = getRandomIntInclusive(
+      this.minNumOfEnemies,
+      this.maxNumOfEnemies
+    );
 
-    this.waves = [];
-    this.waves.push(this.wave1.wave);
-    this.waves.push(this.wave2.wave);
-    this.waves.push(this.wave3.wave);
-    this.waves.push(this.wave4.wave);
+    for (let i = 0; i < numOfEnemies; i++) {
+      this.waveMap.push("t5");
+    }
+  }
+
+  generateDefaultWave() {
+    let numOfEnemies = getRandomIntInclusive(
+      this.minNumOfEnemies,
+      this.maxNumOfEnemies
+    );
+
+    for (let i = 0; i < numOfEnemies; i++) {
+      let index = getRandomIntInclusive(0, this.listOfEnemyTier.length - 1);
+      this.waveMap.push(this.listOfEnemyTier[index]);
+    }
+  }
+
+  generateT3Wave() {
+    let numOfEnemies = getRandomIntInclusive(1, 2);
+
+    for (let i = 0; i < numOfEnemies; i++) {
+      this.waveMap.push("t3");
+    }
   }
 
   initWave(waveMap, wave) {
@@ -84,25 +108,27 @@ export default class Level1 {
 
   spawnWave(wave) {
     this.game.init.spawnWaveOfEnemies(wave);
+
+    if (this.isFormation) {
+      let margin = this.getRandomFormationMargin(this.game.enemies.length);
+      this.game.gameBoard.setShipsInFormationLine(this.game.enemies, margin);
+    }
   }
 
   isWaveCanBeSpawned() {
     return this.game.enemies.length == 0 && this.currentWave.length != 0;
   }
 
-  advanceWave() {
-    this.i++;
-    if(this.i == this.waves.length) {
-      //this.initialize();
-      this.isLevelInit = false;
-      return;
-    }
-    this.currentWave = this.waves[this.i];
+  getRandomFormationMargin(numOfEnemies) {
+    let marginMax = (5 - (numOfEnemies - 5)) * 22 + 40;
+    let margin = getRandomIntInclusive(15, marginMax);
+    return margin;
   }
 
-  resetWaves() {
-    for(let i = 0; i < this.waves.length; i++) {
-      this.waves[i].length = 0;
-    }
+  advanceWave() {
+    this.i++;
+    this.generateWave();
+    this.initWave(this.waveMap, this.wave);
+    this.currentWave = this.wave;
   }
 }

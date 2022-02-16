@@ -44,8 +44,18 @@ export class ScoreAndExp extends UICanvas {
     this.scoreProps.text = score;
 
     this.game.draw.drawText(this.scoreProps);
-    //this.game.draw.drawText(this.expBarProps);
+    this.game.draw.drawText(this.scoreProps);
     this.drawExpBar(ctx);
+
+    ////test////
+    this.game.ctx4.current.globalAlpha = 1.0;
+    this.game.ctx4.current.fillStyle = "#ffffff";
+    this.game.ctx4.current.font = "20px tahoma";
+    this.game.ctx4.current.fillText(
+      `Wave: ${this.game.script.currentLvl.i + 1}`,
+      5,
+      100
+    );
   }
 
   drawExpBar(ctx) {

@@ -1,5 +1,5 @@
 import {
-  getRandomInt,
+  getRandomIntInclusive,
   GAME_WIDTH,
   GAME_HEIGHT,
   getTrueBasedOnChance,
@@ -30,8 +30,8 @@ export default class GameBoard {
 
   getRandomCordsWithinBounds(object) {
     var cords = {
-      x: getRandomInt(this.enemyAllowedX.x0, this.enemyAllowedX.x1 - object.w),
-      y: getRandomInt(this.enemyAllowedY.y0, this.enemyAllowedY.y1 - object.h),
+      x: getRandomIntInclusive(this.enemyAllowedX.x0, this.enemyAllowedX.x1 - object.w),
+      y: getRandomIntInclusive(this.enemyAllowedY.y0, this.enemyAllowedY.y1 - object.h),
     };
     return cords;
   }
@@ -59,19 +59,19 @@ export default class GameBoard {
 
     //East or West spawn
     if (spawnEastOrWest >= spawnNorth) {
-      let isWest = getTrueBasedOnChance(50);
+      let isWest = getTrueBasedOnChance(0.5);
       if (isWest == true) {
-        ship.x = getRandomInt(-ship.w * 2, -ship.w);
+        ship.x = getRandomIntInclusive(-ship.w * 2, -ship.w);
       } else {
-        ship.x = getRandomInt(GAME_WIDTH + ship.w, GAME_WIDTH + ship.w * 2);
+        ship.x = getRandomIntInclusive(GAME_WIDTH + ship.w, GAME_WIDTH + ship.w * 2);
       }
-      ship.y = getRandomInt(-ship.h, GAME_HEIGHT / 2);
+      ship.y = getRandomIntInclusive(-ship.h, GAME_HEIGHT / 2);
     }
 
     // North spawn
     else {
-      ship.x = getRandomInt(ship.w, GAME_WIDTH - ship.w);
-      ship.y = getRandomInt(-ship.h * 2, -ship.h);
+      ship.x = getRandomIntInclusive(ship.w, GAME_WIDTH - ship.w);
+      ship.y = getRandomIntInclusive(-ship.h * 2, -ship.h);
     }
   }
 
@@ -111,11 +111,11 @@ export default class GameBoard {
   getEmptyPositionOnBoard(ship) {
     for (let i = 0; i < this.game.enemies.length; i++) {
       while (this.game.collision.rectsColliding(ship, this.game.enemies[i])) {
-        ship.x = getRandomInt(
+        ship.x = getRandomIntInclusive(
           this.enemyAllowedX.x0,
           this.enemyAllowedX.x1 - ship.w
         );
-        ship.y = getRandomInt(this.allowedY.y0, GAME_HEIGHT / 2.5);
+        ship.y = getRandomIntInclusive(this.allowedY.y0, GAME_HEIGHT / 2.5);
       }
     }
   }
@@ -131,8 +131,8 @@ export default class GameBoard {
 
   getPositionOutsideNorthBoard(ship) {
     var position = {
-      x: getRandomInt(this.enemyAllowedX.x0, this.enemyAllowedX.x1 - ship.w),
-      y: getRandomInt(-ship.h, -ship.h),
+      x: getRandomIntInclusive(this.enemyAllowedX.x0, this.enemyAllowedX.x1 - ship.w),
+      y: getRandomIntInclusive(-ship.h, -ship.h),
     };
     return position;
   }

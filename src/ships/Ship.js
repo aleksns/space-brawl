@@ -1,6 +1,6 @@
 import {
   roundDecimalHundreds,
-  getRandomInt,
+  getRandomIntInclusive,
   GAME_HEIGHT,
   GAME_WIDTH,
   getRandomDirection,
@@ -15,7 +15,6 @@ export default class Ship {
     this.isGotHit = false;
     this.isDead = false;
     this.isFill = false;
-    //this.isSlowSpeedApplied = false;
     this.shadowColor = "transparent";
     this.shadowBlur = 0;
     this.filter = "none";
@@ -25,7 +24,7 @@ export default class Ship {
     this.vY = 0;
     this.then = 0;
     this.id = undefined;
-    console.log("CONSTRUCTOR > Ship");
+    //console.log("CONSTRUCTOR > Ship");
   }
 
   initialize() {

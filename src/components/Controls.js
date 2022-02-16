@@ -1,4 +1,5 @@
 import "../App.css";
+import { getTrueBasedOnChance, roundDecimalHundreds } from "../services/services";
 
 export default class Controls {
   constructor(game) {
@@ -104,13 +105,13 @@ export default class Controls {
 
     this.testThen = 0;
     this.canTest = true;
-
+    this.i = 0;
     this.canvas5.current.addEventListener(
       "click",
       (event) => {
         this.mousePosition = this.getMousePosition(event);
-        console.log(`THIS.mousePos = ${JSON.stringify(this.mousePosition)}`);
-
+       console.log(`mousePos = ${JSON.stringify(this.mousePosition)}`);
+       
         // this.btns.forEach((btn) => {
         //   switch (btn.id) {
         //     case "slowTime":

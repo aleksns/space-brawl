@@ -2,7 +2,7 @@ import Ship from "./Ship";
 import {
   directions,
   getRandomDirection,
-  getRandomInt,
+  getRandomIntInclusive,
   getEnemyT3Dimension,
   getDefaultEnemyProjectile,
 } from "../services/services";
@@ -115,11 +115,11 @@ export class EnemyT3 extends Ship {
   }
 
   setDestinationCords() {
-    this.destination.x = getRandomInt(
+    this.destination.x = getRandomIntInclusive(
       this.game.gameBoard.enemyAllowedX.x0,
       this.game.gameBoard.enemyAllowedX.x1 - this.w
     );
-    this.destination.y = getRandomInt(
+    this.destination.y = getRandomIntInclusive(
       this.game.gameBoard.enemyAllowedY.y0,
       this.game.gameBoard.enemyAllowedY.y1
     );
@@ -134,7 +134,7 @@ export class EnemyT3 extends Ship {
   }
 
   setRandomDirectionFromList(listOfDirections) {
-    let index = getRandomInt(0, listOfDirections.length - 1);
+    let index = getRandomIntInclusive(0, listOfDirections.length - 1);
     this.direction = directions[index];
     this.directionChangeIntervalThen = this.game.now;
   }

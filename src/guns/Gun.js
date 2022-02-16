@@ -35,7 +35,6 @@ export default class Gun {
     this.angleMin = 0;
     this.angleMax = 0;
 
-    //this.isSlowSpeedApplied = false;
     this.isAccelerationType = true;
     this.isDead = false;
   }

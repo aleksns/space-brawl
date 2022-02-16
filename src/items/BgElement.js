@@ -1,8 +1,5 @@
 import Item from "./Item";
 import {
-  getRandomInt,
-  getRandomDecimal,
-  getTrueBasedOnChance,
   GAME_WIDTH,
   GAME_HEIGHT,
 } from "../services/services";

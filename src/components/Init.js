@@ -182,8 +182,6 @@ export default class Init {
         newEnemy = new EnemyT3(this.game);
         break;
     }
-
-    //newEnemy.initialize();
    
     return newEnemy;
   }
@@ -191,16 +189,14 @@ export default class Init {
   initWaveOfEnemies(waveMap, wave) {
     for(let i = 0; i < waveMap.length; i++) {
       var newEnemy =  this.initEnemy(waveMap[i]);
-      newEnemy.initialize();
+      //newEnemy.initialize();
       wave.push(newEnemy);
-      //wave.push(this.initEnemy(waveMap[i]));
     }
   }
 
   spawnWaveOfEnemies(wave) {
     for (let i = 0; i < wave.length; i++) {
-      
-      //this.game.gameBoard.setEmptyPositionForT5Enemies(wave[i]);
+      wave[i].initialize();
       this.game.enemies.push(wave[i]);
     }
   }

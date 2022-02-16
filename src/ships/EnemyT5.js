@@ -1,6 +1,6 @@
 import Ship from "./Ship";
 import {
-  getRandomInt,
+  getRandomIntInclusive,
   getEnemyT5Dimension,
   GAME_WIDTH,
   getDefaultEnemyProjectile,
@@ -74,6 +74,7 @@ export class EnemyT5 extends Ship {
     newSingleGun.initialize(getEnemyT4GunProps, getDefaultEnemyProjectile);
     newSingleGun.setProjectileImage(this.game.media.projectileGreenImg);
 
+    this.game.enemyGuns.push(newSingleGun);
     this.gun = newSingleGun; 
   }
 
