@@ -1,5 +1,8 @@
 import { Laser } from "../projectiles/Laser";
-import { centerSingleGunWithProjectile, GAME_WIDTH } from "../services/services";
+import {
+  centerSingleGunWithProjectile,
+  GAME_WIDTH,
+} from "../services/services";
 
 export default class Gun {
   constructor(game, owner) {
@@ -19,7 +22,8 @@ export default class Gun {
     this.rateOfFire = 0;
 
     this.damage = 0;
-    this.numOfRounds = 0;
+    this.numOfRoundsBurst = 0;
+    this.numOfRoundsBarrage = 0;
     this.isLaserGun = undefined;
     this.laserProjectile = undefined;
     this.dW = 0;
@@ -34,8 +38,9 @@ export default class Gun {
     this.angleModifier = 0;
     this.angleMin = 0;
     this.angleMax = 0;
+    this.angleDefault = 0;
 
-    this.isAccelerationType = true;
+    this.isAccelerationType = false;
     this.isDead = false;
   }
 
@@ -48,8 +53,8 @@ export default class Gun {
         this.game.stats.slowModifiers.atkSpeedGlobal
       );
     }
-    
-    if(this.isLaserGun) {
+
+    if (this.isLaserGun) {
       this.laserProjectile = new Laser(this.game, this, this.barrels[0]);
     }
   }
@@ -59,9 +64,21 @@ export default class Gun {
       this.isDead = true;
     }
 
-    if (this.isLaserGun) {
+    if (this.isLaserGun && this.owner.isLaserOn) {
       this.updateLaserdW();
       this.updateGunsPosition(0);
+    }
+  }
+
+  getNumOfRoundsBarrageBasedOnAngle() {
+    if(this.angleModifier == 0 || this.isRotating) {
+      return 1;
+    }
+    else {
+      let multiplier = this.angleMax - this.angleMin + Math.abs(this.angleModifier);
+
+      let numOfRoundsBarrage = Math.floor(Math.abs(multiplier / this.angleModifier));
+      return numOfRoundsBarrage;
     }
   }
 
@@ -76,33 +93,81 @@ export default class Gun {
       return;
     }
 
-    if (this.i < this.numOfRounds) {
+    if (this.i < this.numOfRoundsBurst) {
       for (let i = 0; i < this.barrels.length; i++) {
-        this.updateGunsPosition(i);
+        for (let j = 0; j < this.numOfRoundsBarrage; j++) { 
 
-        if (this.isLaserGun) {
-          this.game.init.addLaser(this, this.laserProjectile);
-        } else {
-          this.game.init.addProjectile(this, this.barrels[i]);
+          this.updateGunsPosition(i);
+
+          if (this.isLaserGun) {
+            this.game.init.addLaser(this, this.laserProjectile);
+          } else {
+            this.game.init.addProjectile(this, this.barrels[i]);
+          }
+
+          this.roundThen = this.game.now;
         }
 
-        this.roundThen = this.game.now;
       }
       this.i++;
     }
 
-    if (this.i == this.numOfRounds) {
+    if (this.i == this.numOfRoundsBurst) {
       this.i = 0;
       this.then = this.game.now;
     }
   }
 
+  updateGunsPosition(i) {
+    this.barrels[i].x = this.getGunPosition(i).x;
+    this.barrels[i].y = this.getGunPosition(i).y;
+
+    this.barrels[i].destinationX = this.getGunDestination(i).destinationX;
+    this.barrels[i].destinationY = this.getGunDestination(i).destinationY;
+
+    if (this.isRotating) {
+      this.angle += this.angleModifier;
+      if (this.angle >= this.angleMax || this.angle < this.angleMin) {
+        //this.angleModifier = -this.angleModifier;
+        this.angle = this.angleMax + this.angleModifier;
+      }
+    }
+
+    if(this.isBarrage) {
+      this.angle += this.angleModifier;
+
+      if (this.isSouthBarrage()) {
+        this.handleSouthBarrage();
+      } else {
+        if (this.angle > this.angleMax || this.angle < this.angleMin) {
+          this.angle = this.angleDefault;
+        }
+      }
+    }
+
+  }
+
+  handleSouthBarrage() {
+    if (this.angle >= 360) {
+      this.angle = 0;
+    }
+
+    if(this.angle >= (this.angleMin + this.angleModifier) && this.angle <= (this.angleMin + this.angleModifier)) {
+      this.angle = this.angleDefault;
+    }
+  }
+
+  isSouthBarrage() {
+    let sign = Math.sign(this.angleModifier);
+    return (sign == 1);
+  }
+
   getGunDestination(i) {
-    if(this.isOnTarget) {
+    if (this.isOnTarget) {
       let gunPositionP2 = {
         destinationX: this.game.gameBoard.getCenterOfObject(this.target).x,
         destinationY: this.game.gameBoard.getCenterOfObject(this.target).y,
-      }
+      };
       return gunPositionP2;
     }
 
@@ -110,37 +175,23 @@ export default class Gun {
     let y = this.barrels[i].y;
     let angle;
 
+    //mirror the angle of a double gun
     if (i == 0) {
       angle = this.angle;
-    }
-    else {
+    } 
+    if(i == this.barrels.length-1) {
       angle = -this.angle;
     }
-    
-    x += this.radius * Math.sin((Math.PI * angle) / 360);
 
-    y += this.radius * Math.cos((Math.PI * angle) / 360);
+    x += this.radius * Math.sin((Math.PI * angle) / 180);
+
+    y += this.radius * Math.cos((Math.PI * angle) / 180);
 
     let gunPositionP2 = {
       destinationX: x,
       destinationY: y,
     };
     return gunPositionP2;
-  }
-
-  updateGunsPosition(i) {
-    this.barrels[i].x = this.getGunPosition(i).x;
-    this.barrels[i].y = this.getGunPosition(i).y;
-
-    if (this.isRotating) {
-      this.angle += this.angleModifier;
-      if (this.angle >= this.angleMax || this.angle < this.angleMin) {
-        this.angleModifier = -this.angleModifier;
-      }
-    }
-
-    this.barrels[i].destinationX = this.getGunDestination(i).destinationX;
-    this.barrels[i].destinationY = this.getGunDestination(i).destinationY;
   }
 
   setGunProps(gunProps) {
@@ -151,14 +202,20 @@ export default class Gun {
     this.rateOfFire = gunProps.rateOfFire;
 
     this.isRotating = gunProps.isRotating;
+    this.isBarrage = gunProps.isBarrage;
     this.angle = gunProps.angle;
     this.angleModifier = gunProps.angleModifier;
     this.angleMin = gunProps.angleMin;
     this.angleMax = gunProps.angleMax;
+    this.angleDefault = this.angle;
 
-    this.damage = gunProps.damage;
-    this.numOfRounds = gunProps.numOfRounds;
+    this.numOfRoundsBurst = gunProps.numOfRoundsBurst;
+    this.numOfRoundsBarrage = this.getNumOfRoundsBarrageBasedOnAngle();
     this.isLaserGun = gunProps.isLaserGun;
+  }
+
+  setGunDamage(damage) {
+    this.damage = damage;
   }
 
   setProjectileProps(projectileProps) {
@@ -168,13 +225,13 @@ export default class Gun {
   setProjectileImage(image) {
     this.projectileImage = image;
   }
- 
+
   updateLaserdW() {
     this.dW = this.laserProjectile.w;
   }
 
-  setToBurst(numOfRounds) {
-    this.numOfRounds = numOfRounds;
+  setToBurst(numOfRoundsBurst) {
+    this.numOfRoundsBurst = numOfRoundsBurst;
   }
 
   setRateOfFire(value) {
@@ -187,10 +244,9 @@ export default class Gun {
   }
 
   resetLaser() {
-    if(this.isLaserGun) {
+    if (this.isLaserGun) {
       this.then = 0;
       this.roundThen = 0;
     }
   }
-
 }

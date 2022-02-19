@@ -4,7 +4,7 @@ import {
   getEnemyT0Dimension,
   getDefaultEnemyProjectile,
 } from "../services/services";
-import { getBossT4DoubleSpray, getBossT4TripleBurst, getBossDoubleBurstCenteredGun, getBossT4TripleTarget } from "../services/gunsProps";
+import { getT0Rotating, getT0Burst, getT0BurstCentered, getT0Target } from "../services/gunsProps";
 import { DoubleGun } from "../guns/DoubleGun";
 import { TripleGun } from "../guns/TripleGun";
 
@@ -66,26 +66,30 @@ export class Boss extends Ship {
     this.setNewDirection();
 
     let newTripleTarget = new TripleGun(this.game, this);
-    newTripleTarget.initialize(getBossT4TripleTarget, getDefaultEnemyProjectile);
-    newTripleTarget.setProjectileImage(this.game.media.projectilePurpleImg);
+    newTripleTarget.initialize(getT0Target, getDefaultEnemyProjectile);
+    newTripleTarget.setGunDamage(this.game.stats.enemyGunsDamage.t0Target);
+    newTripleTarget.setProjectileImage(this.game.media.projectileArcPurpleImg);
     newTripleTarget.setOnTarget();
 
     let newTripleBurstGun = new TripleGun(this.game, this);
-    newTripleBurstGun.setProjectileImage(this.game.media.projectileRedImg);
-    newTripleBurstGun.initialize(getBossT4TripleBurst, getDefaultEnemyProjectile);
+    newTripleBurstGun.initialize(getT0Burst, getDefaultEnemyProjectile);
+    newTripleBurstGun.setGunDamage(this.game.stats.enemyGunsDamage.t0Burst);
+    newTripleBurstGun.setProjectileImage(this.game.media.projectileArcRedImg);
 
     let newDoubleBurstCenteredGun = new DoubleGun(this.game, this);
-    newDoubleBurstCenteredGun.setProjectileImage(this.game.media.projectileRedImg);
-    newDoubleBurstCenteredGun.initialize(getBossDoubleBurstCenteredGun, getDefaultEnemyProjectile);
+    newDoubleBurstCenteredGun.initialize(getT0BurstCentered, getDefaultEnemyProjectile);
+    newDoubleBurstCenteredGun.setGunDamage(this.game.stats.enemyGunsDamage.t0Burst);
+    newDoubleBurstCenteredGun.setProjectileImage(this.game.media.projectileArcRedImg);
 
-    let newDoubleSprayGun = new DoubleGun(this.game, this);
-    newDoubleSprayGun.setProjectileImage(this.game.media.projectileRedImg);
-    newDoubleSprayGun.initialize(getBossT4DoubleSpray, getDefaultEnemyProjectile);
+    let newDoubleRotatingGun = new DoubleGun(this.game, this);
+    newDoubleRotatingGun.initialize(getT0Rotating, getDefaultEnemyProjectile);
+    newDoubleRotatingGun.setGunDamage(this.game.stats.enemyGunsDamage.t0Rotating);
+    newDoubleRotatingGun.setProjectileImage(this.game.media.projectileArcRedImg);
 
     this.game.bossGuns.push(newTripleTarget);
     this.game.bossGuns.push(newTripleBurstGun);
-    //this.game.bossGuns.push(newDoubleBurstCenteredGun);
-    this.game.bossGuns.push(newDoubleSprayGun);
+    this.game.bossGuns.push(newDoubleBurstCenteredGun);
+    this.game.bossGuns.push(newDoubleRotatingGun);
   }
 
   updateShip() {

@@ -5,10 +5,11 @@ import playerShipT3Image from "../images/playerShipT3.png";
 import enemyImageT4 from "../images/enemyShipT4.png";
 import enemyImageT5 from "../images/enemyShipT5.png";
 
-import projectilePlayer from "../images/projectilePlayer.png";
-import projectileEnemyRed from "../images/projectileEnemyRed.png";
-import projectileEnemyPurple from "../images/projectileEnemyPurple.png";
-import projectileEnemyGreen from "../images/projectileEnemyGreen.png";
+import projectileYellowCone from "../images/projectileYellowCone.png";
+import projectileArcRed from "../images/projectileArcRed.png";
+import projectileArcPurple from "../images/projectileArcPurple.png";
+import projectileArcGreen from "../images/projectileArcGreen.png";
+import projectileArcBlue from "../images/projectileArcBlue.png";
 
 import projectileLaserPlayer from "../images/projectileLaserPlayer.png";
 
@@ -31,20 +32,25 @@ export default class Media {
     this.enemyShipT5.src = enemyImageT5;
 
     /* Projectiles */
-    this.projectilePlayerImg = new Image();
-    this.projectilePlayerImg.src = projectilePlayer;
+    this.projectileYellowConeImg = new Image();
+    this.projectileYellowConeImg.src = projectileYellowCone;
 
-    this.projectileRedImg = new Image();
-    this.projectileRedImg.src = projectileEnemyRed;
+    this.projectileArcRedImg = new Image();
+    this.projectileArcRedImg.src = projectileArcRed;
 
-    this.projectilePurpleImg = new Image();
-    this.projectilePurpleImg.src = projectileEnemyPurple;
+    this.projectileArcPurpleImg = new Image();
+    this.projectileArcPurpleImg.src = projectileArcPurple;
     
-    this.projectileGreenImg = new Image();
-    this.projectileGreenImg.src = projectileEnemyGreen;
+    this.projectileArcGreenImg = new Image();
+    this.projectileArcGreenImg.src = projectileArcGreen;
+
+    this.projectileArcBlueImg = new Image();
+    this.projectileArcBlueImg.src = projectileArcBlue;
 
     
     this.projectileLaserImgPlayer = new Image();
     this.projectileLaserImgPlayer.src = projectileLaserPlayer;
+    
+    console.log(`Constructor > Media`);
   }
 }

@@ -29,7 +29,7 @@ export default class Ship {
 
   initialize() {
     this.initializeShip();
-    this.initTimers();
+    //this.initTimers();
 
     if (this.game.stats.isGlobalSlowAll && !this.isPlayer) {
       this.game.stats.decreaseShipSpeed(

@@ -26,10 +26,10 @@ export default class Draw {
     // projectile filters
     this.brightnessNum = 100;
     this.saturationNum = 100;
-    this.brightnessModifier = 2;
-    this.saturationModifier = -2.5;
+    this.brightnessModifier = 1;
+    this.saturationModifier = -1.5;
     this.brightnessMin = 100;
-    this.brightnessMax = 200;
+    this.brightnessMax = 130;
     this.saturationMin = 60;
     this.saturationMax = 100;
     this.filter = `saturate(${this.saturationNum}%) brightness(${this.brightnessNum}%)`;

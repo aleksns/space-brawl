@@ -9,7 +9,7 @@ import {
 
 import { DoubleGun } from "../guns/DoubleGun";
 import { SingleGun } from "../guns/SingleGun";
-import { getBossT3DoubleSpray } from "../services/gunsProps";
+import { getT3Barrage, getT3Target } from "../services/gunsProps";
 
 export class EnemyT3 extends Ship {
   constructor(game) {
@@ -38,7 +38,7 @@ export class EnemyT3 extends Ship {
     this.now = 0;
 
     this.rammingDmg = this.game.stats.enemyT3.rammingDmg;
-    this.gun = undefined;
+    this.guns = [];
     this.target = this.game.player;
 
     this.image = this.game.animations.enemyT3ShipAnimation.image;
@@ -65,18 +65,30 @@ export class EnemyT3 extends Ship {
     this.game.gameBoard.setEnemyOutBordersPosition(this);
     this.setNewDirection();
 
-    let newDoubleSprayGun = new DoubleGun(this.game, this);
-    newDoubleSprayGun.initialize(getBossT3DoubleSpray, getDefaultEnemyProjectile);
-    newDoubleSprayGun.setProjectileImage(this.game.media.projectilePurpleImg);
-    
-    this.game.enemyGuns.push(newDoubleSprayGun);
-    this.gun = newDoubleSprayGun;
+    let newDoubleTarget = new DoubleGun(this.game, this);
+    newDoubleTarget.initialize(getT3Target, getDefaultEnemyProjectile);
+    newDoubleTarget.setGunDamage(this.game.stats.enemyGunsDamage.t3Target);
+    newDoubleTarget.setProjectileImage(this.game.media.projectileArcPurpleImg);
+    newDoubleTarget.setOnTarget();
+
+    let new180BarrageGun = new SingleGun(this.game, this);
+    new180BarrageGun.initialize(getT3Barrage, getDefaultEnemyProjectile);
+    new180BarrageGun.setGunDamage(this.game.stats.enemyGunsDamage.t3Barrage);
+    new180BarrageGun.setProjectileImage(this.game.media.projectileArcGreenImg);
+
+    this.game.enemyGuns.push(newDoubleTarget);
+    this.game.enemyGuns.push(new180BarrageGun);
+
+    this.guns.push(newDoubleTarget);
+    this.guns.push(new180BarrageGun);
 
     this.directionChangeIntervalThen = Date.now();
   }
 
   fireGun() {
-    this.gun.fire();
+    for(let i = 0; i < this.guns.length; i++) {
+      this.guns[i].fire();
+    }
   }
 
   updateShip() {

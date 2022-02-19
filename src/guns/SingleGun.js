@@ -18,8 +18,8 @@ export class SingleGun extends Gun {
 
   getGunPosition(i) {
     var gunPosition = {
-      x: getSingleGunPosition(this.owner, this.dW)[i].x,
-      y: getSingleGunPosition(this.owner, this.dW)[i].y,
+      x: getSingleGunPosition(this.owner, this.dW).x,
+      y: getSingleGunPosition(this.owner, this.dW).y,
     };
     return gunPosition;
   }

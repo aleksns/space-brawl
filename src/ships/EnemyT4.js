@@ -7,7 +7,7 @@ import {
   getDefaultEnemyProjectile,
 } from "../services/services";
 
-import { getEnemyT4GunProps } from "../services/gunsProps";
+import { getT4Target } from "../services/gunsProps";
 import { DoubleGun } from "../guns/DoubleGun";
 import { SingleGun } from "../guns/SingleGun";
 
@@ -66,19 +66,22 @@ export class EnemyT4 extends Ship {
     this.setNewDirection();
 
     let newSingleGun = new SingleGun(this.game, this);
-    newSingleGun.initialize(getEnemyT4GunProps, getDefaultEnemyProjectile);
-    newSingleGun.setProjectileImage(this.game.media.projectileRedImg);
+    newSingleGun.initialize(getT4Target, getDefaultEnemyProjectile);
+    newSingleGun.setGunDamage(this.game.stats.enemyGunsDamage.t4Target);
+    newSingleGun.setProjectileImage(this.game.media.projectileArcRedImg);
     newSingleGun.setOnTarget();
 
     let newDoubleGun = new DoubleGun(this.game, this);
-    newDoubleGun.initialize(getEnemyT4GunProps, getDefaultEnemyProjectile);
-    newDoubleGun.setProjectileImage(this.game.media.projectileRedImg);
+    newDoubleGun.initialize(getT4Target, getDefaultEnemyProjectile);
+    newSingleGun.setGunDamage(this.game.stats.enemyGunsDamage.t4Target);
+    newDoubleGun.setProjectileImage(this.game.media.projectileArcRedImg);
     newDoubleGun.setOnTarget();
 
     //this.game.enemyGuns.push(newDoubleGun);
     this.game.enemyGuns.push(newSingleGun);
     this.gun = newSingleGun;
 
+    console.log(`T4 ship damage = ${this.gun.damage}`);
     this.directionChangeIntervalThen = this.game.now;
   }
 

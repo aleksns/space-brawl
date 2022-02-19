@@ -11,12 +11,13 @@ import {
   getPlayerT1Stats,
   getPlayerT2Stats,
 } from "../services/services";
-import { getBossT3DoubleSpray, getPlayerT1LaserGun, getPlayerT2LaserGun, getPlayerT3LaserGun, getPlayerT4DoubleFront, getPlayerT4Rotating, getPlayerT4SingleFront, getPlayerT4TripleFront } from "../services/gunsProps";
+import { getT0Rotating, getPlayerBarrage180Angle, getPlayerBarrage360Angle, getPlayerBarrageLeft90Angle, getPlayerT1LaserGun, getPlayerT2LaserGun, getPlayerT3LaserGun, getPlayerDoubleFront, getPlayerRotating, getPlayerSingleFront, getPlayerTripleFront } from "../services/gunsProps";
 
 import { DoubleGun } from "../guns/DoubleGun";
 import { SingleGun } from "../guns/SingleGun";
 import  ShieldOrb from "../effects/ShieldOrb";
 import { TripleGun } from "../guns/TripleGun";
+import { DoubleGunTest } from "../guns/DoubleGunTest";
 
 const defaultPosition = {
   x: GAME_WIDTH / 2,
@@ -66,8 +67,9 @@ export class Player extends Ship {
     this.game.playerGuns = [];
     this.initializePlayerGuns();
     this.laserGun = this.laserGunT3;
-    this.game.playerGuns.push(this.singleGun);
-    //this.game.playerGuns.push(this.doubleGun);
+    //this.game.playerGuns.push(this.singleGun);
+    //this.game.playerGuns.push(this.doubleTest);
+    this.game.playerGuns.push(this.tripleGun);
     this.shieldOrb = new ShieldOrb(this.game, this);
   }
 
@@ -146,24 +148,37 @@ export class Player extends Ship {
   initializePlayerGuns() {
     this.laserGunT1 = new SingleGun(this.game, this);
     this.laserGunT1.initialize(getPlayerT1LaserGun, getPlayerLaser);
+    this.laserGunT1.setGunDamage(this.game.stats.playerGunsDamage.laserT1);
 
     this.laserGunT2 = new SingleGun(this.game, this);
     this.laserGunT2.initialize(getPlayerT2LaserGun, getPlayerLaser);
+    this.laserGunT2.setGunDamage(this.game.stats.playerGunsDamage.laserT2);
 
     this.laserGunT3 = new SingleGun(this.game, this);
     this.laserGunT3.initialize(getPlayerT3LaserGun, getPlayerLaser);
-    
+    this.laserGunT3.setGunDamage(this.game.stats.playerGunsDamage.laserT3);
+
+    ////test/////
+    this.doubleTest = new DoubleGunTest(this.game, this);
+    this.doubleTest.initialize(getPlayerRotating, getDefaultPlayerProjectile);
+    this.doubleTest.setGunDamage(this.game.stats.playerGunsDamage.rotating);
+    this.doubleTest.setProjectileImage(this.game.media.projectileArcBlueImg);
+    ////test/////
+
     this.singleGun = new SingleGun(this.game, this);
-    this.singleGun.initialize(getPlayerT4SingleFront, getDefaultPlayerProjectile);
-    this.singleGun.setProjectileImage(this.game.media.projectilePlayerImg);
+    this.singleGun.initialize(getPlayerBarrage180Angle, getDefaultPlayerProjectile);
+    this.singleGun.setGunDamage(this.game.stats.playerGunsDamage.barrage);
+    this.singleGun.setProjectileImage(this.game.media.projectileArcBlueImg);
 
     this.doubleGun = new DoubleGun(this.game, this);
-    this.doubleGun.initialize(getPlayerT4DoubleFront, getDefaultPlayerProjectile);
-    this.doubleGun.setProjectileImage(this.game.media.projectilePlayerImg);
+    this.doubleGun.initialize(getPlayerDoubleFront, getDefaultPlayerProjectile);
+    this.doubleGun.setGunDamage(this.game.stats.playerGunsDamage.default);
+    this.doubleGun.setProjectileImage(this.game.media.projectileArcBlueImg);
 
     this.tripleGun = new TripleGun(this.game, this);
-    this.tripleGun.initialize(getPlayerT4TripleFront, getDefaultPlayerProjectile);
-    this.tripleGun.setProjectileImage(this.game.media.projectilePlayerImg);
+    this.tripleGun.initialize(getPlayerTripleFront, getDefaultPlayerProjectile);
+    this.tripleGun.setGunDamage(this.game.stats.playerGunsDamage.default);
+    this.tripleGun.setProjectileImage(this.game.media.projectileArcBlueImg);
   }
   
 }

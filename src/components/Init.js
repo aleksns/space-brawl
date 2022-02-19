@@ -11,8 +11,6 @@ import { EnemyT5 } from "../ships/EnemyT5";
 import { Coin } from "../items/Coin";
 import { BossTest } from "../ships/BossTest";
 import { ExplosionSmall } from "../effects/ExplosionSmall";
-import { Laser } from "../projectiles/Laser";
-import { initMedia } from "../services/media";
 import { EnemyT3 } from "../ships/EnemyT3";
 
 export default class Init {
@@ -23,50 +21,43 @@ export default class Init {
     this.maxNumOfElements = 2;
     this.maxNumOfItems = 8;
 
-    this.itemsToSpawn = [
-      (this.medkit = {
-        now: 0,
-        then: 0, //tbd
-        //delay: getBuffsSpawnDelay.medkit,
-        delay: 3,
-        //timesSpawned: 0, //tbd
-        id: "medkit",
-      }),
-      (this.atkSpeed = {
-        now: 0,
-        then: 0, //tbd
-        //delay: getBuffsSpawnDelay.atkSpeed,
-        delay: 3,
-        //timesSpawned: 0, //tbd
-        id: "atkSpeed",
-      }),
-    ];
+    this.medkit = {
+      now: 0,
+      then: 0, //tbd
+      delay: getBuffsSpawnDelay.medkit,
+      //delay: 3,
+      //timesSpawned: 0, //tbd
+      id: "medkit",
+    }
+    this.atkSpeed = {
+      now: 0,
+      then: 0, //tbd
+      delay: getBuffsSpawnDelay.atkSpeed,
+      //delay: 3,
+      //timesSpawned: 0, //tbd
+      id: "atkSpeed",
+    }
 
-    this.formationLine = {
-      delay: 20,
-      numOfEnemies: 8,
-    };
+    this.itemsToSpawn = [];
+    this.itemsToSpawn.push(this.medkit);
+    this.itemsToSpawn.push(this.atkSpeed);
 
-    this.enemiesInFormation = [];
-    this.formationThen = 0;
   }
 
   initialize() {
-    //this.initTimers();
+    this.updateTimers();
     this.game.player.initialize();
     this.game.skills.initialize();
   }
 
-  initTimers() {
+  updateTimers() {
     for (let i = 0; i < this.itemsToSpawn.length; i++) {
       this.itemsToSpawn[i].then = Date.now();
     }
-
-    this.formationThen = Date.now();
   }
 
   addItemsBasedOnTiming() {
-    if (this.game.isGlobalActionRestricted) {
+    if (this.game.isGlobalActionRestricted || this.game.stats.isGlobalSlowAll) {
       return;
     }
     for (let i = 0; i < this.itemsToSpawn.length; i++) {
@@ -139,30 +130,30 @@ export default class Init {
 
   // Create formation of enemies > put enemies in the temp list > apply formation function to enemies >
   // > add enemies to the main list > remove temp list
-  spawnFormationOfEnemies() {
-    let timePassed = (this.game.now - this.formationThen) / 1000;
+  // spawnFormationOfEnemies() {
+  //   let timePassed = (this.game.now - this.formationThen) / 1000;
 
-    if (
-      timePassed >= this.formationLine.delay &&
-      !this.progression.isMaxThreatLevel
-    ) {
-      this.formationThen = this.game.now;
+  //   if (
+  //     timePassed >= this.formationLine.delay &&
+  //     !this.progression.isMaxThreatLevel
+  //   ) {
+  //     this.formationThen = this.game.now;
 
-      for (let i = 0; i <= this.formationLine.numOfEnemies; i++) {
-        var newEnemy = new EnemyT5(this.game);
-        newEnemy.initialize();
-        this.enemiesInFormation.push(newEnemy);
-      }
-      let margin = 15;
-      this.game.gameBoard.setShipsInFormationLine(this.enemiesInFormation, margin);
+  //     for (let i = 0; i <= this.formationLine.numOfEnemies; i++) {
+  //       var newEnemy = new EnemyT5(this.game);
+  //       newEnemy.initialize();
+  //       this.enemiesInFormation.push(newEnemy);
+  //     }
+  //     let margin = 15;
+  //     this.game.gameBoard.setShipsInFormationLine(this.enemiesInFormation, margin);
 
-      for (let i = 0; i < this.enemiesInFormation.length; i++) {
-        this.game.enemies.push(this.enemiesInFormation[i]);
-      }
+  //     for (let i = 0; i < this.enemiesInFormation.length; i++) {
+  //       this.game.enemies.push(this.enemiesInFormation[i]);
+  //     }
 
-      this.enemiesInFormation = [];
-    }
-  }
+  //     this.enemiesInFormation = [];
+  //   }
+  // }
 
   spawnBoss(boss) {
     this.game.enemies.push(boss);

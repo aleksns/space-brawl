@@ -19,7 +19,7 @@ export default class Progression {
       damage: 1.5,
       health: 2,
       maxHealth: 2,
-      scorePoints: 3,
+      scorePoints: 2,
     };
 
     this.isPlayerTier1 = false;
@@ -77,7 +77,6 @@ export default class Progression {
     this.level++;
     this.isMaxThreatLevel = false;
     this.applyModifiers();
-    this.game.stats.applyModifiers(this);
     this.game.script.reset();
   }
 
@@ -85,4 +84,5 @@ export default class Progression {
     //this.maxExpPoints *= 2;
     this.game.stats.applyModifiers(this);
   }
+  
 }

@@ -116,7 +116,7 @@ export const getItemsStats = {
 
 export const getBuffsSpawnDelay = {
   medkit: 4.0,
-  atkSpeed: 7.0,   ///9.0
+  atkSpeed: 8.0,   ///9.0
 };
 
 export const getBuffsDuration = {
@@ -182,8 +182,8 @@ export const getEnemyT5DefaultStats = {
   damage: 3,
   health: 75,
   maxHealth: 75,
-  speed: 2,
-  accelerationMod: 60,
+  speed: 1,
+  accelerationMod: 30,
   rammingDmg: 0.1,
   scorePoints: 15,
 };
@@ -227,14 +227,15 @@ export function centerSingleGunWithProjectile(gun, projectileW) {
 
 export function getSingleGunPosition(gun, projectileW) {
   //projectileW - width
-  var toReturn = [];
+  //var toReturn = [];
     var centerPosition = {
     x: centerSingleGunWithProjectile(gun, projectileW).x,
     y: centerSingleGunWithProjectile(gun, projectileW).y,
   };
 
-  toReturn.push(centerPosition);
-  return toReturn;
+  //toReturn.push(centerPosition);
+  //return toReturn;
+  return centerPosition;
 }
 
 export function getDoubleGunPosition(gun, projectileW) {
@@ -259,7 +260,8 @@ export function getTripleGunPosition(gun, projectileW) {
   var toReturn = [];
 
   var leftPosition = getDoubleGunPosition(gun, projectileW)[0];
-  var centerPosition = getSingleGunPosition(gun, projectileW)[0];
+  //var centerPosition = getSingleGunPosition(gun, projectileW)[0];
+  var centerPosition = getSingleGunPosition(gun, projectileW);
   var rightPosition = getDoubleGunPosition(gun, projectileW)[1];
 
   toReturn.push(leftPosition);

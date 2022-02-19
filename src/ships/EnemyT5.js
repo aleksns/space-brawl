@@ -7,7 +7,7 @@ import {
   GAME_HEIGHT,
 } from "../services/services";
 import { SingleGun } from "../guns/SingleGun";
-import { getEnemyT4GunProps } from "../services/gunsProps";
+import { getT5Front } from "../services/gunsProps";
 
 export class EnemyT5 extends Ship {
   constructor(game) {
@@ -71,9 +71,9 @@ export class EnemyT5 extends Ship {
     this.setTargetFront();
 
     let newSingleGun = new SingleGun(this.game, this);
-    newSingleGun.initialize(getEnemyT4GunProps, getDefaultEnemyProjectile);
-    newSingleGun.setProjectileImage(this.game.media.projectileGreenImg);
-
+    newSingleGun.initialize(getT5Front, getDefaultEnemyProjectile);
+    newSingleGun.setGunDamage(this.game.stats.enemyGunsDamage.t5Front);
+    newSingleGun.setProjectileImage(this.game.media.projectileArcGreenImg);
     this.game.enemyGuns.push(newSingleGun);
     this.gun = newSingleGun; 
   }

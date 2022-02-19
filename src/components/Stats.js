@@ -1,4 +1,8 @@
 import {
+  enemyGunsDamageProps,
+  playerGunsDamageProps,
+} from "../services/gunsProps";
+import {
   getPlayerT3Stats,
   getEnemyT4DefaultStats,
   getEnemyT5DefaultStats,
@@ -17,7 +21,6 @@ export default class Stats {
     };
 
     this.enemyT3 = {
-      damage: getEnemyT3DefaultStats.damage,
       health: getEnemyT3DefaultStats.health,
       maxHealth: getEnemyT3DefaultStats.maxHealth,
       s: getEnemyT3DefaultStats.speed,
@@ -27,7 +30,6 @@ export default class Stats {
     };
 
     this.enemyT4 = {
-      damage: getEnemyT4DefaultStats.damage,
       health: getEnemyT4DefaultStats.health,
       maxHealth: getEnemyT4DefaultStats.maxHealth,
       s: getEnemyT4DefaultStats.speed,
@@ -37,7 +39,6 @@ export default class Stats {
     };
 
     this.enemyT5 = {
-      damage: getEnemyT5DefaultStats.damage,
       health: getEnemyT5DefaultStats.health,
       maxHealth: getEnemyT5DefaultStats.maxHealth,
       s: getEnemyT5DefaultStats.speed,
@@ -47,13 +48,32 @@ export default class Stats {
     };
 
     this.enemyT0 = {
-      damage: getEnemyT0DefaultStats.damage,
       health: getEnemyT0DefaultStats.health,
       maxHealth: getEnemyT0DefaultStats.maxHealth,
       s: getEnemyT0DefaultStats.speed,
       a: getEnemyT5DefaultStats.speed / getEnemyT0DefaultStats.accelerationMod,
       rammingDmg: getEnemyT0DefaultStats.rammingDmg,
       scorePoints: getEnemyT0DefaultStats.scorePoints,
+    };
+
+    this.playerGunsDamage = {
+      laserT1: playerGunsDamageProps.laserT1,
+      laserT2: playerGunsDamageProps.laserT2,
+      laserT3: playerGunsDamageProps.laserT3,
+      default: playerGunsDamageProps.default,
+      barrage: playerGunsDamageProps.barrage,
+      rotating: playerGunsDamageProps.rotating,
+    };
+
+    this.enemyGunsDamage = {
+      t4Target: enemyGunsDamageProps.t4Target,
+      t5Front: enemyGunsDamageProps.t5Front,
+      t3Target: enemyGunsDamageProps.t3Target,
+      t3Barrage: enemyGunsDamageProps.t3Barrage,
+      t0Target: enemyGunsDamageProps.t0Target,
+      t0Burst: enemyGunsDamageProps.t0Burst,
+      t0Rotating: enemyGunsDamageProps.t0Rotating,
+      t0Barrage: enemyGunsDamageProps.t0Barrage,
     };
 
     this.enemiesStats = [];
@@ -68,7 +88,6 @@ export default class Stats {
       sProjPlayer: 0,
       atkSpeedGlobal: 0,
       speedGlobal: 0,
-      //speedProjectileGlobal: 0,
     };
 
     this.isGlobalSlowAll = false;
@@ -78,6 +97,18 @@ export default class Stats {
     for (let i = 0; i < this.enemiesStats.length; i++) {
       this.appplyModifiersToEnemy(progression, this.enemiesStats[i]);
     }
+    this.applyModifiersToGunsDamage(progression.enemyModifiers.damage);
+  }
+
+  applyModifiersToGunsDamage(damageMod) {
+    this.enemyGunsDamage.t4Target *= damageMod;
+    this.enemyGunsDamage.t5Front *= damageMod;
+    this.enemyGunsDamage.t3Target *= damageMod;
+    this.enemyGunsDamage.t3Barrage *= damageMod;
+    this.enemyGunsDamage.t0Target *= damageMod;
+    this.enemyGunsDamage.t0Burst *= damageMod;
+    this.enemyGunsDamage.t0Rotating *= damageMod;
+    this.enemyGunsDamage.t0Barrage *= damageMod;
   }
 
   appplyModifiersToEnemy(progression, enemy) {
@@ -104,8 +135,14 @@ export default class Stats {
     this.decreaseEnemiesSpeed(this.game.enemies);
     this.decreaseShipSpeed(this.game.player, this.slowModifiers.speedPlayer);
 
-    this.decreaseGunsAtkSpeed(this.game.enemyGuns, this.slowModifiers.atkSpeedGlobal);
-    this.decreaseGunsAtkSpeed(this.game.playerGuns, this.slowModifiers.atkSpeedPlayer);
+    this.decreaseGunsAtkSpeed(
+      this.game.enemyGuns,
+      this.slowModifiers.atkSpeedGlobal
+    );
+    this.decreaseGunsAtkSpeed(
+      this.game.playerGuns,
+      this.slowModifiers.atkSpeedPlayer
+    );
 
     this.decreaseObjectsSpeed(this.game.playerProjectiles);
     this.decreaseObjectsSpeed(this.game.enemyProjectiles);
@@ -123,7 +160,7 @@ export default class Stats {
 
   decreaseObjectsSpeed(objects) {
     for (let i = 0; i < objects.length; i++) {
-        this.decreaseObjectSpeed(objects[i]);
+      this.decreaseObjectSpeed(objects[i]);
     }
   }
 
@@ -147,8 +184,14 @@ export default class Stats {
     this.increaseEnemiesSpeed(this.game.enemies);
     this.increaseShipSpeed(this.game.player, this.slowModifiers.speedPlayer);
 
-    this.increaseGunsAtkSpeed(this.game.enemyGuns, this.slowModifiers.atkSpeedGlobal);
-    this.increaseGunsAtkSpeed(this.game.playerGuns, this.slowModifiers.atkSpeedPlayer);
+    this.increaseGunsAtkSpeed(
+      this.game.enemyGuns,
+      this.slowModifiers.atkSpeedGlobal
+    );
+    this.increaseGunsAtkSpeed(
+      this.game.playerGuns,
+      this.slowModifiers.atkSpeedPlayer
+    );
 
     this.increaseObjectsSpeed(this.game.playerProjectiles);
     this.increaseObjectsSpeed(this.game.enemyProjectiles);
@@ -168,7 +211,7 @@ export default class Stats {
 
   increaseObjectsSpeed(objects) {
     for (let i = 0; i < objects.length; i++) {
-        this.increaseObjectSpeed(objects[i]);
+      this.increaseObjectSpeed(objects[i]);
     }
   }
 
@@ -204,7 +247,7 @@ export default class Stats {
 
   decreaseGunsAtkSpeed(guns, value) {
     for (let i = 0; i < guns.length; i++) {
-        this.decreaseGunAtkSpeed(guns[i], value);
+      this.decreaseGunAtkSpeed(guns[i], value);
     }
   }
 
@@ -218,7 +261,7 @@ export default class Stats {
 
   increaseGunsAtkSpeed(guns, value) {
     for (let i = 0; i < guns.length; i++) {
-        this.increaseGunAtkSpeed(guns[i], value);
+      this.increaseGunAtkSpeed(guns[i], value);
     }
   }
 

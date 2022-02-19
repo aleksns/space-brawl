@@ -18,7 +18,9 @@ export default class Projectile {
     this.vY = 0;
     this.dX = 0;
     this.dY = 0;
+    this.offStepY0 = 0;
 
+    //for the feature lock-on type projectiles
     this.visionRange = {
       x: 0,
       y: 0,
@@ -89,8 +91,16 @@ export default class Projectile {
   }
 
   removeIfOutsideScreen() {
+    //to allow enemies shoot when outside the screen
+    if(this.gun.isPlayerOwned) {
+      this.offStepY0 = this.getOffstepY0();
+    }
+    else {
+      this.offStepY0 = -this.gun.owner.h * 2;
+    }
+
     if (
-      this.game.collision.isCollisionBorderUp(this, this.getOffstepY0()) ||
+      this.game.collision.isCollisionBorderUp(this, this.offStepY0) ||
       this.game.collision.isCollisionBorderDown(this, this.getOffstepY1()) ||
       this.game.collision.isCollisionBorderLeft(this, this.getOffstepX0()) ||
       this.game.collision.isCollisionBorderRight(this, this.getOffstepX1())

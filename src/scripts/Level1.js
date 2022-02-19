@@ -20,11 +20,13 @@ export default class Level1 {
 
     this.wave = [];
     this.waveMap = [];
-    this.listOfEnemyTier = ["t5", "t4"];
+    //this.listOfEnemyTier = ["t5", "t4"];
+    this.listOfEnemyTier = ["t4"];
 
-    this.minNumOfEnemies = 3;
-    this.maxNumOfEnemies = 10;
+    this.minNumOfEnemies = 1;
+    this.maxNumOfEnemies = 1;
 
+    this.chanceToSpawnFormation = 0.4;
     this.isFormation = false;
   }
 
@@ -57,17 +59,16 @@ export default class Level1 {
   generateWave() {
     this.waveMap = [];
     this.wave = [];
-
-    if (this.i % 4 == 0 && this.i != 0) {
-      this.generateT3Wave();
-    } else {
-      let chanceToSpawnFormation = roundDecimalHundreds(Math.random());
-      if (getTrueBasedOnChance(chanceToSpawnFormation)) {
-        this.generateFormationWave();
-      } else {
-        this.generateDefaultWave();
-      }
-    }
+    this.generateDefaultWave();
+    // if (this.i % 4 == 0 && this.i != 0) {
+    //   this.generateT3Wave();
+    // } else {
+    //   if (getTrueBasedOnChance(this.chanceToSpawnFormation)) {
+    //     this.generateFormationWave();
+    //   } else {
+    //     this.generateDefaultWave();
+    //   }
+    // }
   }
 
   generateFormationWave() {

@@ -125,7 +125,6 @@ export default class Skills {
       return;
     }
 
-    //this.updateTimersBeforeSlowSkill();
     this.slowTime.then = this.game.now;
     this.slowTime.isApplied = true;
     this.game.stats.decreaseSpeedOfEverything();
@@ -134,7 +133,7 @@ export default class Skills {
   turnOffSlowTimeSkill() {
     this.game.stats.increaseSpeedOfEverything();
     this.slowTime.isApplied = false;
-    //this.updateTimersAfterSlowSkill()
+    this.game.init.updateTimers();
   }
 
   updateTimersBeforeSlowSkill() {

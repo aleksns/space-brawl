@@ -36,7 +36,7 @@ export class ProjectileDefault extends Projectile {
     this.color = getDefaultPlayerProjectile.color;
     this.explosionColor = "orange";
     this.isFill = getDefaultPlayerProjectile.isFill;
-    //this.image = this.game.media.projectilePlayerImg;
+    //this.image = this.game.media.projectileYellowConeImg;
     this.image = this.gun.projectileImage;
   }
 
@@ -52,7 +52,7 @@ export class ProjectileDefault extends Projectile {
     this.color = getDefaultEnemyProjectile.color;
     this.explosionColor = "red";
     this.isFill = getDefaultEnemyProjectile.isFill;
-    //this.image = this.game.media.projectileRedImg;
+    //this.image = this.game.media.projectileArcRedImg;
     this.image = this.gun.projectileImage;
   }
 

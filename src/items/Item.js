@@ -20,7 +20,7 @@ export default class Item {
       isFill: false,
       s: 4, // s - speed
       a: 0.2, /// a - acceleration (6/30)
-      visionRange: 150,
+      visionRange: 70,
     };
 
     this.itemCoinProps = {

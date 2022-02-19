@@ -55,7 +55,7 @@ export class Laser extends Projectile {
     this.color = getEnemyLaser.color;
     this.explosionColor = "red";
     this.isFill = getEnemyLaser.isFill;
-    //this.image = this.game.gameBoard.projectileRedImg;
+    //this.image = this.game.gameBoard.projectileArcRedImg;
   }
 
   setEnemyLaserStats() {

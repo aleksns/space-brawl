@@ -49,7 +49,7 @@ export class ThreatLevelBar extends UICanvas {
     ctx.current.beginPath();
 
 
-    if(this.game.progression.isMaxThreatLevel) {   
+    //if(this.game.progression.isMaxThreatLevel) {   
       this.saturation += this.satModifier;
       if(this.saturation <= this.satMin || this.saturation >= this.satMax) {
         this.satModifier = -this.satModifier;
@@ -59,10 +59,10 @@ export class ThreatLevelBar extends UICanvas {
         this.lightModifier = -this.lightModifier;
       }
       this.threatBarProps.color = `hsl(${0},${this.saturation}%,${this.lightness}%)`
-    }
-    else {
-      this.threatBarProps.color = this.threatBarProps.colorDefault;
-    }
+    //}
+    //else {
+      //this.threatBarProps.color = this.threatBarProps.colorDefault;
+   // }
 
 
     ctx.current.fillStyle = this.threatBarProps.color;

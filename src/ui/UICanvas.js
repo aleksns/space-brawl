@@ -49,7 +49,7 @@ export default class UICanvas {
     
     this.threatBarPropsContainer = {
       x: this.threatBarImgContainer.x + 38,
-      y: 5,
+      y: this.threatBarImgContainer.y + 5,
       w: this.threatBarImgContainer.w - 43,
       h: this.threatBarImgContainer.h - 5,
       color: colors.uiRedDark,
