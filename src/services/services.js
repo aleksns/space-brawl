@@ -69,6 +69,8 @@ export const colors = {
   hitRegColor: "#ffffff",
   scoreColor: "#8BE0FF",
   uiOrange: "#FFAA00",
+  uiOrangeDark: "#db6a00",
+  uiOrangeLight: "#ffc94b",
   uiBlue: "#3498DB",
   uiBlueDark: "#000657",
   uiBlueDarkLighter: "#1a2298",
@@ -150,8 +152,8 @@ export const getPlayerT3Stats = {
 
 export const getEnemyT0DefaultStats = {
   damage: 4,
-  health: 10000,
-  maxHealth: 10000,
+  health: 1000,
+  maxHealth: 1000,
   speed: 2,
   accelerationMod: 60,
   rammingDmg: 1,
@@ -180,8 +182,8 @@ export const getEnemyT4DefaultStats = {
 
 export const getEnemyT5DefaultStats = {
   damage: 3,
-  health: 75,
-  maxHealth: 75,
+  health: 45,
+  maxHealth: 45,
   speed: 1,
   accelerationMod: 30,
   rammingDmg: 0.1,

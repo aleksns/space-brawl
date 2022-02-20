@@ -134,7 +134,6 @@ export class Boss extends Ship {
 
   onDeath() {
     this.game.bossGuns = [];
-    this.game.init.addEffect(this, "explosionDefault");
     this.game.progression.score += this.scorePoints;
     this.game.progression.advanceLevel();
   }

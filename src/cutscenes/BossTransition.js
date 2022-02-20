@@ -114,7 +114,6 @@ export class BossTransition extends Cutscene {
       object.startX += this.numOfIterations;
     }
     if (object.startX >= object.destination) {
-      //this.isAnimationFinished = true;
       this.setAnimationIsFinished();
     }
   }
@@ -127,7 +126,6 @@ export class BossTransition extends Cutscene {
       object.startX -= this.numOfIterations;
     }
     if (object.startX <= object.destination) {
-      //this.isAnimationFinished = true;
       this.setAnimationIsFinished();
     }
   }

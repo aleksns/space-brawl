@@ -3,7 +3,6 @@ export default class Animation {
   constructor(game) {
       this.game = game;
 
-      this.framesRefresh = 0.2;
   }
 
   update() {

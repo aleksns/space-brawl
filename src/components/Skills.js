@@ -32,7 +32,7 @@ export default class Skills {
   constructor(game) {
     this.game = game;
     this.atkSpeed = {
-      value: 4,
+      value: 3,
       now: 0,
       then: 0,
       cd: 0,
@@ -51,9 +51,6 @@ export default class Skills {
       opacity: itemBuffProps.opacity,
       isFill: itemBuffProps.isFill,
       color: skillCdColor,
-      // shadowColor: "transparent",
-      // shadowBlur: 0,
-      // globalAlpha: 1.0,
       text: 0,
     };
     this.atkSpeed.image.src = this.atkSpeed.imageSrc;

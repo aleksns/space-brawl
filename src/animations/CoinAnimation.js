@@ -59,6 +59,7 @@ export class CoinAnimation extends Animation {
 
     this.i = 0;
     this.then = 0;
+    this.framesRefresh = 0.08;
   }
 
   updateAnimation() {

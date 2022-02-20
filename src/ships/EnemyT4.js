@@ -19,8 +19,10 @@ export class EnemyT4 extends Ship {
     this.y = 0;
     this.dX = 0;
     this.dY = 0;
-    this.w = getEnemyT4Dimension().w;
-    this.h = getEnemyT4Dimension().h;
+    // this.w = getEnemyT4Dimension().w;
+    // this.h = getEnemyT4Dimension().h;
+    this.w = 180;
+    this.h = 120;
 
     this.health = this.game.stats.enemyT4.health;
     this.maxHealth = this.game.stats.enemyT4.maxHealth;
@@ -41,7 +43,7 @@ export class EnemyT4 extends Ship {
     this.gun = undefined;
     this.target = this.game.player;
 
-    this.image = this.game.media.enemyShipT4;
+    this.image = this.game.media.enemyShipT2;
 
     this.directionChangeIntervalThen = 0;
     this.directionChangeInterval = 4;
@@ -81,7 +83,6 @@ export class EnemyT4 extends Ship {
     this.game.enemyGuns.push(newSingleGun);
     this.gun = newSingleGun;
 
-    console.log(`T4 ship damage = ${this.gun.damage}`);
     this.directionChangeIntervalThen = this.game.now;
   }
 

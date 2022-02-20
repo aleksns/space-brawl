@@ -11,16 +11,28 @@ import {
   getPlayerT1Stats,
   getPlayerT2Stats,
 } from "../services/services";
-import { getT0Rotating, getPlayerBarrage180Angle, getPlayerBarrage360Angle, getPlayerBarrageLeft90Angle, getPlayerT1LaserGun, getPlayerT2LaserGun, getPlayerT3LaserGun, getPlayerDoubleFront, getPlayerRotating, getPlayerSingleFront, getPlayerTripleFront } from "../services/gunsProps";
+import {
+  getT0Rotating,
+  getPlayerBarrage180Angle,
+  getPlayerBarrage360Angle,
+  getPlayerBarrageLeft90Angle,
+  getPlayerT1LaserGun,
+  getPlayerT2LaserGun,
+  getPlayerT3LaserGun,
+  getPlayerDoubleFront,
+  getPlayerRotating,
+  getPlayerSingleFront,
+  getPlayerTripleFront,
+} from "../services/gunsProps";
 
 import { DoubleGun } from "../guns/DoubleGun";
 import { SingleGun } from "../guns/SingleGun";
-import  ShieldOrb from "../effects/ShieldOrb";
+import ShieldOrb from "../effects/ShieldOrb";
 import { TripleGun } from "../guns/TripleGun";
 import { DoubleGunTest } from "../guns/DoubleGunTest";
 
 const defaultPosition = {
-  x: GAME_WIDTH / 2,
+  x: GAME_WIDTH / 2 - getPlayerT3Dimension().w / 2,
   y: GAME_HEIGHT - getPlayerT3Dimension().h,
 };
 
@@ -47,7 +59,6 @@ export class Player extends Ship {
     this.now = 0;
 
     this.image = this.game.media.playerShipT3;
-    ;
     this.isLaserOn = false;
     this.laserGunT1 = undefined;
     this.laserGunT2 = undefined;
@@ -74,16 +85,15 @@ export class Player extends Ship {
   }
 
   updateShip() {
-    if(this.isShieldOn) {
+    if (this.isShieldOn) {
       this.shieldOrb.update();
     }
   }
 
   fireGun() {
-    if(this.isLaserOn) {
+    if (this.isLaserOn) {
       this.laserGun.fire();
-    }
-    else {
+    } else {
       for (let i = 0; i < this.game.playerGuns.length; i++) {
         this.game.playerGuns[i].fire();
       }
@@ -166,7 +176,10 @@ export class Player extends Ship {
     ////test/////
 
     this.singleGun = new SingleGun(this.game, this);
-    this.singleGun.initialize(getPlayerBarrage180Angle, getDefaultPlayerProjectile);
+    this.singleGun.initialize(
+      getPlayerBarrage180Angle,
+      getDefaultPlayerProjectile
+    );
     this.singleGun.setGunDamage(this.game.stats.playerGunsDamage.barrage);
     this.singleGun.setProjectileImage(this.game.media.projectileArcBlueImg);
 
@@ -180,5 +193,4 @@ export class Player extends Ship {
     this.tripleGun.setGunDamage(this.game.stats.playerGunsDamage.default);
     this.tripleGun.setProjectileImage(this.game.media.projectileArcBlueImg);
   }
-  
 }

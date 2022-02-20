@@ -1,7 +1,7 @@
 import { Pulse } from "../effects/Pulse";
 import { colors, GAME_WIDTH } from "../services/services";
 import { HpBarPlayer } from "../ui/HpBarPlayer";
-import { ScoreAndExp } from "../ui/ScoreAndExp";
+import { LevelAndScore } from "../ui/LevelAndScore";
 import { ThreatLevelBar } from "../ui/ThreatLevelBar";
 
 const hitRegFilter = "saturate(50%) brightness(150%)";
@@ -21,8 +21,7 @@ export default class Draw {
     this.skillsBar = this.game.skillsBar;
     this.hpBarPlayer = new HpBarPlayer(this.game);
     this.threatBar = new ThreatLevelBar(this.game);
-    this.scoreAndExp = new ScoreAndExp(this.game);
-
+    this.levelAndScore = this.game.levelAndScore;
     // projectile filters
     this.brightnessNum = 100;
     this.saturationNum = 100;
@@ -35,15 +34,9 @@ export default class Draw {
     this.filter = `saturate(${this.saturationNum}%) brightness(${this.brightnessNum}%)`;
   }
 
-  updateUICanvas() {
-    this.threatBar.update();
-    //this.newEffect.update();
-  }
-
   drawAll() {
     this.drawBgElements();
     this.drawProjectiles();
-    this.drawEffects();
     this.drawItems();
 
     this.drawPlayer();
@@ -52,13 +45,14 @@ export default class Draw {
     if(this.game.isGlobalActionRestricted) {
       return;
     }
+    this.drawEffects();
     this.drawUI(this.ctx); 
   }
 
   drawUIOnInit() {
     this.drawObject(this.hpBarPlayer.hpBarImageProps, this.ctx5);
     this.drawObject(this.threatBar.threatBarImageProps, this.ctx5);
-    this.drawObject(this.scoreAndExp.coinImageProps, this.ctx5);
+    //this.drawObject(this.levelAndScore.levelImageProps, this.ctx5);
   }
 
   drawCutscene(cutscene, ctx) {
@@ -68,7 +62,7 @@ export default class Draw {
   drawUI() {
     this.hpBarPlayer.draw(this.ctx4);
     this.threatBar.draw(this.ctx4);
-    this.scoreAndExp.drawScoreAndExpBar(this.ctx4);
+    this.levelAndScore.draw(this.ctx4);
     this.skillsBar.draw(this.ctx4);
   }
 
@@ -198,23 +192,14 @@ export default class Draw {
   }
 
   drawEffects() {
-    if(this.game.isGlobalActionRestricted) {
-      return;
-    }
+    // if(this.game.isGlobalActionRestricted) {
+    //   return;
+    // }
     for (let i = 0; i < this.game.effects.length; i++) {
       //this.drawEffect(this.game.effects[i]);
       this.game.effects[i].draw(this.ctx2);
     }
   }
-
-  // drawEffect(effect) {
-  //     if(effect.isRect) {
-  //       this.drawRect(effect, this.ctx2);
-  //     }
-  //   else {
-  //   this.drawArc(effect, this.ctx2);
-  //   }
-  // }
 
   drawRect(object, ctx) {
     ctx.current.globalAlpha = object.opacity;

@@ -106,11 +106,25 @@ export default class Controls {
     this.testThen = 0;
     this.canTest = true;
     this.i = 0;
+
+    this.testObject = {
+      x: 300,
+      y: 300,
+      w: 50,
+      h: 50
+    }
+
+    this.testCoin = {
+      id: "coin",
+      value: 15,
+    };
+
     this.canvas5.current.addEventListener(
       "click",
       (event) => {
         this.mousePosition = this.getMousePosition(event);
        console.log(`mousePos = ${JSON.stringify(this.mousePosition)}`);
+        //this.test();
        
         // this.btns.forEach((btn) => {
         //   switch (btn.id) {
@@ -142,6 +156,12 @@ export default class Controls {
     console.log("CONSTRUCTOR > Controls");
   }
 
+
+  test() {
+   this.game.init.addItemOnDrop(this.testCoin, this.testObject);
+   //this.game.progression.playerLevel++;
+  }
+
   getMousePosition(event) {
     var rect = this.canvas5.current.getBoundingClientRect();
     return {
@@ -166,24 +186,12 @@ export default class Controls {
     }
   }
 
-  handleTest() {
-    let timePassed = (this.game.now - this.testThen) / 1000;
-    if (timePassed >= 1) {
-      this.canTest = true;
-    }
-  }
-
   update() {
     this.handlePauseTimeBeforeActivation();
-    this.handleTest();
     this.handleInput();
   }
 
   handleInput() {
-    // if(!this.game.isControlsOn) {
-    //   return;
-    // }
-
     if (this.keys.space == true) {
       this.handleKeySpace();
     }
@@ -244,13 +252,6 @@ export default class Controls {
 
   handleKey2() {
     this.game.skills.turnOnShieldSkill();
-
-    // if (!this.canTest) {
-    //   return;
-    // }
-    // this.testThen = this.game.now;
-    // this.canTest = false;
-    // this.game.stopAllAction();
   }
 
   handleKey3() {

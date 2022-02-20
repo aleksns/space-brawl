@@ -1,9 +1,6 @@
 import {
-  getRandomDecimal,
   getTrueBasedOnChance,
   getRandomIntInclusive,
-  roundDecimalHundreds,
-  GAME_WIDTH,
 } from "../services/services";
 
 export default class Level1 {
@@ -20,11 +17,12 @@ export default class Level1 {
 
     this.wave = [];
     this.waveMap = [];
-    //this.listOfEnemyTier = ["t5", "t4"];
-    this.listOfEnemyTier = ["t4"];
+    this.listOfEnemyTier = ["t5", "t4"];
+    //this.listOfEnemyTier = ["t4"];
 
-    this.minNumOfEnemies = 1;
-    this.maxNumOfEnemies = 1;
+    this.minNumOfEnemies = 3;
+    this.maxNumOfEnemies = 8;
+    this.maxNumOfEnemiesFormation = 10;
 
     this.chanceToSpawnFormation = 0.4;
     this.isFormation = false;
@@ -59,23 +57,23 @@ export default class Level1 {
   generateWave() {
     this.waveMap = [];
     this.wave = [];
-    this.generateDefaultWave();
-    // if (this.i % 4 == 0 && this.i != 0) {
-    //   this.generateT3Wave();
-    // } else {
-    //   if (getTrueBasedOnChance(this.chanceToSpawnFormation)) {
-    //     this.generateFormationWave();
-    //   } else {
-    //     this.generateDefaultWave();
-    //   }
-    // }
+
+    if (this.i % 4 == 0 && this.i != 0) {
+      this.generateT3Wave();
+    } else {
+      if (getTrueBasedOnChance(this.chanceToSpawnFormation)) {
+        this.generateFormationWave();
+      } else {
+        this.generateDefaultWave();
+      }
+    }
   }
 
   generateFormationWave() {
     this.isFormation = true;
     let numOfEnemies = getRandomIntInclusive(
       this.minNumOfEnemies,
-      this.maxNumOfEnemies
+      this.maxNumOfEnemiesFormation
     );
 
     for (let i = 0; i < numOfEnemies; i++) {

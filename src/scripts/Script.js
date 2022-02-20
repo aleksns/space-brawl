@@ -21,7 +21,7 @@ export default class Script {
   }
 
   update() {
-    if(!this.currentLvl.isLevelInit) {
+    if (!this.currentLvl.isLevelInit) {
       this.initialize();
       this.currentLvl.isLevelInit = true;
     }
@@ -47,14 +47,12 @@ export default class Script {
     if (!this.game.isGlobalActionRestricted) {
       return;
     }
-    this.resumeGame();
+    this.game.setGameOffHold();
   }
 
   handleStartLevelTransition() {
     if (!this.game.isGameOnHold && !this.isStartLevelTransitionPlayed) {
-      this.game.setGameOnHold();
-      this.clearScreenFromObjects();
-      this.game.skills.turnOffAllSkills();
+      this.prepareGameForCutscene();
     }
 
     if (!this.isStartLevelTransitionPlayed) {
@@ -65,10 +63,7 @@ export default class Script {
 
   handleBossLevelTransition() {
     if (!this.game.isGameOnHold && !this.isBossLevelTransitionPlayed) {
-      this.game.setGameOnHold();
-      this.clearScreenFromObjects();
-      this.game.skills.turnOffAllSkills();
-      this.game.isGlobalActionRestricted = true;
+      this.prepareGameForCutscene();
     }
 
     if (!this.isBossLevelTransitionPlayed) {
@@ -96,7 +91,15 @@ export default class Script {
       this.playBossCutscene();
       return;
     }
+
     this.game.isGlobalActionRestricted = false;
+  }
+
+  prepareGameForCutscene() {
+    this.game.setGameOnHold();
+    this.clearScreenFromObjects();
+    this.game.skills.turnOffAllSkills();
+    this.game.player.setDefaultPosition();
   }
 
   playLevelTransitionAnimation() {
@@ -115,12 +118,7 @@ export default class Script {
   }
 
   handleEnemiesSpawn() {
-    //this.game.init.spawnFormationOfEnemies();
-
-    if (
-      //this.game.enemies.length >= this.progression.maxNumOfEnemies ||
-      !this.isStartLevelTransitionPlayed || this.game.isGlobalActionRestricted
-    ) {
+    if (this.game.isGlobalActionRestricted) {
       return;
     }
     if (!this.progression.isMaxThreatLevel) {
@@ -128,21 +126,14 @@ export default class Script {
     }
   }
 
-  resumeGame() {
-    this.game.isGlobalActionRestricted = false;
-    this.game.draw.drawUIOnInit();
-  }
-
   cutsceneFinished(cutsceneID) {
     switch (cutsceneID) {
       case "levelTransition":
         this.isStartLevelTransitionPlayed = true;
         this.game.setGameOffHold();
-        this.game.draw.drawUIOnInit();
         break;
       case "bossTransition":
         this.isBossLevelTransitionPlayed = true;
-        this.game.setGameOffHold();
         break;
       case "bossCutscene":
         this.isBossCutscenePlayed = true;
@@ -151,7 +142,6 @@ export default class Script {
         console.log(`Error handling cutsceneFinished in Script class`);
         break;
     }
-    this.game.player.setDefaultPosition();
   }
 
   clearScreenFromObjects() {

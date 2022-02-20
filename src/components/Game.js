@@ -16,6 +16,7 @@ import Cutscenes from "../cutscenes/Cutscenes";
 import Animations from "../animations/Animations";
 import Script from "../scripts/Script";
 import Media from "./Media";
+import { LevelAndScore } from "../ui/LevelAndScore";
 
 //Remove some variables FROM THE CONSTRUCTOR which are not being used
 //e.g. board height, allowed board height, etc
@@ -46,6 +47,7 @@ export default class Game {
     this.clearCanvas5 = clearCanvas5;
     this.skills = new Skills(this);
     this.skillsBar = new SkillsBar(this);
+    this.levelAndScore = new LevelAndScore(this);
     this.stats = new Stats(this);
     this.collision = new Collision(this);
     this.player = new Player(this);
@@ -141,23 +143,20 @@ export default class Game {
 
   setGameOnHold() {
     this.isGameOnHold = true;
+    this.isGlobalActionRestricted = true;
+    this.clearCanvas5();
   }
 
   setGameOffHold() {
     this.isGameOnHold = false;
+    this.isGlobalActionRestricted = false;
+    this.draw.drawUIOnInit();
   }
 
   gameLoop() {
     this.clearCanvas1To4();
-    if (this.isGlobalActionRestricted || this.isGameOnHold) {
-      this.clearCanvas5();
-    }
 
     this.script.update();
-
-    if (this.isGameOnHold) {
-      return;
-    }
 
     if (this.now == 0) {
       this.background.play();

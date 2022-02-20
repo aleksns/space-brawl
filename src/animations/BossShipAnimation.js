@@ -45,6 +45,7 @@ export class BossShipAnimation extends Animation {
 
     this.i = 0;
     this.then = 0;
+    this.framesRefresh = 0.2;
   }
 
   updateAnimation() {

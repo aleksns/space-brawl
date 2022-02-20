@@ -58,7 +58,7 @@ export class EnemyT3 extends Ship {
       x: 0,
       y: 0,
     };
-    //console.log("CONSTRUCTOR > Enemy3");
+    console.log("CONSTRUCTOR > Enemy3");
   }
 
   initializeShip() {

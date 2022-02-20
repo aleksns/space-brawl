@@ -8,7 +8,7 @@ export const buffDefault = {
   radiusModifier: 6,
   lineWidth: 6,
   color: colors.green,
-  isFill: true,
+  isFill: false,
 };
 
 export class BuffDefault extends Effect {

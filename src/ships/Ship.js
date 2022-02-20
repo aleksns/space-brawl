@@ -99,6 +99,7 @@ export default class Ship {
     this.isGotHit = true;
     this.health = this.health - projectile.damage;
     this.updateHealth();
+    this.playHitEffect(projectile);
   }
 
   updateHealth() {

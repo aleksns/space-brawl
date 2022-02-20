@@ -71,13 +71,15 @@ export default class Gun {
   }
 
   getNumOfRoundsBarrageBasedOnAngle() {
-    if(this.angleModifier == 0 || this.isRotating) {
+    if (this.angleModifier == 0 || this.isRotating) {
       return 1;
-    }
-    else {
-      let multiplier = this.angleMax - this.angleMin + Math.abs(this.angleModifier);
+    } else {
+      let multiplier =
+        this.angleMax - this.angleMin + Math.abs(this.angleModifier);
 
-      let numOfRoundsBarrage = Math.floor(Math.abs(multiplier / this.angleModifier));
+      let numOfRoundsBarrage = Math.floor(
+        Math.abs(multiplier / this.angleModifier)
+      );
       return numOfRoundsBarrage;
     }
   }
@@ -95,8 +97,7 @@ export default class Gun {
 
     if (this.i < this.numOfRoundsBurst) {
       for (let i = 0; i < this.barrels.length; i++) {
-        for (let j = 0; j < this.numOfRoundsBarrage; j++) { 
-
+        for (let j = 0; j < this.numOfRoundsBarrage; j++) {
           this.updateGunsPosition(i);
 
           if (this.isLaserGun) {
@@ -107,7 +108,6 @@ export default class Gun {
 
           this.roundThen = this.game.now;
         }
-
       }
       this.i++;
     }
@@ -133,7 +133,7 @@ export default class Gun {
       }
     }
 
-    if(this.isBarrage) {
+    if (this.isBarrage) {
       this.angle += this.angleModifier;
 
       if (this.isSouthBarrage()) {
@@ -144,7 +144,6 @@ export default class Gun {
         }
       }
     }
-
   }
 
   handleSouthBarrage() {
@@ -152,14 +151,17 @@ export default class Gun {
       this.angle = 0;
     }
 
-    if(this.angle >= (this.angleMin + this.angleModifier) && this.angle <= (this.angleMin + this.angleModifier)) {
+    if (
+      this.angle >= this.angleMin + this.angleModifier &&
+      this.angle <= this.angleMin + this.angleModifier
+    ) {
       this.angle = this.angleDefault;
     }
   }
 
   isSouthBarrage() {
     let sign = Math.sign(this.angleModifier);
-    return (sign == 1);
+    return sign == 1;
   }
 
   getGunDestination(i) {
@@ -173,14 +175,16 @@ export default class Gun {
 
     let x = this.barrels[i].x;
     let y = this.barrels[i].y;
-    let angle;
+    let angle = this.angle;
 
     //mirror the angle of a double gun
-    if (i == 0) {
-      angle = this.angle;
-    } 
-    if(i == this.barrels.length-1) {
-      angle = -this.angle;
+    if (this.isRotating) {
+      // if (i == 0) {
+      //   angle = this.angle;
+      // }
+      if (i == this.barrels.length - 1) {
+        angle = -this.angle;
+      }
     }
 
     x += this.radius * Math.sin((Math.PI * angle) / 180);

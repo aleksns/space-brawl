@@ -52,6 +52,7 @@ export default class Update {
 
   updateUI() {
     this.game.skillsBar.update();
+    this.game.levelAndScore.update();
   }
 
   updateGameProgression() {

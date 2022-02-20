@@ -4,7 +4,7 @@ export default class Progression {
   constructor(game) {
     this.game = game;
     this.threatLevel = 0;
-    this.maxThreatLevel = 88;
+    this.maxThreatLevel = 2;
     this.threatLevelModifier = 1;
 
     //this.maxNumOfEnemies = 2;
@@ -13,7 +13,8 @@ export default class Progression {
 
     this.score = 0;
     this.expPoints = 0;
-    this.maxExpPoints = 150;
+    this.maxExpPoints = 100;
+    this.playerLevel = 1;
 
     this.enemyModifiers = {
       damage: 1.5,
@@ -44,6 +45,8 @@ export default class Progression {
       this.isPlayerTier2 = true;
       this.expPoints = 0;
       this.maxExpPoints *= 2;
+      
+      this.playerLevel++;
     }
 
     if(this.expPoints >= this.maxExpPoints && (!this.isPlayerTier1 && this.isPlayerTier2)) {
@@ -53,6 +56,8 @@ export default class Progression {
       this.isPlayerTier1 = true;
       this.expPoints = 0;
       this.maxExpPoints *= 2;
+
+      this.playerLevel++;
     }
     if(this.expPoints >= this.maxExpPoints && this.isPlayerTier1) {
       var newEffect = new LevelUP(this.game);
@@ -61,6 +66,8 @@ export default class Progression {
       // this.isPlayerTier1 = true;
       this.expPoints = 0;
       this.maxExpPoints *= 2;
+
+      this.playerLevel++;
     }
   }
 
@@ -74,8 +81,8 @@ export default class Progression {
 
   advanceLevel() {
     this.resetThreatLevel();
-    this.level++;
     this.isMaxThreatLevel = false;
+    this.level++;
     this.applyModifiers();
     this.game.script.reset();
   }

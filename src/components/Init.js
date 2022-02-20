@@ -128,33 +128,6 @@ export default class Init {
     this.game.bgElements.push(newBgElement);
   }
 
-  // Create formation of enemies > put enemies in the temp list > apply formation function to enemies >
-  // > add enemies to the main list > remove temp list
-  // spawnFormationOfEnemies() {
-  //   let timePassed = (this.game.now - this.formationThen) / 1000;
-
-  //   if (
-  //     timePassed >= this.formationLine.delay &&
-  //     !this.progression.isMaxThreatLevel
-  //   ) {
-  //     this.formationThen = this.game.now;
-
-  //     for (let i = 0; i <= this.formationLine.numOfEnemies; i++) {
-  //       var newEnemy = new EnemyT5(this.game);
-  //       newEnemy.initialize();
-  //       this.enemiesInFormation.push(newEnemy);
-  //     }
-  //     let margin = 15;
-  //     this.game.gameBoard.setShipsInFormationLine(this.enemiesInFormation, margin);
-
-  //     for (let i = 0; i < this.enemiesInFormation.length; i++) {
-  //       this.game.enemies.push(this.enemiesInFormation[i]);
-  //     }
-
-  //     this.enemiesInFormation = [];
-  //   }
-  // }
-
   spawnBoss(boss) {
     this.game.enemies.push(boss);
   }
