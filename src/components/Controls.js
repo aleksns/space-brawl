@@ -108,8 +108,8 @@ export default class Controls {
     this.i = 0;
 
     this.testObject = {
-      x: 300,
-      y: 300,
+      x: 650,
+      y: 550,
       w: 50,
       h: 50
     }

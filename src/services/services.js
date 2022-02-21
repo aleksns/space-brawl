@@ -1,5 +1,6 @@
 export const GAME_WIDTH = window.innerWidth;
 export const GAME_HEIGHT = window.innerHeight;
+export const font = "russo one";
 //export const GAME_WIDTH = 1536;
 //export const GAME_HEIGHT = 734;
 

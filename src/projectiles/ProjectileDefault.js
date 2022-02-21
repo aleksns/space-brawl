@@ -47,10 +47,8 @@ export class ProjectileDefault extends Projectile {
   }
 
   setEnemyProjectileShape() {
-    // this.w = getDefaultEnemyProjectile.w;
-    // this.h = getDefaultEnemyProjectile.h;
-    this.w = 150;
-    this.h = 150;
+    this.w = getDefaultEnemyProjectile.w;
+    this.h = getDefaultEnemyProjectile.h;
     this.color = getDefaultEnemyProjectile.color;
     this.explosionColor = "red";
     this.isFill = getDefaultEnemyProjectile.isFill;

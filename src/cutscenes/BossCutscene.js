@@ -1,5 +1,5 @@
 import Cutscene from "./Cutscene";
-import { colors, GAME_WIDTH, GAME_HEIGHT } from "../services/services";
+import { colors, GAME_WIDTH, GAME_HEIGHT, font } from "../services/services";
 import dialogWindow from "../images/dialogWindow.png";
 
 const margin = {
@@ -79,14 +79,14 @@ export class BossCutscene extends Cutscene {
     let offsetX = this.container.x + margin.textSides;
     let offsetY = this.container.y + margin.textTop;
     ctx.current.fillStyle = "#3498DB";
-    ctx.current.font = `bold 62px tahoma`;
+    ctx.current.font = `62px ${font}`;
     ctx.current.fillText(name, offsetX, offsetY);
 
     let text = this.textProps.text;
     let offsetX2 = this.container.x + margin.textSides + ctx.current.measureText(name).width;
     let offsetY2 = this.container.y + margin.textTop;
     ctx.current.fillStyle = "#ffffff";
-    ctx.current.font = `bold 62px tahoma`;
+    ctx.current.font = `62px ${font}`;
     ctx.current.fillText(text, offsetX2, offsetY2);
 
 

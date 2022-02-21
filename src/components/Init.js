@@ -9,7 +9,6 @@ import { getBuffsSpawnDelay } from "../services/services";
 import { Pulse } from "../effects/Pulse";
 import { EnemyT5 } from "../ships/EnemyT5";
 import { Coin } from "../items/Coin";
-import { BossTest } from "../ships/BossTest";
 import { ExplosionSmall } from "../effects/ExplosionSmall";
 import { EnemyT3 } from "../ships/EnemyT3";
 

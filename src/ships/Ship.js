@@ -48,7 +48,6 @@ export default class Ship {
       return;
     }
     if (this.health <= 0) {
-      this.setDead();
       this.onDeath();
       return;
     }

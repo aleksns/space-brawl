@@ -40,21 +40,22 @@ export class Boss extends Ship {
     this.target = this.game.player;
 
     this.image = this.game.animations.bossShipAnimation.image;
-    //this.image.src = bossImage;
+
     this.isBoss = true;
     this.isCheckSouthOutOfBorderOnly = true;
-
+    this.isDefeated = false;
     this.destination = {
       x: 0,
       y: 0
     }
 
+    this.guns = [];
     console.log("CONSTRUCTOR > BossT0");
   }
 
   fireGun() {
-    for (let i = 0; i < this.game.bossGuns.length; i++) {
-      this.game.bossGuns[i].fire();
+    for (let i = 0; i < this.guns.length; i++) {
+      this.guns[i].fire();
     }
   }
 
@@ -63,7 +64,8 @@ export class Boss extends Ship {
     this.x = GAME_WIDTH / 2 - this.w / 2;
     this.y = -this.h;
 
-    this.setNewDirection();
+    this.setAppearanceDestinationCords();
+    this.game.movement.calculateVectorsAndDistance(this);
 
     let newTripleTarget = new TripleGun(this.game, this);
     newTripleTarget.initialize(getT0Target, getDefaultEnemyProjectile);
@@ -86,17 +88,18 @@ export class Boss extends Ship {
     newDoubleRotatingGun.setGunDamage(this.game.stats.enemyGunsDamage.t0Rotating);
     newDoubleRotatingGun.setProjectileImage(this.game.media.projectileArcRedImg);
 
-    this.game.bossGuns.push(newTripleTarget);
-    this.game.bossGuns.push(newTripleBurstGun);
-    this.game.bossGuns.push(newDoubleBurstCenteredGun);
-    this.game.bossGuns.push(newDoubleRotatingGun);
+    this.game.enemyGuns.push(newTripleTarget);
+    this.game.enemyGuns.push(newTripleBurstGun);
+    this.game.enemyGuns.push(newDoubleBurstCenteredGun);
+    this.game.enemyGuns.push(newDoubleRotatingGun);
+
+    this.guns.push(newTripleTarget);
+    this.guns.push(newTripleBurstGun);
+    this.guns.push(newDoubleBurstCenteredGun);
+    this.guns.push(newDoubleRotatingGun);
   }
 
   updateShip() {
-    // if (this.health <= 0) {
-    //   this.setDead();
-    //   this.onDeath();
-    // }
     this.updateImage();
   }
 
@@ -109,23 +112,31 @@ export class Boss extends Ship {
   }
 
   animateBossAppearance() {
-    this.game.movement.calculateVectorsAndDistance(this);
     this.game.movement.moveSouth(this);
     this.game.movement.applyVelocity(this);
   }
 
-  isAtThePosition() {
+  animateBossEscape() {
+    this.game.movement.moveNorth(this);
+    this.game.movement.applyVelocity(this);
+  }
+
+  isAtThePositionOnScreen() {
     return (this.y >= this.destination.y);
   }
 
-  setNewDirection() {
-    this.setDestinationCords();
-    this.game.movement.calculateVectorsAndDistance(this);
+  isAtThePositionOutsideScreen() {
+    return (this.y < -this.h);
   }
 
-  setDestinationCords() {
+  setAppearanceDestinationCords() {
     this.destination.x = this.x;
     this.destination.y = this.collision.allowedY.y0 / 2;
+  }
+
+  setEscapeDestinationCords() {
+    this.destination.x = this.x;
+    this.destination.y = -this.h;
   }
 
   playHitEffect(projectile) {
@@ -133,8 +144,12 @@ export class Boss extends Ship {
   }
 
   onDeath() {
-    this.game.bossGuns = [];
+    this.image = this.game.animations.bossShipAnimation.imageDefeated;
+    this.isDefeated = true;
+    this.setEscapeDestinationCords();
+  }
+
+  applyScore() {
     this.game.progression.score += this.scorePoints;
-    this.game.progression.advanceLevel();
   }
 }

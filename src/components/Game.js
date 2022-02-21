@@ -63,7 +63,6 @@ export default class Game {
     this.items = [];
     this.coins = [];
     this.enemyGuns = [];
-    this.bossGuns = [];
     this.playerGuns = [];
     this.enemies = [];
 

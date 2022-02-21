@@ -122,7 +122,8 @@ export default class Item {
   }
 
   setDestinationCords() {
-    this.destination.x = this.x;
+    //this.destination.x = this.x;
+    this.destination.x = this.game.gameBoard.getCenterOfObject(this).x;
     this.destination.y = GAME_HEIGHT + this.h;
   }
 
@@ -165,8 +166,8 @@ export default class Item {
 
   initializeCoin(object) {
     this.setPosition(object);
-    this.value = object.itemToDrop.value;
-   //this.value = 20;
+    //this.value = object.itemToDrop.value;
+    this.value = 50;
   }
 
   setPosition(object) {

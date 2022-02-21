@@ -39,6 +39,7 @@ export class Pulse extends Effect {
     this.scaledY = this.anchorY - this.anchorY * this.scale;
     this.isDead = false;
     this.isRect = false;
+    this.id = "pulse";
   }
 
   setDead() {

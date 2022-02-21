@@ -12,6 +12,7 @@ export default class Script {
     this.isStartLevelTransitionPlayed = false;
     this.isBossLevelTransitionPlayed = false;
     this.isBossCutscenePlayed = false;
+    this.isBossDeathCutscenePlayed = false;
     this.isBossSpawned = false;
     this.boss = undefined;
   }
@@ -44,10 +45,7 @@ export default class Script {
       return;
     }
 
-    if (!this.game.isGlobalActionRestricted) {
-      return;
-    }
-    this.game.setGameOffHold();
+    this.handleBossDeathCutscene();
   }
 
   handleStartLevelTransition() {
@@ -83,7 +81,10 @@ export default class Script {
   }
 
   handleBossCutscene() {
-    if (!this.boss.isAtThePosition()) {
+    if(this.boss.isDefeated) {
+      return;
+    }
+    if (!this.boss.isAtThePositionOnScreen()) {
       this.boss.animateBossAppearance();
       this.game.player.moveToDefaultPosition();
       return;
@@ -94,7 +95,28 @@ export default class Script {
       return;
     }
 
-    this.game.isGlobalActionRestricted = false;
+  }
+
+  handleBossDeathCutscene() {
+    if(!this.boss.isDefeated || this.isBossDeathCutscenePlayed) {
+      return;
+    }
+
+    if(!this.game.isGlobalActionRestricted) {
+      this.prepareGameForCutscene();
+    }
+
+    if (!this.boss.isAtThePositionOutsideScreen()) {
+      this.boss.animateBossEscape();
+      this.game.player.moveToDefaultPosition();
+      return;
+    }
+
+    this.isBossDeathCutscenePlayed = true;
+    this.boss.applyScore();
+    this.boss.setDead();
+
+    this.game.progression.advanceLevel();
   }
 
   prepareGameForCutscene() {
@@ -142,6 +164,7 @@ export default class Script {
         break;
       case "bossCutscene":
         this.isBossCutscenePlayed = true;
+        this.game.setGameOffHold();
         break;
       default:
         console.log(`Error handling cutsceneFinished in Script class`);
@@ -178,6 +201,7 @@ export default class Script {
     this.isStartLevelTransitionPlayed = false;
     this.isBossLevelTransitionPlayed = false;
     this.isBossCutscenePlayed = false;
+    this.isBossDeathCutscenePlayed = false;
     this.isBossSpawned = false;
     this.game.animations.bossShipAnimation.resetAnimation();
     this.isScriptInit = false;

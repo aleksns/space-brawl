@@ -38,36 +38,21 @@ export default class Draw {
     this.drawBgElements();
     this.drawProjectiles();
     this.drawItems();
+    this.drawEffects();
 
     this.drawPlayer();
     this.drawEnemies();
 
-
-    ///test
-    this.ctx.current.beginPath();
-    this.ctx.current.rect(
-      this.game.player.destination.x,
-      this.game.player.destination.y,
-      this.game.player.destination.w,
-      this.game.player.destination.h
-    );
-      this.ctx.current.strokeStyle = "green";
-      this.ctx.current.stroke();
-    this.ctx.current.closePath();
-      ///test
-
-
     if (this.game.isGlobalActionRestricted) {
       return;
     }
-    this.drawEffects();
+    
     this.drawUI(this.ctx);
   }
 
   drawUIOnInit() {
     this.drawObject(this.hpBarPlayer.hpBarImageProps, this.ctx5);
     this.drawObject(this.threatBar.threatBarImageProps, this.ctx5);
-    //this.drawObject(this.levelAndScore.levelImageProps, this.ctx5);
   }
 
   drawCutscene(cutscene, ctx) {
@@ -170,6 +155,9 @@ export default class Draw {
   }
 
   drawEnemyHpBar(enemy, ctx) {
+    if(this.game.isGlobalActionRestricted) {
+      return;
+    }
     let remainingHPBar = enemy.health / enemy.maxHealth;
     let dW = enemy.w * remainingHPBar;
     let y = enemy.y + hpBarYOffset;
@@ -201,12 +189,10 @@ export default class Draw {
   }
 
   drawEffects() {
-    // if(this.game.isGlobalActionRestricted) {
-    //   return;
-    // }
     for (let i = 0; i < this.game.effects.length; i++) {
-      //this.drawEffect(this.game.effects[i]);
-      this.game.effects[i].draw(this.ctx2);
+      if(this.game.effects[i].id != "pulse") {
+        this.game.effects[i].draw(this.ctx2);
+      }
     }
   }
 

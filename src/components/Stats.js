@@ -93,30 +93,30 @@ export default class Stats {
     this.isGlobalSlowAll = false;
   }
 
-  applyModifiers(progression) {
+  applyModifiers(enemyModifiers) {
     for (let i = 0; i < this.enemiesStats.length; i++) {
-      this.appplyModifiersToEnemy(progression, this.enemiesStats[i]);
+      this.appplyModifiersToEnemy(enemyModifiers, this.enemiesStats[i]);
     }
-    this.applyModifiersToGunsDamage(progression.enemyModifiers.damage);
+    this.applyModifiersToGunsDamage(enemyModifiers.damage);
   }
 
-  applyModifiersToGunsDamage(damageMod) {
-    this.enemyGunsDamage.t4Target *= damageMod;
-    this.enemyGunsDamage.t5Front *= damageMod;
-    this.enemyGunsDamage.t3Target *= damageMod;
-    this.enemyGunsDamage.t3Barrage *= damageMod;
-    this.enemyGunsDamage.t0Target *= damageMod;
-    this.enemyGunsDamage.t0Burst *= damageMod;
-    this.enemyGunsDamage.t0Rotating *= damageMod;
-    this.enemyGunsDamage.t0Barrage *= damageMod;
+  applyModifiersToGunsDamage(damageModifier) {
+    this.enemyGunsDamage.t4Target *= damageModifier;
+    this.enemyGunsDamage.t5Front *= damageModifier;
+    this.enemyGunsDamage.t3Target *= damageModifier;
+    this.enemyGunsDamage.t3Barrage *= damageModifier;
+    this.enemyGunsDamage.t0Target *= damageModifier;
+    this.enemyGunsDamage.t0Burst *= damageModifier;
+    this.enemyGunsDamage.t0Rotating *= damageModifier;
+    this.enemyGunsDamage.t0Barrage *= damageModifier;
   }
 
-  appplyModifiersToEnemy(progression, enemy) {
-    enemy.damage *= progression.enemyModifiers.damage;
-    enemy.health *= progression.enemyModifiers.health;
-    enemy.maxHealth *= progression.enemyModifiers.maxHealth;
+  appplyModifiersToEnemy(enemyModifiers, enemy) {
+    enemy.damage *= enemyModifiers.damage;
+    enemy.health *= enemyModifiers.health;
+    enemy.maxHealth *= enemyModifiers.maxHealth;
     enemy.scorePoints = Math.floor(
-      enemy.scorePoints * progression.enemyModifiers.scorePoints
+      enemy.scorePoints * enemyModifiers.scorePoints
     );
   }
 

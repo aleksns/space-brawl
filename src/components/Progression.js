@@ -10,64 +10,62 @@ export default class Progression {
     //this.maxNumOfEnemies = 2;
     this.level = 1;
     this.isMaxThreatLevel = false;
-
     this.score = 0;
+    
     this.expPoints = 0;
     this.maxExpPoints = 100;
     this.playerLevel = 1;
 
-    this.enemyModifiers = {
+    this.enemyModifiersLevel = {
       damage: 1.5,
       health: 2,
       maxHealth: 2,
       scorePoints: 2,
     };
 
-    this.isPlayerTier1 = false;
-    this.isPlayerTier2 = false;
+    this.enemyModifiersWave = {
+      damage: 1.08,
+      health: 1.08,
+      maxHealth: 1.08,
+      scorePoints: 1,
+    };
   }
 
   update() {
+    if(this.game.isGlobalActionRestricted) {
+      return;
+    }
     if (this.threatLevel >= this.maxThreatLevel) {
       this.threatLevel = this.maxThreatLevel;
       this.isMaxThreatLevel = true;
     }
 
+    if(this.expPoints >= this.maxExpPoints) {
+      this.increasePlayerLevel();
+    }
   }
 
   increaseExp(value) {
     this.expPoints += value;
+    if(this.expPoints >= this.maxExpPoints) {
+      this.expPoints = this.maxExpPoints;
+    }
+  }
 
-    if(this.expPoints >= this.maxExpPoints && !this.isPlayerTier2) {
-      var newEffect = new LevelUP(this.game);
-      this.game.effects.push(newEffect);
+  increasePlayerLevel() {
+    this.playerLevel ++;
+    this.expPoints = 0;
+    this.maxExpPoints *= 2;
+
+    let newEffect = new LevelUP(this.game);
+    this.game.effects.push(newEffect);
+
+    if(this.playerLevel == 5) {
       this.game.player.setTier2();
-      this.isPlayerTier2 = true;
-      this.expPoints = 0;
-      this.maxExpPoints *= 2;
-      
-      this.playerLevel++;
     }
 
-    if(this.expPoints >= this.maxExpPoints && (!this.isPlayerTier1 && this.isPlayerTier2)) {
-      var newEffect = new LevelUP(this.game);
-      this.game.effects.push(newEffect);
+    if(this.playerLevel == 10) {
       this.game.player.setTier1();
-      this.isPlayerTier1 = true;
-      this.expPoints = 0;
-      this.maxExpPoints *= 2;
-
-      this.playerLevel++;
-    }
-    if(this.expPoints >= this.maxExpPoints && this.isPlayerTier1) {
-      var newEffect = new LevelUP(this.game);
-      this.game.effects.push(newEffect);
-      // this.game.player.setTier1();
-      // this.isPlayerTier1 = true;
-      this.expPoints = 0;
-      this.maxExpPoints *= 2;
-
-      this.playerLevel++;
     }
   }
 
@@ -83,13 +81,17 @@ export default class Progression {
     this.resetThreatLevel();
     this.isMaxThreatLevel = false;
     this.level++;
-    this.applyModifiers();
+    this.applyLevelModifiers();
     this.game.script.reset();
   }
 
-  applyModifiers() {
-    //this.maxExpPoints *= 2;
-    this.game.stats.applyModifiers(this);
+  applyLevelModifiers() {
+    this.game.stats.applyModifiers(this.enemyModifiersLevel);
+  }
+
+  applyWaveModifiers() {
+    //this.game.stats.applyModifiers(this.enemyModifiersWave);
+    //tbd
   }
   
 }

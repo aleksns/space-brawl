@@ -71,7 +71,6 @@ export default class Update {
 
   updateGuns() {
     this.updateObjects(this.game.enemyGuns);
-    this.updateObjects(this.game.bossGuns);
     this.updateObjects(this.game.playerGuns);
     this.game.player.laserGun.update();
   }

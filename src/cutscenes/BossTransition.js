@@ -1,5 +1,5 @@
 import Cutscene from "./Cutscene";
-import { colors, GAME_WIDTH, GAME_HEIGHT } from "../services/services";
+import { colors, GAME_WIDTH, GAME_HEIGHT, font } from "../services/services";
 
 export class BossTransition extends Cutscene {
   constructor(game) {
@@ -68,7 +68,7 @@ export class BossTransition extends Cutscene {
 
   drawText(ctx) {
     ctx.current.fillStyle = "#ffffff";
-    ctx.current.font = `bold 52px tahoma`;
+    ctx.current.font = `52px ${font}`;
     let text = this.textProps.text;
     let offsetX = ctx.current.measureText(text).width;
 

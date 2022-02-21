@@ -155,6 +155,7 @@ export class EnemyT4 extends Ship {
   }
 
   onDeath() {
+    this.setDead();
     this.game.init.addEffect(this, "explosionDefault");
     this.game.progression.score += this.scorePoints;
     this.game.progression.increaseThreatLevel();

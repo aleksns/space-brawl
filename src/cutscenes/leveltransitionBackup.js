@@ -1,5 +1,5 @@
 import Cutscene from "./Cutscene";
-import { colors, GAME_WIDTH, GAME_HEIGHT } from "../services/services";
+import { colors, GAME_WIDTH, GAME_HEIGHT, font } from "../services/services";
 
 export class LevelTransition extends Cutscene {
   constructor(game) {
@@ -28,9 +28,9 @@ export class LevelTransition extends Cutscene {
 
     this.line2 = {
       startX: GAME_WIDTH,
-      startY: this.container.y + this.container.margin,       ///hardcoded
+      startY: this.container.y + this.container.margin,
       endX: GAME_WIDTH,
-      endY: this.container.y + this.container.margin,        ///hardcoded
+      endY: this.container.y + this.container.margin,
       destination: 0 + 100,
     };
 
@@ -66,7 +66,7 @@ export class LevelTransition extends Cutscene {
 
   drawText(ctx) {
     ctx.current.fillStyle = "#ffffff";
-    ctx.current.font = `bold 52px tahoma`;
+    ctx.current.font = `52px ${font}`;
     let text = this.textProps.text + this.progression.level;
     let offsetX = ctx.current.measureText(text).width;
 

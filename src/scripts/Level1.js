@@ -129,5 +129,6 @@ export default class Level1 {
     this.generateWave();
     this.initWave(this.waveMap, this.wave);
     this.currentWave = this.wave;
+    this.game.progression.applyWaveModifiers();
   }
 }

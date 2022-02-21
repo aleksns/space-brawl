@@ -5,6 +5,7 @@ import boss3 from "../images/animations-images/bossShip-images/boss3.png";
 import boss4 from "../images/animations-images/bossShip-images/boss4.png";
 import boss5 from "../images/animations-images/bossShip-images/boss5.png";
 import boss6 from "../images/animations-images/bossShip-images/boss6.png";
+import bossDefeated from "../images/animations-images/bossShip-images/bossDefeated.png";
 
 export class BossShipAnimation extends Animation {
   constructor(game) {
@@ -28,7 +29,11 @@ export class BossShipAnimation extends Animation {
     this.img6 = new Image();
     this.img6.src = boss6;
 
+    this.img7 = new Image();
+    this.img7.src = bossDefeated;
+
     this.image = this.img1;
+    this.imageDefeated = this.img7;
 
     this.images = [];
     this.images.push(this.img1);
