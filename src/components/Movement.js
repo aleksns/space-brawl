@@ -23,8 +23,13 @@ export default class Movement {
   }
 
   calculateVectorsAndDistance(object) {
-    object.dX = object.destination.x - object.x;
-    object.dY = object.destination.y - object.y;
+    let centerX = this.game.gameBoard.getCenterOfObject(object).x;
+    let centerY = this.game.gameBoard.getCenterOfObject(object).y;
+
+    // object.dX = object.destination.x - object.x;
+    // object.dY = object.destination.y - object.y;
+    object.dX = object.destination.x - centerX;
+    object.dY = object.destination.y - centerY;
     
     let distance = Math.sqrt(object.dX * object.dX + object.dY * object.dY);
     object.dX = object.dX / distance;

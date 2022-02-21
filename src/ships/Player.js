@@ -42,9 +42,11 @@ export class Player extends Ship {
     this.game = game;
     this.stats = this.game.stats;
     this.x = defaultPosition.x;
-    this.y = defaultPosition.y;
+    this.y = defaultPosition.y + 100;
     this.w = getPlayerT3Dimension().w;
     this.h = getPlayerT3Dimension().h;
+    this.dX = 0;
+    this.dY = 0;
     // this.health = getPlayerT3Stats.health;
     // this.maxHealth = getPlayerT3Stats.maxHealth;
     this.health = 99999999;
@@ -71,6 +73,15 @@ export class Player extends Ship {
     this.singleGun = undefined;
     this.doubleGun = undefined;
     this.tripleGun = undefined;
+
+    this.destination = {
+      x: GAME_WIDTH / 2,
+      y: GAME_HEIGHT - this.h,
+      w: 5,
+      h: 5,
+    };
+
+    this.isMovingToPosition = false;
     console.log("CONSTRUCTOR > Player");
   }
 
@@ -142,9 +153,33 @@ export class Player extends Ship {
     this.laserGun = this.laserGunT3;
   }
 
-  setDefaultPosition() {
-    this.x = defaultPosition.x;
-    this.y = defaultPosition.y;
+  isPlayerAtThePosition() {
+    let playerCenter = {
+      x: this.game.gameBoard.getCenterOfObject(this).x,
+      y: this.game.gameBoard.getCenterOfObject(this).y,
+      w: 5,
+      h: 5
+    }
+    return this.game.collision.rectsColliding(playerCenter, this.destination);
+  }
+
+  moveToDefaultPosition() {
+    if (this.isPlayerAtThePosition()) {
+      return;
+    }
+
+    this.game.movement.applyVelocity(this);
+  }
+
+  setMoveToDefaultPosition() {
+    if (this.isPlayerAtThePosition()) {
+      return;
+    }
+    this.resetVelocity();
+
+    this.game.movement.calculateVectorsAndDistance(this);
+    this.vX += this.dX * 5;
+    this.vY += this.dY * 5;
   }
 
   playHitEffect(projectile) {
@@ -192,5 +227,12 @@ export class Player extends Ship {
     this.tripleGun.initialize(getPlayerTripleFront, getDefaultPlayerProjectile);
     this.tripleGun.setGunDamage(this.game.stats.playerGunsDamage.default);
     this.tripleGun.setProjectileImage(this.game.media.projectileArcBlueImg);
+  }
+
+  resetVelocity() {
+    this.vX = 0;
+    this.vY = 0;
+    this.dX = 0;
+    this.dY = 0;
   }
 }

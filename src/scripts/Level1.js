@@ -17,11 +17,11 @@ export default class Level1 {
 
     this.wave = [];
     this.waveMap = [];
-    this.listOfEnemyTier = ["t5", "t4"];
-    //this.listOfEnemyTier = ["t4"];
+    //this.listOfEnemyTier = ["t5", "t4"];
+    this.listOfEnemyTier = ["t4"];
 
-    this.minNumOfEnemies = 3;
-    this.maxNumOfEnemies = 8;
+    this.minNumOfEnemies = 1;
+    this.maxNumOfEnemies = 1;
     this.maxNumOfEnemiesFormation = 10;
 
     this.chanceToSpawnFormation = 0.4;

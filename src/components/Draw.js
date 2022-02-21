@@ -42,11 +42,26 @@ export default class Draw {
     this.drawPlayer();
     this.drawEnemies();
 
-    if(this.game.isGlobalActionRestricted) {
+
+    ///test
+    this.ctx.current.beginPath();
+    this.ctx.current.rect(
+      this.game.player.destination.x,
+      this.game.player.destination.y,
+      this.game.player.destination.w,
+      this.game.player.destination.h
+    );
+      this.ctx.current.strokeStyle = "green";
+      this.ctx.current.stroke();
+    this.ctx.current.closePath();
+      ///test
+
+
+    if (this.game.isGlobalActionRestricted) {
       return;
     }
     this.drawEffects();
-    this.drawUI(this.ctx); 
+    this.drawUI(this.ctx);
   }
 
   drawUIOnInit() {
@@ -75,11 +90,7 @@ export default class Draw {
     this.ctx4.current.globalAlpha = item.textOpacity;
     this.ctx4.current.fillStyle = item.textColor;
     this.ctx4.current.font = item.font;
-    this.ctx4.current.fillText(
-      item.text,
-      item.textX,
-      item.textY
-    );
+    this.ctx4.current.fillText(item.text, item.textX, item.textY);
     this.ctx4.current.globalAlpha = 1.0;
   }
 
@@ -93,7 +104,7 @@ export default class Draw {
   }
 
   drawObject(object, ctx) {
-    if(object.shadowBlur != null && object.shadowColor != null) {
+    if (object.shadowBlur != null && object.shadowColor != null) {
       ctx.current.shadowColor = object.shadowColor;
       ctx.current.shadowBlur = object.shadowBlur;
     }
@@ -103,7 +114,7 @@ export default class Draw {
     ctx.current.drawImage(object.image, object.x, object.y, object.w, object.h);
     ctx.current.filter = "none";
 
-    if(object.shadowBlur != null && object.shadowColor != null) {
+    if (object.shadowBlur != null && object.shadowColor != null) {
       ctx.current.shadowColor = "none";
       ctx.current.shadowBlur = 0;
     }
@@ -123,13 +134,12 @@ export default class Draw {
     if (this.game.player.isGotHit) {
       this.game.player.filter = hitRegFilter;
       this.game.player.isGotHit = false;
-    }
-    else {
+    } else {
       this.game.player.filter = "none";
     }
 
     this.drawObject(this.game.player, this.ctx);
-    
+
     // this.ctx.current.lineWidth = 12;
     // this.ctx.current.beginPath();
     // this.ctx.current.rect(this.game.player.x, this.game.player.y, this.game.player.w, this.game.player.h);
@@ -137,7 +147,7 @@ export default class Draw {
     //   this.ctx.current.stroke();
     // this.ctx.current.closePath();
 
-    if(this.game.player.isShieldOn) {
+    if (this.game.player.isShieldOn) {
       this.drawObject(this.game.player.shieldOrb.props, this.ctx);
     }
   }
@@ -152,8 +162,7 @@ export default class Draw {
     if (enemy.isGotHit) {
       enemy.filter = hitRegFilter;
       enemy.isGotHit = false;
-    }
-    else {
+    } else {
       enemy.filter = "none";
     }
     this.drawObject(enemy, this.ctx);
@@ -261,11 +270,17 @@ export default class Draw {
     this.brightnessNum += this.brightnessModifier;
     this.saturationNum += this.saturationModifier;
 
-    if (this.brightnessNum >= this.brightnessMax || this.brightnessNum < this.brightnessMin) {
+    if (
+      this.brightnessNum >= this.brightnessMax ||
+      this.brightnessNum < this.brightnessMin
+    ) {
       this.brightnessModifier = -this.brightnessModifier;
     }
 
-    if (this.saturationNum >= this.saturationMax || this.saturationNum < this.saturationMin) {
+    if (
+      this.saturationNum >= this.saturationMax ||
+      this.saturationNum < this.saturationMin
+    ) {
       this.saturationModifier = -this.saturationModifier;
     }
 

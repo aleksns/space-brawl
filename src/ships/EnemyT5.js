@@ -66,8 +66,7 @@ export class EnemyT5 extends Ship {
   
   initializeShip() {  
     this.setNewPosition();
-    this.setNewDirection();
-    this.game.movement.applyConstantSpeed(this);    
+    this.setNewDirection();   
     this.setTargetFront();
 
     let newSingleGun = new SingleGun(this.game, this);
@@ -96,6 +95,7 @@ export class EnemyT5 extends Ship {
   setNewDirection() {
     this.setDestinationCords();
     this.game.movement.calculateVectorsAndDistance(this);
+    this.game.movement.applyConstantSpeed(this); 
   }
 
   setDestinationCords() {

@@ -151,6 +151,7 @@ export default class Game {
     this.isGameOnHold = false;
     this.isGlobalActionRestricted = false;
     this.draw.drawUIOnInit();
+    this.player.resetVelocity();
   }
 
   gameLoop() {

@@ -68,6 +68,7 @@ export default class Script {
 
     if (!this.isBossLevelTransitionPlayed) {
       this.playBossLevelTransitionAnimation();
+      return;
     }
   }
 
@@ -84,6 +85,7 @@ export default class Script {
   handleBossCutscene() {
     if (!this.boss.isAtThePosition()) {
       this.boss.animateBossAppearance();
+      this.game.player.moveToDefaultPosition();
       return;
     }
 
@@ -99,22 +101,25 @@ export default class Script {
     this.game.setGameOnHold();
     this.clearScreenFromObjects();
     this.game.skills.turnOffAllSkills();
-    this.game.player.setDefaultPosition();
+    this.game.player.setMoveToDefaultPosition();
   }
 
   playLevelTransitionAnimation() {
     this.currentLvl.levelTransition.initialize();
     this.game.draw.drawCutscene(this.currentLvl.levelTransition, this.game.ctx);
+    this.game.player.moveToDefaultPosition();
   }
 
   playBossLevelTransitionAnimation() {
     this.currentLvl.bossTransition.initialize();
     this.game.draw.drawCutscene(this.currentLvl.bossTransition, this.game.ctx);
+    this.game.player.moveToDefaultPosition();
   }
 
   playBossCutscene() {
     this.currentLvl.bossCutscene.initialize();
     this.game.draw.drawCutscene(this.currentLvl.bossCutscene, this.game.ctx4);
+    this.game.player.moveToDefaultPosition();
   }
 
   handleEnemiesSpawn() {
