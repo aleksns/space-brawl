@@ -86,7 +86,9 @@ export default class Ship {
   }
 
   respawn() {
-    console.log(`Error. Ship's OUTSIDE borders. Last x = ${this.x}, last y = ${this.y}`);
+    console.log(
+      `Error. Ship's OUTSIDE borders. Last x = ${this.x}, last y = ${this.y}`
+    );
     this.x = GAME_WIDTH / 2;
     this.y = GAME_HEIGHT / 2;
   }
@@ -122,7 +124,7 @@ export default class Ship {
   }
 
   setRandomDirection() {
-    if(this.isMovingToPosition) {
+    if (this.isMovingToPosition) {
       return;
     }
     this.direction = getRandomDirection();
@@ -130,5 +132,12 @@ export default class Ship {
 
   updateTimersAfterPauseOff() {
     this.then += this.game.timeDifference;
+  }
+
+  resetVelocity() {
+    this.vX = 0;
+    this.vY = 0;
+    this.dX = 0;
+    this.dY = 0;
   }
 }

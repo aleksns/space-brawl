@@ -84,6 +84,17 @@ export default class GameBoard {
     );
   }
 
+  setDestinationOnBoardCords(ship) {
+    ship.destination.x = getRandomIntInclusive(
+      this.enemyAllowedX.x0 + ship.w,
+      this.enemyAllowedX.x1 - ship.w
+    );
+    ship.destination.y = getRandomIntInclusive(
+      this.enemyAllowedY.y0 + ship.h,
+      this.enemyAllowedY.y1 - ship.h
+    );
+  }
+
   setEmptyPositionForT5Enemies() {
     for (let i = 0; i < this.game.enemies.length - 1; i++) {
       for (let j = i + 1; j < this.game.enemies.length; j++) {

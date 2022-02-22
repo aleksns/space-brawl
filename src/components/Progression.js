@@ -4,7 +4,7 @@ export default class Progression {
   constructor(game) {
     this.game = game;
     this.threatLevel = 0;
-    this.maxThreatLevel = 2;
+    this.maxThreatLevel = 28;
     this.threatLevelModifier = 1;
 
     //this.maxNumOfEnemies = 2;
@@ -15,6 +15,12 @@ export default class Progression {
     this.expPoints = 0;
     this.maxExpPoints = 100;
     this.playerLevel = 1;
+
+    this.playerLevelModifiers = {
+      damage: 1.5,
+      health: 1.8,
+      maxHealth: 1.8,
+    }
 
     this.enemyModifiersLevel = {
       damage: 1.5,
@@ -55,7 +61,8 @@ export default class Progression {
   increasePlayerLevel() {
     this.playerLevel ++;
     this.expPoints = 0;
-    this.maxExpPoints *= 2;
+    this.maxExpPoints *= 2.5;
+    this.applyPlayerModifiers();
 
     let newEffect = new LevelUP(this.game);
     this.game.effects.push(newEffect);
@@ -67,6 +74,8 @@ export default class Progression {
     if(this.playerLevel == 10) {
       this.game.player.setTier1();
     }
+
+    this.game.player.updateStats();
   }
 
   increaseThreatLevel() {
@@ -86,12 +95,15 @@ export default class Progression {
   }
 
   applyLevelModifiers() {
-    this.game.stats.applyModifiers(this.enemyModifiersLevel);
+    this.game.stats.applyModifiersToEnemies(this.enemyModifiersLevel);
   }
 
   applyWaveModifiers() {
-    //this.game.stats.applyModifiers(this.enemyModifiersWave);
-    //tbd
+    this.game.stats.applyModifiersToEnemies(this.enemyModifiersWave);
+  }
+
+  applyPlayerModifiers() {
+    this.game.stats.applyModifiersToPlayer(this.playerLevelModifiers);
   }
   
 }

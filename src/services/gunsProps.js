@@ -49,9 +49,9 @@
 //--------------
 /* < Player > */
 export const playerGunsDamageProps = {
-  laserT1: 14,
-  laserT2: 7,
-  laserT3: 3,
+  laserT1: 114,
+  laserT2: 117,
+  laserT3: 113,
   default: 10,
   barrage: 10,
   rotating: 7,
@@ -308,18 +308,18 @@ export const getT3Target = {
 };
 
 export const getT3Barrage = {
-  projectileSpeed: 12,
+  projectileSpeed: 8,
   projectileAcceleration: 4,
 
   atkSpeed: 2.5,
-  rateOfFire: 0.5,
+  rateOfFire: 0.1,
 
   isRotating: false,
-  isBarrage: false,
-  angle: 0,
-  angleModifier: 0,
-  angleMin: 0,
-  angleMax: 0,
+  isBarrage: true,
+  angle: 270,
+  angleModifier: 15,
+  angleMin: 90,
+  angleMax: 270,
 
   numOfRoundsBurst: 2,
   isLaserGun: false,

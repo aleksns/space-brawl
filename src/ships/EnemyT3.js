@@ -83,10 +83,13 @@ export class EnemyT3 extends Ship {
     this.guns.push(new180BarrageGun);
 
     this.directionChangeIntervalThen = Date.now();
+    console.log(
+      `dest.x = ${this.destination.x}, dest.y = ${this.destination.y}`
+    );
   }
 
   fireGun() {
-    for(let i = 0; i < this.guns.length; i++) {
+    for (let i = 0; i < this.guns.length; i++) {
       this.guns[i].fire();
     }
   }
@@ -94,7 +97,6 @@ export class EnemyT3 extends Ship {
   updateShip() {
     this.updateImage();
     if (this.isMovingToPosition) {
-      this.moveToThePosition();
       return;
     }
 
@@ -111,38 +113,26 @@ export class EnemyT3 extends Ship {
   }
 
   moveToThePosition() {
-    if(this.game.gameBoard.isOnTheGameBoard(this)) {
+    if (this.game.gameBoard.isOnTheGameBoard(this)) {
       this.isMovingToPosition = false;
+      this.resetVelocity();
       return;
     }
-    if(!this.game.stats.isGlobalSlowAll) {
-      this.game.movement.applyVelocity(this);
-    }
+    this.game.movement.applyVelocity(this);
   }
 
   setNewDirection() {
-    this.setDestinationCords();
+    this.game.gameBoard.setDestinationOnBoardCords(this);
     this.game.movement.calculateVectorsAndDistance(this);
     this.game.movement.applyConstantSpeed(this);
   }
 
-  setDestinationCords() {
-    this.destination.x = getRandomIntInclusive(
-      this.game.gameBoard.enemyAllowedX.x0,
-      this.game.gameBoard.enemyAllowedX.x1 - this.w
-    );
-    this.destination.y = getRandomIntInclusive(
-      this.game.gameBoard.enemyAllowedY.y0,
-      this.game.gameBoard.enemyAllowedY.y1
-    );
-
-  }
-
   move() {
-    if(this.isMovingToPosition) {
-      return;
+    if (this.isMovingToPosition) {
+      this.moveToThePosition();
+    } else {
+      this.game.movement.move(this, this.isCheckSouthOutOfBorderOnly);
     }
-    this.game.movement.move(this, this.isCheckSouthOutOfBorderOnly);
   }
 
   setRandomDirectionFromList(listOfDirections) {

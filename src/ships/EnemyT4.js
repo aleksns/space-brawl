@@ -92,7 +92,6 @@ export class EnemyT4 extends Ship {
 
   updateShip() {
     if (this.isMovingToPosition) {
-      this.moveToThePosition();
       return;
     }
 
@@ -105,43 +104,26 @@ export class EnemyT4 extends Ship {
   }
 
   moveToThePosition() {
-    if(this.game.gameBoard.isOnTheGameBoard(this)) {
+    if (this.game.gameBoard.isOnTheGameBoard(this)) {
       this.isMovingToPosition = false;
-      this.vX = 0;
-      this.vY = 0;
-      this.dX = 0;
-      this.dY = 0;
+      this.resetVelocity();
       return;
     }
-
-    if(!this.game.stats.isGlobalSlowAll) {
-      this.game.movement.applyVelocity(this);
-    }
+    this.game.movement.applyVelocity(this);
   }
 
   setNewDirection() {
-    this.setDestinationCords();
+    this.game.gameBoard.setDestinationOnBoardCords(this);
     this.game.movement.calculateVectorsAndDistance(this);
     this.game.movement.applyConstantSpeed(this);
   }
 
-  setDestinationCords() {
-    this.destination.x = getRandomIntInclusive(
-      this.game.gameBoard.enemyAllowedX.x0,
-      this.game.gameBoard.enemyAllowedX.x1 - this.w
-    );
-    this.destination.y = getRandomIntInclusive(
-      this.game.gameBoard.enemyAllowedY.y0,
-      this.game.gameBoard.enemyAllowedY.y1
-    );
-
-  }
-
   move() {
-    if(this.isMovingToPosition) {
-      return;
+    if (this.isMovingToPosition) {
+      this.moveToThePosition();
+    } else {
+      this.game.movement.move(this, this.isCheckSouthOutOfBorderOnly);
     }
-    this.game.movement.move(this, this.isCheckSouthOutOfBorderOnly);
   }
 
   setRandomDirectionFromList(listOfDirections) {

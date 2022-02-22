@@ -3,7 +3,7 @@ import {
   playerGunsDamageProps,
 } from "../services/gunsProps";
 import {
-  getPlayerT3Stats,
+  getPlayerDefaultStats,
   getEnemyT4DefaultStats,
   getEnemyT5DefaultStats,
   getEnemyT0DefaultStats,
@@ -15,9 +15,20 @@ export default class Stats {
     this.game = game;
 
     this.player = {
-      s: getPlayerT3Stats.speed,
-      a: getPlayerT3Stats.speed / getPlayerT3Stats.accelerationMod,
-      rammingDmg: getPlayerT3Stats.rammingDmg,
+      health: getPlayerDefaultStats.health,
+      maxHealth: getPlayerDefaultStats.maxHealth,
+      s: getPlayerDefaultStats.speed,
+      a: getPlayerDefaultStats.speed / getPlayerDefaultStats.accelerationMod,
+      rammingDmg: getPlayerDefaultStats.rammingDmg,
+    };
+
+    this.enemyT0 = {
+      health: getEnemyT0DefaultStats.health,
+      maxHealth: getEnemyT0DefaultStats.maxHealth,
+      s: getEnemyT0DefaultStats.speed,
+      a: getEnemyT5DefaultStats.speed / getEnemyT0DefaultStats.accelerationMod,
+      rammingDmg: getEnemyT0DefaultStats.rammingDmg,
+      scorePoints: getEnemyT0DefaultStats.scorePoints,
     };
 
     this.enemyT3 = {
@@ -45,15 +56,6 @@ export default class Stats {
       a: getEnemyT5DefaultStats.speed / getEnemyT5DefaultStats.accelerationMod,
       rammingDmg: getEnemyT5DefaultStats.rammingDmg,
       scorePoints: getEnemyT5DefaultStats.scorePoints,
-    };
-
-    this.enemyT0 = {
-      health: getEnemyT0DefaultStats.health,
-      maxHealth: getEnemyT0DefaultStats.maxHealth,
-      s: getEnemyT0DefaultStats.speed,
-      a: getEnemyT5DefaultStats.speed / getEnemyT0DefaultStats.accelerationMod,
-      rammingDmg: getEnemyT0DefaultStats.rammingDmg,
-      scorePoints: getEnemyT0DefaultStats.scorePoints,
     };
 
     this.playerGunsDamage = {
@@ -93,14 +95,29 @@ export default class Stats {
     this.isGlobalSlowAll = false;
   }
 
-  applyModifiers(enemyModifiers) {
+  applyModifiersToPlayer(playerModifiers) {
+    this.player.health *= playerModifiers.health;
+    this.player.maxHealth *= playerModifiers.maxHealth;
+    this.applyModifiersToPlayerGunsDamage(playerModifiers.damage);
+  }
+
+  applyModifiersToEnemies(enemyModifiers) {
     for (let i = 0; i < this.enemiesStats.length; i++) {
       this.appplyModifiersToEnemy(enemyModifiers, this.enemiesStats[i]);
     }
-    this.applyModifiersToGunsDamage(enemyModifiers.damage);
+    this.applyModifiersToEnemyGunsDamage(enemyModifiers.damage);
   }
 
-  applyModifiersToGunsDamage(damageModifier) {
+  applyModifiersToPlayerGunsDamage(playerModifiers) {
+    this.playerGunsDamage.laserT1 *= playerModifiers;
+    this.playerGunsDamage.laserT2 *= playerModifiers;
+    this.playerGunsDamage.laserT3 *= playerModifiers;
+    this.playerGunsDamage.default *= playerModifiers;
+    this.playerGunsDamage.barrage *= playerModifiers;
+    this.playerGunsDamage.rotating *= playerModifiers;
+  }
+
+  applyModifiersToEnemyGunsDamage(damageModifier) {
     this.enemyGunsDamage.t4Target *= damageModifier;
     this.enemyGunsDamage.t5Front *= damageModifier;
     this.enemyGunsDamage.t3Target *= damageModifier;
@@ -111,12 +128,11 @@ export default class Stats {
     this.enemyGunsDamage.t0Barrage *= damageModifier;
   }
 
-  appplyModifiersToEnemy(enemyModifiers, enemy) {
-    enemy.damage *= enemyModifiers.damage;
-    enemy.health *= enemyModifiers.health;
-    enemy.maxHealth *= enemyModifiers.maxHealth;
-    enemy.scorePoints = Math.floor(
-      enemy.scorePoints * enemyModifiers.scorePoints
+  appplyModifiersToEnemy(enemyModifiers, enemyStats) {
+    enemyStats.health *= enemyModifiers.health;
+    enemyStats.maxHealth *= enemyModifiers.maxHealth;
+    enemyStats.scorePoints = Math.floor(
+      enemyStats.scorePoints * enemyModifiers.scorePoints
     );
   }
 

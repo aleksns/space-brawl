@@ -235,9 +235,6 @@ export default class Skills {
       return;
     }
 
-    // if(this.game.stats.isGlobalSlowAll) {
-    //   return;
-    // }
     let timePassed = (this.game.now - this.laser.then) / 1000;
     this.changeLaserWidthDependingOnRemainingTime(timePassed);
 
@@ -256,9 +253,6 @@ export default class Skills {
       return;
     }
 
-    // if(this.game.stats.isGlobalSlowAll) {
-    //   return;
-    // }
     let timePassed = (this.game.now - this.shield.then) / 1000;
     if (timePassed >= this.shield.duration / 2) {
       this.changeShieldDependingOnRemainingTime(timePassed);

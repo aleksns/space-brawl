@@ -26,8 +26,6 @@ export default class Movement {
     let centerX = this.game.gameBoard.getCenterOfObject(object).x;
     let centerY = this.game.gameBoard.getCenterOfObject(object).y;
 
-    // object.dX = object.destination.x - object.x;
-    // object.dY = object.destination.y - object.y;
     object.dX = object.destination.x - centerX;
     object.dY = object.destination.y - centerY;
     
