@@ -49,7 +49,4 @@ export class LevelUP extends Effect{
       }
   }
 
-  setOpacity(value) {
-    this.props.opacity = value;
-  }
 }

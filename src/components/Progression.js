@@ -4,7 +4,7 @@ export default class Progression {
   constructor(game) {
     this.game = game;
     this.threatLevel = 0;
-    this.maxThreatLevel = 2;
+    this.maxThreatLevel = 32;
     this.threatLevelModifier = 1;
 
     //this.maxNumOfEnemies = 2;
@@ -62,6 +62,9 @@ export default class Progression {
     if (this.expPoints >= this.maxExpPoints) {
       this.expPoints = this.maxExpPoints;
     }
+
+    let text = `+${value} EXP`;
+    this.game.init.addFloatingTextEffect("exp", text);
   }
 
   increasePlayerLevel() {

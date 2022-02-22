@@ -67,7 +67,7 @@ export default class Draw {
   }
 
   drawStatusEffect(item) {
-    this.ctx.current.drawImage(item.image, item.x, item.y, item.w, item.h);
+    this.ctx4.current.drawImage(item.image, item.x, item.y, item.w, item.h);
     this.drawText(item);
   }
 

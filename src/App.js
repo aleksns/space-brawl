@@ -139,42 +139,18 @@ export default function App() {
     gameRef.current = game;
   }, []);
 
-  //const game = new Game(contextRef);
-
-  const [isWPressed, setWIsPressed] = useState(false);
-  const [isAPressed, setAIsPressed] = useState(false);
-  const [isSPressed, setSIsPressed] = useState(false);
-  const [isDPressed, setDIsPressed] = useState(false);
-
-  const [playerHP, setPlayerHP] = useState(undefined);
-  const [playerDmg, setPlayerDmg] = useState(undefined);
-  const [playerAtkSpeed, setPlayerAtkSpeed] = useState(undefined);
-  const [score, setScore] = useState(0);
-  const [isGameOver, setIsGameOver] = useState(false);
   const [isUiOn, setIsUiOn] = useState(true);
-
-  function handleUiKeysPressed() {
-    setWIsPressed(gameRef.current.keys.keyW);
-    setAIsPressed(gameRef.current.keys.keyA);
-    setSIsPressed(gameRef.current.keys.keyS);
-    setDIsPressed(gameRef.current.keys.keyD);
-  }
 
 
   function startIt() {
-    setIsGameOver(false);
     setIsUiOn(false);
     gameRef.current.isGameOn = !gameRef.current.isGameOn;
     requestAnimationFrame(runLoop);
   }
 
-  function runLoop(timestamp) {
+  function runLoop() {
     if (gameRef.current.isGameOn) {
-      // let dT = timestamp - lastTime;
-      // lastTime = timestamp;
 
-      clearCanvas1To4();
-      //updateUI();
       gameRef.current.gameLoop();
 
       requestAnimationFrame(runLoop);
@@ -205,67 +181,6 @@ export default function App() {
         </button>
         <GithubLinkWithIcon />
       </div>
-
-      {/* <input type="range" min="1" max="80" onChange={handleSpeedUp} /> */}
-
-      {/* <div className="test-wasd-container">
-        <div className="test-w-container">
-          <div
-            className="test-wasd"
-            style={
-              !isWPressed
-                ? { backgroundColor: keysUpColor }
-                : { backgroundColor: keysDownColor }
-            }
-          >
-            ↑
-          </div>
-        </div>
-        <div className="test-asd-container">
-          <div
-            className="test-wasd"
-            style={
-              !isAPressed
-                ? { backgroundColor: keysUpColor }
-                : { backgroundColor: keysDownColor }
-            }
-          >
-            ←
-          </div>
-          <div
-            className="test-wasd"
-            style={
-              !isSPressed
-                ? { backgroundColor: keysUpColor }
-                : { backgroundColor: keysDownColor }
-            }
-          >
-            ↓
-          </div>
-          <div
-            className="test-wasd"
-            style={
-              !isDPressed
-                ? { backgroundColor: keysUpColor }
-                : { backgroundColor: keysDownColor }
-            }
-          >
-            →
-          </div>
-        </div>
-      </div> */}
-      {/* <h4 style={{color: "#ffffff"}}>Health: {health}</h4> */}
-
-      {/* {isGameOver ? (
-        <GameOver />
-      ) : (
-        <UI
-          playerHP={playerHP}
-          score={score}
-          playerDmg={playerDmg}
-          playerAtkSpeed={playerAtkSpeed}
-        />
-      )} */}
     </>
   );
 }

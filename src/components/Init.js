@@ -11,6 +11,7 @@ import { EnemyT5 } from "../ships/EnemyT5";
 import { Coin } from "../items/Coin";
 import { ExplosionSmall } from "../effects/ExplosionSmall";
 import { EnemyT3 } from "../ships/EnemyT3";
+import { FloatingText } from "../effects/FloatingText";
 
 export default class Init {
   constructor(game) {
@@ -214,6 +215,12 @@ export default class Init {
         console.log("Error handling `addEffect` function in Init class");
         break;
     }
+    this.game.effects.push(newEffect);
+  }
+
+  addFloatingTextEffect(textID, text) {
+    let newEffect = new FloatingText(this.game);
+    newEffect.setProps(textID, text);
     this.game.effects.push(newEffect);
   }
 

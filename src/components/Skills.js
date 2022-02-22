@@ -319,6 +319,9 @@ export default class Skills {
     if (this.game.player.health > this.game.player.maxHealth) {
       this.game.player.health = this.game.player.maxHealth;
     }
+
+    let text = `+ ${amount} HP`;
+    this.game.init.addFloatingTextEffect("hp", text);
   }
 
   changeLaserWidthDependingOnRemainingTime(timePassed) {

@@ -41,7 +41,7 @@ export class EnemyT5 extends Ship {
     this.damage = this.game.stats.enemyT5.damage;
     this.gun = undefined;
 
-    this.image = this.game.media.enemyShipT5;
+    this.image = undefined;
 
     this.destination = {
       x: 0,
@@ -59,7 +59,7 @@ export class EnemyT5 extends Ship {
     }
     this.id = "t5";
 
-    this.chanceForDoubleGun = 0.3;
+    this.chanceForDoubleGun = 0.4;
     console.log("CONSTRUCTOR > EnemyT5");
   }
 
@@ -76,9 +76,11 @@ export class EnemyT5 extends Ship {
     let newGun;
     if(getTrueBasedOnChance(this.chanceForDoubleGun)) {
       newGun = new DoubleGun(this.game, this);
+      this.image = this.game.media.enemyShipT5V1;
     }
     else {
       newGun = new SingleGun(this.game, this);
+      this.image = this.game.media.enemyShipT5V2;
     }
     
     newGun.initialize(getT5Front, getDefaultEnemyProjectile);

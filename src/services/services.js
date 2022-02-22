@@ -57,7 +57,7 @@ export function getEnemyT4Dimension() {
 export function getEnemyT5Dimension() {
   let dimension = {
     w: GAME_WIDTH / 16,
-    h: GAME_HEIGHT / 8,
+    h: GAME_HEIGHT / 7,
   };
   return dimension;
 }
