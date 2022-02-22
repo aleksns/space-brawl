@@ -5,8 +5,10 @@ import {
   GAME_WIDTH,
   getDefaultEnemyProjectile,
   GAME_HEIGHT,
+  getTrueBasedOnChance,
 } from "../services/services";
 import { SingleGun } from "../guns/SingleGun";
+import { DoubleGun } from "../guns/DoubleGun";
 import { getT5Front } from "../services/gunsProps";
 
 export class EnemyT5 extends Ship {
@@ -56,6 +58,8 @@ export class EnemyT5 extends Ship {
       value: 2,
     }
     this.id = "t5";
+
+    this.chanceForDoubleGun = 0.3;
     console.log("CONSTRUCTOR > EnemyT5");
   }
 
@@ -69,12 +73,20 @@ export class EnemyT5 extends Ship {
     this.setNewDirection();   
     this.setTargetFront();
 
-    let newSingleGun = new SingleGun(this.game, this);
-    newSingleGun.initialize(getT5Front, getDefaultEnemyProjectile);
-    newSingleGun.setGunDamage(this.game.stats.enemyGunsDamage.t5Front);
-    newSingleGun.setProjectileImage(this.game.media.projectileArcGreenImg);
-    this.game.enemyGuns.push(newSingleGun);
-    this.gun = newSingleGun; 
+    let newGun;
+    if(getTrueBasedOnChance(this.chanceForDoubleGun)) {
+      newGun = new DoubleGun(this.game, this);
+    }
+    else {
+      newGun = new SingleGun(this.game, this);
+    }
+    
+    newGun.initialize(getT5Front, getDefaultEnemyProjectile);
+    newGun.setGunDamage(this.game.stats.enemyGunsDamage.t5Front);
+    newGun.setProjectileImage(this.game.media.projectileArcGreenImg);
+
+    this.game.enemyGuns.push(newGun);
+    this.gun = newGun; 
   }
 
   move() {  

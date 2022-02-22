@@ -54,22 +54,20 @@ export default class GameBoard {
   }
 
   setEnemyOutBordersPosition(ship) {
-    let spawnEastOrWest = Math.floor(Math.random() * 100);
-    let spawnNorth = Math.floor(Math.random() * 100);
+    let diceThrow = Math.random();
 
-    //East or West spawn
-    if (spawnEastOrWest >= spawnNorth) {
-      let isWest = getTrueBasedOnChance(0.5);
-      if (isWest == true) {
-        ship.x = getRandomIntInclusive(-ship.w * 2, -ship.w);
-      } else {
-        ship.x = getRandomIntInclusive(GAME_WIDTH + ship.w, GAME_WIDTH + ship.w * 2);
-      }
+    //West spawn
+    if (diceThrow <= 0.33) {
+      ship.x = getRandomIntInclusive(-ship.w * 2, -ship.w);
       ship.y = getRandomIntInclusive(-ship.h, GAME_HEIGHT / 2);
-    }
-
-    // North spawn
-    else {
+    } 
+    //East spawn
+    if (diceThrow > 0.33 && diceThrow < 0.66) {
+      ship.x = getRandomIntInclusive(GAME_WIDTH + ship.w, GAME_WIDTH + ship.w * 2);
+      ship.y = getRandomIntInclusive(-ship.h, GAME_HEIGHT / 2);
+    } 
+     // North spawn
+    if (diceThrow >= 0.66) {
       ship.x = getRandomIntInclusive(ship.w, GAME_WIDTH - ship.w);
       ship.y = getRandomIntInclusive(-ship.h * 2, -ship.h);
     }

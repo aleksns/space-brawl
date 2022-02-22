@@ -1,6 +1,13 @@
 import Cutscene from "./Cutscene";
-import { colors, GAME_WIDTH, GAME_HEIGHT, font } from "../services/services";
+import {
+  colors,
+  GAME_WIDTH,
+  GAME_HEIGHT,
+  font,
+  getRandomIntInclusive,
+} from "../services/services";
 import dialogWindow from "../images/dialogWindow.png";
+import { dialog1, dialogs } from "../services/dialogs";
 
 const margin = {
   sides: 50,
@@ -22,89 +29,92 @@ export class BossCutscene extends Cutscene {
     this.container.image = new Image();
     this.container.image.src = dialogWindow;
 
-    this.textProps = {
-      x: this.container.x,
-      y: this.container.y,
+    this.nameToPrint = {
       text: "",
-      s: 0.05, //s - speed
+      textX: 0,
+      textY: 0,
+      textOpacity: 1.0,
+      textColor: "#3498DB",
+      font: `62px ${font}`,
+    };
+
+    this.replicToPrint = {
+      text: "",
+      textX: 0,
+      textY: 0,
+      textOpacity: 1.0,
+      textColor: "#ffffff",
+      font: `62px ${font}`,
+      s: 0.05, //text print speed
       then: 0,
     };
 
-    this.replic1 = {
-      name: "Boss: ",
-      text: "I WILL EAT YOUR BRAINS!",
-    };
-
-    this.replic2 = {
-      name: "Player: ",
-      text: "I don't have them!",
-    };
-
-    this.replic3 = {
-      name: "Boss: ",
-      text: "*Angry alien noises*",
-    };
-
-    this.dialogs = [];
-    this.dialogs.push(this.replic1);
-    this.dialogs.push(this.replic2);
-    this.dialogs.push(this.replic3);
+    this.dialogsList = [];
+    this.dialogsList = dialogs;
+    this.currentDialog = undefined;
 
     this.isAnimationFinished = true;
 
     this.i = 0;
     this.j = 0;
-    this.then = 0;
     this.id = "bossCutscene";
   }
 
   drawText(ctx) {
-    for (let i = 1; i <= this.dialogs.size; i++) {
-    }
-
     if (this.isAnimationFinished) {
       return;
     }
 
-    let timePassed = (this.game.now - this.textProps.then) / 1000;
+    let timePassed = (this.game.now - this.replicToPrint.then) / 1000;
 
-    if (this.j < this.dialogs[this.i].text.length && timePassed >= this.textProps.s) {
-      this.textProps.text += this.dialogs[this.i].text.charAt(this.j);
+    if (
+      this.j < this.currentDialog[this.i].text.length &&
+      timePassed >= this.replicToPrint.s
+    ) {
+      this.replicToPrint.text += this.currentDialog[this.i].text.charAt(this.j);
       this.j++;
-      this.textProps.then = this.game.now;
+      this.replicToPrint.then = this.game.now;
     }
 
     this.game.draw.drawObject(this.container, ctx);
-    let name = this.dialogs[this.i].name;
-    let offsetX = this.container.x + margin.textSides;
-    let offsetY = this.container.y + margin.textTop;
-    ctx.current.fillStyle = "#3498DB";
-    ctx.current.font = `62px ${font}`;
-    ctx.current.fillText(name, offsetX, offsetY);
+    this.drawNameText();
+    this.drawReplicText(ctx);
 
-    let text = this.textProps.text;
-    let offsetX2 = this.container.x + margin.textSides + ctx.current.measureText(name).width;
-    let offsetY2 = this.container.y + margin.textTop;
-    ctx.current.fillStyle = "#ffffff";
-    ctx.current.font = `62px ${font}`;
-    ctx.current.fillText(text, offsetX2, offsetY2);
-
-
-    if (timePassed >= 1.5 && this.isReplicFinished(this.i)) {
+    if (timePassed >= 1 && this.isReplicFinished(this.i)) {
       this.setNewReplic();
     }
 
-    if(timePassed >= 1.5 && this.i == this.dialogs.length) {
+    if (timePassed >= 1 && this.i == this.currentDialog.length) {
       this.finishDialogsAndAnimation();
     }
   }
 
+  drawNameText() {
+    this.nameToPrint.text = this.currentDialog[this.i].name;
+    this.nameToPrint.textX = this.container.x + margin.textSides;
+    this.nameToPrint.textY = this.container.y + margin.textTop;
+    this.game.draw.drawText(this.nameToPrint);
+  }
+
+  drawReplicText(ctx) {
+    this.replicToPrint.textX =
+      this.container.x +
+      margin.textSides +
+      ctx.current.measureText(this.nameToPrint.text).width;
+    this.replicToPrint.textY = this.container.y + margin.textTop;
+    this.game.draw.drawText(this.replicToPrint);
+  }
+
   isReplicFinished(index) {
-    return this.textProps.text.length >= this.dialogs[index].text.length;
+    return (
+      this.replicToPrint.text.length >= this.currentDialog[index].text.length
+    );
   }
 
   initializeCutscene() {
     this.isAnimationFinished = false;
+    let index = getRandomIntInclusive(0, this.dialogsList.length - 1);
+    this.currentDialog = this.dialogsList[index];
   }
 
   update() {
@@ -112,18 +122,18 @@ export class BossCutscene extends Cutscene {
   }
 
   setNewReplic() {
-    this.textProps.text = "";
+    this.replicToPrint.text = "";
     this.j = 0;
-    this.i ++;
-    this.textProps.then = 0;
+    this.i++;
+    this.replicToPrint.then = 0;
   }
 
   finishDialogsAndAnimation() {
     this.isAnimationFinished = true;
     this.j = 0;
     this.i = 0;
-    this.textProps.text = "";
-    this.textProps.then = 0;
+    this.replicToPrint.text = "";
+    this.replicToPrint.then = 0;
     this.setAnimationIsFinished();
   }
 

@@ -266,7 +266,6 @@ export function getHPColor(health) {
 
 export function getTrueBasedOnChance(chance) {
   let foo = roundDecimalHundreds(Math.random());
-
   if (foo < chance) {
     return true;
   } else {

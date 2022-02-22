@@ -166,8 +166,8 @@ export default class Item {
 
   initializeCoin(object) {
     this.setPosition(object);
-    this.value = object.itemToDrop.value;
-    //this.value = 50;
+    //this.value = object.itemToDrop.value;
+    this.value = 2350;
   }
 
   setPosition(object) {

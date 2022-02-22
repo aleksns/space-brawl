@@ -123,8 +123,8 @@ export default class Controls {
       "click",
       (event) => {
         this.mousePosition = this.getMousePosition(event);
-       console.log(`mousePos = ${JSON.stringify(this.mousePosition)}`);
-        //this.test();
+       //console.log(`mousePos = ${JSON.stringify(this.mousePosition)}`);
+        this.test();
        
         // this.btns.forEach((btn) => {
         //   switch (btn.id) {

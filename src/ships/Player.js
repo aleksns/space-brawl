@@ -20,6 +20,7 @@ import {
   getPlayerRotating,
   getPlayerSingleFront,
   getPlayerTripleFront,
+  getT5Front,
 } from "../services/gunsProps";
 
 import { DoubleGun } from "../guns/DoubleGun";
@@ -210,8 +211,8 @@ export class Player extends Ship {
     this.laserGunT3.setGunDamage(this.stats.playerGunsDamage.laserT3);
 
     ////test/////
-    this.doubleTest = new DoubleGunTest(this.game, this);
-    this.doubleTest.initialize(getPlayerRotating, getDefaultPlayerProjectile);
+    this.doubleTest = new DoubleGun(this.game, this);
+    this.doubleTest.initialize(getT5Front, getDefaultPlayerProjectile);
     this.doubleTest.setGunDamage(this.stats.playerGunsDamage.rotating);
     this.doubleTest.setProjectileImage(this.game.media.projectileArcBlueImg);
     ////test/////
