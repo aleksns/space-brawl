@@ -37,7 +37,7 @@ export class Boss extends Ship {
     this.now = 0;
     //this.damage = this.game.stats.enemyT0.damage;
     //this.gun = undefined;
-    this.target = this.game.player;
+    this.target = this.game.playerTeam[0];
 
     this.image = this.game.animations.bossShipAnimation.image;
 
@@ -147,6 +147,7 @@ export class Boss extends Ship {
     this.image = this.game.animations.bossShipAnimation.imageDefeated;
     this.isDefeated = true;
     this.setEscapeDestinationCords();
+    this.game.progression.increaseExp(this.scorePoints, true)
   }
 
   applyScore() {

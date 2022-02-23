@@ -100,10 +100,10 @@ export default class Projectile {
     }
 
     if (
-      this.game.collision.isCollisionBorderUp(this, this.offStepY0) ||
-      this.game.collision.isCollisionBorderDown(this, this.getOffstepY1()) ||
-      this.game.collision.isCollisionBorderLeft(this, this.getOffstepX0()) ||
-      this.game.collision.isCollisionBorderRight(this, this.getOffstepX1())
+      this.game.gameBoard.collision.isCollisionBorderUp(this, this.offStepY0) ||
+      this.game.gameBoard.collision.isCollisionBorderDown(this, this.getOffstepY1()) ||
+      this.game.gameBoard.collision.isCollisionBorderLeft(this, this.getOffstepX0()) ||
+      this.game.gameBoard.collision.isCollisionBorderRight(this, this.getOffstepX1())
     ) {
       this.setDead();
     }

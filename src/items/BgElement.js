@@ -11,7 +11,7 @@ const minHeight = 50;
 const maxHeight = 250;
 const color = "#ffffff";
 //s - speed, a - acceleration
-const s = 3; //default 2
+const s = 5; //default 2
 const a = s / 30;
 
 export class BgElement extends Item {

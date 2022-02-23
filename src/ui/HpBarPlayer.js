@@ -29,7 +29,7 @@ export class HpBarPlayer extends UICanvas {
   }
 
   draw(ctx) {  
-    let remainingHPBar = this.game.player.health / this.game.player.maxHealth;
+    let remainingHPBar = this.game.playerTeam[0].health / this.game.playerTeam[0].maxHealth;
     let dW = this.hpBarProps.w * remainingHPBar;
 
     ctx.current.beginPath();

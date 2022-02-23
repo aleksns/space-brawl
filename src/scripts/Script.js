@@ -49,7 +49,7 @@ export default class Script {
   }
 
   handleStartLevelTransition() {
-    if (!this.game.isGameOnHold && !this.isStartLevelTransitionPlayed) {
+    if (!this.game.isGlobalActionRestricted && !this.isStartLevelTransitionPlayed) {
       this.prepareGameForCutscene();
     }
 
@@ -60,7 +60,7 @@ export default class Script {
   }
 
   handleBossLevelTransition() {
-    if (!this.game.isGameOnHold && !this.isBossLevelTransitionPlayed) {
+    if (!this.game.isGlobalActionRestricted && !this.isBossLevelTransitionPlayed) {
       this.prepareGameForCutscene();
     }
 
@@ -86,7 +86,7 @@ export default class Script {
     }
     if (!this.boss.isAtThePositionOnScreen()) {
       this.boss.animateBossAppearance();
-      this.game.player.moveToDefaultPosition();
+      this.game.playerTeam[0].moveToDefaultPosition();
       return;
     }
 
@@ -108,14 +108,13 @@ export default class Script {
 
     if (!this.boss.isAtThePositionOutsideScreen()) {
       this.boss.animateBossEscape();
-      this.game.player.moveToDefaultPosition();
+      this.game.playerTeam[0].moveToDefaultPosition();
       return;
     }
 
     this.isBossDeathCutscenePlayed = true;
     this.boss.applyScore();
     this.boss.setDead();
-
     this.game.progression.advanceLevel();
   }
 
@@ -123,25 +122,25 @@ export default class Script {
     this.game.setGameOnHold();
     this.clearScreenFromObjects();
     this.game.skills.turnOffAllSkills();
-    this.game.player.setMoveToDefaultPosition();
+    this.game.playerTeam[0].setMoveToDefaultPosition();
   }
 
   playLevelTransitionAnimation() {
     this.currentLvl.levelTransition.initialize();
     this.game.draw.drawCutscene(this.currentLvl.levelTransition, this.game.ctx);
-    this.game.player.moveToDefaultPosition();
+    this.game.playerTeam[0].moveToDefaultPosition();
   }
 
   playBossLevelTransitionAnimation() {
     this.currentLvl.bossTransition.initialize();
     this.game.draw.drawCutscene(this.currentLvl.bossTransition, this.game.ctx);
-    this.game.player.moveToDefaultPosition();
+    this.game.playerTeam[0].moveToDefaultPosition();
   }
 
   playBossCutscene() {
     this.currentLvl.bossCutscene.initialize();
     this.game.draw.drawCutscene(this.currentLvl.bossCutscene, this.game.ctx4);
-    this.game.player.moveToDefaultPosition();
+    this.game.playerTeam[0].moveToDefaultPosition();
   }
 
   handleEnemiesSpawn() {

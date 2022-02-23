@@ -1,11 +1,9 @@
 import { getDeadZoneDimensionForObject } from "../services/services";
 
 export default class Collision {
-  constructor(game) {
+  constructor(game, gameBoard) {
     this.game = game;
-    this.gameBoard = this.game.gameBoard;
-    this.width = this.gameBoard.width; ///exists in services.
-    this.height = this.gameBoard.height; ///exists in services
+    this.gameBoard = gameBoard;
 
     this.allowedX = this.gameBoard.allowedX;
     this.allowedY = this.gameBoard.allowedY;
@@ -63,7 +61,6 @@ export default class Collision {
       newRandomDirections = this.getRandomOppositeDirections(
         this.getNorthDirections()
       );
-      // rect.y = this.allowedY.y0; //// testing
     }
     if (
       this.isCollisionBorderDown(rect, this.enemyAllowedY.y1) &&
@@ -72,7 +69,6 @@ export default class Collision {
       newRandomDirections = this.getRandomOppositeDirections(
         this.getSouthDirections()
       );
-      // rect.y = this.allowedY.y1 - rect.h; //// testing
     }
     if (
       this.isCollisionBorderLeft(rect, rect.offStepX) &&
@@ -81,7 +77,6 @@ export default class Collision {
       newRandomDirections = this.getRandomOppositeDirections(
         this.getWestDirections()
       );
-      // rect.x = this.allowedX.x0; //// testing
     }
     if (
       this.isCollisionBorderRight(rect, rect.offStepX) &&
@@ -90,13 +85,11 @@ export default class Collision {
       newRandomDirections = this.getRandomOppositeDirections(
         this.getEastDirections()
       );
-      //rect.x = this.allowedX.x1 - rect.w;//// testing
     }
     if (newRandomDirections.length != 0) {
       rect.setRandomDirectionFromList(newRandomDirections);
     }
 
-    // this.handleEnemyOutOfBorders(rect);   //testing
   }
 
   isOutOfBorders(rect) {
@@ -111,7 +104,6 @@ export default class Collision {
 
   getRandomOppositeDirections(excluded) {
     let newDirections = ["N", "E", "S", "W", "NE", "SE", "SW", "NW"];
-    //newDirections = directions;
     let excludedDirections = excluded;
 
     for (let i = 0; i < excludedDirections.length; i++) {

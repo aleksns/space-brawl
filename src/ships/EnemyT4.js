@@ -41,7 +41,7 @@ export class EnemyT4 extends Ship {
 
     this.rammingDmg = this.game.stats.enemyT4.rammingDmg;
     this.gun = undefined;
-    this.target = this.game.player;
+    this.target = this.game.playerTeam[0];
 
     this.image = this.game.media.enemyShipT2;
 

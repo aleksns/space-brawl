@@ -2,13 +2,26 @@ import { colors, font } from "../services/services";
 import Effect from "./Effect";
 
 const textProps = {
-  expColor: colors.uiOrangeDark,
   expXModifier: -0.4,
   expYModifier: -0.8,
+  expColor: colors.uiOrangeDark,
+  expFont: `22px ${font}`,
 
-  hpColor: colors.green,
+  expBossXModifier: 0.1,
+  expBossYModifier: -4.5,
+  expBossColor: colors.uiOrangeDark,
+  expBossFont: `82px ${font}`,
+  expBossOpacityModifier: 0.013,
+
   hpXModifier: 0.8,
   hpYModifier: -1.7,
+  hpColor: colors.green,
+  hpFont: `35px ${font}`,
+
+  atkSpeedXModifier: 2.5,
+  atkSpeedYModifier: -0.2,
+  atkSpeedColor: colors.uiBlue,
+  atkSpeedFont: `45px ${font}`,
 };
 export class FloatingText extends Effect {
   constructor(game) {
@@ -29,7 +42,7 @@ export class FloatingText extends Effect {
       textY: 0,
       textOpacity: 0.6,
       textColor: undefined,
-      font: `22px ${font}`,
+      font: undefined,
     };
 
     this.isDead = false;
@@ -37,19 +50,35 @@ export class FloatingText extends Effect {
 
   setProps(textID, text) {
     this.props.text = text;
-    this.props.textX = (this.game.player.x + this.game.player.w) + this.offSet;
-    this.props.textY = this.game.player.y + (this.game.player.h / 2);
+    this.props.textX = this.game.playerTeam[0].x + this.game.playerTeam[0].w + this.offSet;
+    this.props.textY = this.game.playerTeam[0].y + this.game.playerTeam[0].h / 2;
 
     switch (textID) {
       case "exp":
-        this.props.textColor = textProps.expColor;
         this.xModifier = textProps.expXModifier;
         this.yModifier = textProps.expYModifier;
+        this.props.textColor = textProps.expColor;
+        this.props.font = textProps.expFont;
+        break;
+      case "expBoss":
+        this.xModifier = textProps.expBossXModifier;
+        this.yModifier = textProps.expBossYModifier;
+        this.props.textColor = textProps.expBossColor;
+        this.props.font = textProps.expBossFont;
+
+        this.opacityModifier = textProps.expBossOpacityModifier;
         break;
       case "hp":
-        this.props.textColor = textProps.hpColor;
         this.xModifier = textProps.hpXModifier;
         this.yModifier = textProps.hpYModifier;
+        this.props.textColor = textProps.hpColor;
+        this.props.font = textProps.hpFont;
+        break;
+      case "atkSpeed":
+        this.xModifier = textProps.atkSpeedXModifier;
+        this.yModifier = textProps.atkSpeedYModifier;
+        this.props.textColor = textProps.atkSpeedColor;
+        this.props.font = textProps.atkSpeedFont;
         break;
       default:
         console.log("Error handling `setProps` function in FloatingText class");
@@ -78,12 +107,14 @@ export class FloatingText extends Effect {
     this.props.textOpacity += this.opacityModifier;
     if (this.props.textOpacity >= 1.0) {
       this.opacityModifier = -this.opacityModifier;
-    } 
+    }
   }
 
   updateTextPosition() {
-    this.props.textX = (this.game.player.x + this.game.player.w) + this.offSet + this.xOffset;
-    this.props.textY = this.game.player.y + (this.game.player.h / 2) + this.yOffset;
+    this.props.textX =
+      this.game.playerTeam[0].x + this.game.playerTeam[0].w + this.offSet + this.xOffset;
+    this.props.textY =
+      this.game.playerTeam[0].y + this.game.playerTeam[0].h / 2 + this.yOffset;
   }
 
   setOpacityModifier(value) {

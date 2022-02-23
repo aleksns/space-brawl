@@ -96,7 +96,7 @@ export class EnemyT5 extends Ship {
   }
 
   updateShip() {
-    if (this.game.collision.isCollisionBorderDown(this, -this.h)) {
+    if (this.game.gameBoard.collision.isCollisionBorderDown(this, -this.h)) {
       this.setDead();
     }
   }

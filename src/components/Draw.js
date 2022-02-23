@@ -43,7 +43,7 @@ export default class Draw {
     this.drawPlayer();
     this.drawEnemies();
 
-    if (this.game.isGlobalActionRestricted) {
+    if (this.game.isGlobalActionRestricted || this.game.gameOver) {
       return;
     }
     
@@ -116,24 +116,23 @@ export default class Draw {
   }
 
   drawPlayer() {
-    if (this.game.player.isGotHit) {
-      this.game.player.filter = hitRegFilter;
-      this.game.player.isGotHit = false;
-    } else {
-      this.game.player.filter = "none";
+    if(this.game.gameOver) {
+      return;
     }
 
-    this.drawObject(this.game.player, this.ctx);
-
-    // this.ctx.current.lineWidth = 12;
-    // this.ctx.current.beginPath();
-    // this.ctx.current.rect(this.game.player.x, this.game.player.y, this.game.player.w, this.game.player.h);
-    //   this.ctx.current.strokeStyle = "green";
-    //   this.ctx.current.stroke();
-    // this.ctx.current.closePath();
-
-    if (this.game.player.isShieldOn) {
-      this.drawObject(this.game.player.shieldOrb.props, this.ctx);
+    for(let i = 0; i < this.game.playerTeam.length; i++) {
+      if (this.game.playerTeam[i].isGotHit) {
+        this.game.playerTeam[i].filter = hitRegFilter;
+        this.game.playerTeam[i].isGotHit = false;
+      } else {
+        this.game.playerTeam[i].filter = "none";
+      }
+  
+      this.drawObject(this.game.playerTeam[i], this.ctx);
+  
+      if (this.game.playerTeam[i].isShieldOn) {
+        this.drawObject(this.game.playerTeam[i].shieldOrb.props, this.ctx);
+      }
     }
   }
 
@@ -155,7 +154,7 @@ export default class Draw {
   }
 
   drawEnemyHpBar(enemy, ctx) {
-    if(this.game.isGlobalActionRestricted) {
+    if(this.game.isGlobalActionRestricted || this.game.gameOver) {
       return;
     }
     let remainingHPBar = enemy.health / enemy.maxHealth;

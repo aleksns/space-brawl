@@ -4,7 +4,7 @@ export default class Progression {
   constructor(game) {
     this.game = game;
     this.threatLevel = 0;
-    this.maxThreatLevel = 32;
+    this.maxThreatLevel = 2;
     this.threatLevelModifier = 1;
 
     //this.maxNumOfEnemies = 2;
@@ -57,14 +57,18 @@ export default class Progression {
     }
   }
 
-  increaseExp(value) {
+  increaseExp(value, isBoss) {
     this.expPoints += value;
     if (this.expPoints >= this.maxExpPoints) {
       this.expPoints = this.maxExpPoints;
     }
 
     let text = `+${value} EXP`;
-    this.game.init.addFloatingTextEffect("exp", text);
+    if (!isBoss) {
+      this.game.init.addFloatingTextEffect("exp", text);
+    } else {
+      this.game.init.addFloatingTextEffect("expBoss", text);
+    }
   }
 
   increasePlayerLevel() {
@@ -77,16 +81,16 @@ export default class Progression {
     this.game.effects.push(newEffect);
 
     if (this.playerLevel == 5) {
-      this.game.player.setTier2();
+      this.game.playerTeam[0].setTier2();
       this.applyPlayerModifiers(this.playerTierModifiers);
     }
 
     if (this.playerLevel == 10) {
-      this.game.player.setTier1();
+      this.game.playerTeam[0].setTier1();
       this.applyPlayerModifiers(this.playerTierModifiers);
     }
 
-    this.game.player.updateStats();
+    this.game.playerTeam[0].updateStats();
   }
 
   increaseThreatLevel() {

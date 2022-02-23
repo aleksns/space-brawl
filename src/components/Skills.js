@@ -131,6 +131,7 @@ export default class Skills {
     this.game.stats.increaseSpeedOfEverything();
     this.slowTime.isApplied = false;
     this.game.init.updateTimers();
+    this.game.playerTeam[0].resetVelocity();
   }
 
   updateTimersBeforeSlowSkill() {
@@ -151,13 +152,13 @@ export default class Skills {
     }
     this.laser.then = this.game.now;
     this.laser.isApplied = true;
-    this.game.player.laserGun.resetLaser();
-    this.game.player.isLaserOn = true;
+    this.game.playerTeam[0].laserGun.resetLaser();
+    this.game.playerTeam[0].isLaserOn = true;
   }
 
   turnOffLaserSkill() {
     this.laser.isApplied = false;
-    this.game.player.isLaserOn = false;
+    this.game.playerTeam[0].isLaserOn = false;
     for (let i = 0; i < this.game.playerProjectiles.length; i++) {
       if (this.game.playerProjectiles[i].isLaser) {
         this.game.playerProjectiles[i].setDead();
@@ -172,13 +173,13 @@ export default class Skills {
     }
     this.shield.then = this.game.now;
     this.shield.isApplied = true;
-    this.game.player.isShieldOn = true;
+    this.game.playerTeam[0].isShieldOn = true;
   }
 
   turnOffShieldSkill() {
     this.shield.isApplied = false;
-    this.game.player.isShieldOn = false;
-    this.game.player.shieldOrb.reset();
+    this.game.playerTeam[0].isShieldOn = false;
+    this.game.playerTeam[0].shieldOrb.reset();
   }
 
   updateSkillRemainingCD(skill) {
@@ -278,6 +279,9 @@ export default class Skills {
       this.game.playerGuns,
       this.atkSpeed.value
     );
+
+    let text = `+ ${this.atkSpeed.value}00% ATK Speed`;
+    this.game.init.addFloatingTextEffect("atkSpeed", text);
   }
 
   turnOffAtkSpeedSkill() {
@@ -315,9 +319,9 @@ export default class Skills {
   }
 
   restoreHealth(amount) {
-    this.game.player.health += amount;
-    if (this.game.player.health > this.game.player.maxHealth) {
-      this.game.player.health = this.game.player.maxHealth;
+    this.game.playerTeam[0].health += amount;
+    if (this.game.playerTeam[0].health > this.game.playerTeam[0].maxHealth) {
+      this.game.playerTeam[0].health = this.game.playerTeam[0].maxHealth;
     }
 
     let text = `+ ${amount} HP`;
@@ -327,14 +331,14 @@ export default class Skills {
   changeLaserWidthDependingOnRemainingTime(timePassed) {
     let remainingTime = this.laser.duration - timePassed;
     let remainingLaserW = remainingTime / this.laser.duration;
-    let dW = this.game.player.laserGun.laserProjectile.dW * remainingLaserW;
-    this.game.player.laserGun.laserProjectile.setLaserWidth(dW);
+    let dW = this.game.playerTeam[0].laserGun.laserProjectile.dW * remainingLaserW;
+    this.game.playerTeam[0].laserGun.laserProjectile.setLaserWidth(dW);
   }
 
   changeShieldDependingOnRemainingTime(timePassed) {
     let remainingTime = this.shield.duration - timePassed;
     let remainingShieldTime = remainingTime / this.shield.duration;
-    let o = this.game.player.shieldOrb.props.opacityMax * remainingShieldTime;
-    this.game.player.shieldOrb.setOpacity(o);
+    let o = this.game.playerTeam[0].shieldOrb.props.opacityMax * remainingShieldTime;
+    this.game.playerTeam[0].shieldOrb.setOpacity(o);
   }
 }

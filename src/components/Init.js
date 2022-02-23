@@ -46,7 +46,11 @@ export default class Init {
 
   initialize() {
     this.updateTimers();
-    this.game.player.initialize();
+    
+    for(let i = 0; i < this.game.playerTeam.length; i++) {
+      this.game.playerTeam[i].initialize();
+    }
+    
     this.game.skills.initialize();
   }
 
@@ -57,7 +61,7 @@ export default class Init {
   }
 
   addItemsBasedOnTiming() {
-    if (this.game.isGlobalActionRestricted || this.game.stats.isGlobalSlowAll) {
+    if (this.game.isGlobalActionRestricted || this.game.stats.isGlobalSlowAll || this.game.gameOver) {
       return;
     }
     for (let i = 0; i < this.itemsToSpawn.length; i++) {
@@ -107,7 +111,7 @@ export default class Init {
     }
   }
 
-  addBgElements() {
+  addBgElements() { 
     if (this.game.bgElements.length >= this.maxNumOfElements) {
       return;
     }

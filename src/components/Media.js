@@ -16,6 +16,7 @@ import projectileArcBlue from "../images/projectileArcBlue.png";
 
 
 import projectileLaserPlayer from "../images/projectileLaserPlayer.png";
+import shieldOrb from "../images/shieldOrb.png";
 
 export default class Media {
   constructor() {
@@ -60,6 +61,9 @@ export default class Media {
     
     this.projectileLaserImgPlayer = new Image();
     this.projectileLaserImgPlayer.src = projectileLaserPlayer;
+
+    this.shieldOrbImg = new Image();
+    this.shieldOrbImg.src = shieldOrb;
     
     console.log(`Constructor > Media`);
   }

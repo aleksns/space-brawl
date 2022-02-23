@@ -134,27 +134,46 @@ export default function App() {
       context4Ref,
       context5Ref,
       clearCanvas1To4,
-      clearCanvas5
+      clearCanvas5,
+      handleGameOver
     );
     gameRef.current = game;
+
+    gameRef.current.isAnimationOn = false;
+    //requestAnimationFrame(runLoop);
   }, []);
 
   const [isUiOn, setIsUiOn] = useState(true);
 
+  function handleGameOver() {
+    setIsUiOn(true);
+  }
 
-  function startIt() {
-    setIsUiOn(false);
-    gameRef.current.isGameOn = !gameRef.current.isGameOn;
+  function startGame() {
+   setIsUiOn(false);  
+   gameRef.current.initialize();
+   gameRef.current.isAnimationOn = true;
+   gameRef.current.isGameOn = true;
+  }
+
+  function startAnimation() {
     requestAnimationFrame(runLoop);
+    gameRef.current.isAnimationOn = !gameRef.current.isAnimationOn;
   }
 
   function runLoop() {
-    if (gameRef.current.isGameOn) {
-
+    if (gameRef.current.isAnimationOn) {
       gameRef.current.gameLoop();
 
       requestAnimationFrame(runLoop);
     }
+    else{
+      //gameOver();
+    }
+  }
+
+  function gameOver() {
+    setIsUiOn(!isUiOn);
   }
 
   return (
@@ -172,7 +191,7 @@ export default function App() {
       >
         <h1 className="label-start">COSMIC BRAWL (WIP)</h1>
         <button
-          onClick={startIt}
+          onClick={startGame}
           disabled={!isUiOn}
           className="btn-start"
           style={!isUiOn ? { cursor: "default" } : {}}
@@ -180,7 +199,17 @@ export default function App() {
           START
         </button>
         <GithubLinkWithIcon />
+
+        <button
+          onClick={startAnimation}
+          disabled={!isUiOn}
+          className="btn-start-test"
+          style={!isUiOn ? { cursor: "default" } : {}}
+        >
+          MENU
+        </button>
       </div>
+      
     </>
   );
 }

@@ -275,9 +275,9 @@ export class SkillsBar extends UICanvas {
   }
 
   isPlayerCollidingWithSkillsBar() {
-    return this.game.collision.rectsColliding(
+    return this.game.gameBoard.collision.rectsColliding(
       this.skillsBarContainerProps,
-      this.game.player
+      this.game.playerTeam[0]
     );
   }
 

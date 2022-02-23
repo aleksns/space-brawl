@@ -39,10 +39,10 @@ export class Player extends Ship {
     super(game);
     this.game = game;
     this.stats = this.game.stats;
-    this.x = defaultPosition.x;
-    this.y = defaultPosition.y + 100;
     this.w = getPlayerT3Dimension().w;
     this.h = getPlayerT3Dimension().h;
+    this.x = defaultPosition.x;
+    this.y = defaultPosition.y + (this.h * 2);
     this.dX = 0;
     this.dY = 0;
     this.health = this.stats.player.health;
@@ -83,7 +83,6 @@ export class Player extends Ship {
   }
 
   initializeShip() {
-    this.game.playerGuns = [];
     this.initializePlayerGuns();
     this.laserGun = this.laserGunT3;
     //this.game.playerGuns.push(this.barrage);
@@ -93,6 +92,9 @@ export class Player extends Ship {
   }
 
   updateShip() {
+    if(this.isDead) {
+      return;
+    }
     if (this.isShieldOn) {
       this.shieldOrb.update();
     }
@@ -151,7 +153,7 @@ export class Player extends Ship {
       w: 5,
       h: 5
     }
-    return this.game.collision.rectsColliding(playerCenter, this.destination);
+    return this.game.gameBoard.collision.rectsColliding(playerCenter, this.destination);
   }
 
   moveToDefaultPosition() {
@@ -179,6 +181,7 @@ export class Player extends Ship {
 
   onDeath() {
     this.setDead();
+    this.game.handlePlayerIsDead();
     console.log(`Player has died. DON'T BE SAD!`);
   }
 
@@ -195,6 +198,11 @@ export class Player extends Ship {
 
     ///test
     this.doubleTest.setGunDamage(this.stats.playerGunsDamage.rotating);
+  }
+
+  setToDefaultPosition() {
+    this.x = defaultPosition.x;
+    this.y = defaultPosition.y + (this.h * 2);
   }
 
   initializePlayerGuns() {

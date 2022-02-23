@@ -149,7 +149,7 @@ export default class Stats {
     this.isGlobalSlowAll = true;
 
     this.decreaseEnemiesSpeed(this.game.enemies);
-    this.decreaseShipSpeed(this.game.player, this.slowModifiers.speedPlayer);
+    this.decreaseShipSpeed(this.game.playerTeam[0], this.slowModifiers.speedPlayer);
 
     this.decreaseGunsAtkSpeed(
       this.game.enemyGuns,
@@ -198,7 +198,7 @@ export default class Stats {
 
   increaseSpeedOfEverything() {
     this.increaseEnemiesSpeed(this.game.enemies);
-    this.increaseShipSpeed(this.game.player, this.slowModifiers.speedPlayer);
+    this.increaseShipSpeed(this.game.playerTeam[0], this.slowModifiers.speedPlayer);
 
     this.increaseGunsAtkSpeed(
       this.game.enemyGuns,

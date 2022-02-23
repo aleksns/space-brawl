@@ -9,7 +9,7 @@ import {
 export default class Ship {
   constructor(game) {
     this.game = game;
-    this.collision = game.collision;
+    this.collision = game.gameBoard.collision;
     this.color = "transparent";
     this.opacity = 1.0;
     this.isGotHit = false;
@@ -78,7 +78,7 @@ export default class Ship {
     }
 
     if (
-      this.game.collision.isOutOfBorders(this) &&
+      this.game.gameBoard.collision.isOutOfBorders(this) &&
       !this.isCheckSouthOutOfBorderOnly
     ) {
       this.respawn();

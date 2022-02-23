@@ -43,11 +43,7 @@ export class Coin extends Item {
   }
 
   applyEffect() {
-   this.game.progression.increaseExp(this.value);
+   this.game.progression.increaseExp(this.value, false);
   }
 
-  setMinSpawnRange() {
-    this.spawnRangeMinX = this.w;
-    this.spawnRangeMaxX = this.game.gameBoard.width - this.w;
-  }
 }

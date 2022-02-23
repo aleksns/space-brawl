@@ -72,7 +72,7 @@ export default class Update {
   updateGuns() {
     this.updateObjects(this.game.enemyGuns);
     this.updateObjects(this.game.playerGuns);
-    this.game.player.laserGun.update();
+    this.game.playerTeam[0].laserGun.update();
   }
 
   updateCoins() {
@@ -80,15 +80,17 @@ export default class Update {
   }
 
   updateItems() {
-    this.game.init.addBgElements();
-    this.updateObjects(this.game.bgElements);
+    //this.game.init.addBgElements();
+    //this.updateObjects(this.game.bgElements);
 
     this.game.init.addItems();
     this.updateObjects(this.game.items);
   }
 
   updatePlayer() {
-    this.game.player.update();
+    for(let i = 0; i < this.game.playerTeam.length; i++) {
+      this.game.playerTeam[i].update();
+    }
   }
 
   updateEnemies() {
@@ -108,15 +110,18 @@ export default class Update {
   }
 
   updateCollisionPlayerHullWithEnemies() {
+    if(this.game.gameOver) {
+      return;
+    }
     for (let i = 0; i < this.game.enemies.length; i++) {
       if (
-        this.game.collision.rectsColliding(
-          this.game.player,
+        this.game.gameBoard.collision.rectsColliding(
+          this.game.playerTeam[0],
           this.game.enemies[i]
         )
       ) {
-        this.game.enemies[i].gotHitByShipHull(this.game.player);
-        this.game.player.gotHitByShipHull(this.game.enemies[i]);
+        this.game.enemies[i].gotHitByShipHull(this.game.playerTeam[0]);
+        this.game.playerTeam[0].gotHitByShipHull(this.game.enemies[i]);
       }
     }
   }
@@ -124,13 +129,13 @@ export default class Update {
   updateCollisionPlayerWithProjectiles() {
     for (let i = 0; i < this.game.enemyProjectiles.length; i++) {
       if (
-        this.game.collision.rectsColliding(
-          this.game.player,
+        this.game.gameBoard.collision.rectsColliding(
+          this.game.playerTeam[0],
           this.game.enemyProjectiles[i]
         ) &&
         !this.game.enemyProjectiles[i].isPlayerOwned
       ) {
-        this.game.player.gotHitByProjectile(this.game.enemyProjectiles[i]);
+        this.game.playerTeam[0].gotHitByProjectile(this.game.enemyProjectiles[i]);
         this.game.enemyProjectiles[i].setDead();
       }
     }
@@ -140,7 +145,7 @@ export default class Update {
     for (let i = 0; i < this.game.enemies.length; i++) {
       for (let y = 0; y < this.game.playerProjectiles.length; y++) {
         if (
-          this.game.collision.rectsColliding(
+          this.game.gameBoard.collision.rectsColliding(
             this.game.enemies[i],
             this.game.playerProjectiles[y]
           ) &&
@@ -183,7 +188,7 @@ export default class Update {
   }
 
   removeDeadBgElements() {
-    this.removeDeadObjects(this.game.bgElements);
+    //this.removeDeadObjects(this.game.bgElements);
   }
 
   removeDeadEffects() {

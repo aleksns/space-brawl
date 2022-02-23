@@ -50,8 +50,4 @@ export class AtkSpeed extends Item {
     this.game.skills.turnOnAtkSpeedSkill();
   }
 
-  setMinSpawnRange() {
-    this.spawnRangeMinX = this.w;
-    this.spawnRangeMaxX = this.game.gameBoard.width - this.w;
-  }
 }

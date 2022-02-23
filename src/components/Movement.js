@@ -69,11 +69,11 @@ export default class Movement {
     this.applyFrictionAndVelocity(object);
 
     if (isCheckSouthOutOfBorderOnly) {
-      if (this.game.collision.isCollisionBorderDown(object, -object.h)) {
+      if (this.game.gameBoard.collision.isCollisionBorderDown(object, -object.h)) {
         object.setDead();
       }
     } else {
-      this.game.collision.handleCollisionWithBorders(object);
+      this.game.gameBoard.collision.handleCollisionWithBorders(object);
     }
   }
 

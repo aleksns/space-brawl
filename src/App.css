@@ -97,6 +97,23 @@ html {
   transition-duration: var(--transition-time);
 }
 
+ /* TEST */
+.btn-start-test {
+  margin-top: 10px;
+  position: relative;
+  background-color: var(--purple-dark);
+  color: #ffffff;
+  width: 50px;
+  height: 25px;
+  border-radius: 15px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-color: transparent;
+  transition-duration: var(--transition-time);
+}
+/* TEST */
+
 .btn-start:hover {
   box-shadow: 0 0 var(--shadow-radius) var(--purple-light);
   background-color: var(--purple-light);

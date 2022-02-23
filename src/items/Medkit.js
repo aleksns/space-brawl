@@ -51,8 +51,4 @@ export class Medkit extends Item {
     this.game.skills.restoreHealth(this.restoredHP);
   }
 
-  setMinSpawnRange() {
-    this.spawnRangeMinX = this.w;
-    this.spawnRangeMaxX = this.game.gameBoard.width - this.w;
-  }
 }

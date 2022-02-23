@@ -145,9 +145,9 @@ export class LevelAndScore extends UICanvas {
   }
 
   isPlayerCollidingWithLevelBar() {
-    return this.game.collision.rectsColliding(
+    return this.game.gameBoard.collision.rectsColliding(
       this.levelImageProps,
-      this.game.player
+      this.game.playerTeam[0]
     );
   }
 

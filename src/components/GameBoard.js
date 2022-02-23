@@ -2,21 +2,21 @@ import {
   getRandomIntInclusive,
   GAME_WIDTH,
   GAME_HEIGHT,
-  getTrueBasedOnChance,
 } from "../services/services";
+import Collision from "./Collision";
 
 export default class GameBoard {
   constructor(game) {
     this.game = game;
-    this.width = GAME_WIDTH;
-    this.height = GAME_HEIGHT;
-    this.allowedX = { x0: 5, x1: this.width - 5 };
-    this.allowedY = { y0: 50, y1: this.height - 5 };
 
-    this.enemyAllowedX = { x0: 5, x1: this.width - 5 };
-    this.enemyAllowedY = { y0: 50, y1: this.height / 2 };
+    this.allowedX = { x0: 5, x1: GAME_WIDTH - 5 };
+    this.allowedY = { y0: 50, y1: GAME_HEIGHT - 5 };
+
+    this.enemyAllowedX = { x0: 5, x1: GAME_WIDTH - 5 };
+    this.enemyAllowedY = { y0: 50, y1: GAME_HEIGHT / 2 };
 
     this.friction = 0.95;
+    this.collision = new Collision(this.game, this);
   }
 
   updateVisionRange(object) {
@@ -25,7 +25,7 @@ export default class GameBoard {
   }
 
   isInsideVisionRange(target, visionRangeOwner) {
-    return this.game.collision.rectCircleColliding(target, visionRangeOwner);
+    return this.collision.rectCircleColliding(target, visionRangeOwner);
   }
 
   getRandomCordsWithinBounds(object) {
@@ -97,7 +97,7 @@ export default class GameBoard {
     for (let i = 0; i < this.game.enemies.length - 1; i++) {
       for (let j = i + 1; j < this.game.enemies.length; j++) {
         if (
-          this.game.collision.rectsColliding(
+          this.collision.rectsColliding(
             this.game.enemies[i],
             this.game.enemies[j]
           ) &&
@@ -105,11 +105,11 @@ export default class GameBoard {
           this.game.enemies[j].id == "t5"
         ) {
           this.game.enemies[i].x =
-            this.game.gameBoard.getPositionOutsideNorthBoard(
+            this.getPositionOutsideNorthBoard(
               this.game.enemies[i]
             ).x;
           this.game.enemies[i].y =
-            this.game.gameBoard.getPositionOutsideNorthBoard(
+            this.getPositionOutsideNorthBoard(
               this.game.enemies[i]
             ).y;
         }
@@ -119,7 +119,7 @@ export default class GameBoard {
 
   getEmptyPositionOnBoard(ship) {
     for (let i = 0; i < this.game.enemies.length; i++) {
-      while (this.game.collision.rectsColliding(ship, this.game.enemies[i])) {
+      while (this.collision.rectsColliding(ship, this.game.enemies[i])) {
         ship.x = getRandomIntInclusive(
           this.enemyAllowedX.x0,
           this.enemyAllowedX.x1 - ship.w
@@ -131,7 +131,7 @@ export default class GameBoard {
 
   getEmptyPositionOutsideNorthBoard(ship) {
     for (let i = 0; i < this.game.enemies.length; i++) {
-      while (this.game.collision.rectsColliding(ship, this.game.enemies[i])) {
+      while (this.collision.rectsColliding(ship, this.game.enemies[i])) {
         ship.x = this.getPositionOutsideNorthBoard(ship).x;
         ship.y = this.getPositionOutsideNorthBoard(ship).y;
       }

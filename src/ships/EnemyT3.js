@@ -39,7 +39,7 @@ export class EnemyT3 extends Ship {
 
     this.rammingDmg = this.game.stats.enemyT3.rammingDmg;
     this.guns = [];
-    this.target = this.game.player;
+    this.target = this.game.playerTeam[0];
 
     this.image = this.game.animations.enemyT3ShipAnimation.image;
 
@@ -83,9 +83,6 @@ export class EnemyT3 extends Ship {
     this.guns.push(new180BarrageGun);
 
     this.directionChangeIntervalThen = Date.now();
-    console.log(
-      `dest.x = ${this.destination.x}, dest.y = ${this.destination.y}`
-    );
   }
 
   fireGun() {

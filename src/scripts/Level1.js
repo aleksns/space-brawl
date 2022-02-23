@@ -18,7 +18,7 @@ export default class Level1 {
     this.wave = [];
     this.waveMap = [];
     //this.listOfEnemyTier = ["t5", "t4"];
-    this.listOfEnemyTier = ["t5"];
+    this.listOfEnemyTier = ["t3"];
 
     this.minNumOfEnemies = 1;
     this.maxNumOfEnemies = 10;

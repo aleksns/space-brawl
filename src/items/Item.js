@@ -1,4 +1,4 @@
-import { getRandomIntInclusive, GAME_HEIGHT } from "../services/services";
+import { getRandomIntInclusive, GAME_HEIGHT, GAME_WIDTH } from "../services/services";
 
 export default class Item {
   constructor(game) {
@@ -106,7 +106,7 @@ export default class Item {
 
   isPlayerInsideVisionRange() {
     let boolean = this.game.gameBoard.isInsideVisionRange(
-      this.game.player,
+      this.game.playerTeam[0],
       this.visionRange
     );
     return boolean;
@@ -114,10 +114,10 @@ export default class Item {
 
   updateDestinationCords() {
     this.destination.x = this.game.gameBoard.getCenterOfObject(
-      this.game.player
+      this.game.playerTeam[0]
     ).x;
     this.destination.y = this.game.gameBoard.getCenterOfObject(
-      this.game.player
+      this.game.playerTeam[0]
     ).y;
   }
 
@@ -146,14 +146,14 @@ export default class Item {
   }
 
   removeIfOutsideBorderDown() {
-    if (this.game.collision.isCollisionBorderDown(this, this.offStep)) {
+    if (this.game.gameBoard.collision.isCollisionBorderDown(this, this.offStep)) {
       this.setDead();
     }
   }
 
   isPickedUpByPlayer() {
     if (
-      this.game.collision.rectsColliding(this, this.game.player) &&
+      this.game.gameBoard.collision.rectsColliding(this, this.game.playerTeam[0]) &&
       !this.isDead
     ) {
       return true;
@@ -184,7 +184,7 @@ export default class Item {
     if (!this.isSpawnOnScreen) {
       maxY = 0 - (this.h + 25);
     } else {
-      maxY = this.game.gameBoard.height - this.h / 2;
+      maxY = GAME_HEIGHT - this.h / 2;
     }
 
     this.x = getRandomIntInclusive(minX, maxX);
@@ -194,5 +194,10 @@ export default class Item {
   randomize() {
     this.setMinSpawnRange();
     this.setRandomPosition();
+  }
+
+  setMinSpawnRange() {
+    this.spawnRangeMinX = this.w;
+    this.spawnRangeMaxX = GAME_WIDTH - this.w;
   }
 }

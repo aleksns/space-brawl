@@ -1,5 +1,4 @@
 import "../App.css";
-import { getTrueBasedOnChance, roundDecimalHundreds } from "../services/services";
 
 export default class Controls {
   constructor(game) {
@@ -17,7 +16,6 @@ export default class Controls {
     this.game = game;
     this.player = game.player;
     this.canvas5 = game.canvas5;
-    this.btns = this.game.skillsBar.skillsBtns;
 
     window.addEventListener(
       "keydown",
@@ -196,7 +194,7 @@ export default class Controls {
       this.handleKeySpace();
     }
 
-    if (this.game.isPauseOn || this.game.isGlobalActionRestricted) {
+    if (this.game.isPauseOn || this.game.isGlobalActionRestricted || this.game.gameOver) {
       return;
     }
 
@@ -226,7 +224,7 @@ export default class Controls {
     }
 
     //having collision check before applyFrictionAndVelocity adds smooth back off effect when reaching borders
-    this.game.collision.handleCollisionWithBorders(this.player);
+    this.game.gameBoard.collision.handleCollisionWithBorders(this.player);
     this.game.movement.applyFrictionAndVelocity(this.player);
   }
 

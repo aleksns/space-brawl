@@ -1,5 +1,3 @@
-import shieldOrb from "../images/shieldOrb.png";
-
 export default class ShieldOrb {
   constructor(game, owner) {
     this.game = game;
@@ -21,8 +19,7 @@ export default class ShieldOrb {
       opacity: 1.0,
       opacityMax: 1.0
     };
-    this.props.image = new Image();
-    this.props.image.src = shieldOrb;
+    this.props.image = this.game.media.shieldOrbImg;
   }
 
   reset() {
