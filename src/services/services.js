@@ -1,6 +1,6 @@
 export const GAME_WIDTH = window.innerWidth;
 export const GAME_HEIGHT = window.innerHeight;
-export const font = "russo one";
+export const font = "audiowide";
 //export const GAME_WIDTH = 1536;
 //export const GAME_HEIGHT = 734;
 
@@ -90,7 +90,7 @@ export const colors = {
 export const getStatusEffectsBar = {
   w: 200,
   h: 75,
-  x: GAME_WIDTH - 220,
+  x: GAME_WIDTH - 400,
   y: GAME_HEIGHT - 85,
   color: "#FFC76B",
   isFill: false,
@@ -113,8 +113,8 @@ export const itemBuffProps = {
 };
 
 export const getItemsStats = {
-  medkitTier1: 25,
-  atkSpeedTier1: 0.2, //higher values give more atk speed
+  medkit: 25,
+  atkSpeed: 0.2, //higher values give more atk speed
 };
 
 export const getBuffsSpawnDelay = {

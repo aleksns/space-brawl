@@ -34,9 +34,8 @@ export class Boss extends Ship {
     this.offStepX = Math.floor(this.w / 2);
     this.offStepY = Math.floor(this.h / 2);
     this.scorePoints = this.game.stats.enemyT0.scorePoints;
+    this.expPoints = Math.floor(this.scorePoints / 2);
     this.now = 0;
-    //this.damage = this.game.stats.enemyT0.damage;
-    //this.gun = undefined;
     this.target = this.game.playerTeam[0];
 
     this.image = this.game.animations.bossShipAnimation.image;

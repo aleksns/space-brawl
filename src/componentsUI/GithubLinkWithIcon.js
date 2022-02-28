@@ -1,26 +1,28 @@
 import React from "react";
 import "../App.css";
-import GitLogo from "../images/github-icon.png";
+// import GitLogo from "../images/github-icon.png";
 import { makeStyles, Link } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  gitLink: {
+  gitLinkStyle: {
     color: "#ffffff",
-    fontFamily: "Century Gothic",
+    fontFamily: "Audiowide",
+    letterSpacing: "1.5px",
     fontSize: "1.1rem",
     fontWeight: "600",
     "&:hover": {
       filter:
-        "invert(48%) sepia(13%) saturate(3207%) hue-rotate(210deg) brightness(100%) contrast(90%)",
+      "invert(48%) sepia(13%) saturate(3207%) hue-rotate(170deg) brightness(100%) contrast(90%)",
     },
   },
-  gitLogo: {
+  gitLogoStyle: {
     width: "40px",
     height: "40px",
   },
 }));
 
 export default function GithubLinkWithIcon(props) {
+  const {gitLogo} = props;
   const classes = useStyles();
   const gitUrl = "https://github.com/aleksns";
 
@@ -30,14 +32,15 @@ export default function GithubLinkWithIcon(props) {
   };
 
   return (
-    <div className="container-git-link">
+    <div className="container-git-link"
+    >
       <Link
-        className={classes.gitLink}
+        className={classes.gitLinkStyle}
         component="button"
         underline="none"
         onClick={openInNewTab}
       >
-        <img src={GitLogo} className={classes.gitLogo}></img>Github: Aleksns
+        <img src={gitLogo} className={classes.gitLogoStyle}></img>Github: Aleksns
       </Link>
     </div>
   );

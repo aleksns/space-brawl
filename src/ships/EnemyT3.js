@@ -35,6 +35,7 @@ export class EnemyT3 extends Ship {
     this.offStepX = this.s * 20;
     this.offStepY = this.s * 20;
     this.scorePoints = this.game.stats.enemyT3.scorePoints;
+    this.expPoints = Math.floor(this.scorePoints / 2);
     this.now = 0;
 
     this.rammingDmg = this.game.stats.enemyT3.rammingDmg;
@@ -51,7 +52,7 @@ export class EnemyT3 extends Ship {
 
     this.itemToDrop = {
       id: "coin",
-      value: 30,
+      expPoints: this.expPoints,
     };
 
     this.destination = {

@@ -20,7 +20,7 @@ export class Coin extends Item {
 
     this.image = this.game.animations.coinAnimation.image;
     this.isSpawnOnScreen = true;
-    this.value = 0; ///tbd
+    this.expPoints = 0;
 
     this.visionRange = {
       x: 0,
@@ -43,7 +43,7 @@ export class Coin extends Item {
   }
 
   applyEffect() {
-   this.game.progression.increaseExp(this.value, false);
+   this.game.progression.increaseExp(this.expPoints, false);
   }
 
 }

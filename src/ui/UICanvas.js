@@ -80,7 +80,7 @@ export default class UICanvas {
     this.scorePropsContainer = {
       x: this.threatBarImgContainer.x,
       y: (barImageProps.y + barImageProps.h) + 20,
-      font: "20px russo one",
+      font: "20px audiowide",
       color: "#ffffff",
     };
 

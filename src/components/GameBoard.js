@@ -146,15 +146,27 @@ export default class GameBoard {
     return position;
   }
 
-  getFormationLinePosX() {}
-
-  getFormationTriangle() {}
-
   getCenterOfObject(object) {
     var center = {
       x: object.x + object.w / 2,
       y: object.y + object.h / 2,
     };
     return center;
+  }
+
+  increaseObjectScale(object) {
+    //let scaleFactor = Math.sqrt((object.w * object.w) + (object.h * object.h));
+    let scaleFactor = 1.1;
+
+    object.x = scaleFactor;
+    object.y /= scaleFactor;
+
+    object.w *= scaleFactor;
+    object.h *= scaleFactor;
+
+    console.log(`-------------------`)
+    console.log(`object.w = ${object.w}`)
+    console.log(`-------------------`)
+
   }
 }

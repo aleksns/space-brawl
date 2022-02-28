@@ -42,7 +42,7 @@ export class LevelAndScore extends UICanvas {
       textColor: "#ffffff",
       textOpacity: 1.0,
       text: "1",
-      font: "19px russo one",
+      font: "19px audiowide",
       textHeight: 14,
     };
 

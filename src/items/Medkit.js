@@ -18,7 +18,7 @@ export class Medkit extends Item {
     this.a = this.itemBuffProps.a;
     this.isFill = this.itemBuffProps.isFill;
     this.isInteractable = true;
-    this.restoredHP = getItemsStats.medkitTier1;
+    this.restoredHP = this.game.stats.itemsStats.medkit;
     this.spawnRangeMinX = 0;
     this.spawnRangeMaxX = 0;
 

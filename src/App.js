@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState } from "react";
+import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Canvas from "./components/Canvas";
 import Game from "./components/Game";
-import GameOver from "./components/GameOver";
-import GithubLinkWithIcon from "./components/GithubLinkWithIcon";
-import UI from "./components/UI";
+import Tutorial from "./componentsUI/Tutorial";
+import MainMenu from "./componentsUI/MainMenu";
 import { GAME_WIDTH, GAME_HEIGHT } from "./services/services";
+import gitLogo from "./images/github-icon.png";
 
-const keysUpColor = "#ffffff";
-const keysDownColor = "#6CAEFF";
 const lineWidth = 3;
 const width = GAME_WIDTH;
 const height = GAME_HEIGHT;
+
 // const width = window.innerWidth;
 // const height = window.innerHeight;
 
@@ -139,26 +139,19 @@ export default function App() {
     );
     gameRef.current = game;
 
-    gameRef.current.isAnimationOn = false;
-    //requestAnimationFrame(runLoop);
+    gameRef.current.isAnimationOn = true;
+    requestAnimationFrame(runLoop);
   }, []);
 
   const [isUiOn, setIsUiOn] = useState(true);
 
-  function handleGameOver() {
-    setIsUiOn(true);
-  }
-
   function startGame() {
-   setIsUiOn(false);  
-   gameRef.current.initialize();
-   gameRef.current.isAnimationOn = true;
-   gameRef.current.isGameOn = true;
-  }
+    setIsUiOn(false);
 
-  function startAnimation() {
-    requestAnimationFrame(runLoop);
-    gameRef.current.isAnimationOn = !gameRef.current.isAnimationOn;
+
+    gameRef.current.initialize();
+    gameRef.current.isAnimationOn = true;
+    gameRef.current.isGameOn = true;
   }
 
   function runLoop() {
@@ -167,13 +160,10 @@ export default function App() {
 
       requestAnimationFrame(runLoop);
     }
-    else{
-      //gameOver();
-    }
   }
 
-  function gameOver() {
-    setIsUiOn(!isUiOn);
+  function handleGameOver() {
+    setIsUiOn(true);
   }
 
   return (
@@ -185,31 +175,33 @@ export default function App() {
         canvas4Ref={canvas4Ref}
         canvas5Ref={canvas5Ref}
       />
+
       <div
-        className="ui-start-container"
+        className="container container-main"
         style={!isUiOn ? { opacity: "0", zIndex: -1 } : {}}
       >
-        <h1 className="label-start">COSMIC BRAWL (WIP)</h1>
-        <button
-          onClick={startGame}
-          disabled={!isUiOn}
-          className="btn-start"
-          style={!isUiOn ? { cursor: "default" } : {}}
-        >
-          START
-        </button>
-        <GithubLinkWithIcon />
-
-        <button
-          onClick={startAnimation}
-          disabled={!isUiOn}
-          className="btn-start-test"
-          style={!isUiOn ? { cursor: "default" } : {}}
-        >
-          MENU
-        </button>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={<MainMenu startGame={startGame} isUiOn={isUiOn} gitLogo={gitLogo}/>}
+            />
+            <Route
+              exact
+              path="/tutorial"
+              element={<Tutorial/>}
+            />
+          </Routes>
+        </BrowserRouter>
       </div>
-      
+      <div
+        className="container-git-label"
+        style={isUiOn ? { opacity: "0" } : {}}
+      >
+        <img src={gitLogo} className="git-logo-label"></img>
+        <h4>Github: Aleksns</h4>
+      </div>
     </>
   );
 }

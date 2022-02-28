@@ -32,7 +32,7 @@ export default class Skills {
   constructor(game) {
     this.game = game;
     this.atkSpeed = {
-      value: 3,
+      value: 2,
       now: 0,
       then: 0,
       cd: 0,
@@ -42,7 +42,7 @@ export default class Skills {
       y: itemBuffProps.statusEffectY,
       w: itemBuffProps.w,
       h: itemBuffProps.h,
-      textX: itemBuffProps.statusEffectX + 5,
+      textX: itemBuffProps.statusEffectX + 18,
       textY: itemBuffProps.statusEffectY - 5,
       font: "22px tahoma",
       imageSrc: atkSpeedImage,
@@ -208,7 +208,7 @@ export default class Skills {
     }
 
     let updatedText = this.atkSpeed.duration - timePassed;
-    updatedText = Math.round((updatedText + Number.EPSILON) * 100) / 100;
+    updatedText = Math.round((updatedText + Number.EPSILON));
     this.atkSpeed.text = updatedText;
     this.game.draw.drawStatusEffect(this.atkSpeed);
   }
@@ -268,6 +268,9 @@ export default class Skills {
   }
 
   turnOnAtkSpeedSkill() {
+    let text = `+ ${this.atkSpeed.value}00% ATK Speed`;
+    this.game.init.addFloatingTextEffect("atkSpeed", text);
+
     if (this.atkSpeed.isApplied) {
       this.atkSpeed.then = this.game.now;
       return;
@@ -279,9 +282,6 @@ export default class Skills {
       this.game.playerGuns,
       this.atkSpeed.value
     );
-
-    let text = `+ ${this.atkSpeed.value}00% ATK Speed`;
-    this.game.init.addFloatingTextEffect("atkSpeed", text);
   }
 
   turnOffAtkSpeedSkill() {

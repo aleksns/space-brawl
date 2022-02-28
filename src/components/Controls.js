@@ -1,102 +1,9 @@
-import "../App.css";
 
 export default class Controls {
   constructor(game) {
-    this.keys = {
-      keyW: false,
-      keyA: false,
-      keyS: false,
-      keyD: false,
-      key1: false,
-      key2: false,
-      key3: false,
-      space: false,
-    };
-
     this.game = game;
     this.player = game.player;
-    this.canvas5 = game.canvas5;
-
-    window.addEventListener(
-      "keydown",
-      (event) => {
-        switch (event.code) {
-          case "KeyW":
-            this.keys.keyW = true;
-            break;
-          case "KeyA":
-            this.keys.keyA = true;
-            break;
-          case "KeyS":
-            this.keys.keyS = true;
-            break;
-          case "KeyD":
-            this.keys.keyD = true;
-            break;
-
-          case "Digit1":
-            this.keys.key1 = true;
-            break;
-          case "Digit2":
-            this.keys.key2 = true;
-            break;
-          case "Digit3":
-            this.keys.key3 = true;
-            break;
-
-          case "Space":
-            this.keys.space = true;
-            break;
-
-          default:
-            console.log("Error handling 'handleKeyDown' function");
-            break;
-        }
-      },
-      false
-    );
-    window.addEventListener(
-      "keyup",
-      (event) => {
-        switch (event.code) {
-          case "KeyW":
-            this.keys.keyW = false;
-            break;
-          case "KeyA":
-            this.keys.keyA = false;
-            break;
-          case "KeyS":
-            this.keys.keyS = false;
-            break;
-          case "KeyD":
-            this.keys.keyD = false;
-            break;
-
-          case "Digit1":
-            this.keys.key1 = false;
-            break;
-          case "Digit2":
-            this.keys.key2 = false;
-            break;
-          case "Digit3":
-            this.keys.key3 = false;
-            break;
-
-          case "Space":
-            this.keys.space = false;
-            break;
-          default:
-            console.log("Error handling 'handleKeyUp' function");
-            break;
-        }
-      },
-      false
-    );
-
-    this.mousePosition = {
-      x: 0,
-      y: 0,
-    };
+    this.eventListener = this.game.eventListener;
 
     this.pauseThen = 0;
     this.canPause = true;
@@ -117,47 +24,14 @@ export default class Controls {
       value: 15,
     };
 
-    this.canvas5.current.addEventListener(
-      "click",
-      (event) => {
-        this.mousePosition = this.getMousePosition(event);
-       //console.log(`mousePos = ${JSON.stringify(this.mousePosition)}`);
-        this.test();
-       
-        // this.btns.forEach((btn) => {
-        //   switch (btn.id) {
-        //     case "slowTime":
-        //       this.game.skills.applySlowTimeStatusEffect();
-        //       break;
-        //     case "shield":
-        //       //tbd
-        //       break;
-        //     case "laser":
-        //       //tbd
-        //       break;
-        //     default:
-        //       console.log("Error handling `btns.forEach` in Controls class");
-        //       break;
-        //   }
-        // });
-
-        // if (this.isInside(this.mousePosition, this.game.startBtn)) {
-        //     console.log('clicked inside btn');
-        //     this.game.init.addEffect(this.game.startBtn, "explosionDefault");
-        // }else{
-        //     console.log('clicked outside btn');
-        // }
-      },
-      false
-    );
-
     console.log("CONSTRUCTOR > Controls");
   }
 
 
   test() {
-   this.game.init.addItemOnDrop(this.testCoin, this.testObject);
+   //this.game.init.addItemOnDrop(this.testCoin, this.testObject);
    //this.game.progression.playerLevel++;
+   //this.game.gameBoard.increaseObjectScale(this.game.player);
   }
 
   getMousePosition(event) {
@@ -190,7 +64,7 @@ export default class Controls {
   }
 
   handleInput() {
-    if (this.keys.space == true) {
+    if (this.eventListener.keys.space == true) {
       this.handleKeySpace();
     }
 
@@ -198,28 +72,28 @@ export default class Controls {
       return;
     }
 
-    if (this.keys.keyW == true) {
+    if (this.eventListener.keys.keyW == true) {
       this.handleKeyW();
     }
-    if (this.keys.keyA == true) {
+    if (this.eventListener.keys.keyA == true) {
       this.handleKeyA();
     }
-    if (this.keys.keyS == true) {
+    if (this.eventListener.keys.keyS == true) {
       this.handleKeyS();
     }
-    if (this.keys.keyD == true) {
+    if (this.eventListener.keys.keyD == true) {
       this.handleKeyD();
     }
 
-    if (this.keys.key1 == true) {
+    if (this.eventListener.keys.key1 == true) {
       this.handleKey1();
     }
 
-    if (this.keys.key2 == true) {
+    if (this.eventListener.keys.key2 == true) {
       this.handleKey2();
     }
 
-    if (this.keys.key3 == true) {
+    if (this.eventListener.keys.key3 == true) {
       this.handleKey3();
     }
 
@@ -264,4 +138,5 @@ export default class Controls {
     this.canPause = false;
     this.game.setPause();
   }
+
 }

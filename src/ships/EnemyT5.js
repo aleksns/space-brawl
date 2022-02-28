@@ -31,11 +31,10 @@ export class EnemyT5 extends Ship {
     this.a = this.s / 60; // default was this.s / 40
     /* offStep = applies additional distance for enemies to stop their movement
     before reaching allowed borders and maintaining smooth bounce effect */
-    // this.offStepX = Math.floor(this.w / 4);
-    // this.offStepY = Math.floor(this.h / 2);
     this.offStepX = this.s * 20;
     this.offStepY = this.s * 20;
     this.scorePoints = this.game.stats.enemyT5.scorePoints;
+    this.expPoints = Math.floor(this.scorePoints / 2);
     this.now = 0;
 
     this.damage = this.game.stats.enemyT5.damage;
@@ -55,8 +54,8 @@ export class EnemyT5 extends Ship {
 
     this.itemToDrop = {
       id: "coin",
-      value: 2,
-    }
+      expPoints: this.expPoints,
+    };
     this.id = "t5";
 
     this.chanceForDoubleGun = 0.4;

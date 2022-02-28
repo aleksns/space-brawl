@@ -57,6 +57,7 @@ export default class Gun {
     if (this.isLaserGun) {
       this.laserProjectile = new Laser(this.game, this, this.barrels[0]);
     }
+    this.then = Date.now();
   }
 
   update() {

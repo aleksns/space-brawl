@@ -8,6 +8,7 @@ import {
   getEnemyT5DefaultStats,
   getEnemyT0DefaultStats,
   getEnemyT3DefaultStats,
+  getItemsStats,
 } from "../services/services";
 
 export default class Stats {
@@ -78,6 +79,10 @@ export default class Stats {
       t0Barrage: enemyGunsDamageProps.t0Barrage,
     };
 
+    this.itemsStats = {
+      medkit: getItemsStats.medkit,
+    }
+
     this.enemiesStats = [];
     this.enemiesStats.push(this.enemyT0);
     this.enemiesStats.push(this.enemyT3);
@@ -93,6 +98,10 @@ export default class Stats {
     };
 
     this.isGlobalSlowAll = false;
+  }
+
+  applyModifiersToItems(itemsModifiers){
+    this.itemsStats.medkit = Math.floor(this.itemsStats.medkit * itemsModifiers.medkit)
   }
 
   applyModifiersToPlayer(playerModifiers) {

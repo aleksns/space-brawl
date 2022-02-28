@@ -16,6 +16,7 @@ import Animations from "../animations/Animations";
 import Script from "../scripts/Script";
 import Media from "./Media";
 import { LevelAndScore } from "../ui/LevelAndScore";
+import EventListener from "./EventListener";
 
 export default class Game {
   constructor(
@@ -38,8 +39,13 @@ export default class Game {
     this.clearCanvas1To4 = clearCanvas1To4;
     this.clearCanvas5 = clearCanvas5;
     this.handleGameOver = handleGameOver;
+
+    this.elem = document.getElementById("uiScreen");
+    this.eventListener = new EventListener(this);
     
     this.initialize();
+    
+
     console.log("CONSTRUCTOR > GAME");
   }
 
@@ -87,8 +93,7 @@ export default class Game {
     this.backgroundEnemy = undefined;
     this.isBackGroundEnemyAdded = false;
 
-    this.elem = document.getElementById("uiScreen");
-
+    
     /*  <Sound>  */
     this.laser = new SoundChannel(this.soundList.laser, 1, 0.04);
     this.background = new SoundChannel(this.soundList.bgMusic, 1, 0.08);
@@ -138,7 +143,11 @@ export default class Game {
 
   gameLoop() {
     this.clearCanvas1To4();
-    this.handleBackground();
+    
+    if(!this.isPauseOn) {
+      this.handleBackground();
+    }
+  
     //this.handleBackgroundEnemy();
     //this.updateBackgroundEnemy();
     if (!this.isGameOn) {
