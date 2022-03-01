@@ -15,10 +15,6 @@ const height = GAME_HEIGHT;
 // const width = window.innerWidth;
 // const height = window.innerHeight;
 
-//removed variables for canvas
-//context.lineJoin = "round";
-//context.lineCap = "round";
-
 export default function App() {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);

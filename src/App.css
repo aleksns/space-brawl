@@ -21,6 +21,10 @@ h1 {
   animation: colorShift 13s ease infinite forwards;
 }
 
+h4 {
+  color: #ffffff;
+}
+
 body {
   background-color: var(--background-main);
   width: 100%;
