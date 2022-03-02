@@ -15,7 +15,7 @@ export default class GameBoard {
     this.enemyAllowedX = { x0: 5, x1: GAME_WIDTH - 5 };
     this.enemyAllowedY = { y0: 50, y1: GAME_HEIGHT / 2 };
 
-    this.friction = 0.95;
+    this.friction = 0.93;
     this.collision = new Collision(this.game, this);
   }
 

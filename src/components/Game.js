@@ -95,7 +95,6 @@ export default class Game {
 
     this.backgroundEnemy = undefined;
     this.isBackGroundEnemyAdded = false;
-
   }
 
   stopAllAction() {
