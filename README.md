@@ -1,6 +1,6 @@
 # SPACE - BRAWL
 
-## `Note:` The game was tested with _Google Chrome_ browser and _1920x1080_ screen resolution. It may work differently with other browsers
+## `Note:` The game was tested with _Google Chrome_ browser and _1920x1080_ screen resolution. It may work different with other browsers
 
 # [PLAY DEMO](https://aleksns.github.io/space-brawl/)
 
@@ -16,7 +16,8 @@ https://user-images.githubusercontent.com/75623459/156432439-4d3eec42-23b0-4449-
 
 <br />
 
-# `Description`
+# `Main Features`
+# Progression
 ### // TBD
 
 # `Credits`
