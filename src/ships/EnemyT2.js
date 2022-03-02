@@ -3,15 +3,16 @@ import {
   directions,
   getRandomDirection,
   getRandomIntInclusive,
-  getEnemyT4Dimension,
+  getEnemyT2Dimension,
   getDefaultEnemyProjectile,
+  getBigEnemyProjectile,
 } from "../services/services";
 
-import { getT4Target } from "../services/gunsProps";
 import { DoubleGun } from "../guns/DoubleGun";
 import { SingleGun } from "../guns/SingleGun";
+import { getT2Barrage, getT2Target } from "../services/gunsProps";
 
-export class EnemyT4 extends Ship {
+export class EnemyT2 extends Ship {
   constructor(game) {
     super(game);
     this.game = game;
@@ -19,30 +20,30 @@ export class EnemyT4 extends Ship {
     this.y = 0;
     this.dX = 0;
     this.dY = 0;
-    this.w = getEnemyT4Dimension().w;
-    this.h = getEnemyT4Dimension().h;
+    this.w = getEnemyT2Dimension().w;
+    this.h = getEnemyT2Dimension().h;
 
-    this.health = this.game.stats.enemyT4.health;
-    this.maxHealth = this.game.stats.enemyT4.maxHealth;
+    this.health = this.game.stats.enemyT2.health;
+    this.maxHealth = this.game.stats.enemyT2.maxHealth;
 
     this.isPlayer = false;
     /* physics related variables: v - velocity, f - friction, s - speed, a - acceleration */
-    this.s = this.game.stats.enemyT4.s;
-    this.a = this.s / 20;
+    this.s = this.game.stats.enemyT2.s; // default was 2
+    this.a = this.s / 40; // default was this.s / 40
     this.direction = getRandomDirection();
     /* offStep = applies additional distance for enemies to stop their movement
     before reaching allowed borders and maintaining smooth bounce effect */
     this.offStepX = this.s * 20;
     this.offStepY = this.s * 20;
-    this.scorePoints = this.game.stats.enemyT4.scorePoints;
+    this.scorePoints = this.game.stats.enemyT2.scorePoints;
     this.expPoints = Math.floor(this.scorePoints / 2);
     this.now = 0;
 
-    this.rammingDmg = this.game.stats.enemyT4.rammingDmg;
-    this.gun = undefined;
+    this.rammingDmg = this.game.stats.enemyT2.rammingDmg;
+    this.guns = [];
     this.target = this.game.playerTeam[0];
 
-    this.image = this.game.media.enemyShipT4;
+    this.image = this.game.animations.enemyT2ShipAnimation.image;
 
     this.directionChangeIntervalThen = 0;
     this.directionChangeInterval = 4;
@@ -59,37 +60,41 @@ export class EnemyT4 extends Ship {
       x: 0,
       y: 0,
     };
-    console.log("CONSTRUCTOR > EnemyT4");
+    console.log("CONSTRUCTOR > Enemy3");
   }
 
   initializeShip() {
     this.game.gameBoard.setEnemyOutBordersPosition(this);
     this.setNewDirection();
 
-    let newSingleGun = new SingleGun(this.game, this);
-    newSingleGun.initialize(getT4Target, getDefaultEnemyProjectile);
-    newSingleGun.setGunDamage(this.game.stats.enemyGunsDamage.t4Target);
-    newSingleGun.setProjectileImage(this.game.media.projectileArcRedImg);
-    newSingleGun.setOnTarget();
+    let newDoubleTarget = new DoubleGun(this.game, this);
+    newDoubleTarget.initialize(getT2Target, getDefaultEnemyProjectile);
+    newDoubleTarget.setGunDamage(this.game.stats.enemyGunsDamage.t2Target);
+    newDoubleTarget.setProjectileImage(this.game.media.projectileArcPurpleImg);
+    newDoubleTarget.setOnTarget();
 
-    let newDoubleGun = new DoubleGun(this.game, this);
-    newDoubleGun.initialize(getT4Target, getDefaultEnemyProjectile);
-    newSingleGun.setGunDamage(this.game.stats.enemyGunsDamage.t4Target);
-    newDoubleGun.setProjectileImage(this.game.media.projectileArcRedImg);
-    newDoubleGun.setOnTarget();
+    let new180BarrageGun = new SingleGun(this.game, this);
+    new180BarrageGun.initialize(getT2Barrage, getBigEnemyProjectile);
+    new180BarrageGun.setGunDamage(this.game.stats.enemyGunsDamage.t2Barrage);
+    new180BarrageGun.setProjectileImage(this.game.media.projectileArcGreenImg);
 
-    //this.game.enemyGuns.push(newDoubleGun);
-    this.game.enemyGuns.push(newSingleGun);
-    this.gun = newSingleGun;
+    this.game.enemyGuns.push(newDoubleTarget);
+    this.game.enemyGuns.push(new180BarrageGun);
 
-    this.directionChangeIntervalThen = this.game.now;
+    this.guns.push(newDoubleTarget);
+    this.guns.push(new180BarrageGun);
+
+    this.directionChangeIntervalThen = Date.now();
   }
 
   fireGun() {
-    this.gun.fire();
+    for (let i = 0; i < this.guns.length; i++) {
+      this.guns[i].fire();
+    }
   }
 
   updateShip() {
+    this.updateImage();
     if (this.isMovingToPosition) {
       return;
     }
@@ -100,6 +105,10 @@ export class EnemyT4 extends Ship {
     }
     this.setRandomDirection();
     this.directionChangeIntervalThen = this.game.now;
+  }
+
+  updateImage() {
+    this.image = this.game.animations.enemyT2ShipAnimation.image;
   }
 
   moveToThePosition() {

@@ -72,15 +72,17 @@ export class EnemyT5 extends Ship {
     this.setNewDirection();   
     this.setTargetFront();
 
-    let newGun;
-    if(getTrueBasedOnChance(this.chanceForDoubleGun)) {
-      newGun = new DoubleGun(this.game, this);
-      this.image = this.game.media.enemyShipT5V1;
-    }
-    else {
-      newGun = new SingleGun(this.game, this);
-      this.image = this.game.media.enemyShipT5V2;
-    }
+    let newGun = new SingleGun(this.game, this);
+    this.image = this.game.media.enemyShipT5V1;
+    // let newGun;
+    // if(getTrueBasedOnChance(this.chanceForDoubleGun)) {
+    //   newGun = new DoubleGun(this.game, this);
+    //   this.image = this.game.media.enemyShipT5V1;
+    // }
+    // else {
+    //   newGun = new SingleGun(this.game, this);
+    //   this.image = this.game.media.enemyShipT5V2;
+    // }
     
     newGun.initialize(getT5Front, getDefaultEnemyProjectile);
     newGun.setGunDamage(this.game.stats.enemyGunsDamage.t5Front);

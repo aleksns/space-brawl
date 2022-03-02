@@ -2,11 +2,9 @@ import playerShipT1Image from "../images/playerShipT1.png";
 import playerShipT2Image from "../images/playerShipT2.png";
 import playerShipT3Image from "../images/playerShipT3.png";
 
-import enemyImageT2 from "../images/enemyT3f0.png";
+import enemyImageT3 from "../images/enemyT3.png";
 import enemyImageT4 from "../images/enemyShipT4.png";
 import enemyImageT5V1 from "../images/enemyShipT5V1.png";
-import enemyImageT5V2 from "../images/enemyShipT5V2.png";
-
 
 import projectileYellowCone from "../images/projectileYellowCone.png";
 import projectileArcRed from "../images/projectileArcRed.png";
@@ -31,17 +29,14 @@ export default class Media {
     this.playerShipT3 = new Image();
     this.playerShipT3.src = playerShipT3Image;
 
-    this.enemyShipT2 = new Image();
-    this.enemyShipT2.src = enemyImageT2;
+    this.enemyShipT3 = new Image();
+    this.enemyShipT3.src = enemyImageT3;
 
     this.enemyShipT4 = new Image();
     this.enemyShipT4.src = enemyImageT4;
 
     this.enemyShipT5V1 =  new Image();
     this.enemyShipT5V1.src = enemyImageT5V1;
-    
-    this.enemyShipT5V2 =  new Image();
-    this.enemyShipT5V2.src = enemyImageT5V2;
 
     /* Projectiles */
     this.projectileYellowConeImg = new Image();

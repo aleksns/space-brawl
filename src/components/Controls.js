@@ -1,3 +1,4 @@
+import { font, GAME_HEIGHT, GAME_WIDTH } from "../services/services";
 
 export default class Controls {
   constructor(game) {
@@ -12,43 +13,16 @@ export default class Controls {
     this.canTest = true;
     this.i = 0;
 
-    this.testObject = {
-      x: 650,
-      y: 550,
-      w: 50,
-      h: 50
-    }
-
-    this.testCoin = {
-      id: "coin",
-      value: 15,
+    this.pauseProps = {
+      text: "PAUSE",
+      textX: GAME_HEIGHT / 2,
+      textY: GAME_HEIGHT / 2,
+      textOpacity: 1.0,
+      textColor: "#ffffff",
+      font: `100px ${font}`,
     };
 
     console.log("CONSTRUCTOR > Controls");
-  }
-
-
-  test() {
-   //this.game.init.addItemOnDrop(this.testCoin, this.testObject);
-   //this.game.progression.playerLevel++;
-   //this.game.gameBoard.increaseObjectScale(this.game.player);
-  }
-
-  getMousePosition(event) {
-    var rect = this.canvas5.current.getBoundingClientRect();
-    return {
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top,
-    };
-  }
-
-  isInside(position, rect) {
-    return (
-      position.x > rect.x &&
-      position.x < rect.x + rect.w &&
-      position.y < rect.y + rect.h &&
-      position.y > rect.y
-    );
   }
 
   handlePauseTimeBeforeActivation() {
@@ -134,6 +108,9 @@ export default class Controls {
     if (!this.canPause || this.game.isGlobalActionRestricted) {
       return;
     }
+    this.pauseProps.textX = (GAME_WIDTH / 2) - this.game.ctx.current.measureText(this.pauseProps.text).width;
+
+    this.game.draw.drawPauseText(this.pauseProps);
     this.pauseThen = this.game.now;
     this.canPause = false;
     this.game.setPause();

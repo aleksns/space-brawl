@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Canvas from "./components/Canvas";
 import Game from "./components/Game";
-import Tutorial from "./componentsUI/Tutorial";
 import MainMenu from "./componentsUI/MainMenu";
 import { GAME_WIDTH, GAME_HEIGHT } from "./services/services";
 import gitLogo from "./images/github-icon.png";
+import Tutorial1 from "./componentsUI/Tutorial1";
+import Tutorial2 from "./componentsUI/Tutorial2";
 
 const lineWidth = 3;
 const width = GAME_WIDTH;
@@ -144,7 +145,6 @@ export default function App() {
   function startGame() {
     setIsUiOn(false);
 
-
     gameRef.current.initialize();
     gameRef.current.isAnimationOn = true;
     gameRef.current.isGameOn = true;
@@ -181,13 +181,16 @@ export default function App() {
             <Route
               exact
               path="/"
-              element={<MainMenu startGame={startGame} isUiOn={isUiOn} gitLogo={gitLogo}/>}
+              element={
+                <MainMenu
+                  startGame={startGame}
+                  isUiOn={isUiOn}
+                  gitLogo={gitLogo}
+                />
+              }
             />
-            <Route
-              exact
-              path="/tutorial"
-              element={<Tutorial/>}
-            />
+            <Route path="/tutorial1" element={<Tutorial1 />} />
+            <Route path="/tutorial2" element={<Tutorial2 />} />
           </Routes>
         </BrowserRouter>
       </div>

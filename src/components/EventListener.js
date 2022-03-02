@@ -20,6 +20,19 @@ export default class EventListener {
         y: 0,
       };
 
+      
+    this.testObject = {
+      x: 650,
+      y: 550,
+      w: 50,
+      h: 50
+    }
+
+    this.testCoin = {
+      id: "coin",
+      value: 15,
+    };
+
     window.addEventListener(
       "keydown",
       (event) => {
@@ -110,6 +123,12 @@ export default class EventListener {
 
     console.log("CONSTRUCTOR > Controls");
   }
+
+  test() {
+    //this.game.init.addItemOnDrop(this.testCoin, this.testObject);
+    //this.game.progression.playerLevel++;
+    //this.game.gameBoard.increaseObjectScale(this.game.player);
+   }
 
   getMousePosition(event) {
     var rect = this.canvas5.current.getBoundingClientRect();

@@ -1,41 +1,41 @@
 import Animation from "./Animation";
 
-import enemyT3f1 from "../images/animations-images/enemyT3-images/enemyT3f1.png";
-import enemyT3f2 from "../images/animations-images/enemyT3-images/enemyT3f2.png";
-import enemyT3f3 from "../images/animations-images/enemyT3-images/enemyT3f3.png";
-import enemyT3f4 from "../images/animations-images/enemyT3-images/enemyT3f4.png";
-import enemyT3f5 from "../images/animations-images/enemyT3-images/enemyT3f5.png";
-import enemyT3f6 from "../images/animations-images/enemyT3-images/enemyT3f6.png";
-import enemyT3f7 from "../images/animations-images/enemyT3-images/enemyT3f7.png";
-import enemyT3f8 from "../images/animations-images/enemyT3-images/enemyT3f8.png";
+import enemyT2f1 from "../images/animations-images/enemyT2-images/enemyT2f1.png";
+import enemyT2f2 from "../images/animations-images/enemyT2-images/enemyT2f2.png";
+import enemyT2f3 from "../images/animations-images/enemyT2-images/enemyT2f3.png";
+import enemyT2f4 from "../images/animations-images/enemyT2-images/enemyT2f4.png";
+import enemyT2f5 from "../images/animations-images/enemyT2-images/enemyT2f5.png";
+import enemyT2f6 from "../images/animations-images/enemyT2-images/enemyT2f6.png";
+import enemyT2f7 from "../images/animations-images/enemyT2-images/enemyT2f7.png";
+import enemyT2f8 from "../images/animations-images/enemyT2-images/enemyT2f8.png";
 
-export class EnemyT3ShipAnimation extends Animation {
+export class EnemyT2ShipAnimation extends Animation {
   constructor(game) {
     super(game);
 
     this.img1 = new Image();
-    this.img1.src = enemyT3f1;
+    this.img1.src = enemyT2f1;
 
     this.img2 = new Image();
-    this.img2.src = enemyT3f2;
+    this.img2.src = enemyT2f2;
 
     this.img3 = new Image();
-    this.img3.src = enemyT3f3;
+    this.img3.src = enemyT2f3;
 
     this.img4 = new Image();
-    this.img4.src = enemyT3f4;
+    this.img4.src = enemyT2f4;
 
     this.img5 = new Image();
-    this.img5.src = enemyT3f5;
+    this.img5.src = enemyT2f5;
 
     this.img6 = new Image();
-    this.img6.src = enemyT3f6;
+    this.img6.src = enemyT2f6;
 
     this.img7 = new Image();
-    this.img7.src = enemyT3f7;
+    this.img7.src = enemyT2f7;
 
     this.img8 = new Image();
-    this.img8.src = enemyT3f8;
+    this.img8.src = enemyT2f8;
 
     this.image = this.img1;
 

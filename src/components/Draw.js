@@ -79,6 +79,14 @@ export default class Draw {
     this.ctx4.current.globalAlpha = 1.0;
   }
 
+  drawPauseText(item) {
+    this.ctx5.current.globalAlpha = item.textOpacity;
+    this.ctx5.current.fillStyle = item.textColor;
+    this.ctx5.current.font = item.font;
+    this.ctx5.current.fillText(item.text, item.textX, item.textY);
+    this.ctx5.current.globalAlpha = 1.0;
+  }
+
   drawItems() {
     for (let i = 0; i < this.game.items.length; i++) {
       this.drawObject(this.game.items[i], this.ctx);

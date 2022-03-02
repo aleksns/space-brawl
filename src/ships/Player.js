@@ -7,6 +7,7 @@ import {
   GAME_HEIGHT,
   getDefaultPlayerProjectile,
   getPlayerLaser,
+  getBigPlayerProjectile,
 } from "../services/services";
 import {
   getPlayerBarrage40Angle,
@@ -228,7 +229,7 @@ export class Player extends Ship {
     this.barrageT1 = new SingleGun(this.game, this);
     this.barrageT1.initialize(
       getPlayerBarrage120Angle,
-      getDefaultPlayerProjectile
+      getBigPlayerProjectile
     );
     this.barrageT1.setGunDamage(this.stats.playerGunsDamage.barrage);
     this.barrageT1.setProjectileImage(this.game.media.projectileArcYellowImg);
@@ -236,7 +237,7 @@ export class Player extends Ship {
     this.barrageT2 = new SingleGun(this.game, this);
     this.barrageT2.initialize(
       getPlayerBarrage80Angle,
-      getDefaultPlayerProjectile
+      getBigPlayerProjectile
     );
     this.barrageT2.setGunDamage(this.stats.playerGunsDamage.barrage);
     this.barrageT2.setProjectileImage(this.game.media.projectileArcYellowImg);
@@ -244,7 +245,7 @@ export class Player extends Ship {
     this.barrageT3 = new SingleGun(this.game, this);
     this.barrageT3.initialize(
       getPlayerBarrage40Angle,
-      getDefaultPlayerProjectile
+      getBigPlayerProjectile
     );
     this.barrageT3.setGunDamage(this.stats.playerGunsDamage.barrage);
     this.barrageT3.setProjectileImage(this.game.media.projectileArcYellowImg);

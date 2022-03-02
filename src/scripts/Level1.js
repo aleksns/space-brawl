@@ -17,11 +17,11 @@ export default class Level1 {
 
     this.wave = [];
     this.waveMap = [];
-    this.listOfEnemyTier = ["t4", "t5"];
+    this.listOfEnemyTier = ["t3", "t4", "t5"];
     //this.listOfEnemyTier = ["t3"];
 
-    this.minNumOfEnemies = 1;
-    this.maxNumOfEnemies = 10;
+    this.minNumOfEnemies = 4;
+    this.maxNumOfEnemies = 8;
     this.maxNumOfEnemiesFormation = 10;
 
     this.chanceToSpawnFormation = 0.4;
@@ -59,7 +59,7 @@ export default class Level1 {
     this.wave = [];
 
     if (this.i % 4 == 0 && this.i != 0) {
-      this.generateT3Wave();
+      this.generateT2Wave();
     } else {
       if (getTrueBasedOnChance(this.chanceToSpawnFormation)) {
         this.generateFormationWave();
@@ -93,11 +93,11 @@ export default class Level1 {
     }
   }
 
-  generateT3Wave() {
+  generateT2Wave() {
     let numOfEnemies = getRandomIntInclusive(1, 2);
 
     for (let i = 0; i < numOfEnemies; i++) {
-      this.waveMap.push("t3");
+      this.waveMap.push("t2");
     }
   }
 

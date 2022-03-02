@@ -1,6 +1,5 @@
 import { Laser } from "../projectiles/Laser";
 import {
-  centerSingleGunWithProjectile,
   GAME_WIDTH,
 } from "../services/services";
 
@@ -17,6 +16,8 @@ export default class Gun {
 
     this.projectileSpeed = 0;
     this.projectileAcceleration = 0;
+    this.projectileW = 0;
+    this.projectileH = 0;
 
     this.atkSpeed = 0;
     this.rateOfFire = 0;
@@ -224,6 +225,8 @@ export default class Gun {
   }
 
   setProjectileProps(projectileProps) {
+    this.projectileW = projectileProps.w;
+    this.projectileH = projectileProps.h;
     this.dW = projectileProps.w;
   }
 

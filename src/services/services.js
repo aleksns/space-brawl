@@ -38,10 +38,18 @@ export function getEnemyT0Dimension() {
   return dimension;
 }
 
-export function getEnemyT3Dimension() {
+export function getEnemyT2Dimension() {
   let dimension = {
     w: GAME_WIDTH / 4.5,
     h: GAME_HEIGHT / 4.5,
+  };
+  return dimension;
+}
+
+export function getEnemyT3Dimension() {
+  let dimension = {
+    w: GAME_WIDTH / 7,
+    h: GAME_HEIGHT / 7,
   };
   return dimension;
 }
@@ -137,15 +145,15 @@ export const getPlayerDefaultStats = {
 
 export const getEnemyT0DefaultStats = {
   damage: 4,
-  health: 1000,
-  maxHealth: 1000,
+  health: 6000,
+  maxHealth: 6000,
   speed: 2,
   accelerationMod: 60,
   rammingDmg: 1,
   scorePoints: 1000,
 };
 
-export const getEnemyT3DefaultStats = {
+export const getEnemyT2DefaultStats = {
   damage: 4,
   health: 1000,
   maxHealth: 1000,
@@ -153,6 +161,16 @@ export const getEnemyT3DefaultStats = {
   accelerationMod: 20,
   rammingDmg: 0.1,
   scorePoints: 250,
+};
+
+export const getEnemyT3DefaultStats = {
+  damage: 3,
+  health: 200,
+  maxHealth: 200,
+  speed: 1,
+  accelerationMod: 10,
+  rammingDmg: 0.1,
+  scorePoints: 50,
 };
 
 export const getEnemyT4DefaultStats = {
@@ -174,7 +192,7 @@ export const getEnemyT5DefaultStats = {
   rammingDmg: 0.1,
   scorePoints: 15,
 };
-
+ 
 
 export const getDefaultPlayerProjectile = {
   w: 20,
@@ -183,9 +201,30 @@ export const getDefaultPlayerProjectile = {
   isFill: true,
 };
 
+export const getBigPlayerProjectile = {
+  w: 30,
+  h: 30,
+  color: "#47FFFB",
+  isFill: true,
+};
+
 export const getDefaultEnemyProjectile = {
   w: 20,
   h: 20,
+  color: colors.red,
+  isFill: true,
+};
+
+export const getBigEnemyProjectile = {
+  w: 35,
+  h: 35,
+  color: colors.red,
+  isFill: true,
+};
+
+export const getVeryBigEnemyProjectile = {
+  w: 45,
+  h: 45,
   color: colors.red,
   isFill: true,
 };

@@ -54,9 +54,9 @@
 /* < Player > */
 
 export const playerGunsDamageProps = {
-  laserT1: 114,
-  laserT2: 117,
-  laserT3: 113,
+  laserT1: 15,
+  laserT2: 9,
+  laserT3: 4,
   default: 10,
   barrage: 10,
   rotating: 7,
@@ -267,10 +267,11 @@ export const getPlayerT3LaserGun = {
 
 /* < Enemies > */
 export const enemyGunsDamageProps = {
-  t4Target: 2,
   t5Front: 2,
-  t3Barrage: 2,
-  t3Target: 3,
+  t4Target: 2,
+  t3Burst: 2,
+  t2Barrage: 2,
+  t2Target: 3,
   t0Target: 3,
   t0Burst: 2,
   t0Rotating: 2,
@@ -314,7 +315,25 @@ export const getT4Target = {
   isLaserGun: false,
 };
 
-export const getT3Target = {
+export const getT3TargetBurst = {
+  projectileSpeed: 5,
+  projectileAcceleration: 3,
+
+  atkSpeed: 3.5,
+  rateOfFire: 0.1,
+
+  isRotating: false,
+  isBarrage: false,
+  angle: 0,
+  angleModifier: 0,
+  angleMin: 0,
+  angleMax: 0,
+
+  numOfRoundsBurst: 10,
+  isLaserGun: false,
+};
+
+export const getT2Target = {
   projectileSpeed: 6,
   projectileAcceleration: 3,
 
@@ -332,7 +351,7 @@ export const getT3Target = {
   isLaserGun: false,
 };
 
-export const getT3Barrage = {
+export const getT2Barrage = {
   projectileSpeed: 5,
   projectileAcceleration: 3,
 
@@ -342,7 +361,7 @@ export const getT3Barrage = {
   isRotating: false,
   isBarrage: true,
   angle: 360,
-  angleModifier: -15,
+  angleModifier: -20,
   angleMin: 0,
   angleMax: 360,
 
@@ -353,10 +372,10 @@ export const getT3Barrage = {
 
 /* < Boss > */
 export const getT0Target = {
-  projectileSpeed: 8,
-  projectileAcceleration: 4,
+  projectileSpeed: 5,
+  projectileAcceleration: 2,
 
-  atkSpeed: 1.5,
+  atkSpeed: 2.5,
   rateOfFire: 0.5,
 
   isRotating: false,
@@ -366,7 +385,7 @@ export const getT0Target = {
   angleMin: 0,
   angleMax: 0,
 
-  numOfRoundsBurst: 5,
+  numOfRoundsBurst: 2,
   isLaserGun: false,
 };
 
@@ -374,7 +393,7 @@ export const getT0Burst = {
   projectileSpeed: 9,
   projectileAcceleration: 4,
 
-  atkSpeed: 2.5,
+  atkSpeed: 5.5,
   rateOfFire: 0.1,
 
   isRotating: false,
@@ -385,24 +404,6 @@ export const getT0Burst = {
   angleMax: 0,
 
   numOfRoundsBurst: 10,
-  isLaserGun: false,
-};
-
-export const getT0BurstCentered = {
-  projectileSpeed: 4,
-  projectileAcceleration: 2,
-
-  atkSpeed: 8.0,
-  rateOfFire: 0.1,
-
-  isRotating: false,
-  isBarrage: false,
-  angle: 90,
-  angleModifier: 0,
-  angleMin: 0,
-  angleMax: 0,
-
-  numOfRoundsBurst: 20,
   isLaserGun: false,
 };
 
@@ -424,23 +425,23 @@ export const getT0Rotating = {
   isLaserGun: false,
 };
 
-export const getT0BarrageSouth180Angle = {
-  projectileSpeed: 6, ///25
-  projectileAcceleration: 4, //12
+export const getT0Barrage360 = {
+  projectileSpeed: 3,
+  projectileAcceleration: 2,
 
-  atkSpeed: 2.1,
-  rateOfFire: 0.1,
+  atkSpeed: 4.1,
+  rateOfFire: 0.8,
 
   isRotating: false,
   isBarrage: true,
 
   //‾/|\‾
-  angle: 270,
-  angleModifier: 10,
-  angleMin: 90,
-  angleMax: 270,
+  angle: 360,
+  angleModifier: -20,
+  angleMin: 0,
+  angleMax: 360,
 
-  numOfRoundsBurst: 1,
+  numOfRoundsBurst: 2,
   isLaserGun: false,
 };
 

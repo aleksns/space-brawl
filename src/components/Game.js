@@ -112,9 +112,11 @@ export default class Game {
   setPause() {
     this.isPauseOn = !this.isPauseOn;
     if (this.isPauseOn == true) {
-      this.then = this.now;
+      this.then = this.now;  
     } else {
       this.updateTimeDifference();
+      this.clearCanvas5();
+      this.draw.drawUIOnInit();
     }
   }
 

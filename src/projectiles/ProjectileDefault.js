@@ -1,4 +1,3 @@
-import { colors, getDefaultPlayerProjectile, getDefaultEnemyProjectile } from "../services/services";
 import Projectile from "./Projectile";
 
 export class ProjectileDefault extends Projectile {
@@ -20,45 +19,19 @@ export class ProjectileDefault extends Projectile {
   }
 
   setProjectileStats(isPlayerOwned) {
+    this.w = this.gun.projectileW;
+    this.h = this.gun.projectileH;
+    this.image = this.gun.projectileImage;
+
+    this.damage = this.gun.damage;
+    this.s = this.gun.projectileSpeed;
+    this.a = this.gun.projectileAcceleration;
+
     if(isPlayerOwned) {
-      this.setPlayerProjectileShape();
-      this.setPlayerProjectileStats();
+      this.explosionColor = "orange";
     }
     else {
-      this.setEnemyProjectileShape();
-      this.setEnemyProjectileStats();
+      this.explosionColor = "red";
     }
-  }
-
-  setPlayerProjectileShape() {
-    this.w = getDefaultPlayerProjectile.w;
-    this.h = getDefaultPlayerProjectile.h;
-    this.color = getDefaultPlayerProjectile.color;
-    this.explosionColor = "orange";
-    this.isFill = getDefaultPlayerProjectile.isFill;
-    //this.image = this.game.media.projectileYellowConeImg;
-    this.image = this.gun.projectileImage;
-  }
-
-  setPlayerProjectileStats() {
-    this.damage = this.gun.damage;
-    this.s = this.gun.projectileSpeed;
-    this.a = this.gun.projectileAcceleration;
-  }
-
-  setEnemyProjectileShape() {
-    this.w = getDefaultEnemyProjectile.w;
-    this.h = getDefaultEnemyProjectile.h;
-    this.color = getDefaultEnemyProjectile.color;
-    this.explosionColor = "red";
-    this.isFill = getDefaultEnemyProjectile.isFill;
-    //this.image = this.game.media.projectileArcRedImg;
-    this.image = this.gun.projectileImage;
-  }
-
-  setEnemyProjectileStats() {
-    this.damage = this.gun.damage;
-    this.s = this.gun.projectileSpeed;
-    this.a = this.gun.projectileAcceleration;
   }
 }

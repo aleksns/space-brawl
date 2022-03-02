@@ -9,6 +9,7 @@ import {
   getEnemyT0DefaultStats,
   getEnemyT3DefaultStats,
   getItemsStats,
+  getEnemyT2DefaultStats,
 } from "../services/services";
 
 export default class Stats {
@@ -30,6 +31,15 @@ export default class Stats {
       a: getEnemyT5DefaultStats.speed / getEnemyT0DefaultStats.accelerationMod,
       rammingDmg: getEnemyT0DefaultStats.rammingDmg,
       scorePoints: getEnemyT0DefaultStats.scorePoints,
+    };
+
+    this.enemyT2 = {
+      health: getEnemyT2DefaultStats.health,
+      maxHealth: getEnemyT2DefaultStats.maxHealth,
+      s: getEnemyT2DefaultStats.speed,
+      a: getEnemyT2DefaultStats.speed / getEnemyT2DefaultStats.accelerationMod,
+      rammingDmg: getEnemyT2DefaultStats.rammingDmg,
+      scorePoints: getEnemyT2DefaultStats.scorePoints,
     };
 
     this.enemyT3 = {
@@ -68,11 +78,12 @@ export default class Stats {
       rotating: playerGunsDamageProps.rotating,
     };
 
-    this.enemyGunsDamage = {
-      t4Target: enemyGunsDamageProps.t4Target,
+    this.enemyGunsDamage = {  
       t5Front: enemyGunsDamageProps.t5Front,
-      t3Target: enemyGunsDamageProps.t3Target,
-      t3Barrage: enemyGunsDamageProps.t3Barrage,
+      t4Target: enemyGunsDamageProps.t4Target,
+      t3Burst: enemyGunsDamageProps.t3Burst,
+      t2Target: enemyGunsDamageProps.t2Target,
+      t2Barrage: enemyGunsDamageProps.t2Barrage,
       t0Target: enemyGunsDamageProps.t0Target,
       t0Burst: enemyGunsDamageProps.t0Burst,
       t0Rotating: enemyGunsDamageProps.t0Rotating,
@@ -85,6 +96,7 @@ export default class Stats {
 
     this.enemiesStats = [];
     this.enemiesStats.push(this.enemyT0);
+    this.enemiesStats.push(this.enemyT2);
     this.enemiesStats.push(this.enemyT3);
     this.enemiesStats.push(this.enemyT4);
     this.enemiesStats.push(this.enemyT5);
@@ -127,10 +139,11 @@ export default class Stats {
   }
 
   applyModifiersToEnemyGunsDamage(damageModifier) {
-    this.enemyGunsDamage.t4Target *= damageModifier;
     this.enemyGunsDamage.t5Front *= damageModifier;
-    this.enemyGunsDamage.t3Target *= damageModifier;
-    this.enemyGunsDamage.t3Barrage *= damageModifier;
+    this.enemyGunsDamage.t4Target *= damageModifier;
+    this.enemyGunsDamage.t3Burst *= damageModifier;
+    this.enemyGunsDamage.t2Target *= damageModifier;
+    this.enemyGunsDamage.t2Barrage *= damageModifier;
     this.enemyGunsDamage.t0Target *= damageModifier;
     this.enemyGunsDamage.t0Burst *= damageModifier;
     this.enemyGunsDamage.t0Rotating *= damageModifier;

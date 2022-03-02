@@ -89,13 +89,13 @@ export default class Progression {
     let newEffect = new LevelUP(this.game);
     this.game.effects.push(newEffect);
 
-    if (this.playerLevel == 5) {
+    if (this.playerLevel == 2) {
       this.game.playerTeam[0].setTier2();
       this.applyPlayerModifiers(this.playerTierModifiers);
       this.applyModifiersToItems(this.itemsModifiersTierUp);
     }
 
-    if (this.playerLevel == 10) {
+    if (this.playerLevel == 5) {
       this.game.playerTeam[0].setTier1();
       this.applyPlayerModifiers(this.playerTierModifiers);
       this.applyModifiersToItems(this.itemsModifiersTierUp);

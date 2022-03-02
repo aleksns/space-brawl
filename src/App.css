@@ -88,12 +88,31 @@ a {
 
 .li-btn-menu {
   font-size: 1.5rem;
-  font-weight: 600;
-  right: 0.5%;
+  left: 1%;
+  position: absolute;
+}
+
+.li-btn-tutorial-prev {
+  font-size: 1.5rem;
+  right: 9%;
+  position: absolute;
+}
+
+.li-btn-tutorial-next {
+  font-size: 1.5rem;
+  right: 1%;
   position: absolute;
 }
 
 .img-tutorial {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.video-tutorial {
   position: absolute;
   left: 0;
   top: 0;
@@ -129,8 +148,8 @@ a {
   position: absolute;
   bottom: 5px;
   right: 20px;
-  justify-content: end;
   opacity: 0.4;
+  justify-content: flex-end;
 }
 
 .git-logo-label {

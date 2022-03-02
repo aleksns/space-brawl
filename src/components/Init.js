@@ -12,6 +12,7 @@ import { Coin } from "../items/Coin";
 import { ExplosionSmall } from "../effects/ExplosionSmall";
 import { EnemyT3 } from "../ships/EnemyT3";
 import { FloatingText } from "../effects/FloatingText";
+import { EnemyT2 } from "../ships/EnemyT2";
 
 export default class Init {
   constructor(game) {
@@ -28,7 +29,7 @@ export default class Init {
       //delay: 3,
       //timesSpawned: 0, //tbd
       id: "medkit",
-    }
+    };
     this.atkSpeed = {
       now: 0,
       then: 0, //tbd
@@ -36,21 +37,20 @@ export default class Init {
       //delay: 3,
       //timesSpawned: 0, //tbd
       id: "atkSpeed",
-    }
+    };
 
     this.itemsToSpawn = [];
     this.itemsToSpawn.push(this.medkit);
     this.itemsToSpawn.push(this.atkSpeed);
-
   }
 
   initialize() {
     this.updateTimers();
-    
-    for(let i = 0; i < this.game.playerTeam.length; i++) {
+
+    for (let i = 0; i < this.game.playerTeam.length; i++) {
       this.game.playerTeam[i].initialize();
     }
-    
+
     this.game.skills.initialize();
   }
 
@@ -61,7 +61,11 @@ export default class Init {
   }
 
   addItemsBasedOnTiming() {
-    if (this.game.isGlobalActionRestricted || this.game.stats.isGlobalSlowAll || this.game.gameOver) {
+    if (
+      this.game.isGlobalActionRestricted ||
+      this.game.stats.isGlobalSlowAll ||
+      this.game.gameOver
+    ) {
       return;
     }
     for (let i = 0; i < this.itemsToSpawn.length; i++) {
@@ -111,7 +115,7 @@ export default class Init {
     }
   }
 
-  addBgElements() { 
+  addBgElements() {
     if (this.game.bgElements.length >= this.maxNumOfElements) {
       return;
     }
@@ -149,14 +153,20 @@ export default class Init {
       case "t3":
         newEnemy = new EnemyT3(this.game);
         break;
+      case "t2":
+        newEnemy = new EnemyT2(this.game);
+        break;
+      default:
+        console.log("Error handling `initEnemy` function in Init class");
+        break;
     }
-   
+
     return newEnemy;
   }
 
   initWaveOfEnemies(waveMap, wave) {
-    for(let i = 0; i < waveMap.length; i++) {
-      var newEnemy =  this.initEnemy(waveMap[i]);
+    for (let i = 0; i < waveMap.length; i++) {
+      var newEnemy = this.initEnemy(waveMap[i]);
       //newEnemy.initialize();
       wave.push(newEnemy);
     }
