@@ -176,7 +176,6 @@ export default function App() {
         className="container container-main"
         style={!isUiOn ? { opacity: "0", zIndex: -1 } : {}}
       >
-        <BrowserRouter>
           <Routes>
             <Route
               exact
@@ -192,7 +191,6 @@ export default function App() {
             <Route path="/tutorial1" element={<Tutorial1 />} />
             <Route path="/tutorial2" element={<Tutorial2 />} />
           </Routes>
-        </BrowserRouter>
       </div>
       <div
         className="container-git-label"
