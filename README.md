@@ -3,6 +3,17 @@
 
 # [PLAY DEMO](https://aleksns.github.io/space-brawl/)
 
+### Video example 1/2
+
+https://user-images.githubusercontent.com/75623459/156432219-50c1fe83-c792-4c67-b097-4df337d73f2d.mp4
+
+<br />
+
+### Video example 2/2
+
+https://user-images.githubusercontent.com/75623459/156432439-4d3eec42-23b0-4449-b336-934e2c21252f.mp4
+
+<br />
 
 ### Credits
 
