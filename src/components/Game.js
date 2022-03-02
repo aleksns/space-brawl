@@ -45,7 +45,10 @@ export default class Game {
     
     this.initialize();
     
-
+    /*  <Sound>  */
+    this.laser = new SoundChannel(this.soundList.laser, 1, 0.04);
+    this.background = new SoundChannel(this.soundList.bgMusic, 1, 0.08);
+    /* <Sound />*/
     console.log("CONSTRUCTOR > GAME");
   }
 
@@ -93,11 +96,6 @@ export default class Game {
     this.backgroundEnemy = undefined;
     this.isBackGroundEnemyAdded = false;
 
-    
-    /*  <Sound>  */
-    this.laser = new SoundChannel(this.soundList.laser, 1, 0.04);
-    this.background = new SoundChannel(this.soundList.bgMusic, 1, 0.08);
-    /* <Sound />*/
   }
 
   stopAllAction() {

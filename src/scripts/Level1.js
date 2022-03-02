@@ -94,11 +94,11 @@ export default class Level1 {
   }
 
   generateT2Wave() {
-    let numOfEnemies = getRandomIntInclusive(1, 2);
+    // let numOfEnemies = getRandomIntInclusive(1, 2);
 
-    for (let i = 0; i < numOfEnemies; i++) {
+    // for (let i = 0; i < numOfEnemies; i++) {
       this.waveMap.push("t2");
-    }
+    //}
   }
 
   initWave(waveMap, wave) {
