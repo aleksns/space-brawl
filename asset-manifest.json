@@ -1,20 +1,15 @@
 {
   "files": {
     "main.css": "/space-brawl/static/css/main.b77168f5.css",
-    "main.js": "/space-brawl/static/js/main.54eb667c.js",
+    "main.js": "/space-brawl/static/js/main.da14e3c9.js",
     "static/js/27.d3262a63.chunk.js": "/space-brawl/static/js/27.d3262a63.chunk.js",
     "static/media/background_soundtrack.mp3": "/space-brawl/static/media/background_soundtrack.56ed0a8ed910acf737ec.mp3",
     "static/media/projectileYellowCone.png": "/space-brawl/static/media/projectileYellowCone.aa444cdf18300a7cf9bb.png",
     "static/media/tutorial2.png": "/space-brawl/static/media/tutorial2.b01bde0b1d35798329b1.png",
     "static/media/tutorial1.png": "/space-brawl/static/media/tutorial1.c395a026013eacd47d0c.png",
-    "static/media/projectileArcPurple.png": "/space-brawl/static/media/projectileArcPurple.67eef74a0a9eeded1d17.png",
     "static/media/shieldOrb.png": "/space-brawl/static/media/shieldOrb.f21201bcbe031712474b.png",
-    "static/media/projectileArcRed.png": "/space-brawl/static/media/projectileArcRed.5a9fba2b03b4cd2772da.png",
-    "static/media/projectileArcGreen.png": "/space-brawl/static/media/projectileArcGreen.60ab24fd91d5894fd6ee.png",
     "static/media/enemyT3.png": "/space-brawl/static/media/enemyT3.0bc6ce9d14da83cc8253.png",
-    "static/media/projectileArcBlue.png": "/space-brawl/static/media/projectileArcBlue.f44ce4a7ea69f07d994e.png",
     "static/media/projectileLaserPlayer.png": "/space-brawl/static/media/projectileLaserPlayer.e553667f5bf05b110de1.png",
-    "static/media/projectileArcYellow.png": "/space-brawl/static/media/projectileArcYellow.db238f32ed07b673f7f6.png",
     "static/media/bossDefeated.png": "/space-brawl/static/media/bossDefeated.2e955c607822dd1e63bf.png",
     "static/media/boss3.png": "/space-brawl/static/media/boss3.13d76f72aaebc39193ad.png",
     "static/media/boss4.png": "/space-brawl/static/media/boss4.b4736886325a36a244fd.png",
@@ -47,6 +42,6 @@
   },
   "entrypoints": [
     "static/css/main.b77168f5.css",
-    "static/js/main.54eb667c.js"
+    "static/js/main.da14e3c9.js"
   ]
 }
