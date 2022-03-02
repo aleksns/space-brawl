@@ -1,4 +1,4 @@
-# INFO
+# SPACE - BRAWL
 
 ## `Note:` The game was tested with _Google Chrome_ browser and _1920x1080_ screen resolution. It may work differently with other browsers
 
