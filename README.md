@@ -1,6 +1,9 @@
 # Readme
 ###TBD
 
+# [PLAY DEMO](https://aleksns.github.io/space-brawl/)
+
+
 ### Credits
 
 #### - Music -
