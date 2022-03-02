@@ -97,6 +97,7 @@ export default class Level1 {
     // let numOfEnemies = getRandomIntInclusive(1, 2);
 
     // for (let i = 0; i < numOfEnemies; i++) {
+      
       this.waveMap.push("t2");
     //}
   }
