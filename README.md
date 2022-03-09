@@ -6,19 +6,19 @@
 
 ### `Video example 1/3`
 
-https://user-images.githubusercontent.com/75623459/157508123-521b08a5-35c8-4a31-b33f-c592e3d0b734.mp4
+https://user-images.githubusercontent.com/75623459/157510396-02b499da-e568-4ba4-ac69-e6e55d1a9fbb.mp4
 
 <br />
 
 ### `Video example 2/3`
 
-https://user-images.githubusercontent.com/75623459/157508270-5752a928-96b2-4472-b479-c18e7de73e90.mp4
+https://user-images.githubusercontent.com/75623459/157510558-d2a97596-e873-4ea0-88bf-5c8e6a550f8e.mp4
 
 <br />
 
 ### `Video example 3/3`
 
-https://user-images.githubusercontent.com/75623459/157508455-a1763e54-c5ea-4b32-9c94-5175ce96b880.mp4
+https://user-images.githubusercontent.com/75623459/157510698-f8e698f1-0467-4c0c-8afb-d281dc763d3c.mp4
 
 <br />
 
