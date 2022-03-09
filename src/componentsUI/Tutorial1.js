@@ -10,13 +10,13 @@ export default function Tutorial1() {
 
       {/* <video className="video-tutorial" src={vid} controls="controls" autoplay="true" /> */}
 
-      <li className="li-btn li-btn-menu">
+      <button className="button-blue button-blue-menu">
         <NavLink to="/">MENU</NavLink>
-      </li>
+      </button>
 
-      <li className="li-btn li-btn-tutorial-next">
+      <button className="button-blue button-blue-tutorial-next">
         <NavLink to="/tutorial2">NEXT</NavLink>
-      </li>
+      </button>
     </div>
   );
 }

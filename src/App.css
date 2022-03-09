@@ -34,15 +34,11 @@ body {
   letter-spacing: 1.5px;
 }
 
-ul {
-  padding: 0px;
-}
-
-.li-btn,
 button {
+  list-style-type: none;
+  margin: 30px 0;
   text-align: center;
   cursor: pointer;
-
   border-radius: 15px;
   color: #ffffff;
   border-color: transparent;
@@ -53,17 +49,12 @@ button {
   font-family: inherit;
 }
 
-li {
-  list-style-type: none;
-  margin: 30px 0;
-}
-
 a {
   text-decoration: none;
   color: #ffffff;
 }
 
-.li-btn {
+.button-blue {
   font-size: 2rem;
   font-weight: 600;
   list-style-type: none;
@@ -73,7 +64,7 @@ a {
   padding: 10px 15px 10px;
 }
 
-.li-btn:hover {
+.button-blue:hover {
   box-shadow: 0 0 var(--shadow-radius) var(--blue-light);
   background-color: var(--purple-light);
   color: #ffffff;
@@ -81,38 +72,25 @@ a {
   background-color: var(--blue-light);
 }
 
-.li-label :hover {
-  color: var(--purple-dark);
-  transition-duration: var(--transition-time);
-}
-
-.li-btn-menu {
+.button-blue-menu {
   font-size: 1.5rem;
   left: 1%;
   position: absolute;
 }
 
-.li-btn-tutorial-prev {
+.button-blue-tutorial-prev {
   font-size: 1.5rem;
   right: 9%;
   position: absolute;
 }
 
-.li-btn-tutorial-next {
+.button-blue-tutorial-next {
   font-size: 1.5rem;
   right: 1%;
   position: absolute;
 }
 
 .img-tutorial {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-}
-
-.video-tutorial {
   position: absolute;
   left: 0;
   top: 0;
@@ -195,33 +173,33 @@ a {
     color: #4d00a5;
   }
   10% {
-    color: #5700b9;
+    color: #6b12d1;
   }
   20% {
-    color: #5e00ca;
+    color: #7c21e4;
   }
   30% {
-    color: #6600db;
+    color: #8724f8;
   }
   40% {
-    color: #6d00eb;
+    color: #9233ff;
   }
   50% {
-    color: #7700ff;
+    color: #9334ff;
   }
   60% {
-    color: #8010ff;
+    color: #9233ff;
   }
   70% {
-    color: #8923ff;
+    color: #8724f8;
   }
   80% {
-    color: #9539ff;
+    color: #7c21e4;
   }
   90% {
-    color: #9d48ff;
+    color: #6b12d1;
   }
   100% {
-    color: #5500b6;
+    color: #4d00a5;
   }
 }

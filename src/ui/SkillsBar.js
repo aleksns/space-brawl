@@ -1,5 +1,5 @@
 import UICanvas from "./UICanvas";
-import { colors, GAME_HEIGHT } from "../services/services";
+import { colors, font, GAME_HEIGHT } from "../services/services";
 import skillsBarImage from "../images/skillsBar.png";
 import skillTimeImage from "../images/skillTime.png";
 import shieldImage from "../images/skillShield.png";
@@ -85,7 +85,7 @@ export class SkillsBar extends UICanvas {
       textOpacity: 1.0,
       text: "",
       barOpacity: 1.0,
-      font: "22px tahoma",
+      font: `22px ${font}`,
     };
     this.slowTimeProps.image = new Image();
     this.slowTimeProps.image.src = skillTimeImage;
@@ -113,7 +113,7 @@ export class SkillsBar extends UICanvas {
       textOpacity: 1.0,
       text: "",
       barOpacity: 1.0,
-      font: "22px tahoma",
+      font: `22px ${font}`,
     };
     this.shieldProps.image = new Image();
     this.shieldProps.image.src = shieldImage;
@@ -141,7 +141,7 @@ export class SkillsBar extends UICanvas {
       textOpacity: 1.0,
       text: "",
       barOpacity: 1.0,
-      font: "22px tahoma",
+      font: `22px ${font}`,
     };
     this.laserProps.image = new Image();
     this.laserProps.image.src = laserImage;
@@ -209,15 +209,6 @@ export class SkillsBar extends UICanvas {
 
     cdProps.text = text;
   }
-
-  // showOutlineIconTest(icon, ctx) {
-  //   ctx.current.beginPath();
-  //   ctx.current.rect(icon.x, icon.y, icon.w, icon.h);
-  //   ctx.current.fillStyle = "green";
-  //   ctx.current.strokeStyle = "green";
-  //   ctx.current.stroke();
-  //   ctx.current.closePath();
-  // }
 
   drawSkillIconAndCD(ctx, skill, skillProps, cdProps) {
     this.game.draw.drawObject(skillProps, ctx);

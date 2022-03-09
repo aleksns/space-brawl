@@ -185,6 +185,7 @@ export class Player extends Ship {
       return;
     }
     this.setDead();
+    this.game.skills.turnOffAllSkills();
     this.game.handlePlayerIsDead();
     console.log(`Player has died. DON'T BE SAD!`);
   }

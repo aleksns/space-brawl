@@ -18,10 +18,10 @@ export default class Level1 {
     this.wave = [];
     this.waveMap = [];
     this.listOfEnemyTier = ["t3", "t4", "t5"];
-    //this.listOfEnemyTier = ["t3"];
+    //this.listOfEnemyTier = ["t2"];
 
-    this.minNumOfEnemies = 4;
-    this.maxNumOfEnemies = 8;
+    this.minNumOfEnemies = 5;
+    this.maxNumOfEnemies = 9;
     this.maxNumOfEnemiesFormation = 10;
 
     this.chanceToSpawnFormation = 0.4;
@@ -94,12 +94,10 @@ export default class Level1 {
   }
 
   generateT2Wave() {
-    // let numOfEnemies = getRandomIntInclusive(1, 2);
-
-    // for (let i = 0; i < numOfEnemies; i++) {
-      
+    let numOfEnemies = getRandomIntInclusive(1, 2);
+    for (let i = 0; i < numOfEnemies; i++) {
       this.waveMap.push("t2");
-    //}
+    }
   }
 
   initWave(waveMap, wave) {

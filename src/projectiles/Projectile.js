@@ -28,8 +28,6 @@ export default class Projectile {
       color: "green",
     };
 
-    this.filter = "saturate(100%) brightness(100%)";
-
     this.lineJoin = "round";
     this.lineCap = "square";
     this.isPlayerOwned = undefined;

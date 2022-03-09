@@ -13,7 +13,7 @@ export default class EventListener {
     };
 
     this.game = game;
-    this.canvas5 = game.canvas5;
+    this.canvas6 = game.canvas6;
 
     this.mousePosition = {
         x: 0,
@@ -111,7 +111,7 @@ export default class EventListener {
     );
 
 
-    this.canvas5.current.addEventListener(
+    this.canvas6.current.addEventListener(
       "click",
       (event) => {
         this.mousePosition = this.getMousePosition(event);

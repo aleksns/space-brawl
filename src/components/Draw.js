@@ -17,6 +17,7 @@ export default class Draw {
     this.ctx3 = game.ctx3;
     this.ctx4 = game.ctx4;
     this.ctx5 = game.ctx5;
+    this.ctx6 = game.ctx6;
 
     this.skillsBar = this.game.skillsBar;
     this.hpBarPlayer = new HpBarPlayer(this.game);
@@ -31,7 +32,10 @@ export default class Draw {
     this.brightnessMax = 130;
     this.saturationMin = 60;
     this.saturationMax = 100;
+
     this.filter = `saturate(${this.saturationNum}%) brightness(${this.brightnessNum}%)`;
+    
+    this.canvas6Elem = this.game.canvas6Elem;
   }
 
   drawAll() {
@@ -46,13 +50,13 @@ export default class Draw {
     if (this.game.isGlobalActionRestricted || this.game.gameOver) {
       return;
     }
-    
+
     this.drawUI(this.ctx);
   }
 
   drawUIOnInit() {
-    this.drawObject(this.hpBarPlayer.hpBarImageProps, this.ctx5);
-    this.drawObject(this.threatBar.threatBarImageProps, this.ctx5);
+    this.drawObject(this.hpBarPlayer.hpBarImageProps, this.ctx6);
+    this.drawObject(this.threatBar.threatBarImageProps, this.ctx6);
   }
 
   drawCutscene(cutscene, ctx) {
@@ -67,7 +71,7 @@ export default class Draw {
   }
 
   drawStatusEffect(item) {
-    this.ctx4.current.drawImage(item.image, item.x, item.y, item.w, item.h);
+    this.drawObjectImage(item, this.ctx4);
     this.drawText(item);
   }
 
@@ -80,11 +84,11 @@ export default class Draw {
   }
 
   drawPauseText(item) {
-    this.ctx5.current.globalAlpha = item.textOpacity;
-    this.ctx5.current.fillStyle = item.textColor;
-    this.ctx5.current.font = item.font;
-    this.ctx5.current.fillText(item.text, item.textX, item.textY);
-    this.ctx5.current.globalAlpha = 1.0;
+    this.ctx6.current.globalAlpha = item.textOpacity;
+    this.ctx6.current.fillStyle = item.textColor;
+    this.ctx6.current.font = item.font;
+    this.ctx6.current.fillText(item.text, item.textX, item.textY);
+    this.ctx6.current.globalAlpha = 1.0;
   }
 
   drawItems() {
@@ -104,7 +108,7 @@ export default class Draw {
 
     ctx.current.filter = object.filter;
     ctx.current.globalAlpha = object.opacity;
-    ctx.current.drawImage(object.image, object.x, object.y, object.w, object.h);
+    this.drawObjectImage(object, ctx);
     ctx.current.filter = "none";
 
     if (object.shadowBlur != null && object.shadowColor != null) {
@@ -124,20 +128,20 @@ export default class Draw {
   }
 
   drawPlayer() {
-    if(this.game.gameOver) {
+    if (this.game.gameOver) {
       return;
     }
 
-    for(let i = 0; i < this.game.playerTeam.length; i++) {
+    for (let i = 0; i < this.game.playerTeam.length; i++) {
       if (this.game.playerTeam[i].isGotHit) {
         this.game.playerTeam[i].filter = hitRegFilter;
         this.game.playerTeam[i].isGotHit = false;
       } else {
         this.game.playerTeam[i].filter = "none";
       }
-  
+
       this.drawObject(this.game.playerTeam[i], this.ctx);
-  
+
       if (this.game.playerTeam[i].isShieldOn) {
         this.drawObject(this.game.playerTeam[i].shieldOrb.props, this.ctx);
       }
@@ -162,7 +166,7 @@ export default class Draw {
   }
 
   drawEnemyHpBar(enemy, ctx) {
-    if(this.game.isGlobalActionRestricted || this.game.gameOver) {
+    if (this.game.isGlobalActionRestricted || this.game.gameOver) {
       return;
     }
     let remainingHPBar = enemy.health / enemy.maxHealth;
@@ -185,22 +189,26 @@ export default class Draw {
 
   drawProjectiles() {
     this.updateFilter();
+    this.canvas6Elem.style.filter = this.filter;
+
     for (let i = 0; i < this.game.enemyProjectiles.length; i++) {
-      this.game.enemyProjectiles[i].setFilter(this.filter);
-      this.drawObject(this.game.enemyProjectiles[i], this.ctx);
+      this.drawObjectImage(this.game.enemyProjectiles[i], this.ctx5);
     }
     for (let i = 0; i < this.game.playerProjectiles.length; i++) {
-      this.game.playerProjectiles[i].setFilter(this.filter);
-      this.drawObject(this.game.playerProjectiles[i], this.ctx);
+      this.drawObjectImage(this.game.playerProjectiles[i], this.ctx5);
     }
   }
 
   drawEffects() {
     for (let i = 0; i < this.game.effects.length; i++) {
-      if(this.game.effects[i].id != "pulse") {
+      if (this.game.effects[i].id != "pulse") {
         this.game.effects[i].draw(this.ctx2);
       }
     }
+  }
+
+  drawObjectImage(object, ctx) {
+    ctx.current.drawImage(object.image, object.x, object.y, object.w, object.h);
   }
 
   drawRect(object, ctx) {

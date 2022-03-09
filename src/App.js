@@ -32,13 +32,17 @@ export default function App() {
   const canvas5Ref = useRef(null);
   const context5Ref = useRef(null);
 
+  const canvas6Ref = useRef(null);
+  const context6Ref = useRef(null);
+
   const gameRef = useRef(null);
 
-  const clearCanvas1To4 = () => {
+  const clearCanvas1To5 = () => {
     clearCanvas1();
     clearCanvas2();
     clearCanvas3();
     clearCanvas4();
+    clearCanvas5();
   };
 
   const clearCanvas1 = () => {
@@ -81,6 +85,14 @@ export default function App() {
       canvas5Ref.current.height
     );
   };
+  const clearCanvas6 = () => {
+    context6Ref.current.clearRect(
+      0,
+      0,
+      canvas6Ref.current.width,
+      canvas6Ref.current.height
+    );
+  };
 
   useEffect(() => {
     //main game canvas
@@ -115,7 +127,7 @@ export default function App() {
     context4.lineWidth = lineWidth;
     context4Ref.current = context4;
 
-    //canvas for UI elements that are being rendered onpy upon a level start
+    //canvas for projectiles
     const canvas5 = canvas5Ref.current;
     canvas5.width = width;
     canvas5.height = height;
@@ -123,15 +135,24 @@ export default function App() {
     context5.lineWidth = lineWidth;
     context5Ref.current = context5;
 
+    //canvas for UI elements that are being rendered only upon a level start
+    const canvas6 = canvas6Ref.current;
+    canvas6.width = width;
+    canvas6.height = height;
+    const context6 = canvas6.getContext("2d");
+    context6.lineWidth = lineWidth;
+    context6Ref.current = context6;
+
     const game = new Game(
-      canvas5Ref,
+      canvas6Ref,
       contextRef,
       context2Ref,
       context3Ref,
       context4Ref,
       context5Ref,
-      clearCanvas1To4,
-      clearCanvas5,
+      context6Ref,
+      clearCanvas1To5,
+      clearCanvas6,
       handleGameOver
     );
     gameRef.current = game;
@@ -170,11 +191,12 @@ export default function App() {
         canvas3Ref={canvas3Ref}
         canvas4Ref={canvas4Ref}
         canvas5Ref={canvas5Ref}
+        canvas6Ref={canvas6Ref}
       />
 
       <div
         className="container container-main"
-        style={!isUiOn ? { opacity: "0", zIndex: -1 } : {}}
+        style={!isUiOn ? { display: "none" } : {}}
       >
           <Routes>
             <Route
@@ -194,7 +216,7 @@ export default function App() {
       </div>
       <div
         className="container-git-label"
-        style={isUiOn ? { opacity: "0" } : {}}
+        style={isUiOn ? { display: "none" } : {}}
       >
         <img src={gitLogo} className="git-logo-label"></img>
         <h4>Github: Aleksns</h4>

@@ -20,14 +20,15 @@ import EventListener from "./EventListener";
 
 export default class Game {
   constructor(
-    canvas5Ref,
+    canvas6Ref,
     contextRef,
     context2Ref,
     context3Ref,
     context4Ref,
     context5Ref,
-    clearCanvas1To4,
-    clearCanvas5,
+    context6Ref,
+    clearCanvas1To5,
+    clearCanvas6,
     handleGameOver,
   ) {
     this.ctx = contextRef;
@@ -35,19 +36,20 @@ export default class Game {
     this.ctx3 = context3Ref;
     this.ctx4 = context4Ref;
     this.ctx5 = context5Ref;
-    this.canvas5 = canvas5Ref;
-    this.clearCanvas1To4 = clearCanvas1To4;
-    this.clearCanvas5 = clearCanvas5;
+    this.ctx6 = context6Ref;
+    this.canvas6 = canvas6Ref;
+    this.clearCanvas1To5 = clearCanvas1To5;
+    this.clearCanvas6 = clearCanvas6;
     this.handleGameOver = handleGameOver;
 
-    this.elem = document.getElementById("uiScreen");
+    this.canvas6Elem = document.getElementById(`projectilesScreen`);
     this.eventListener = new EventListener(this);
     
     this.initialize();
     
     /*  <Sound>  */
     this.laser = new SoundChannel(this.soundList.laser, 1, 0.04);
-    this.background = new SoundChannel(this.soundList.bgMusic, 1, 0.08);
+    this.background = new SoundChannel(this.soundList.bgMusic, 1, 0.04);
     /* <Sound />*/
     console.log("CONSTRUCTOR > GAME");
   }
@@ -112,7 +114,7 @@ export default class Game {
       this.then = this.now;  
     } else {
       this.updateTimeDifference();
-      this.clearCanvas5();
+      this.clearCanvas6();
       this.draw.drawUIOnInit();
     }
   }
@@ -124,7 +126,7 @@ export default class Game {
 
   setGameOnHold() {
     this.isGlobalActionRestricted = true;
-    this.clearCanvas5();
+    this.clearCanvas6();
   }
 
   setGameOffHold() {
@@ -135,13 +137,13 @@ export default class Game {
 
   handlePlayerIsDead() {
     this.gameOver = true;
-    this.clearCanvas5();
+    this.clearCanvas6();
     this.player.setToDefaultPosition();
     this.handleGameOver();
   }
 
   gameLoop() {
-    this.clearCanvas1To4();
+    this.clearCanvas1To5();
     
     if(!this.isPauseOn) {
       this.handleBackground();

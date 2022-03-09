@@ -67,16 +67,6 @@ export class LevelAndScore extends UICanvas {
     this.drawScore();
     this.drawLevelIconAndBar(ctx);
     this.drawLevelText(ctx);
-
-    ////test////
-    // this.game.ctx4.current.globalAlpha = 1.0;
-    // this.game.ctx4.current.fillStyle = "#ffffff";
-    // this.game.ctx4.current.font = "20px tahoma";
-    // this.game.ctx4.current.fillText(
-    //   `level: ${this.game.progression.playerLevel}`,
-    //   5,
-    //   100
-    // );
   }
 
   drawScore() {

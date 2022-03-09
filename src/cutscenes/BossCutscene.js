@@ -76,7 +76,7 @@ export class BossCutscene extends Cutscene {
       this.replicToPrint.then = this.game.now;
     }
 
-    this.game.draw.drawObject(this.container, ctx);
+    this.game.draw.drawObjectImage(this.container, ctx);
     this.drawNameText();
     this.drawReplicText(ctx);
 

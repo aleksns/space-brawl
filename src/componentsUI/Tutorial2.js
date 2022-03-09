@@ -8,13 +8,13 @@ export default function Tutorial2() {
     <div>
       <img className = "img-tutorial" src = {tutorial2}></img>
 
-      <li className="li-btn li-btn-menu">
+      <button className="button-blue button-blue-menu">
         <NavLink to="/">MENU</NavLink>
-      </li>
+      </button>
 
-      <li className="li-btn li-btn-tutorial-next">
+      <button className="button-blue button-blue-tutorial-next">
         <NavLink to="/tutorial1">PREV</NavLink>
-      </li>
+      </button>
     </div>
   );
 }

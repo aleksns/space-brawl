@@ -17,9 +17,9 @@ export default function MainMenu(props) {
       >
         START
       </button>
-      <li className="li-btn">
+      <button className="button-blue">
         <NavLink to="/tutorial1">TUTORIAL</NavLink>
-      </li>
+      </button>
       <GithubLinkWithIcon isUiOn={isUiOn} gitLogo={gitLogo} />
     </>
   );
