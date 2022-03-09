@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/space-brawl/static/css/main.b77168f5.css",
-    "main.js": "/space-brawl/static/js/main.d0604b34.js",
+    "main.css": "/space-brawl/static/css/main.0afd57ef.css",
+    "main.js": "/space-brawl/static/js/main.9c93f6fe.js",
     "static/js/27.d3262a63.chunk.js": "/space-brawl/static/js/27.d3262a63.chunk.js",
     "static/media/background_soundtrack.mp3": "/space-brawl/static/media/background_soundtrack.56ed0a8ed910acf737ec.mp3",
     "static/media/projectileYellowCone.png": "/space-brawl/static/media/projectileYellowCone.aa444cdf18300a7cf9bb.png",
@@ -41,7 +41,7 @@
     "index.html": "/space-brawl/index.html"
   },
   "entrypoints": [
-    "static/css/main.b77168f5.css",
-    "static/js/main.d0604b34.js"
+    "static/css/main.0afd57ef.css",
+    "static/js/main.9c93f6fe.js"
   ]
 }
