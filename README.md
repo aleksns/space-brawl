@@ -7,6 +7,7 @@
 <br />
   
 [**Features**](#features)
+* [Game Mechanics](#game-mechanics)
 * [Controls](#controls)
 * [UI](#ui)
 * [Player](#player)
@@ -22,6 +23,10 @@
    - [Player Level](#player-level)
    - [Game Level](#game-level)
    - [Waves](#waves)
+ * [Items](#items)
+   - [Coins](#coins)
+   - [Buffs](#buffs)
+ * [Cutscenes](#cutscenes)
 
 # About 
 ***
@@ -57,6 +62,16 @@ https://user-images.githubusercontent.com/75623459/157510698-f8e698f1-0467-4c0c-
 
 ***
 
+# Game Mechanics
+
+- Destroy enemies and collect coins to level UP your ship and advance in TIER (see [Player](#player) section and [Coins](#coins) section)
+- Use skills, but watch out for CD timer
+- Buff-Items (atk speed and medkits) spawn with different delay, collect them to assert the victory (see [Buffs](#buffs) section)
+- Each destroyed enemy fills `Threat Bar`, fill it to spawn The Boss (you still need to destroy remaining enemies after `Threat Bar` is filled)
+- Watch a wonderful and unskippable cutscene before every Boss spawn. (see [Cutscenes](#cutscenes) section)
+- Destroy The Boss to advance to the next Level
+- The game is looped with difficulty being increased with each wave and level (see [Progression](#progression) section). Rinse and repeat...PROFIT??
+
 # Controls
 
 - **`WASD`** - move the ship
@@ -69,8 +84,7 @@ https://user-images.githubusercontent.com/75623459/157510698-f8e698f1-0467-4c0c-
 
 *Note: if you move with you ship over `Skills Bar` or `Exp Bar` it will become transparent*
 
-![githubUI](https://user-images.githubusercontent.com/75623459/157760872-a6d74b22-cf87-4dc4-a91f-d1d2d52ffae9.png)
-
+![githubUI](https://user-images.githubusercontent.com/75623459/157761516-5fd1ce10-fc7c-4fac-bbc9-a29fc611b445.png)
 
 # Player
 
@@ -163,6 +177,14 @@ Every level adds significant modifiers to enemies.
 
 Enemies spawn in waves, every defeated wave adds small modifiers to enemies. Every wave is being generated with random enemy types and amount of enemies.
 Every 3rd wave a mini boss is spawned (T2 enemy), there is also a chance for T5 Formation to be spawned (random amount of t5 ships alligned in line).
+
+# Items
+
+## Coins
+
+## Buffs
+
+# Cutscenes
 
 ### // TBD
 
