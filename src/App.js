@@ -1,13 +1,15 @@
-import { useEffect, useRef, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import { GAME_WIDTH, GAME_HEIGHT } from "./services/services";
+import { useEffect, useRef, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import Canvas from "./components/Canvas";
 import Game from "./components/Game";
 import MainMenu from "./componentsUI/MainMenu";
-import { GAME_WIDTH, GAME_HEIGHT } from "./services/services";
-import gitLogo from "./images/github-icon.png";
 import Tutorial1 from "./componentsUI/Tutorial1";
 import Tutorial2 from "./componentsUI/Tutorial2";
+import gitLogo from "./images/github-icon.png";
+import tutorial1 from "./images/tutorial1.png";
+import tutorial2 from "./images/tutorial2.png";
 
 const lineWidth = 3;
 const width = GAME_WIDTH;
@@ -94,6 +96,8 @@ export default function App() {
     );
   };
 
+  const [isUiOn, setIsUiOn] = useState(true);
+
   useEffect(() => {
     //main game canvas
     const canvas = canvasRef.current;
@@ -161,7 +165,13 @@ export default function App() {
     requestAnimationFrame(runLoop);
   }, []);
 
-  const [isUiOn, setIsUiOn] = useState(true);
+  function Tutorial1Img() {
+    return <img className = "img-tutorial" src = {tutorial1}></img>
+  }
+
+  function Tutorial2Img() {
+    return <img className = "img-tutorial" src = {tutorial2}></img>
+  }
 
   function startGame() {
     setIsUiOn(false);
@@ -198,21 +208,27 @@ export default function App() {
         className="container container-main"
         style={!isUiOn ? { display: "none" } : {}}
       >
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                <MainMenu
-                  startGame={startGame}
-                  isUiOn={isUiOn}
-                  gitLogo={gitLogo}
-                />
-              }
-            />
-            <Route path="/tutorial1" element={<Tutorial1 />} />
-            <Route path="/tutorial2" element={<Tutorial2 />} />
-          </Routes>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <MainMenu
+                startGame={startGame}
+                isUiOn={isUiOn}
+                gitLogo={gitLogo}
+              />
+            }
+          />
+          <Route
+            path="/tutorial1"
+            element={<Tutorial1 Tutorial1Img={Tutorial1Img} />}
+          />
+          <Route
+            path="/tutorial2"
+            element={<Tutorial2 Tutorial2Img={Tutorial2Img} />}
+          />
+        </Routes>
       </div>
       <div
         className="container-git-label"

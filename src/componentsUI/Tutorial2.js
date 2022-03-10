@@ -1,12 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "../App.css";
-import tutorial2 from "../images/tutorial2.png";
 
-export default function Tutorial2() {
+export default function Tutorial2(props) {
+  const { Tutorial2Img } = props;
   return (
     <div>
-      <img className = "img-tutorial" src = {tutorial2}></img>
+      <Tutorial2Img />
 
       <button className="button-blue button-blue-menu">
         <NavLink to="/">MENU</NavLink>

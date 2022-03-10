@@ -355,8 +355,8 @@ export const getT2Barrage = {
   projectileSpeed: 5,
   projectileAcceleration: 3,
 
-  atkSpeed: 3.5,  //4.5
-  rateOfFire: 0.4,  //0.6
+  atkSpeed: 2.8,  //4.5
+  rateOfFire: 0.35,  //0.6
 
   isRotating: false,
   isBarrage: true,
