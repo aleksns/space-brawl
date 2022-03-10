@@ -147,7 +147,7 @@ export const getEnemyT0DefaultStats = {
   damage: 4,
   health: 10000,
   maxHealth: 10000,
-  speed: 2,
+  speed: 1.6,
   accelerationMod: 60,
   rammingDmg: 1,
   scorePoints: 1000,

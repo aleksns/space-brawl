@@ -5,10 +5,8 @@ import {
   getRandomIntInclusive,
   getEnemyT3Dimension,
   getDefaultEnemyProjectile,
-  getBigEnemyProjectile,
 } from "../services/services";
 
-import { DoubleGun } from "../guns/DoubleGun";
 import { SingleGun } from "../guns/SingleGun";
 import { getT3Barrage, getT3TargetBurst } from "../services/gunsProps";
 

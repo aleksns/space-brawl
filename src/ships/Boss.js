@@ -6,8 +6,7 @@ import {
   getVeryBigEnemyProjectile,
   getBigEnemyProjectile,
 } from "../services/services";
-import { getT0Rotating, getT0Burst, getT0BurstCentered, getT0Target, getT0Barrage360 } from "../services/gunsProps";
-import { DoubleGun } from "../guns/DoubleGun";
+import { getT0Burst, getT0Target, getT0Barrage360 } from "../services/gunsProps";
 import { TripleGun } from "../guns/TripleGun";
 import { SingleGun } from "../guns/SingleGun";
 

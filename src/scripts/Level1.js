@@ -24,7 +24,7 @@ export default class Level1 {
     this.maxNumOfEnemies = 9;
     this.maxNumOfEnemiesFormation = 10;
 
-    this.chanceToSpawnFormation = 0.4;
+    this.chanceToSpawnFormation = 0.35;
     this.isFormation = false;
   }
 

@@ -1,4 +1,4 @@
-import { itemBuffProps, GAME_WIDTH, GAME_HEIGHT } from "../services/services";
+import { itemBuffProps, GAME_WIDTH, GAME_HEIGHT, font } from "../services/services";
 import atkSpeedImage from "../images/atkSpeed.png";
 
 const skillCdColor = "grey";
@@ -44,7 +44,7 @@ export default class Skills {
       h: itemBuffProps.h,
       textX: itemBuffProps.statusEffectX + 18,
       textY: itemBuffProps.statusEffectY - 5,
-      font: "22px tahoma",
+      font: `22px ${font}`,
       imageSrc: atkSpeedImage,
       image: new Image(),
       isApplied: false,
@@ -81,7 +81,7 @@ export default class Skills {
     };
 
     this.laser = {
-      duration: 8,
+      duration: 4,
       cd: 15,
       remainingCD: 0,
       isApplied: false,
