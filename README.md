@@ -1,8 +1,10 @@
-# SPACE - BRAWL
+# SPACE - BRAWL ![shipGit3](https://user-images.githubusercontent.com/75623459/157771067-c2ee779c-e6e3-48ea-9272-97c60ede5f9e.png "Tier 3") ![shipGit2](https://user-images.githubusercontent.com/75623459/157771054-ef243fcb-60f7-434d-b259-43f337c190df.png "Tier 2") ![shipGit](https://user-images.githubusercontent.com/75623459/157770834-f6dabfab-7b0a-41e9-ac0e-0ed4dfa4e91d.png "Tier 1")
 
-* [**About**](#about)
+
+* [**About**](#about) 
 * [**PLAY DEMO**](#play-demo)
 * [**Video Examples**](#video-examples)
+
 
 <br />
   
@@ -11,48 +13,37 @@
 * [Controls](#controls)
 * [UI](#ui)
 * [Player](#player)
-   - [Skills](#skills)
 * [Enemies](#enemies)
-   - [Boss](#boss)
-   - [Enemy T2](#enemy-t2)
-   - [Enemy T3](#enemy-t3)
-   - [Enemy T4](#enemy-t4)
-   - [Enemy T5](#enemy-t5)
-   - [Formation T5](#formation-t5)
- * [Progression](#progression)
-   - [Player Level](#player-level)
-   - [Game Level](#game-level)
-   - [Waves](#waves)
- * [Items](#items)
-   - [Coins](#coins)
-   - [Buffs](#buffs)
- * [Cutscenes](#cutscenes)
+* [Progression](#progression)
+* [Items](#items)
+* [Cutscenes](#cutscenes)
+* [Credits](#credits)
 
-# About 
+# `About` 
 ***
 Space-Brawl is the classic arcade shooter. Destroy enemies, use skills, collect coins to gain experience and LVL UP your ship. 3 Ship Tiers with unique ship model and guns. Be aware of The Boss! It's time to show the aliens how it's done! Wait no more and try it out yourself!
 
 <br />
 
-# [<ins>PLAY DEMO</ins>](https://aleksns.github.io/space-brawl/)
+# [<ins>`PLAY DEMO`</ins>](https://aleksns.github.io/space-brawl/)
 ***
 #### Note: The game was tested with _Google Chrome_ browser and _1920x1080_ screen resolution. It may work different with other browsers
 
-# Video Examples
+# `Video Examples`
 ***
-### `Video example 1/3`
+### *Video example 1/3*
 
 https://user-images.githubusercontent.com/75623459/157510396-02b499da-e568-4ba4-ac69-e6e55d1a9fbb.mp4
 
 <br />
 
-### `Video example 2/3`
+### *Video example 2/3*
 
 https://user-images.githubusercontent.com/75623459/157510558-d2a97596-e873-4ea0-88bf-5c8e6a550f8e.mp4
 
 <br />
 
-### `Video example 3/3`
+### *Video example 3/3*
 
 https://user-images.githubusercontent.com/75623459/157510698-f8e698f1-0467-4c0c-8afb-d281dc763d3c.mp4
 
@@ -60,11 +51,9 @@ https://user-images.githubusercontent.com/75623459/157510698-f8e698f1-0467-4c0c-
 
 # Features
 
+# `Game Mechanics`
 ***
-
-# Game Mechanics
-
-- Destroy enemies and collect coins to level UP your ship and advance in TIER (see [Player](#player) section and [Coins](#coins) section)
+- Destroy enemies and collect coins to level UP your ship and advance in TIER (see [Player](#player) section and [Coin](#coin) section)
 - Use skills, but watch out for CD timer
 - Buff-Items (atk speed and medkits) spawn with different delay, collect them to assert the victory (see [Buffs](#buffs) section)
 - Each destroyed enemy fills `Threat Bar`, fill it to spawn The Boss (you still need to destroy remaining enemies after `Threat Bar` is filled)
@@ -72,49 +61,57 @@ https://user-images.githubusercontent.com/75623459/157510698-f8e698f1-0467-4c0c-
 - Destroy The Boss to advance to the next Level
 - The game is looped with difficulty being increased with each wave and level (see [Progression](#progression) section). Rinse and repeat...PROFIT??
 
-# Controls
-
+# `Controls`
+***
 - **`WASD`** - move the ship
 - **`1`** - Slow Time skill
 - **`2`** - Shield skill
 - **`3`** - Laser skill
 - **`Space`** - pause the game
 
-# UI
-
+# `UI`
+***
 *Note: if you move with you ship over `Skills Bar` or `Exp Bar` it will become transparent*
 
 ![githubUI](https://user-images.githubusercontent.com/75623459/157761516-5fd1ce10-fc7c-4fac-bbc9-a29fc611b445.png)
 
-# Player
-
+# `Player`
+***
 Player ship has 3 different upgrades, each alters the look of the ship, stats and guns. Below health bar, you can see exp bar with player level number. Destroy ships and collect coins they drop to gain exp. If your health reaches 0, you will...well, you know :(
+
+## TIERS
+
+Every few levels advance in TIER. Better stats, more guns, bigger ship
+
+![gitTiers](https://user-images.githubusercontent.com/75623459/157770213-4605589e-e486-4302-8514-90a12b86e4d5.png)
+
+
 
 ## Skills
 
 Player has 3 skills: Slow Time, Shield, Laser. Each has a different CD and properties.
 
-### `Slow Time`
+### *Slow Time*
 
-For a short duration, feel yourself like the main character in that movie (hint: black glasses and coats).
+For a short duration, feel yourself like the main character in that movie.
 
 ![skillSlow](https://user-images.githubusercontent.com/75623459/157758123-6ec830cc-b36b-4a7e-b80b-a6cd3ac2a9fc.gif)
 
-### `Shield`
+### *Shield*
 
 Absorbs 100% of projectiles damage and 99% of ships ramming damage. The remaining duration can be tracked by visual shield opacity.
 
 ![skillShield](https://user-images.githubusercontent.com/75623459/157758150-90182c6b-83bc-4fd8-b1af-580684d42670.gif)
 
-### `Laser`
+### *Laser*
 
 Strong and powerful beam of energy which damages all enemies on it's path. During the Laser skill, normal attack is disabled. Laser width decreases in proportion to the remaining skill time
 
 ![skillLaser](https://user-images.githubusercontent.com/75623459/157758174-a6fe909e-0fb7-4cad-8808-654d50800e42.gif)
 
-# Enemies
-
-There are 5 types of enemies, each has it's own abilities and movement pattern.
+# `Enemies`
+***
+There are 5 types of enemies, each has it's own abilities and movement patterns. Enemies spawn at random position, outside of the game screen and move towards the game borders, upon arriving, they get random movement pattern, which changes every few seconds or on collision with game borders.
 
 ## Boss
 
@@ -125,7 +122,7 @@ To assert the dominance, it doesn't move (apart from cutscenes). Yelds a lot of 
 
 ## Enemy T2
 
-Classic mini-boss. Spawns every 3rd wave (there is a chance to spawn 2 of them). Got 360 barrage and triple on-target guns. Slow, but got a lot of HP points.
+Classic mini-boss. Spawns every 3rd wave (there is a chance to spawn 2 of them). Got 360 barrage and double on-target guns. Slow, but got a lot of HP points.
 Yes, eyes are flashing (quality content right here).
 Moves freely on the game screen. 
 
@@ -159,9 +156,10 @@ Every wave, there is a chance for T5-Formation to be spawned. Number of ships is
 
 ![formation-t5](https://user-images.githubusercontent.com/75623459/157735034-ef260b4a-0144-4429-aece-ea0b477be20d.gif)
 
-# Progression
-There are few main progression systems: Player progression, Level progression, Wave progression
+# `Progression`
 ***
+There are few main progression systems: Player progression, Level progression, Wave progression
+
 ## Player Level
 
 Each new player level adds modifiers to player stats (and to item-buff medkit), every few levels player advances in `TIER`, 
@@ -178,18 +176,35 @@ Every level adds significant modifiers to enemies.
 Enemies spawn in waves, every defeated wave adds small modifiers to enemies. Every wave is being generated with random enemy types and amount of enemies.
 Every 3rd wave a mini boss is spawned (T2 enemy), there is also a chance for T5 Formation to be spawned (random amount of t5 ships alligned in line).
 
-# Items
+# `Items`
+***
+Items move down with different speed. Collect them to recieve different buffs. Each item has different "vison range" and `magnet effect`. Aproach them and they will follow you, but if you will move out of the "vision range" they will stop following and continue moving down with a default speed.
 
-## Coins
+## Coin
+
+Dropped from destroyed enemies. Collect it to gain experience. The stronger the enemy, the more experience it will yeld.
+
+![itemCoin](https://user-images.githubusercontent.com/75623459/157766182-40697d81-7904-4c79-a652-9d3829c689af.gif)
 
 ## Buffs
 
-# Cutscenes
+### *Attack Speed*
 
-### // TBD
+Temporary increases Player's attack speed by 200%
+
+![atkSpeedGit](https://user-images.githubusercontent.com/75623459/157764007-d7e11b36-bddf-40a5-8b65-36ce9e12bf2a.png)
+
+### *Medkit*
+
+Immediately restores Player's health. Amount of health restored is based on Player's level.
+
+![medkitGit](https://user-images.githubusercontent.com/75623459/157764000-20a1772a-7f71-4268-860f-24c5c18cd322.png)
+
+# `Cutscenes`
+***
 
 # `Credits`
-
+***
 #### - Music -
 - [background music](https://freesound.org/people/CarnotaurusTeam/sounds/505283/)
 - [laser](https://freesound.org/people/DayCraftMC/sounds/337112/)
