@@ -1,14 +1,12 @@
-# SPACE - BRAWL ![shipGit3](https://user-images.githubusercontent.com/75623459/157771067-c2ee779c-e6e3-48ea-9272-97c60ede5f9e.png "Tier 3") ![shipGit2](https://user-images.githubusercontent.com/75623459/157771054-ef243fcb-60f7-434d-b259-43f337c190df.png "Tier 2") ![shipGit](https://user-images.githubusercontent.com/75623459/157770834-f6dabfab-7b0a-41e9-ac0e-0ed4dfa4e91d.png "Tier 1")
+![titleGit](https://user-images.githubusercontent.com/75623459/157774017-3b93cfe6-efe6-4dca-8f25-9cc5636b7ba8.png)
 
+<br/>
 
 * [**About**](#about) 
 * [**PLAY DEMO**](#play-demo)
 * [**Video Examples**](#video-examples)
-
-
 <br />
-  
-[**Features**](#features)
+
 * [Game Mechanics](#game-mechanics)
 * [Controls](#controls)
 * [UI](#ui)
@@ -21,13 +19,12 @@
 
 # `About` 
 ***
-Space-Brawl is the classic arcade shooter. Destroy enemies, use skills, collect coins to gain experience and LVL UP your ship. 3 Ship Tiers with unique ship model and guns. Be aware of The Boss! It's time to show the aliens how it's done! Wait no more and try it out yourself!
+Space-Brawl is the classic arcade shooter. Destroy enemies, use skills, collect coins to gain experience and LVL UP your ship. 3 Ship Tiers with unique ship models and guns. Be aware of The Boss! It's time to show the aliens how it's done! Wait no more and try it out yourself! Click on the link below.
 
-<br />
 
 # [<ins>`PLAY DEMO`</ins>](https://aleksns.github.io/space-brawl/)
+##### *Note: The game was tested with Google Chrome browser and 1920x1080 screen resolution. It might work different with other configurations*
 ***
-#### Note: The game was tested with _Google Chrome_ browser and _1920x1080_ screen resolution. It may work different with other browsers
 
 # `Video Examples`
 ***
@@ -48,8 +45,6 @@ https://user-images.githubusercontent.com/75623459/157510558-d2a97596-e873-4ea0-
 https://user-images.githubusercontent.com/75623459/157510698-f8e698f1-0467-4c0c-8afb-d281dc763d3c.mp4
 
 <br />
-
-# Features
 
 # `Game Mechanics`
 ***
@@ -84,7 +79,6 @@ Player ship has 3 different upgrades, each alters the look of the ship, stats an
 Every few levels advance in TIER. Better stats, more guns, bigger ship
 
 ![gitTiers](https://user-images.githubusercontent.com/75623459/157770213-4605589e-e486-4302-8514-90a12b86e4d5.png)
-
 
 
 ## Skills
@@ -202,6 +196,8 @@ Immediately restores Player's health. Amount of health restored is based on Play
 
 # `Cutscenes`
 ***
+
+Watch and enjoy unskippable cutscene with The Boss appearance. It picks a random dialog and (perhaps) reveals the deep lore of the game
 
 # `Credits`
 ***
