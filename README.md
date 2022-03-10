@@ -7,6 +7,10 @@
 <br />
   
 [**Features**](#features)
+* [Controls](#controls)
+* [UI](#ui)
+* [Player](#player)
+   - [Skills](#skills)
 * [Enemies](#enemies)
    - [Boss](#boss)
    - [Enemy T2](#enemy-t2)
@@ -25,7 +29,7 @@ Space-Brawl is the classic arcade shooter. Destroy enemies, use skills, collect 
 
 <br />
 
-# [PLAY DEMO](https://aleksns.github.io/space-brawl/)
+# [<ins>PLAY DEMO</ins>](https://aleksns.github.io/space-brawl/)
 ***
 #### Note: The game was tested with _Google Chrome_ browser and _1920x1080_ screen resolution. It may work different with other browsers
 
@@ -52,6 +56,47 @@ https://user-images.githubusercontent.com/75623459/157510698-f8e698f1-0467-4c0c-
 # Features
 
 ***
+
+# Controls
+
+- **`WASD`** - move the ship
+- **`1`** - Slow Time skill
+- **`2`** - Shield skill
+- **`3`** - Laser skill
+- **`Space`** - pause the game
+
+# UI
+
+*Note: if you move with you ship over `Skills Bar` or `Exp Bar` it will become transparent*
+
+![githubUI](https://user-images.githubusercontent.com/75623459/157760872-a6d74b22-cf87-4dc4-a91f-d1d2d52ffae9.png)
+
+
+# Player
+
+Player ship has 3 different upgrades, each alters the look of the ship, stats and guns. Below health bar, you can see exp bar with player level number. Destroy ships and collect coins they drop to gain exp. If your health reaches 0, you will...well, you know :(
+
+## Skills
+
+Player has 3 skills: Slow Time, Shield, Laser. Each has a different CD and properties.
+
+### `Slow Time`
+
+For a short duration, feel yourself like the main character in that movie (hint: black glasses and coats).
+
+![skillSlow](https://user-images.githubusercontent.com/75623459/157758123-6ec830cc-b36b-4a7e-b80b-a6cd3ac2a9fc.gif)
+
+### `Shield`
+
+Absorbs 100% of projectiles damage and 99% of ships ramming damage. The remaining duration can be tracked by visual shield opacity.
+
+![skillShield](https://user-images.githubusercontent.com/75623459/157758150-90182c6b-83bc-4fd8-b1af-580684d42670.gif)
+
+### `Laser`
+
+Strong and powerful beam of energy which damages all enemies on it's path. During the Laser skill, normal attack is disabled. Laser width decreases in proportion to the remaining skill time
+
+![skillLaser](https://user-images.githubusercontent.com/75623459/157758174-a6fe909e-0fb7-4cad-8808-654d50800e42.gif)
 
 # Enemies
 
