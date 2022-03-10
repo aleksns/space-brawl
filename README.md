@@ -3,8 +3,10 @@
 * [**About**](#about)
 * [**PLAY DEMO**](#play-demo)
 * [**Video Examples**](#video-examples)
+
+<br />
   
-## Features
+[**Features**](#features)
 * [Enemies](#enemies)
    - [Boss](#boss)
    - [Enemy T2](#enemy-t2)
@@ -48,7 +50,9 @@ https://user-images.githubusercontent.com/75623459/157510698-f8e698f1-0467-4c0c-
 <br />
 
 # Features
+
 ***
+
 # Enemies
 
 There are 5 types of enemies, each has it's own abilities and movement pattern.
