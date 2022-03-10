@@ -18,7 +18,7 @@ h1 {
   height: auto;
   font-size: 5rem;
   cursor: default;
-  animation: colorShift 13s ease infinite forwards;
+  animation: color-change infinite 13s;
 }
 
 h4 {
@@ -114,7 +114,6 @@ a {
   display: flex;
   width: 100%;
   white-space: nowrap;
-  /* z-index: 11; */
   position: relative;
   margin-top: 5%;
   justify-content: center;
@@ -168,7 +167,7 @@ a {
   background-color: var(--background-main);
 }
 
-@keyframes colorShift {
+@keyframes color-change {
   0% {
     color: #4d00a5;
   }

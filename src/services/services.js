@@ -145,8 +145,8 @@ export const getPlayerDefaultStats = {
 
 export const getEnemyT0DefaultStats = {
   damage: 4,
-  health: 8000,
-  maxHealth: 8000,
+  health: 10000,
+  maxHealth: 10000,
   speed: 2,
   accelerationMod: 60,
   rammingDmg: 1,
@@ -155,8 +155,8 @@ export const getEnemyT0DefaultStats = {
 
 export const getEnemyT2DefaultStats = {
   damage: 4,
-  health: 1500,
-  maxHealth: 1500,
+  health: 2000,
+  maxHealth: 2000,
   speed: 2,
   accelerationMod: 20,
   rammingDmg: 0.1,
@@ -185,8 +185,8 @@ export const getEnemyT4DefaultStats = {
 
 export const getEnemyT5DefaultStats = {
   damage: 3,
-  health: 45,
-  maxHealth: 45,
+  health: 50,
+  maxHealth: 50,
   speed: 1,
   accelerationMod: 30,
   rammingDmg: 0.1,

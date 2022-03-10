@@ -385,7 +385,7 @@ export const getT0Target = {
   angleMin: 0,
   angleMax: 0,
 
-  numOfRoundsBurst: 2,
+  numOfRoundsBurst: 3,
   isLaserGun: false,
 };
 
@@ -393,7 +393,7 @@ export const getT0Burst = {
   projectileSpeed: 9,
   projectileAcceleration: 4,
 
-  atkSpeed: 3.5,
+  atkSpeed: 2.8,
   rateOfFire: 0.1,
 
   isRotating: false,
@@ -429,8 +429,8 @@ export const getT0Barrage360 = {
   projectileSpeed: 3,
   projectileAcceleration: 2,
 
-  atkSpeed: 2.5,
-  rateOfFire: 0.8,
+  atkSpeed: 2.1,
+  rateOfFire: 0.7,
 
   isRotating: false,
   isBarrage: true,
