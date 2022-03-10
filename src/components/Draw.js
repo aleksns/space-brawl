@@ -39,7 +39,6 @@ export default class Draw {
   }
 
   drawAll() {
-    this.drawBgElements();
     this.drawProjectiles();
     this.drawItems();
     this.drawEffects();

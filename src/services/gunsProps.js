@@ -61,12 +61,13 @@ export const playerGunsDamageProps = {
   barrage: 10,
   rotating: 7,
 }
+/* ////////////////////////////////////////////////////////////////////// */
 
 export const getPlayerSingleDefault = {
   projectileSpeed: 10, ///25
   projectileAcceleration: 3, //12
 
-  atkSpeed: 0.4,
+  atkSpeed: 0.3,
   rateOfFire: 0.1,
 
   isRotating: false,
@@ -285,7 +286,7 @@ export const getT5Front = {
   projectileSpeed: 6,
   projectileAcceleration: 1,
 
-  atkSpeed: 1.5,
+  atkSpeed: 1.2,
   rateOfFire: 2.0,
 
   isRotating: false,
@@ -300,15 +301,14 @@ export const getT5Front = {
 };
 
 export const getT4Target = {
-  projectileSpeed: 5,
-  projectileAcceleration: 3,
+  projectileSpeed: 9,
+  projectileAcceleration: 4,
 
-  atkSpeed: 1.2,
-  rateOfFire: 2.0,
+  atkSpeed: 1.1,
+  rateOfFire: 0.1,
 
   isRotating: false,
-  isBarrage: false,
-  isBarrage: false,
+  isBarrage: true,
   angle: 0,
   angleModifier: 0,
   angleMin: 0,
@@ -368,7 +368,7 @@ export const getT2Target = {
   angleMin: 0,
   angleMax: 0,
 
-  numOfRoundsBurst: 2,
+  numOfRoundsBurst: 3,
   isLaserGun: false,
 };
 
