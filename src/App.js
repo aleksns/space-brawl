@@ -8,8 +8,6 @@ import MainMenu from "./componentsUI/MainMenu";
 import Tutorial1 from "./componentsUI/Tutorial1";
 import Tutorial2 from "./componentsUI/Tutorial2";
 import gitLogo from "./images/github-icon.png";
-import tutorial1 from "./images/tutorial1.png";
-import tutorial2 from "./images/tutorial2.png";
 
 const lineWidth = 3;
 const width = GAME_WIDTH;
@@ -139,7 +137,7 @@ export default function App() {
     context5.lineWidth = lineWidth;
     context5Ref.current = context5;
 
-    //canvas for UI elements that are being rendered only upon a level start
+    //canvas for UI elements that are being rendered only upon level start
     const canvas6 = canvas6Ref.current;
     canvas6.width = width;
     canvas6.height = height;
@@ -164,14 +162,6 @@ export default function App() {
     gameRef.current.isAnimationOn = true;
     requestAnimationFrame(runLoop);
   }, []);
-
-  function Tutorial1Img() {
-    return <img className = "img-tutorial" src = {tutorial1}></img>
-  }
-
-  function Tutorial2Img() {
-    return <img className = "img-tutorial" src = {tutorial2}></img>
-  }
 
   function startGame() {
     setIsUiOn(false);
@@ -220,14 +210,8 @@ export default function App() {
               />
             }
           />
-          <Route
-            path="/tutorial1"
-            element={<Tutorial1 Tutorial1Img={Tutorial1Img} />}
-          />
-          <Route
-            path="/tutorial2"
-            element={<Tutorial2 Tutorial2Img={Tutorial2Img} />}
-          />
+          <Route path="/tutorial1" element={<Tutorial1 />} />
+          <Route path="/tutorial2" element={<Tutorial2 />} />
         </Routes>
       </div>
       <div

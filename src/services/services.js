@@ -165,8 +165,8 @@ export const getEnemyT2DefaultStats = {
 
 export const getEnemyT3DefaultStats = {
   damage: 3,
-  health: 200,
-  maxHealth: 200,
+  health: 350,
+  maxHealth: 350,
   speed: 1,
   accelerationMod: 10,
   rammingDmg: 0.1,
@@ -192,7 +192,6 @@ export const getEnemyT5DefaultStats = {
   rammingDmg: 0.1,
   scorePoints: 15,
 };
- 
 
 export const getDefaultPlayerProjectile = {
   w: 20,

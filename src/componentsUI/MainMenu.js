@@ -13,7 +13,6 @@ export default function MainMenu(props) {
         onClick={startGame}
         disabled={!isUiOn}
         className="btn-start"
-        style={!isUiOn ? { cursor: "default" } : {}}
       >
         START
       </button>

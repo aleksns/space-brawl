@@ -10,7 +10,7 @@ import {
 
 import { DoubleGun } from "../guns/DoubleGun";
 import { SingleGun } from "../guns/SingleGun";
-import { getT3TargetBurst } from "../services/gunsProps";
+import { getT3Barrage, getT3TargetBurst } from "../services/gunsProps";
 
 export class EnemyT3 extends Ship {
   constructor(game) {
@@ -73,9 +73,16 @@ export class EnemyT3 extends Ship {
     newSingleBurstTarget.setProjectileImage(this.game.media.projectileArcPurpleImg);
     newSingleBurstTarget.setOnTarget();
 
+    let newBarrage80Angle = new SingleGun(this.game, this);
+    newBarrage80Angle.initialize(getT3Barrage, getDefaultEnemyProjectile);
+    newBarrage80Angle.setGunDamage(this.game.stats.enemyGunsDamage.t3Burst);
+    newBarrage80Angle.setProjectileImage(this.game.media.projectileArcRedImg);
+
     this.game.enemyGuns.push(newSingleBurstTarget);
+    this.game.enemyGuns.push(newBarrage80Angle);
 
     this.guns.push(newSingleBurstTarget);
+    this.guns.push(newBarrage80Angle);
 
     this.directionChangeIntervalThen = Date.now();
   }

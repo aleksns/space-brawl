@@ -266,10 +266,12 @@ export const getPlayerT3LaserGun = {
 /* < /Player > */
 
 /* < Enemies > */
+/* ////////////////////////////////////////////////////////////////////////// */
+
 export const enemyGunsDamageProps = {
   t5Front: 3,
   t4Target: 3,
-  t3Burst: 3,
+  t3Burst: 2,
   t2Barrage: 3,
   t2Target: 4,
   t0Target: 4,
@@ -277,6 +279,7 @@ export const enemyGunsDamageProps = {
   t0Rotating: 3,
   t0Barrage: 3
 }
+/* ////////////////////////////////////////////////////////////////////////// */
 
 export const getT5Front = {
   projectileSpeed: 6,
@@ -330,6 +333,24 @@ export const getT3TargetBurst = {
   angleMax: 0,
 
   numOfRoundsBurst: 10,
+  isLaserGun: false,
+};
+
+export const getT3Barrage = {
+  projectileSpeed: 4,
+  projectileAcceleration: 3,
+
+  atkSpeed: 3.5,
+  rateOfFire: 0.1,
+
+  isRotating: false,
+  isBarrage: true,
+  angle: 320,
+  angleModifier: 10,
+  angleMin: 40,
+  angleMax: 320,
+
+  numOfRoundsBurst: 1,
   isLaserGun: false,
 };
 
