@@ -24,8 +24,8 @@ export default class Item {
     };
 
     this.itemCoinProps = {
-      w: 20,
-      h: 20,
+      w: 30,
+      h: 30,
       color: "transparent",
       opacity: 1.0,
       shadowBlur: 5,
