@@ -19,14 +19,15 @@
 
 # `About` 
 ***
-Space-Brawl is the classic arcade shooter. Destroy enemies, use skills, collect coins to gain experience and LVL UP your ship. 3 Ship Tiers with unique ship models and guns. Be aware of The Boss! It's time to show the aliens how it's done! Wait no more and try it out yourself! Click on the link below.
+Space-Brawl is the classic arcade shooter browser game. Destroy enemies, use skills, collect coins to gain experience and LVL UP your ship. 3 Ship Tiers with unique ship models and guns. Be aware of The Boss! It's time to show the aliens how it's done! Wait no more and try it out yourself! Click on the link below.
 
 
 # [<ins>`PLAY DEMO`</ins>](https://aleksns.github.io/space-brawl/)
-##### *Note: The game was tested with Google Chrome browser and 1920x1080 screen resolution. It might work different with other configurations*
+##### *Note: The game was tested with Google Chrome browser and 1920x1080 screen resolution. It might work different with other configurations.*
 ***
 
 # `Video Examples`
+##### *Note: The game recieves new updates from time to time, including game balance. The videos below may not represent the current state, for the most up to date game experience, try it out yourself, clicking the link above.*
 ***
 ### *Video example 1/3*
 
@@ -127,12 +128,12 @@ Moves freely on the game screen.
 It may look funny if 2 of these ships will align together, forming eyes. Ship itself has 2 attack patterns: on-target burst and 80 angle front barrage.
 Moves freely on the game screen.
 
-![enemy-t3](https://user-images.githubusercontent.com/75623459/157734899-d340c3a3-6b46-40d9-9b06-620eab7680ae.gif)
+![enemy-t3](https://user-images.githubusercontent.com/75623459/157912580-f4e0b0f7-04ec-4aba-b537-9a2e62baef83.gif)
 
 ## Enemy T4
 
 There are actually 3 aliens in this ship. One of them is invisible, but rumors say, it reveal itself once in awhile. Has only 1 attack (on-target type) but 
-projectiles are very fast, comparing to other ships.
+projectiles have very high velocity.
 Moves freely on the game screen.
 
 ![enemy-t4](https://user-images.githubusercontent.com/75623459/157734939-333d12ae-aadd-4bca-94d5-1ef234248df0.gif)
