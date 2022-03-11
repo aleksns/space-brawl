@@ -12,7 +12,7 @@ import projectileArcPurple from "../images/projectileArcPurple.png";
 import projectileArcGreen from "../images/projectileArcGreen.png";
 import projectileArcBlue from "../images/projectileArcBlue.png";
 import projectileArcYellow from "../images/projectileArcYellow.png";
-
+import projectileArcOrange from "../images/projectileArcOrange.png";
 
 import projectileLaserPlayer from "../images/projectileLaserPlayer.png";
 import shieldOrb from "../images/shieldOrb.png";
@@ -56,6 +56,9 @@ export default class Media {
 
     this.projectileArcYellowImg = new Image();
     this.projectileArcYellowImg.src = projectileArcYellow;
+
+    this.projectileArcOrangeImg = new Image();
+    this.projectileArcOrangeImg.src = projectileArcOrange;
 
     
     this.projectileLaserImgPlayer = new Image();

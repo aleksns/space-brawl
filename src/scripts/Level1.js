@@ -24,6 +24,7 @@ export default class Level1 {
     this.maxNumOfEnemies = 8;
     this.maxNumOfEnemiesFormation = 10;
 
+    this.defaultChanceToSpawnFormation = 0.35;
     this.chanceToSpawnFormation = 0.35;
     this.isFormation = false;
   }
@@ -65,12 +66,17 @@ export default class Level1 {
         this.generateFormationWave();
       } else {
         this.generateDefaultWave();
+        if(this.chanceToSpawnFormation < this.defaultChanceToSpawnFormation) {
+          this.chanceToSpawnFormation = this.defaultChanceToSpawnFormation;
+        }
       }
     }
   }
 
   generateFormationWave() {
     this.isFormation = true;
+    this.chanceToSpawnFormation = 0;
+
     let numOfEnemies = getRandomIntInclusive(
       this.minNumOfEnemies,
       this.maxNumOfEnemiesFormation

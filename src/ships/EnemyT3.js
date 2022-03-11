@@ -5,6 +5,7 @@ import {
   getRandomIntInclusive,
   getEnemyT3Dimension,
   getDefaultEnemyProjectile,
+  getBigEnemyProjectile,
 } from "../services/services";
 
 import { SingleGun } from "../guns/SingleGun";
@@ -58,7 +59,7 @@ export class EnemyT3 extends Ship {
       x: 0,
       y: 0,
     };
-    console.log("CONSTRUCTOR > Enemy3");
+    console.log("CONSTRUCTOR > EnemyT3");
   }
 
   initializeShip() {
@@ -72,9 +73,9 @@ export class EnemyT3 extends Ship {
     newSingleBurstTarget.setOnTarget();
 
     let newBarrage80Angle = new SingleGun(this.game, this);
-    newBarrage80Angle.initialize(getT3Barrage, getDefaultEnemyProjectile);
+    newBarrage80Angle.initialize(getT3Barrage, getBigEnemyProjectile);
     newBarrage80Angle.setGunDamage(this.game.stats.enemyGunsDamage.t3Burst);
-    newBarrage80Angle.setProjectileImage(this.game.media.projectileArcRedImg);
+    newBarrage80Angle.setProjectileImage(this.game.media.projectileArcOrangeImg);
 
     this.game.enemyGuns.push(newSingleBurstTarget);
     this.game.enemyGuns.push(newBarrage80Angle);

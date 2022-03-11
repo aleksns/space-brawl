@@ -145,9 +145,7 @@ export default class Game {
   gameLoop() {
     this.clearCanvas1To5();
     
-    if(!this.isPauseOn) {
-      this.handleBackground();
-    }
+    this.handleBackground();
   
     //this.handleBackgroundEnemy();
     //this.updateBackgroundEnemy();
@@ -173,16 +171,19 @@ export default class Game {
     // console.log("bgElements.length = " + this.bgElements.length);
     // console.log("enemies.length = " + this.enemies.length);
     // console.log("effects.length = " + this.effects.length);
-    //console.log("enemy projectiles.length = " + this.enemyProjectiles.length);
-    //console.log("player projectiles.length = " + this.playerProjectiles.length);
+    // console.log("enemy projectiles.length = " + this.enemyProjectiles.length);
+    // console.log("player projectiles.length = " + this.playerProjectiles.length);
     // console.log(`---------------------------------------`);
   }
 
   handleBackground() {
-    this.init.addBgElements();
-    this.update.updateObjects(this.bgElements);
+    if(!this.isPauseOn) {
+      this.init.addBgElements();
+      this.update.updateObjects(this.bgElements);
+      this.update.removeDeadObjects(this.bgElements);
+    }
+
     this.draw.drawBgElements();
-    this.update.removeDeadObjects(this.bgElements);
   }
 
   handleBackgroundEnemy() {

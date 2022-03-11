@@ -120,24 +120,14 @@ export const itemBuffProps = {
   statusEffectY: getStatusEffectsBar.y + 10,
 };
 
-export const getItemsStats = {
-  medkit: 25,
-  atkSpeed: 0.2, //higher values give more atk speed
-};
-
 export const getBuffsSpawnDelay = {
   medkit: 4.0,
   atkSpeed: 8.0,   ///9.0
 };
 
-export const getBuffsDuration = {
-  atkSpeed: 10.0,
-  slow: 4.0, 
-};
-
 export const getPlayerDefaultStats = {
-  health: 100,
-  maxHealth: 100,
+  health: 150,
+  maxHealth: 150,
   speed: 25,   //25
   accelerationMod: 10,
   rammingDmg: 0.1,

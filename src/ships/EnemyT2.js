@@ -60,7 +60,7 @@ export class EnemyT2 extends Ship {
       x: 0,
       y: 0,
     };
-    console.log("CONSTRUCTOR > Enemy3");
+    console.log("CONSTRUCTOR > EnemyT2");
   }
 
   initializeShip() {
@@ -70,7 +70,7 @@ export class EnemyT2 extends Ship {
     let newDoubleTarget = new DoubleGun(this.game, this);
     newDoubleTarget.initialize(getT2Target, getDefaultEnemyProjectile);
     newDoubleTarget.setGunDamage(this.game.stats.enemyGunsDamage.t2Target);
-    newDoubleTarget.setProjectileImage(this.game.media.projectileArcPurpleImg);
+    newDoubleTarget.setProjectileImage(this.game.media.projectileArcOrangeImg);
     newDoubleTarget.setOnTarget();
 
     let new180BarrageGun = new SingleGun(this.game, this);

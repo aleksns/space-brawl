@@ -26,16 +26,12 @@ export default class Init {
       now: 0,
       then: 0, //tbd
       delay: getBuffsSpawnDelay.medkit,
-      //delay: 3,
-      //timesSpawned: 0, //tbd
       id: "medkit",
     };
     this.atkSpeed = {
       now: 0,
       then: 0, //tbd
       delay: getBuffsSpawnDelay.atkSpeed,
-      //delay: 3,
-      //timesSpawned: 0, //tbd
       id: "atkSpeed",
     };
 
@@ -94,23 +90,20 @@ export default class Init {
         var newItem = new Medkit(this.game);
         newItem.initialize();
         this.game.items.push(newItem);
-        //item.timesSpawned++;
         break;
       case "atkSpeed":
         var newItem = new AtkSpeed(this.game);
         newItem.initialize();
         this.game.items.push(newItem);
-        //item.timesSpawned++;
         break;
       case "coin":
         var newCoin = new Coin(this.game);
         newCoin.initialize();
         newCoin.initializeCoin(object);
         this.game.coins.push(newCoin);
-        //item.timesSpawned++;
         break;
       default:
-        //console.log("Error handling `addItem function in Init class");
+        console.log("Error handling `addItem function in Init class");
         break;
     }
   }

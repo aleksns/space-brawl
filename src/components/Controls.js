@@ -105,7 +105,7 @@ export default class Controls {
   }
 
   handleKeySpace() {
-    if (!this.canPause || this.game.isGlobalActionRestricted) {
+    if (!this.canPause || this.game.isGlobalActionRestricted || this.game.gameOver) {
       return;
     }
     this.pauseProps.textX = (GAME_WIDTH / 2) - this.game.ctx.current.measureText(this.pauseProps.text).width;

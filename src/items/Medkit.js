@@ -1,5 +1,5 @@
 import Item from "./Item";
-import { colors, getItemsStats } from "../services/services";
+import { colors } from "../services/services";
 import medkitImage from "../images/medkit.png";
 
 const shadowColor = colors.red;
@@ -18,7 +18,6 @@ export class Medkit extends Item {
     this.a = this.itemBuffProps.a;
     this.isFill = this.itemBuffProps.isFill;
     this.isInteractable = true;
-    this.restoredHP = this.game.stats.itemsStats.medkit;
     this.spawnRangeMinX = 0;
     this.spawnRangeMaxX = 0;
 
@@ -32,6 +31,7 @@ export class Medkit extends Item {
     this.image = new Image();
     this.image.src = medkitImage;
     this.isSpawnOnScreen = false;
+    this.restoredHP = Math.floor(this.game.player.maxHealth * 0.3);
     //this.effectType = "medkit";   for different effects to play
   }
 

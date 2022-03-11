@@ -10,18 +10,20 @@ export default function ImageLazyLoad(props) {
     const imgToLoad = new Image();
     imgToLoad.src = original;
 
-    const getImg = new Promise((resolve) => resolve(imgToLoad.onload));
+    const loadImage = new Promise((resolve) => resolve(imgToLoad.onload));
 
-    async function loadImage() {
-      await getImg
-        .then(() => {
-          setIsLoading(false);
-          setCurrentImg(original);
-        })
-        .catch((e) => console.log(e.name));
+    async function setImage() {
+      try {
+        await loadImage;
+        setIsLoading(false);
+        setCurrentImg(original);
+      }
+      catch (error) {
+        console.log(error);
+      }
     }
-
-    loadImage();
+    
+    setImage();
   }, [original]);
 
   return (
