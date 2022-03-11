@@ -22,7 +22,8 @@
 Space-Brawl is the classic arcade shooter browser game. Destroy enemies, use skills, collect coins to gain experience and LVL UP your ship. 3 Ship Tiers with unique ship models and guns. Be aware of The Boss! It's time to show the aliens how it's done! Wait no more and try it out yourself! Click on the link below.
 
 
-# [<ins>`PLAY DEMO`</ins>](https://aleksns.github.io/space-brawl/)
+# [<ins>`PLAY DEMO`</ins>](https://aleksns.github.io/space-brawl/)![sealGit](https://user-images.githubusercontent.com/75623459/157919638-19942205-aaf1-4a00-8720-490ed53e3f60.png)
+
 ##### *Note: The game was tested with Google Chrome browser and 1920x1080 screen resolution. It might work different with other configurations.*
 ***
 
@@ -191,7 +192,7 @@ Temporary increases Player's attack speed by 200%
 
 ### *Medkit*
 
-Immediately restores Player's health. Amount of health restored is based on Player's level.
+Immediately restores 30% of Player's health
 
 ![medkitGit](https://user-images.githubusercontent.com/75623459/157764000-20a1772a-7f71-4268-860f-24c5c18cd322.png)
 
@@ -202,9 +203,13 @@ Watch and enjoy unskippable cutscene with The Boss appearance. It picks a random
 
 # `Credits`
 ***
+#### - Special thanks to Mr Sealy -
+![sealGitSmall](https://user-images.githubusercontent.com/75623459/157920356-58dc51a5-19d8-4392-b1f0-3af84095f854.png)
+
 #### - Music -
 - [background music](https://freesound.org/people/CarnotaurusTeam/sounds/505283/)
 - [laser](https://freesound.org/people/DayCraftMC/sounds/337112/)
 
 #### - Images -
-- [All images](https://github.com/aleksns)
+- [All images (except Github Logo)](https://github.com/aleksns)
+
