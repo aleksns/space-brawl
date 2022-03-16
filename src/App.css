@@ -12,7 +12,6 @@
 }
 
 h1 {
-  color: #ffffff;
   margin-top: 40px;
   position: relative;
   width: auto;
@@ -24,9 +23,10 @@ h1 {
 
 h2 {
   color: var(--purple-light);
+  font-size: 1.3rem;
 }
 
-h4 {
+h1, h4, h5 {
   color: #ffffff;
 }
 
@@ -63,12 +63,21 @@ a {
 }
 
 .mobile-placeholder {
-  margin: 20px;
+  margin: 5px 30px;
 }
 
 .mobile-placeholder-img {
   width: 50%;
   height: 70%;
+}
+
+.mobile-button-placeholder {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: -5px;
+  background-color: var(--blue-dark);
+  padding: 8px 13px 8px;
+  z-index: 11;
 }
 
 .button-blue {
@@ -182,7 +191,7 @@ a {
 
 @keyframes color-change {
   0% {
-    color: #4d00a5;
+    color: #5000ac;
   }
   10% {
     color: #6b12d1;
@@ -212,6 +221,6 @@ a {
     color: #6b12d1;
   }
   100% {
-    color: #4d00a5;
+    color: #5000ac;
   }
 }
