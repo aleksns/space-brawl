@@ -1,13 +1,11 @@
 import "./App.css";
 import { GAME_WIDTH, GAME_HEIGHT } from "./services/services";
 import { useEffect, useRef, useState } from "react";
-import { Route, Routes } from "react-router-dom";
 import Canvas from "./components/Canvas";
 import Game from "./components/Game";
-import MainMenu from "./componentsUI/MainMenu";
-import Tutorial1 from "./componentsUI/Tutorial1";
-import Tutorial2 from "./componentsUI/Tutorial2";
 import gitLogo from "./images/github-icon.png";
+import MainScreen from "./componentsUI/MainScreen";
+import MobilePlaceholder from "./componentsUI/MobilePlaceholder";
 
 const lineWidth = 3;
 const width = GAME_WIDTH;
@@ -95,6 +93,8 @@ export default function App() {
   };
 
   const [isUiOn, setIsUiOn] = useState(true);
+  const [isMobile, setIsMobile] = useState(undefined);
+  const [deviceName, setDeviceName] = useState(undefined);
 
   useEffect(() => {
     //main game canvas
@@ -145,6 +145,35 @@ export default function App() {
     context6.lineWidth = lineWidth;
     context6Ref.current = context6;
 
+    function detectMob() {
+      const toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i,
+      ];
+
+      function convertString(string) {
+        var convertedString = string.replace(/i$/, "");
+        convertedString = convertedString.replaceAll("/", "");
+        return convertedString;
+      }
+
+      return toMatch.some((toMatchItem) => {
+        let deviceName = convertString(toMatchItem.toString());
+        setDeviceName(deviceName);
+        return navigator.userAgent.match(toMatchItem);
+      });
+    }
+
+    if (detectMob()) {
+      setIsMobile(true);
+      return;
+    }
+
     const game = new Game(
       canvas6Ref,
       contextRef,
@@ -194,33 +223,11 @@ export default function App() {
         canvas6Ref={canvas6Ref}
       />
 
-      <div
-        className="container container-main"
-        style={!isUiOn ? { display: "none" } : {}}
-      >
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              <MainMenu
-                startGame={startGame}
-                isUiOn={isUiOn}
-                gitLogo={gitLogo}
-              />
-            }
-          />
-          <Route path="/tutorial1" element={<Tutorial1 />} />
-          <Route path="/tutorial2" element={<Tutorial2 />} />
-        </Routes>
-      </div>
-      <div
-        className="container-git-label"
-        style={isUiOn ? { display: "none" } : {}}
-      >
-        <img src={gitLogo} className="git-logo-label"></img>
-        <h4>Github: Aleksns</h4>
-      </div>
+      {isMobile ? (
+        <MobilePlaceholder deviceName={deviceName} />
+      ) : (
+        <MainScreen startGame={startGame} isUiOn={isUiOn} gitLogo={gitLogo} />
+      )}
     </>
   );
 }

@@ -111,15 +111,15 @@ export default class EventListener {
     );
 
 
-    this.canvas6.current.addEventListener(
-      "click",
-      (event) => {
-        this.mousePosition = this.getMousePosition(event);
-        console.log(`mousePos = ${JSON.stringify(this.mousePosition)}`)
-        //this.test();
-      },
-      false
-    );
+    // this.canvas6.current.addEventListener(
+    //   "click",
+    //   (event) => {
+    //     this.mousePosition = this.getMousePosition(event);
+    //     console.log(`mousePos = ${JSON.stringify(this.mousePosition)}`)
+    //     //this.test();
+    //   },
+    //   false
+    // );
 
     console.log("CONSTRUCTOR > Controls");
   }
@@ -131,7 +131,7 @@ export default class EventListener {
    }
 
   getMousePosition(event) {
-    var rect = this.canvas5.current.getBoundingClientRect();
+    var rect = this.canvas6.current.getBoundingClientRect();
     return {
       x: event.clientX - rect.left,
       y: event.clientY - rect.top,
