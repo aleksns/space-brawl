@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/space-brawl/static/css/main.b62adeee.css",
-    "main.js": "/space-brawl/static/js/main.e5f4f1a1.js",
+    "main.css": "/space-brawl/static/css/main.a0b91b03.css",
+    "main.js": "/space-brawl/static/js/main.36bb8122.js",
     "static/js/27.d3262a63.chunk.js": "/space-brawl/static/js/27.d3262a63.chunk.js",
     "static/media/background_soundtrack.mp3": "/space-brawl/static/media/background_soundtrack.56ed0a8ed910acf737ec.mp3",
     "static/media/projectileYellowCone.png": "/space-brawl/static/media/projectileYellowCone.aa444cdf18300a7cf9bb.png",
@@ -28,6 +28,7 @@
     "static/media/enemyT2f1.png": "/space-brawl/static/media/enemyT2f1.65c1ceb89c32c4007aad.png",
     "static/media/enemyT2f2.png": "/space-brawl/static/media/enemyT2f2.6b8ef2790b4096d194ee.png",
     "static/media/enemyT2f3.png": "/space-brawl/static/media/enemyT2f3.fb84dcdd081a70a5b622.png",
+    "static/media/sealSad.png": "/space-brawl/static/media/sealSad.61d0a34abd2891961c18.png",
     "static/media/enemyShipT4.png": "/space-brawl/static/media/enemyShipT4.386c9fd602c26a2b6884.png",
     "static/media/playerShipT3.png": "/space-brawl/static/media/playerShipT3.1eb43950ae37c71efd7c.png",
     "static/media/levelUp.png": "/space-brawl/static/media/levelUp.05d0c8f1d5fa8819fccc.png",
@@ -41,7 +42,7 @@
     "index.html": "/space-brawl/index.html"
   },
   "entrypoints": [
-    "static/css/main.b62adeee.css",
-    "static/js/main.e5f4f1a1.js"
+    "static/css/main.a0b91b03.css",
+    "static/js/main.36bb8122.js"
   ]
 }
