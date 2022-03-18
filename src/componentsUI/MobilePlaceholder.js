@@ -51,7 +51,7 @@ export default function MobilePlaceholder(props) {
   return (
     <div className="container mobile-placeholder">
       <h5>Language:</h5>
-      <button className="mobile-button-placeholder" onClick={handleLangToggle}>
+      <button className="mobile-placeholder-button" onClick={handleLangToggle}>
         {btnText}
       </button>
       <h2>{text1}</h2>
