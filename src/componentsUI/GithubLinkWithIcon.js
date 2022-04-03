@@ -27,7 +27,7 @@ export default function GithubLinkWithIcon(props) {
   const gitUrl = "https://github.com/aleksns";
 
   const openInNewTab = () => {
-    const newWindow = window.open(gitUrl, "_blank", "noopener,noreferrer");
+    const newWindow = window.open(gitUrl, "_blank", "noopener noreferrer");
     if (newWindow) newWindow.opener = null;
   };
 
