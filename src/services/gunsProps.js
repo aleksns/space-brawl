@@ -255,7 +255,6 @@ export const getPlayerT3LaserGun = {
 
   isRotating: false,
   isBarrage: false,
-  isBarrage: false,
   angle: 0,
   angleModifier: 0,
   angleMin: 0,

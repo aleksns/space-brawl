@@ -169,7 +169,7 @@ export default function App() {
       });
     }
 
-    if (detectMob()) {
+    if (detectMob() || window.screen.width <= 800) {
       setIsMobile(true);
       return;
     }

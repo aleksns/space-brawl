@@ -62,9 +62,15 @@ a {
   border-radius: var(--border-radius-btn);
 }
 
-.mobile-placeholder {
-  margin: 5px 30px;
+.mobile-placeholder-container {
+  margin: 5%;
 }
+
+.mobile-placeholder-container h2 {
+  color: white;
+  font-weight: normal;
+  font-size: 0.95em;
+} 
 
 .mobile-placeholder-img {
   width: 50%;
