@@ -18,8 +18,8 @@ export default class Progression {
 
     this.playerLevelModifiers = {
       damage: 1.06,
-      health: 1.1,
-      maxHealth: 1.1,
+      health: 1.3,
+      maxHealth: 1.3,
     };
 
     this.playerTierModifiers = {
@@ -36,7 +36,7 @@ export default class Progression {
     };
 
     this.enemyModifiersWave = {
-      damage: 1.3,
+      damage: 1.2,
       health: 1.4,
       maxHealth: 1.4,
       scorePoints: 1,

@@ -169,7 +169,7 @@ export default function App() {
       });
     }
 
-    if (detectMob() || window.screen.width <= 800) {
+    if (detectMob() || !matchMedia("(pointer:fine)").matches || "ontouchstart" in window) {
       setIsMobile(true);
       return;
     }

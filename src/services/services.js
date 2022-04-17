@@ -126,8 +126,8 @@ export const getBuffsSpawnDelay = {
 };
 
 export const getPlayerDefaultStats = {
-  health: 150,
-  maxHealth: 150,
+  health: 250,
+  maxHealth: 250,
   speed: 25,   //25
   accelerationMod: 10,
   rammingDmg: 0.1,
