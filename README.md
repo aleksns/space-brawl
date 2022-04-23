@@ -118,8 +118,8 @@ To assert the dominance, it doesn't move (apart from cutscenes). Yelds a lot of 
 
 ## Enemy T2
 
-Classic mini-boss. Spawns every 3rd wave (there is a chance to spawn 2 of them). Got 360 barrage and double on-target guns. Slow, but got a lot of HP points.
-Yes, eyes are flashing (quality content right here).
+Classic mini-boss. Spawns every 3rd wave. Got 360 barrage and double on-target guns. Slow, but got a lot of HP points.
+Yes, the eyes are flashing (quality content right here).
 Moves freely on the game screen. 
 
 ![enemy-t2](https://user-images.githubusercontent.com/75623459/157730248-eafd8513-07e7-44ce-bc72-3a7284c11c48.gif)
