@@ -73,11 +73,13 @@ export default class Stats {
       laserT2: playerGunsDamageProps.laserT2,
       laserT3: playerGunsDamageProps.laserT3,
       default: playerGunsDamageProps.default,
+      defaultT1: playerGunsDamageProps.defaultT1,
       barrage: playerGunsDamageProps.barrage,
+      barrageT1: playerGunsDamageProps.barrageT1,
       rotating: playerGunsDamageProps.rotating,
     };
 
-    this.enemyGunsDamage = {  
+    this.enemyGunsDamage = {
       t5Front: enemyGunsDamageProps.t5Front,
       t4Target: enemyGunsDamageProps.t4Target,
       t3Burst: enemyGunsDamageProps.t3Burst,
@@ -121,24 +123,32 @@ export default class Stats {
   }
 
   applyModifiersToPlayerGunsDamage(playerModifiers) {
-    this.playerGunsDamage.laserT1 *= playerModifiers;
-    this.playerGunsDamage.laserT2 *= playerModifiers;
-    this.playerGunsDamage.laserT3 *= playerModifiers;
-    this.playerGunsDamage.default *= playerModifiers;
-    this.playerGunsDamage.barrage *= playerModifiers;
-    this.playerGunsDamage.rotating *= playerModifiers;
+    Object.keys(this.playerGunsDamage).forEach(key => {
+      this.playerGunsDamage[key] *= playerModifiers;
+      this.playerGunsDamage[key] = Math.round((this.playerGunsDamage[key] + Number.EPSILON) * 100) / 100;
+      //console.log(`${this.playerGunsDamage[key]}`)
+    }) 
+
+    
   }
 
   applyModifiersToEnemyGunsDamage(damageModifier) {
-    this.enemyGunsDamage.t5Front *= damageModifier;
-    this.enemyGunsDamage.t4Target *= damageModifier;
-    this.enemyGunsDamage.t3Burst *= damageModifier;
-    this.enemyGunsDamage.t2Target *= damageModifier;
-    this.enemyGunsDamage.t2Barrage *= damageModifier;
-    this.enemyGunsDamage.t0Target *= damageModifier;
-    this.enemyGunsDamage.t0Burst *= damageModifier;
-    this.enemyGunsDamage.t0Rotating *= damageModifier;
-    this.enemyGunsDamage.t0Barrage *= damageModifier;
+    // this.enemyGunsDamage.t5Front *= damageModifier;
+    // this.enemyGunsDamage.t4Target *= damageModifier;
+    // this.enemyGunsDamage.t3Burst *= damageModifier;
+    // this.enemyGunsDamage.t2Target *= damageModifier;
+    // this.enemyGunsDamage.t2Barrage *= damageModifier;
+    // this.enemyGunsDamage.t0Target *= damageModifier;
+    // this.enemyGunsDamage.t0Burst *= damageModifier;
+    // this.enemyGunsDamage.t0Rotating *= damageModifier;
+    // this.enemyGunsDamage.t0Barrage *= damageModifier;
+
+    Object.keys(this.enemyGunsDamage).forEach(key => {
+      this.enemyGunsDamage[key] *= damageModifier;
+      this.enemyGunsDamage[key] = Math.round((this.enemyGunsDamage[key] + Number.EPSILON) * 100) / 100;
+      console.log(`${this.enemyGunsDamage[key]}`)
+    }) 
+    console.log(`---------APPLIED MODIFIERS---------------`)
   }
 
   appplyModifiersToEnemy(enemyModifiers, enemyStats) {
@@ -162,7 +172,10 @@ export default class Stats {
     this.isGlobalSlowAll = true;
 
     this.decreaseEnemiesSpeed(this.game.enemies);
-    this.decreaseShipSpeed(this.game.playerTeam[0], this.slowModifiers.speedPlayer);
+    this.decreaseShipSpeed(
+      this.game.playerTeam[0],
+      this.slowModifiers.speedPlayer
+    );
 
     this.decreaseGunsAtkSpeed(
       this.game.enemyGuns,
@@ -211,7 +224,10 @@ export default class Stats {
 
   increaseSpeedOfEverything() {
     this.increaseEnemiesSpeed(this.game.enemies);
-    this.increaseShipSpeed(this.game.playerTeam[0], this.slowModifiers.speedPlayer);
+    this.increaseShipSpeed(
+      this.game.playerTeam[0],
+      this.slowModifiers.speedPlayer
+    );
 
     this.increaseGunsAtkSpeed(
       this.game.enemyGuns,

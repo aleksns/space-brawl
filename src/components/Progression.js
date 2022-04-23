@@ -4,7 +4,7 @@ export default class Progression {
   constructor(game) {
     this.game = game;
     this.threatLevel = 0;
-    this.maxThreatLevel = 25;
+    this.maxThreatLevel = 23;
     this.threatLevelModifier = 1;
     this.maxThreatLevelModifier = 1.2;
     
@@ -17,9 +17,9 @@ export default class Progression {
     this.playerLevel = 1;
 
     this.playerLevelModifiers = {
-      damage: 1.06,
-      health: 1.15,
-      maxHealth: 1.15,
+      damage: 1.15,
+      health: 1.2,
+      maxHealth: 1.2,
     };
 
     this.playerTierModifiers = {
@@ -29,16 +29,16 @@ export default class Progression {
     };
 
     this.enemyModifiersLevel = {
-      damage: 2.5,
-      health: 3,
-      maxHealth: 3,
+      damage: 2,
+      health: 2,
+      maxHealth: 2,
       scorePoints: 2,
     };
 
     this.enemyModifiersWave = {
       damage: 1.3,
-      health: 1.4,
-      maxHealth: 1.4,
+      health: 1.3,
+      maxHealth: 1.3,
       scorePoints: 1,
     };
   }
@@ -76,12 +76,12 @@ export default class Progression {
     let newEffect = new LevelUP(this.game);
     this.game.effects.push(newEffect);
 
-    if (this.playerLevel == 2) {
+    if (this.playerLevel === 2) {
       this.game.playerTeam[0].setTier2();
       this.applyPlayerModifiers(this.playerTierModifiers);
     }
 
-    if (this.playerLevel == 5) {
+    if (this.playerLevel === 4) {
       this.game.playerTeam[0].setTier1();
       this.applyPlayerModifiers(this.playerTierModifiers);
     }

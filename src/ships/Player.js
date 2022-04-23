@@ -198,13 +198,13 @@ export class Player extends Ship {
     this.laserGunT2.setGunDamage(this.stats.playerGunsDamage.laserT2);
     this.laserGunT3.setGunDamage(this.stats.playerGunsDamage.laserT3);
 
-    this.barrageT1.setGunDamage(this.stats.playerGunsDamage.barrage);
+    this.barrageT1.setGunDamage(this.stats.playerGunsDamage.barrageT1);
     this.barrageT2.setGunDamage(this.stats.playerGunsDamage.barrage);
     this.barrageT3.setGunDamage(this.stats.playerGunsDamage.barrage);
 
     this.singleGun.setGunDamage(this.stats.playerGunsDamage.default);
     this.doubleGun.setGunDamage(this.stats.playerGunsDamage.default);
-    this.tripleGun.setGunDamage(this.stats.playerGunsDamage.default);
+    this.tripleGun.setGunDamage(this.stats.playerGunsDamage.defaultT1);
   }
 
   setToDefaultPosition() {
@@ -232,7 +232,7 @@ export class Player extends Ship {
       getPlayerBarrage120Angle,
       getBigPlayerProjectile
     );
-    this.barrageT1.setGunDamage(this.stats.playerGunsDamage.barrage);
+    this.barrageT1.setGunDamage(this.stats.playerGunsDamage.barrageT1);
     this.barrageT1.setProjectileImage(this.game.media.projectileArcYellowImg);
 
     this.barrageT2 = new SingleGun(this.game, this);
@@ -264,7 +264,7 @@ export class Player extends Ship {
 
     this.tripleGun = new TripleGun(this.game, this);
     this.tripleGun.initialize(getPlayerTripleDefault, getDefaultPlayerProjectile);
-    this.tripleGun.setGunDamage(this.stats.playerGunsDamage.default);
+    this.tripleGun.setGunDamage(this.stats.playerGunsDamage.defaultT1);
     this.tripleGun.setProjectileImage(this.game.media.projectileArcBlueImg);
   }
 }

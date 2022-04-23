@@ -35,14 +35,6 @@ export default function App() {
 
   const gameRef = useRef(null);
 
-  const clearCanvas1To5 = () => {
-    clearCanvas1();
-    clearCanvas2();
-    clearCanvas3();
-    clearCanvas4();
-    clearCanvas5();
-  };
-
   const clearCanvas1 = () => {
     contextRef.current.clearRect(
       0,
@@ -97,6 +89,9 @@ export default function App() {
   const [deviceName, setDeviceName] = useState(undefined);
 
   useEffect(() => {
+
+    // Canvas props
+
     //main game canvas
     const canvas = canvasRef.current;
     canvas.width = width;
@@ -145,6 +140,7 @@ export default function App() {
     context6.lineWidth = lineWidth;
     context6Ref.current = context6;
 
+    // Detect mobile
     function detectMob() {
       const toMatch = [
         /Android/i,
@@ -190,6 +186,22 @@ export default function App() {
 
     gameRef.current.isAnimationOn = true;
     requestAnimationFrame(runLoop);
+
+    function clearCanvas1To5() {
+      clearCanvas1();
+      clearCanvas2();
+      clearCanvas3();
+      clearCanvas4();
+      clearCanvas5();
+    };
+
+    function runLoop() {
+      if (gameRef.current.isAnimationOn) {
+        gameRef.current.gameLoop();
+  
+        requestAnimationFrame(runLoop);
+      }
+    }
   }, []);
 
   function startGame() {
@@ -198,14 +210,6 @@ export default function App() {
     gameRef.current.initialize();
     gameRef.current.isAnimationOn = true;
     gameRef.current.isGameOn = true;
-  }
-
-  function runLoop() {
-    if (gameRef.current.isAnimationOn) {
-      gameRef.current.gameLoop();
-
-      requestAnimationFrame(runLoop);
-    }
   }
 
   function handleGameOver() {

@@ -82,7 +82,7 @@ export default class Skills {
 
     this.laser = {
       duration: 4,
-      cd: 15,
+      cd: 14,
       remainingCD: 0,
       isApplied: false,
       isOnCD: false,

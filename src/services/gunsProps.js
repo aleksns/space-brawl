@@ -58,7 +58,9 @@ export const playerGunsDamageProps = {
   laserT2: 9,
   laserT3: 4,
   default: 10,
+  defaultT1: 15,
   barrage: 10,
+  barrageT1: 20,
   rotating: 7,
 }
 /* ////////////////////////////////////////////////////////////////////// */

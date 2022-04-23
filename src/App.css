@@ -64,6 +64,7 @@ a {
 
 .mobile-placeholder-container {
   margin: 5%;
+  text-align: center; 
 }
 
 .mobile-placeholder-container h2 {
@@ -77,12 +78,13 @@ a {
   height: 70%;
 }
 
-.mobile-placeholder-button {
-  font-size: 0.8rem;
-  font-weight: 600;
-  margin: -5px;
-  background-color: var(--blue-dark);
-  padding: 8px 13px 8px;
+.mobile-placeholder-link {
+  text-decoration: underline;
+  font-size: 0.95rem;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  color: var(--blue-light);
   z-index: 11;
 }
 
