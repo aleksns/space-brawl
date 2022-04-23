@@ -126,29 +126,14 @@ export default class Stats {
     Object.keys(this.playerGunsDamage).forEach(key => {
       this.playerGunsDamage[key] *= playerModifiers;
       this.playerGunsDamage[key] = Math.round((this.playerGunsDamage[key] + Number.EPSILON) * 100) / 100;
-      //console.log(`${this.playerGunsDamage[key]}`)
     }) 
-
-    
   }
 
   applyModifiersToEnemyGunsDamage(damageModifier) {
-    // this.enemyGunsDamage.t5Front *= damageModifier;
-    // this.enemyGunsDamage.t4Target *= damageModifier;
-    // this.enemyGunsDamage.t3Burst *= damageModifier;
-    // this.enemyGunsDamage.t2Target *= damageModifier;
-    // this.enemyGunsDamage.t2Barrage *= damageModifier;
-    // this.enemyGunsDamage.t0Target *= damageModifier;
-    // this.enemyGunsDamage.t0Burst *= damageModifier;
-    // this.enemyGunsDamage.t0Rotating *= damageModifier;
-    // this.enemyGunsDamage.t0Barrage *= damageModifier;
-
     Object.keys(this.enemyGunsDamage).forEach(key => {
       this.enemyGunsDamage[key] *= damageModifier;
       this.enemyGunsDamage[key] = Math.round((this.enemyGunsDamage[key] + Number.EPSILON) * 100) / 100;
-      console.log(`${this.enemyGunsDamage[key]}`)
     }) 
-    console.log(`---------APPLIED MODIFIERS---------------`)
   }
 
   appplyModifiersToEnemy(enemyModifiers, enemyStats) {
